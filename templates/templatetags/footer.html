@@ -1,0 +1,106 @@
+{% load static %}
+
+<!-- **** FOOTER CONTENT **** -->
+
+<div class="footer container-fluid gray-background text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-3 text-center">
+                <h4>
+                    Sales | Support | Customer Service 
+                    <br>
+                    <span style="
+                        font-size: 1.5em;
+                        font-weight: bold;
+                        color: #ffd220;"
+                    >
+                        24x7x365
+                    </span>
+                </h4>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-xs-2" style="padding-top: 15px;">
+                        <img style="max-width: 30px" src="{% static 'images/icons/svg/smartphone.svg' %}">
+                    </div>
+                    <div class="col-xs-10">
+                        <h4 style="font-weight: bold;"><a href="tel:1-800-862-5144"> US: <span style="color: #1B1C1D">+</span>1.800.862.5144</a>  <br> <a href="tel:1-213-286-0733">INT: +1.213.286.0733</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-xs-2" style="padding-top: 15px;">
+                        <img style="max-width: 30px" src="{% static 'images/icons/svg/chat-speech-bubbles.svg' %}">
+                    </div>
+                    <div class="col-xs-10">
+                        <h3>Live Slack</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-xs-2" style="padding-top: 15px;">
+                        <img style="max-width: 30px" src="{% static 'images/icons/svg/close-envelope.svg' %}">
+                    </div>
+                    <div class="col-xs-10">
+                        <a href="mailto:support@mibura.com" style="color: #FFF;"><h3>Email Us</h3></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <hr>
+
+        <div class="row">
+            <div class="col-xs-5 col-md-1">
+                <h4>
+                    About
+                </h4>
+                <a href="{% url 'index' %}">Home</a><br>
+                <a href="/company">Careers</a>
+            </div>
+            <div class="col-xs-7 col-md-2">
+                <h4>
+                    Products and Services
+                </h4>
+                <a href="{% url 'datacenter:index' %}">Modern Data Center</a><br>
+                <a href="{% url 'cloud:index' %}">Cloud Implementation</a><br>
+                <a href="{% url 'support:index' %}">Smart Support</a><br>
+                <a href="{% url 'staffing:index' %}">Tech Staffing</a>
+            </div>
+            
+            <div class="col-xs-12 col-md-4 text-center">
+                <div style="font-size: 3.5em;">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/miburainc/">
+                        <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    </a>
+                    <!-- Twitter -->
+                    <a href="#">
+                        <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                    </a>
+                    <!-- Slack -->
+                    <a href="#">
+                        <i class="fa fa-slack" aria-hidden="true"></i>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="https://www.linkedin.com/company/mibura-inc-">
+                        <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                    </a>
+                    <!-- Skype -->
+                    <a href="skype:mibura1?call">
+                        <i class="fa fa-skype" aria-hidden="true"></i>
+                    </a>
+                </div>  
+            </div>
+            <div class="col-xs-12 col-md-5">
+                <div>
+                    <p style="font-size: 0.9em">
+                         ©2017 Mibura, Inc. All Rights reserved - Cisco, Dell EMC, Docker, Intel, Xeon Logo, Oracle, Hitachi Data System, HPE, NetApp, SuperMicro, Microsoft, Microsoft Azure, Microsoft Office 365, Amazon Web Services, Google Compute Platform, VMware, Redhat, Splunk, IBM, Fortinet, Ixia, F5,  and Nutanix are trademarks of Corporations in the U.S. and/or other countries.
+                    </p>
+                </div>  
+            </div>
+        </div>
+    </div>
+</div> <!--footer-->

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Support -
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/support-style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12 text-white text-center pad-top-bottom gray-background">
+			<h1>
+				Discover Smart Support
+			</h1>
+			<h3>
+				OEM hardware and cloud partnerships, alignment with global distributors, and our first contact triage is a best of breed support platform.
+			</h3>
+			<br>
+			<a class="btn btn-success" href="{% url 'support:purchase' %}">Try Pure Gold for Cloud Support 14 days FREE</a>
+		</div>
+		<div class="col-xs-12 text-center">
+			<h2>
+				Our Support Plans are Per Device, Per Cloud Instance or Both!
+			</h2>
+		</div>
+		<div class="col-md-5">
+			<h4>
+				On Premise Data Center
+			</h4>
+			<p>
+				(3rd Party Hardware &amp; Software Contract)
+			</p>
+		</div>
+		<div class="col-md-2">
+			<p>
+				- OR -
+			</p>
+		</div>
+		<div class="col-md-5">
+			<h4>
+				Cloud Platform
+			</h4>
+			<p>
+				(Premium Cloud Support)
+			</p>
+		</div>
+		<div class="col-xs-12 ltgray-background">
+			<h2>
+				Ask Us About Carbon Black
+			</h2>
+			<p>
+				We can create a support plan tailored for your environment with unparalleled white glove service!
+			</p>
+		</div>
+		
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}
+Company
+{% endblock %}
+
+{% block css %}
+
+<style type="text/css">
+	#landing-banner {
+		color: white;
+		height: 100%;
+	}
+	#landing-banner h1 {
+		padding-top: 7%;
+		font-size: 4em;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div id="BG_VIDEO">
+
+	{% cloudinary_vid 'companyVideo_picdhq.mp4' autoplay="true" loop="true" %}
+
+</div>
+
+<div class="container" id="landing-banner">
+	<div class="row">
+		<div class="col-xs-12 col-md-8 col-md-offset-2 text-center pad-top-bottom">
+			<h1>
+				Our Journey from the 
+Data Center to the Cloud
+			</h1>
+			<h4>
+				10 YEARS AGO we started with the goal to simplify consulting for enterprise technology. As we progressed, customers asked us to take it one step further and sell hardware. THEN they asked us to dedicate teams and support environments around the globe. With Cloud adoption in the enterprise growing at an unprecedented rate, timing couldn't be better for our flexible On-Premise &amp; Cloud support. TODAY we are taking everything that we've done, simplifying into its basic elements, to provide fast growing support options that are twice the value and half the cost of traditional support.
+			</h4>
+			<a href="#opportunities" id="scroll-opp">Join our team and be at the forefront of of the digital revolution <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+		</div>		
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 text-center pad-top-bottom">
+			<h1>
+				Why Work at MIBURA?
+			</h1>
+		</div>
+		<div class="col-md-4">
+			<p>We're Embracing the Software Defined Planet! We're still focused on delivering the best of breed hardware for our customers, but each day we inch towards enabling our customers and employees to learn and become comfortable in writing code. If there is an inner geek in you that want's to kung-fu on a keyboard, this is the right place!</p>
+		</div>
+		<div class="col-md-4">
+			<p>We've learned a great deal in 10 years, but not enough to satisfy our appetite. From our partner ecosystem, to our brilliant customers; we feel there is much more to learn. Most importantly, we want to learn from one another so were always asking each other questions.</p>
+		</div>
+		<div class="col-md-4">
+			<p>Humanity First. Everyday is an opportunity to help those in need. Our outreach programs vary from orphanages in India to local medical clinics in Los Angeles. We make a point to help those is need because lets face it, that is our ultimate purpose in life.</p>
+		</div>
+	</div>
+	<div class="row">
+		Photo carousel.
+	</div>
+</div>
+<div class="container-fluid pad-top-bottom gray-background text-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 text-center">
+				<h1>Perks of working at MIBURA</h1>
+				<h4>But that’s not why we work here :wink: We are at MIBURA because we want to work with fun and intelligent people who will help us grow as individuals. Psst, check out our other offices and ask about our customers from nearly every country!</h4>
+			</div>
+			<div class="col-xs-8 col-xs-offset-2">
+				<hr>
+			</div>
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-md-4 col-md-offset-2">
+						<p>Excellent Benefits</p>
+						<p>Great Compensation</p>
+						<p>Customized Bonuses</p>
+						<p>Work From Home</p>
+						<p>Coding/Systems Bootcamps</p>
+					</div>
+					<div class="col-md-4">
+						<p>Regular Team Outings</p>
+						<p>Accelerated Training</p>
+						<p>Travel Around the World</p>
+						<p>Auto and Phone Allowance</p>
+						<p>Education Reimbursement</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container">
+
+	<div id="opportunities" class="row">
+		<div class="col-xs-12 text-center">
+			<h1>Opportunities @ Mibura</h1>
+		</div>
+	</div>
+</div>
+
+	
+
+{% endblock %}

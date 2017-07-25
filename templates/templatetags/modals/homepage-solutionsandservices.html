@@ -1,0 +1,151 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">
+					<h3>Our Solutions &amp; Services</h3>
+
+					<p>Our Engineers Work Tirelessly to Accelerate Business and Human Potential!</p>
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row match-my-cols text-center" style="overflow: hidden;">
+					<div class="col-xs-6 col-md-3 solutions-card">
+					<i class="fa fa-puzzle-piece" aria-hidden="true"></i><br>
+					Application Services
+					<br>
+					<hr>
+					<span class="solutions-content">
+					Today's businesses are built on applications. Accelerate your journey to application transformation &amp; scalable optimization using a flexible on-premise &amp; cloud model.
+					</span> 
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-bar-chart" aria-hidden="true"></i><br>
+						Big Data &amp; Analytics
+						<br><hr>
+						<span class="solutions-content">
+						Big Data is the aggregation of large sets of data points that are synthesized in real time for real results. </span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-users" aria-hidden="true"></i><br>
+						Business Process Outsourcing
+						<br><hr>
+						<span class="solutions-content">
+						Certain aspects of your business run better when managed by a services vendor like MIBURA. We have over a hundred years of experience in understanding how to shift processes externally to yield better productivity.</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-cloud" aria-hidden="true"></i><br>
+						Cloud
+						<br><hr><span class="solutions-content">
+						It's all about flexibility, scalability and costcontainment. Certain parts of your data center simply run better and smarter in the Cloud.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-server" aria-hidden="true"></i><br>
+						Data Center
+						<br><hr><span class="solutions-content">
+						Consolidate and modernize your data center with proven hardware platforms from Dell EMC, HP, Cisco, and SuperMicro. Get a quote in 15 minutes with same-day procurement. Hardware is backed by OEM and MIBURA's Smart Support with Free Shipping on any order.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-desktop" aria-hidden="true"></i><br>
+						Digital Business Services
+						<br><hr><span class="solutions-content">
+						Refresh your enterprise with business intelligence, real-time analytics, mobile access, social media platform integration, and cloud capabilities.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-laptop" aria-hidden="true"></i><br>
+						End User
+						<br><hr><span class="solutions-content">
+						Enable workforce productivity and collaboration with integrated hardware, software, and services. This includes security and patch management for desktops, laptops, tablets, and mobile devices. Give employees freedom and peace of mind with security.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-wifi" aria-hidden="true"></i><br>
+						Internet of Things
+						<br><hr><span class="solutions-content">
+						Within the next few years, billions of IoT devices will be added to the marketplace, and they will need to seamlessly integrate with on-premise and cloud data centers. Our expertise in the data center will highlight these devices as they get smarter, more efficient, and commoditized.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-refresh" aria-hidden="true"></i><br>
+						IT Support &amp; Lifecycle Services
+						<br><hr><span class="solutions-content">
+						Optimize your IT lifecycle with expert consulting, deployment, training, and automated, proactive support services.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-mobile" aria-hidden="true"></i>
+						<br>
+						Mobile
+						<br>
+						<hr>
+						<span class="solutions-content">
+							Enable and empower mobile devices with protection through identity access management, single sign-on, and enterprise suite. All these services available on-premise and in the cloud.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-lock" aria-hidden="true"></i><br>
+						Security
+						<br>
+						<hr>
+						<span class="solutions-content">
+							Security is a critical part of Information Technology's DNA. Firewalls don't cut it anymore. Our discipline is to protect and prepare for tomorrow's challenges in cyber security using advanced threat protection and analytics with real-time data and proactive measures 24x7.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-handshake-o" aria-hidden="true"></i>
+						<br>
+						Training
+						<br>
+						<hr>
+						<span class="solutions-content">
+							Train your IT professionals and end users to manage, monitor, and maintain your technology solutions.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+.solutions-card:hover {
+		cursor: pointer;
+		background: #FAFAFA;
+	}
+	.solutions-card {
+		font-size: 16px;
+		padding: 15px;
+		margin-bottom: 25px;
+		background: #FFFFFF;
+		position: static;
+		transition: 0.2s background;
+	}
+	.solutions-content {
+		padding: 15px;
+		z-index: 10000;
+		position: fixed;
+		width: 250px;
+		height: auto;
+		margin-top: -20px;
+		margin-left: -120px;
+		background: white;
+		border-radius: 5px;
+		border: 1px solid;
+		display: none;
+	}
+</style>
+
+<script type="text/javascript">
+	$('.solutions-card').hover(
+		function() {
+		$(this).find("span:first-of-type").show()
+		},
+		function() {
+			$(this).find("span:first-of-type").hide()
+		}
+	)
+</script>

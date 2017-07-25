@@ -27,28 +27,52 @@
     height:100%;
     top:0; 
     left:0;
-    background:rgba(0,0,0,0.5);
+    background:rgba(0,0,0,0.3);
     opacity: 1;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
    -moz-transition: all 0.5s;
 }
 
-#landing-banner {
-	color: white;
+html, body {
+	height: 100%;
+	min-height: 100%;
 }
-#landing-banner h1 {
-	padding-top: 12%;
+
+h1 {
 	font-size: 5em;
 }
+
+h2 {
+	font-size: 4em;
+}
+h3 {
+	font-size: 2.8em;
+}
+h4 {
+	font-size: 1.6em;
+	line-height: 45px;
+}
+
+#landing-banner {
+	padding-top: 14%;
+	height: 100%;
+	margin-top: -52px;
+	color: white;
+	min-height: 100%;
+}
+
 #landing-banner h4 {
 	padding-top: 7%;
-	font-size: 2em;
 }
 
 #landing-banner a {
 	font-weight: 700;
 	font-size: 1.8em;
+}
+
+#intro {
+	/*margin-top: 100%;*/
 }
 
 /* Position */
@@ -84,4 +108,12 @@
 
 .footer a:hover {
 	text-decoration: none;
+}
+
+.footer h3 {
+	font-size: 1.8em;
+}
+
+.footer h4 {
+	font-size: 1.2em;
 }

@@ -9,7 +9,14 @@ Home
 
 {% block css %}
 <style type="text/css">
-	
+	.city-background {
+		background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://res.cloudinary.com/mibura/image/upload/c_scale,e_brightness:-46,w_1600/v1500940139/wwdif_gvk4my.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #000;
+    color: white;
+	}
 
 	.card:hover {
 		background: white;
@@ -53,6 +60,44 @@ Home
 		max-height: 50px;
 		filter: brightness(0%);
 	}
+
+	#scrolldown {
+		z-index: 50000000;
+		position: absolute;
+		bottom: 30px;
+		left: 0;
+		width: 100%;
+		font-size: 60px;
+		animation: MoveUpDown 1.5s ease infinite;
+	}
+	.scrolldown-arrow {
+		opacity: 0.5;
+		color: white;
+		
+	}
+	.scrolldown-arrow:hover {
+		text-decoration: none;
+		color: rgba(255,255,255,0.8)
+	}
+	.scrolldown-arrow:visited {
+		text-decoration: none;
+		color: rgba(255,255,255,0.8)
+	}
+	.scrolldown-arrow:active {
+		text-decoration: none;
+		color: rgba(255,255,255,0.8)
+	}
+	@keyframes MoveUpDown {
+		0% {
+			margin-bottom: 0;
+		}
+		50% {
+			margin-bottom: 15px;
+		}
+		100% {
+			margin-bottom: 0;
+		}
+}
 </style>
 {% endblock %}
 
@@ -62,6 +107,16 @@ Home
 
 	{% cloudinary_vid 'homepage_landing_ohhb2l.mp4' autoplay="true" loop="true" %}
 
+</div>
+
+<div class="container" id="scrolldown">
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<a class="scrolldown-arrow" href="#intro">
+				<i class="fa fa-angle-down" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
 </div>
 
 
@@ -133,29 +188,85 @@ Home
 		</div>
 	</div>
 </div>
+<div id="intro" class="container-fluid pad-top-bottom ltgray-background">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3 text-center">
+			<h2>We're Known For:</h2>
+			<h4>At MIBURA, we understand the challenges and complexities of today's on premise data center and cloud environments. We take an agile and strategic approach to everything we do—offering subject matter expertise across the world's leading cloud providers, enterprise hardware, and enterprise software companies. 
+			We know the Hybrid Cloud!</h4>
+			<p></p>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
+				Click Here to learn more
+			</button>
+			{% include 'templatetags/modals/homepage-solutionsandservices.html' %}
+		</div>
+	</div>	
+</div>
+<div id="wedoitfor" class="container-fluid pad-top-bottom city-background">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-xs-12">
+				<h2>We Do It For:</h2>
+				<h4>
+					Today's data center and cloud platform have changed the way we live and do business. Each business has unique compliance and regulation obligations, having transparency requirements at the same time. Our experience in every vertical gives us confidence in accelerating you through The Fourth Industrial Revolution.
+				</h4>
+			</div>
+			<div class="col-md-4">
+				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
+					24x7x365
+				</h2>
+				<h3>Assistance</h3>
+				<h4>
+					Hardware &amp; Software Procurement 
+					Enterprise Technology Support 
+					Temp IT Workforce 
+					Global Integration &amp; Delivery
+				</h4>
+			</div>
+			<div class="col-md-4">
+				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
+					15
+				</h2>
+				<h3>Minutes Or Less</h3>
+				<h4>
+					Scoping for SOW, 
+					Quote for BOM, 
+					Hardware or Cloud SUPPORT, 
+					Infrastructure &amp; Security ASSESSMENT
+				</h4>
+			</div>
+			<div class="col-md-4">
+				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
+					10
+				</h2>
+				<h3>Years</h3>
+				<h4>
+					Trusted Professional Services, Procurement, and Support for Global &amp; SMB Companies, Telecommunication Companies, Cloud Providers, State &amp; Federal Agencies, and Non-Profit Organizations
+				</h4>
+			</div>
+			<div class="col-xs-12 text-center">
+				Click here to learn more
+			</div>
+		</div>
+	</div>	
+</div>
+
+<div class="container pad-top-bottom">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h2>Working together to serve you better.</h2>
+			<h3>Our capabilities power real transformations for people and organizations everywhere—enabling you to innovate faster and embrace the next big opportunity</h3>
+		</div>
+		<div class="col-xs-12">
+			Partner Logos
+		</div>
+	</div>
+</div>
+
+{% endblock %}
 
 
-
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-<p>.</p><p>.</p>
-
+{% block javascript %}
+<script type="text/javascript" src="{% static 'js/pagescroll.js' %}"></script>
 {% endblock %}

@@ -71,3 +71,42 @@
     background-color: #eeeeee;
   }
 }
+
+#navbar-static {
+  background-color: transparent;
+  border: none;
+}
+
+#navbar-static .navbar-nav > li > a {
+  color: #FFFFFF;
+}
+
+#navbar-static .navbar-nav > li > a:hover,
+#navbar-static .navbar-nav > li > a:focus {
+  color: #FFFFFF;
+}
+
+#navbar-static .navbar-nav > .active > a,
+#navbar-static .navbar-nav > .active > a:hover,
+#navbar-static .navbar-nav > .active > a:focus {
+  color: #FFFFFF;
+  background-color: transparent;
+}
+
+#navbar-static .navbar-nav > .open > a,
+#navbar-static .navbar-nav > .open > a:hover,
+#navbar-static .navbar-nav > .open > a:focus {
+  color: #FFFFFF;
+  background-color: rgba(255,255,255,0.2);
+}
+
+#navbar-static .navbar-link {
+  color: #FFFFFF;
+}
+#navbar-static .navbar-link:hover {
+  color: #F3F3F3;
+}
+
+#navbar-static .navbar-text {
+  color: #FFFFFF;
+}

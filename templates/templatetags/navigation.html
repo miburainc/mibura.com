@@ -1,6 +1,45 @@
 {% load static %}
 
-<nav class="navbar navbar-default">
+<!-- Top static Navbar -->
+<nav id="navbar-static" class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">
+        <img src="{% static 'images/company/logo-white.png' %}">
+      </a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="{% url 'index' %}">Home</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <p class="navbar-text">1.800.862.5144</p>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="{% url 'datacenter:index' %}">Modern Data Center</a></li>
+            <li><a href="{% url 'cloud:index' %}">Cloud Implementation</a></li>
+            <li><a href="{% url 'support:index' %}">Smart Support</a></li>
+            <li><a href="{% url 'staffing:index' %}">Tech Staffing</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<!-- Fixed Navbar -->
+
+<nav id="navbar-fixed" class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -19,7 +58,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
 
-        <li class="active"><a href="{% url 'index' %}">Home <span class="sr-only">(current)</span></a></li>
+        <li><a href="{% url 'index' %}">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <p class="navbar-text">1.800.862.5144</p>
@@ -39,6 +78,10 @@
 
 <style type="text/css">
 
+.navbar-fixed {
+  display: none;
+}
+
 .navbar-brand {
   padding: 0px;
 }
@@ -48,3 +91,21 @@
   width: auto;
 }
 </style>
+
+<script type="text/javascript">
+
+  $('#navbar-fixed').hide();
+
+  (function($) {          
+    $(document).ready(function(){                    
+        $(window).scroll(function(){                          
+            if ($(this).scrollTop() > 200) {
+                $('#navbar-fixed').fadeIn(500);
+            } else {
+                $('#navbar-fixed').fadeOut(500);
+            }
+        });
+    });
+})(jQuery);
+
+</script>

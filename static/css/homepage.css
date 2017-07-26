@@ -1,0 +1,132 @@
+/* BG Video */
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    height: 300%;
+    top: -100%;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    width: 300%;
+    left: -100%;
+  }
+}
+
+
+
+
+/* Body */
+
+.homepage-links div {
+	margin-bottom: 5px;
+}
+
+.city-background {
+	background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://res.cloudinary.com/mibura/image/upload/c_scale,e_brightness:-46,w_1600/v1500940139/wwdif_gvk4my.jpg);
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	color: #000;
+	color: white;
+}
+
+.card:hover {
+	background: white;
+	margin-top: -3px;
+	text-decoration: none;
+	color: black;
+}
+
+.card {
+	display: block;
+	width: 100%;
+	background: white;
+	background: rgba(255,255,255,.8);
+
+	padding: 15px;
+
+	color: black;
+	font-family: 'Roboto', Helvetica;
+	font-weight: 300;
+	text-align: center;
+	font-size: 1.28571429em;
+
+	border-radius: 5px;
+
+	transition: margin 0.1s ease-out;
+	-webkit-transition: margin 0.1s ease-out;
+	-moz-transition: margin 0.1s ease-out;
+	-o-transition: margin 0.1s ease-out;
+}
+
+.card > hr {
+	margin-top: 15px;
+	margin-bottom: 5px;
+	border: 0;
+	border-top: 1px solid #CCC;
+}
+
+.card .head img {
+	display: block;
+	margin: auto;
+	max-height: 50px;
+	filter: brightness(0%);
+}
+
+
+
+#scrolldown {
+	z-index: 50000000;
+	position: absolute;
+	bottom: 30px;
+	left: 0;
+	width: 100%;
+	font-size: 60px;
+	animation: MoveUpDown 1.5s ease-out infinite;
+}
+.scrolldown-arrow {
+	color: rgba(255,255,255,0.7)
+}
+.scrolldown-arrow:hover {
+	text-decoration: none;
+	color: rgba(255,255,255,1)
+}
+.scrolldown-arrow:visited {
+	text-decoration: none;
+	color: rgba(255,255,255,0.7)
+}
+.scrolldown-arrow:active {
+	text-decoration: none;
+	color: rgba(255,255,255,0.7)
+}
+@keyframes MoveUpDown {
+	0% {
+		margin-bottom: 0;
+	}
+	50% {
+		margin-bottom: 15px;
+	}
+	100% {
+		margin-bottom: 0;
+	}
+}

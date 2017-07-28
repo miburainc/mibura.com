@@ -9,9 +9,29 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DB_URL = get_env_variable('DATABASE_URL')
 
+AZURE_SQL_SERVER = 'miburawebsite-postgresqldbserver'
+AZURE_SQL_USER = 'miburasqluser'
+AZURE_SQL_PASSWORD = '$zAs2yG_&$'
+AZURE_SQL_DBNAME = 'miburasqldb'
+
+AZURE_SQL_DB = 'postgres://{user}:{password}@ec2-23-21-246-11.compute-1.amazonaws.com:5432/d9frsnq525kq6c'
+
 DATABASES = {
     'default': env.db('DATABASE_URL'),
 }
+
+# Azure
+DATABASES = {
+   'default': {
+   'ENGINE': 'django.db.backends.postgresql_psycopg2',
+   'NAME': os.environ.get('DATABASENAME', ''),
+   'USER': os.environ.get('DATABASEUSER', ''),
+   'PASSWORD': os.environ.get('DATABASEPASSWORD', ''),
+   'HOST': os.environ.get('DATABASEHOST', ''),
+   'PORT': '5432',
+  }
+}
+# End Azure
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura.herokuapp.com', 'localhost', '127.0.0.1' ])
 

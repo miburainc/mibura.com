@@ -14,7 +14,6 @@ import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ROOT_DIR = environ.Path(__file__) - 3  # (availlist/config/settings/base.py - 3 = availlist/)
-APPS_DIR = ROOT_DIR.path('availlist')
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -39,7 +38,6 @@ def get_env_variable(var_name):
 SECRET_KEY = get_env_variable("SECRET_KEY")
 
 ALLOWED_HOSTS = ['*']
-
 
 
 
@@ -99,6 +97,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -167,7 +166,7 @@ TASK_UPLOAD_FILE_MAX_SIZE = 5242880
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -176,16 +175,27 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
+# STATIC FILE CONFIGURATION
+# ------------------------------------------------------------------------------
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    str(ROOT_DIR.path('static')),
 ]
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Media Files
 

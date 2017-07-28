@@ -1,9 +1,9 @@
 from .base import *
 import raven, logging
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-DEBUG = False
+DEBUG = get_env_variable('DJANGO_DEBUG')
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -13,7 +13,7 @@ DATABASES = {
     'default': env.db('DATABASE_URL'),
 }
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura', 'localhost' ])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura.herokuapp.com', 'localhost', '127.0.0.1' ])
 # END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
@@ -28,18 +28,19 @@ INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
 # and https://docs.djangoproject.com/en/dev/howto/deployment/checklist/#run-manage-py-check-deploy
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 60
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
-    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = True
-X_FRAME_OPTIONS = 'DENY'
+if not DEBUG:
+	SECURE_HSTS_SECONDS = 60
+	SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+	    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+	SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+	    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
+	SECURE_BROWSER_XSS_FILTER = True
+	SESSION_COOKIE_SECURE = True
+	SESSION_COOKIE_HTTPONLY = True
+	SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+	CSRF_COOKIE_SECURE = True
+	CSRF_COOKIE_HTTPONLY = True
+	X_FRAME_OPTIONS = 'DENY'
 
 
 # Logging

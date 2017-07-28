@@ -11,6 +11,10 @@ DATABASES = {
     }
 }
 
+DATABASES = {
+    'default': env.db('DATABASE_URL'),
+}
+
 INSTALLED_APPS += []
 
 MIDDLEWARE += []

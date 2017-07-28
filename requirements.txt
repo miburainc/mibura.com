@@ -12,6 +12,7 @@ django-debug-toolbar==1.8
 django-environ==0.4.3
 django-sslserver==0.19
 djangorestframework==3.6.3
+gunicorn==19.7.1
 idna==2.5
 Jinja2==2.9.6
 jsonfield==1.0.3

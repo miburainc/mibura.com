@@ -1,4 +1,5 @@
 from .base import *
+import raven
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -15,7 +16,8 @@ DATABASES = {
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura', 'localhost' ])
 # END SITE CONFIGURATION
 
-INSTALLED_APPS += ['gunicorn', ]
+INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
+
 
 # MIDDLEWARE += []
 
@@ -38,3 +40,13 @@ SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
 X_FRAME_OPTIONS = 'DENY'
+
+
+# Logging
+
+RAVEN_CONFIG = {
+    'dsn': 'https://5fa67b91426e4d0ca77f38be242ed5ce:b12b07d3bc064ba184fc7491ab35bdb2@sentry.io/196861',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}

@@ -14,7 +14,6 @@ DATABASES = {
 }
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura.herokuapp.com', 'localhost', '127.0.0.1' ])
-# END SITE CONFIGURATION
 
 INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
 

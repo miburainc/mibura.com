@@ -20,6 +20,7 @@ MIDDLEWARE += [
 	"debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
+ALLOWED_HOSTS = ['*',]
 
 # Stripe
 

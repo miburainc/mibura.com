@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'pinax.stripe',
     'cloudinary',
     'corsheaders',
+    'crispy_forms',
 
     # Apps
     'bootcamp',
@@ -123,7 +124,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -143,6 +144,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# FORMS
+
+TASK_UPLOAD_FILE_TYPES = [
+    'application/x-iwork-pages-sffpages',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.oasis.opendocument.text',
+    'application/pdf',
+    'application/rtf'
+]
+TASK_UPLOAD_FILE_MAX_SIZE = 5242880
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -1,0 +1,7 @@
+#footer a {
+	color: #AAA;
+}
+
+#footer a:hover {
+	color: #FFF;
+}

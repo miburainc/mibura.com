@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^$', views.index, name="index"),
-    url(r'^company/', include('company.urls', namespace="company")),
+    url(r'^company/', include('company.urls')),
     url(r'^datacenter/', include('datacenter.urls', namespace="datacenter")),
     url(r'^cloud/', include('cloud.urls', namespace="cloud")),
     url(r'^support/', include('support.urls', namespace="support")),

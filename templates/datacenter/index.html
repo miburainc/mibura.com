@@ -5,6 +5,8 @@
 Datacenter
 {% endblock %}
 
+
+
 {% block css %}
 <style type="text/css">
 	#datacenter-header {
@@ -22,7 +24,10 @@ Datacenter
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
-}
+	}
+	.ui.image {
+		filter: brightness(0%);
+	}
 </style>
 {% endblock %}
 
@@ -70,7 +75,7 @@ Datacenter
 	</div>
 	<div class="row text-center">
 		<div class="col-md-4">
-			<img style="max-height: 50px;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-modernize.png" alt="Modernize">
+			<img class="ui image" style="max-height: 50px;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-modernize.png" alt="Modernize">
 			<br>
 			<h3>Modernize</h3>
 			<h4>Your IT Infrastructure</h4>
@@ -139,6 +144,7 @@ Datacenter
 		<div class="row text-center">
 			<div class="col-xs-12">
 				<h3>The Modern Data Center is the future of IT infrastructure, today.</h3>
+				<br><br>
 			</div>
 		</div>
 		<div class="row">

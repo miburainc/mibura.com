@@ -1,17 +1,234 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-Support
+Staff
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+	.staffing-background {
+		color: #FFFFFF;
+		padding-top: 150px;
+		margin-top: -50px;
+		height: 500px;
+		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/services_banner.jpg' %});
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	th {
+		font-weight: 900;
+	}
+</style>
 {% endblock %}
 
 {% block content %}
 
+<div class="staffing-background container-fluid">
 <div class="container">
-	<div class="row">
+	<div class="row text-center">
 		<div class="col-xs-12">
-			Staffing
+			<h1>IT Workforce</h1>
+			<h4>Our temp and long term residence tech staffing services provides flexibility and emergency resource needs that's trusted by the world's largest companies</h4>
 		</div>
 	</div>
+</div>
+</div>
+
+<div class="container-fluid pad-top-bottom gray-background text-white">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h4>From a Level 1 Helpdesk to Senior Engineer resource, our global ecosystem of certified, proven IT professinoals (including federal security clearance) are ready to tackle projects and long term objectives. We're quick so your team can vet our candidates and hit the gound running.</h4>
+			<br><br>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<span style="color: #ffd220; font-weight: 700; font-size: 4em;">#1</span>
+			<h4>IN CUSTOMER SATISFACTION</h4>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<span style="color: #ffd220; font-weight: 700; font-size: 4em;">Simple</span>
+			<h4>SERVICE AGREEMENTS</h4>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<span style="color: #ffd220; font-weight: 700; font-size: 4em;">Thorough</span>
+			<h4>KNOWLEDGE TRANSFER</h4>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container-fluid pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h3>Our Bench</h3>
+		</div>
+		<div class="col-xs-12 text-center">
+			<table class="table table-bordered table-striped table-condensed">
+                <thead>
+                    <tr>
+                        <th>Skill Category</th>
+                        <th>Experience(in years)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Program / Product Manager / Project Manager Level 2</td>
+                        <td>8+ experience with 4+ years in IT, Enterprise Ifrasctructure Programs</td>
+                    </tr>
+                    <tr>
+                        <td>HelpDesk Support</td>
+                        <td>1-3 IT Helpdesk &amp; Syst Admin NOC Support</td>
+
+                    </tr>
+                    <tr>
+                        <td>Technical Lead Developer</td>
+                        <td>6-8 experience with 3+ years in IT, Enterprise Technology Development</td>
+
+                    </tr>
+                    <tr>
+                        <td>Senior Engineer</td>
+                        <td>3-5 experience with 2+ years in IT, Enterprise Systems Engineering</td>
+
+                    </tr>
+                    <tr>
+                        <td>SW Test Engineer</td>
+                        <td>1-3 experience and enterprise systems testing experience</td>
+
+                    </tr>
+                    <tr>
+                        <td>Sr. SW Test Engineer</td>
+                        <td>3-5 experience and enterprise systems testing experience</td>
+
+                    </tr>
+                    <tr>
+                        <td>Architect</td>
+                        <td>8  experince with 3+ years in IT, Enterprise systems architecture</td>
+
+                    </tr>
+                    <tr>
+                        <td>Bus Tech Analyst</td>
+                        <td>3-5 experience with 2+ years in IT, Enterprise business processes and systems</td>
+
+                    </tr>
+                    <tr>
+                        <td>Systems Designer</td>
+                        <td>3-5 with 2+ years in IT, Enterprise Systems and integration design</td>
+
+                    </tr>
+                    <tr>
+                        <td>Applications Support</td>
+                        <td>1-3 experience in IT, Enterprise Systems and relevant support, monitoring and infrastructure optimization experience</td>
+
+                    </tr>
+                    <tr>
+                        <td>Virtualization Engineer</td>
+                        <td>5-8 of heterogeneous platforms (including Backup &amp; DR)</td>
+                    </tr>
+                    <tr>
+                        <td>Senior Linux Sys Admin</td>
+                        <td>3-5 experience with 2+ years in IT, Enterprise Systems Engineering</td>
+                    </tr>
+                    <tr>
+                        <td>Senior Windows Sys Admin</td>
+                        <td>3-5 experience with 2+ years in IT, Enterprise Systems Engineering</td>
+                    </tr>
+                    <tr>
+                        <td>Database Administration</td>
+                        <td>8+ Oracle, Postgres, MySQL,MSQL</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th data-field="id">Data Center Infrastructure - Network/Storage</th>
+                        <th data-field="name">Experience</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Architect</td>
+                        <td>Advanced Storage Infrastructure including building custom storage platforms</td>
+                    </tr>
+                    <tr>
+                        <td>Engineer, Tier 2</td>
+                        <td>5 experience complex storage infrastructure design &amp; architecture</td>
+                    </tr>
+                    <tr>
+                        <td>Engineer, Tier 1</td>
+                        <td>Storage Administration &amp; Management</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th data-field="id">Enterprise Network &amp; Security</th>
+                        <th data-field="name">Experience</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Architect</td>
+                        <td>10+ of advanced networking, CCIE such as Service Provider experience</td>
+                    </tr>
+                    <tr>
+                        <td>Engineer, Tier 2</td>
+                        <td>5-8 experience in switches, routers, firewall + security expert "NP"</td>
+                    </tr>
+                    <tr>
+                        <td>Engineer, Tier 1</td>
+                        <td>3 experience in switches, routers, firewall "NA"</td>
+                    </tr>
+                </tbody>
+                <thead>
+                    <tr>
+                        <th data-field="id">Cloud - AWS, Azure, O365, Google Compute</th>
+                        <th data-field="name">Description</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>L1 Cloud Support</td>
+                        <td>Basic support which includes administrative task via dashboards IE: spinup OS compute, storage, network resources</td>
+                    </tr>
+                    <tr>
+                        <td>L2 Cloud Support</td>
+                        <td>Same as above but includes automation and DEVOps tools such as Splunk, Chief, Puppet Vmware Vrops etc</td>
+                    </tr>
+                    <tr>
+                        <td>L3 Cloud Support</td>
+                        <td>Same as above but SysOps and DevOps Support</td>
+                    </tr>
+                    <tr>
+                        <td>Dedicated Cloud Operations</td>
+                        <td>Manage cloud computing strategy including application, design, monitoring, and management</td>
+                    </tr>
+                    <tr>
+                        <td>Dedicated Cloud Software</td>
+                        <td>Support in design, development, and deployment of personalized cloud solution</td>
+                    </tr>
+                </tbody>
+            </table>
+		</div>
+		<div class="col-xs-12">
+			<button type="button" class="btn btn-success">Talk to a Staffing Expert Now</button>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="staffing-background container-fluid text-white">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h3>AN ORCHESTRATION OF COMPONENTS, OEM PARTNERSHIPS, AND A GLOBAL SERVICE DESK TEAM</h3>
+			<h4>Trusted services arm for leading consulting and enterproise IT companies</h4>
+		</div>
+	</div>
+</div>
 </div>
 
 {% endblock %}

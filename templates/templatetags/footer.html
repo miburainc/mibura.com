@@ -1,8 +1,10 @@
 {% load static %}
 
+<link rel="stylesheet" type="text/css" href="{% static 'css/footer-style.css' %}">
+
 <!-- **** FOOTER CONTENT **** -->
 
-<div class="footer container-fluid gray-background text-white">
+<div id="footer" class="footer container-fluid gray-background text-white">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-3 text-center">
@@ -24,7 +26,11 @@
                         <img style="max-width: 30px" src="{% static 'images/icons/svg/smartphone.svg' %}">
                     </div>
                     <div class="col-xs-10">
-                        <h4 style="font-weight: bold;"><a href="tel:1-800-862-5144"> US: <span style="color: #1B1C1D">+</span>1.800.862.5144</a>  <br> <a href="tel:1-213-286-0733">INT: +1.213.286.0733</a></h4>
+                        <div style="padding-top: 10px;font-size: 18px; line-height: 24px;">
+                            <a href="tel:1-800-862-5144"> US: +1.800.862.5144</a>  
+                            <br>
+                            <a href="tel:1-213-286-0733">INT: +1.213.286.0733</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +50,7 @@
                         <img style="max-width: 30px" src="{% static 'images/icons/svg/close-envelope.svg' %}">
                     </div>
                     <div class="col-xs-10">
-                        <a href="mailto:support@mibura.com" style="color: #FFF;"><h3>Email Us</h3></a>
+                        <a href="mailto:support@mibura.com"><h3>Email Us</h3></a>
                     </div>
                 </div>
             </div>
@@ -58,7 +64,7 @@
                     About
                 </h4>
                 <a href="{% url 'index' %}">Home</a><br>
-                <a href="/company">Careers</a>
+                <a href="{% url 'company' %}">Careers</a>
             </div>
             <div class="col-xs-7 col-md-2">
                 <h4>
@@ -92,7 +98,7 @@
                     <a href="skype:mibura1?call">
                         <i class="fa fa-skype" aria-hidden="true"></i>
                     </a>
-                </div>  
+                </div>
             </div>
             <div class="col-xs-12 col-md-5">
                 <div>

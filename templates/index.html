@@ -9,18 +9,22 @@ Home
 
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/homepage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/background-video.css' %}">
 
 <!-- <link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="{% static 'css/homepage-mobile.css' %}" /> -->
 <style type="text/css">
 	@media (max-width: 767px) {
-  .fullscreen-bg {
-    background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
-  }
+		#landing-banner {
+			background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
+		}
+		.fullscreen-bg {
+			background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
+		}
 
-  .fullscreen-bg__video {
-    display: none;
-  }
-}
+		.fullscreen-bg__video {
+			display: none;
+		}
+	}
 </style>
 
 {% endblock %}
@@ -50,18 +54,18 @@ Home
 <div class="container" id="landing-banner">
 	<div class="row">
 		<div class="col-xs-12">
-			<h1 class="text-center">This is MIBURA.</h1>
+			<h1 class="text-center">This is MIBURA</h1>
 		</div>
 		<div class="col-xs-12 text-center">
-			<p style="font-size: 1.8em; font-weight: bold;">
+			<p style="font-size: 1.8em;">
 				We're Driving The Fourth Industrial Revolution with Cost Effective <br>
 				Data Center Hardware, Cloud, Device Management, Consulting, and Support <br> <br>
-				<span style="font-weight: bold;">Compute <span style="color: #0773ba">|</span> Storage <span style="color: #0773ba">|</span> Network <span style="color: #0773ba">|</span> People <span style="color: #0773ba">|</span> DELIVERED </span>
+				Compute <span style="color: #0773ba">|</span> Storage <span style="color: #0773ba">|</span> Network <span style="color: #0773ba">|</span> People <span style="color: #0773ba">|</span> DELIVERED
 			</p>
 		</div>
 	</div>
 	<div class="row homepage-links" style="margin-top: 50px;">
-		<div class="col-md-3">
+		<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">
 			<a href="{% url 'datacenter:index' %}" class="card">
 				<div class="head">
 					<img src="{% static 'images/icons/svg/server.svg' %}" class="img-responsive">
@@ -74,7 +78,7 @@ Home
 				</div>
 			</a>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">
 			<a href="{% url 'cloud:index' %}" class="card">
 				<div class="head">
 					<img src="{% static 'images/icons/svg/cloud-computing.svg' %}" class="img-responsive">
@@ -87,7 +91,7 @@ Home
 				</div>
 			</a>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">
 			<a href="{% url 'support:index' %}" class="card">
 				<div class="head">
 					<img src="{% static 'images/icons/svg/customer.svg' %}" class="img-responsive">
@@ -100,7 +104,7 @@ Home
 				</div>
 			</a>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-10 col-xs-offset-1 col-md-3 col-md-offset-0">
 			<a href="{% url 'staffing:index' %}" class="card">
 				<div class="head">
 					<img src="{% static 'images/icons/svg/operator.svg' %}" class="img-responsive">
@@ -118,7 +122,7 @@ Home
 
 <div id="intro" class="container-fluid pad-top-bottom ltgray-background">
 	<div class="row">
-		<div class="col-md-6 col-md-offset-3 text-center">
+		<div class="col-xs-12 col-md-6 col-md-offset-3 text-center">
 			<h2>We're Known For:</h2>
 			<h4>At MIBURA, we understand the challenges and complexities of today's on premise data center and cloud environments. We take an agile and strategic approach to everything we do—offering subject matter expertise across the world's leading cloud providers, enterprise hardware, and enterprise software companies. 
 			We know the Hybrid Cloud!</h4>
@@ -141,7 +145,7 @@ Home
 					Today's data center and cloud platform have changed the way we live and do business. Each business has unique compliance and regulation obligations, having transparency requirements at the same time. Our experience in every vertical gives us confidence in accelerating you through The Fourth Industrial Revolution.
 				</h4>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
 					24x7x365
 				</h2>
@@ -153,7 +157,7 @@ Home
 					Global Integration &amp; Delivery
 				</h4>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
 					15
 				</h2>
@@ -165,7 +169,7 @@ Home
 					Infrastructure &amp; Security ASSESSMENT
 				</h4>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<h2 style="font-size:3.5em; font-weight: bold; line-height: 0em; color: #ffd220">
 					10
 				</h2>
@@ -174,9 +178,10 @@ Home
 					Trusted Professional Services, Procurement, and Support for Global &amp; SMB Companies, Telecommunication Companies, Cloud Providers, State &amp; Federal Agencies, and Non-Profit Organizations
 				</h4>
 			</div>
-			<div class="col-xs-12 text-center">
-				Click here to learn more
-			</div>
+			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ServicesModal">
+				Click Here to learn more
+			</button>
+			{% include 'templatetags/modals/homepage-services.html' %}
 		</div>
 	</div>	
 </div>
@@ -187,9 +192,9 @@ Home
 			<h2>Working together to serve you better.</h2>
 			<h3>Our capabilities power real transformations for people and organizations everywhere—enabling you to innovate faster and embrace the next big opportunity</h3>
 		</div>
-		<div class="col-xs-12">
+		<!-- <div class="col-xs-12">
 			Partner Logos
-		</div>
+		</div> -->
 	</div>
 </div>
 

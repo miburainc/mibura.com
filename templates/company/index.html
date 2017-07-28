@@ -7,61 +7,148 @@ Company
 {% endblock %}
 
 {% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/background-video.css' %}">
 
 <style type="text/css">
-	#landing-banner {
-		color: white;
-		height: 100%;
+
+#landing-banner {
+	color: white;
+	min-height: 100%;
+	height: 100%;
+	padding-top: 100px;
+}
+
+.panel {
+	border: 0;
+}
+
+.panel-equal-height-lg {
+	background-color: #FCFCFC;
+	height: 250px;
+	padding: 10px;
+}
+
+.panel-equal-height-lg p {
+	font-size: 18px;
+	line-height: 22px;
+}
+
+.panel-body {
+	display: table;
+  width: 100%;
+  text-align: center;
+}
+
+.blue-circle {
+	color: white;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 60px;
+	width: 150px;
+	height: 150px;
+	background-color: #429ed3;
+	border-radius: 50%;
+
+	display: table-cell;
+	vertical-align: middle; 
+	text-align: center;
+
+	/*padding-top: 30px;
+	padding-left: 45px;*/
+}
+
+#whywork-section {
+	background-color: white;
+	background: white;
+}
+
+@media (max-width: 767px) {
+	.fullscreen-bg {
+		background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
 	}
-	#landing-banner h1 {
-		padding-top: 7%;
-		font-size: 4em;
+
+	.fullscreen-bg__video {
+		display: none;
 	}
+}
+
 </style>
+
 {% endblock %}
 
 {% block content %}
 
-<div id="BG_VIDEO">
+<div class="fullscreen-bg">
 
-	{% cloudinary_vid 'companyVideo_picdhq.mp4' autoplay="true" loop="true" %}
+	{% cloudinary_vid 'companyVideo_picdhq.mp4' autoplay="true" loop="true" muted="true" class="fullscreen-bg__video" %}
 
 </div>
 
-<div class="container" id="landing-banner">
-	<div class="row">
-		<div class="col-xs-12 col-md-8 col-md-offset-2 text-center pad-top-bottom">
-			<h1>
-				Our Journey from the 
-Data Center to the Cloud
-			</h1>
+<div id="landing-banner" class="container-fluid pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h2>
+				Our Journey from the Data Center to the Cloud
+			</h2>
 			<h4>
 				10 YEARS AGO we started with the goal to simplify consulting for enterprise technology. As we progressed, customers asked us to take it one step further and sell hardware. THEN they asked us to dedicate teams and support environments around the globe. With Cloud adoption in the enterprise growing at an unprecedented rate, timing couldn't be better for our flexible On-Premise &amp; Cloud support. TODAY we are taking everything that we've done, simplifying into its basic elements, to provide fast growing support options that are twice the value and half the cost of traditional support.
 			</h4>
-			<a href="#opportunities" id="scroll-opp">Join our team and be at the forefront of of the digital revolution <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a style="font-size: 20px;" href="#opportunities" id="scroll-opp">Join our team and be at the forefront of of the digital revolution <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 		</div>		
 	</div>
 </div>
-<div class="container">
+</div>
+
+<div id="whywork-section" class="container-fluid">
+<div class="container pad-top-bottom">
 	<div class="row">
-		<div class="col-xs-12 text-center pad-top-bottom">
+		<div class="col-xs-12 text-center">
 			<h1>
 				Why Work at MIBURA?
 			</h1>
 		</div>
-		<div class="col-md-4">
-			<p>We're Embracing the Software Defined Planet! We're still focused on delivering the best of breed hardware for our customers, but each day we inch towards enabling our customers and employees to learn and become comfortable in writing code. If there is an inner geek in you that want's to kung-fu on a keyboard, this is the right place!</p>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="blue-circle">
+						<i class="fa fa-code" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<p>We're Embracing the Software Defined Planet! We're still focused on delivering the best of breed hardware for our customers, but each day we inch towards enabling our customers and employees to learn and become comfortable in writing code. If there is an inner geek in you that want's to kung-fu on a keyboard, this is the right place!</p>
+				</div>
+			</div>
 		</div>
-		<div class="col-md-4">
-			<p>We've learned a great deal in 10 years, but not enough to satisfy our appetite. From our partner ecosystem, to our brilliant customers; we feel there is much more to learn. Most importantly, we want to learn from one another so were always asking each other questions.</p>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="blue-circle">
+						<i class="fa fa-handshake-o" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<p>We've learned a great deal in 10 years, but not enough to satisfy our appetite. From our partner ecosystem, to our brilliant customers; we feel there is much more to learn. Most importantly, we want to learn from one another so were always asking each other questions.</p>
+				</div>
+			</div>
 		</div>
-		<div class="col-md-4">
-			<p>Humanity First. Everyday is an opportunity to help those in need. Our outreach programs vary from orphanages in India to local medical clinics in Los Angeles. We make a point to help those is need because lets face it, that is our ultimate purpose in life.</p>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="blue-circle">
+						<i class="fa fa-users" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<p>Humanity First. Everyday is an opportunity to help those in need. Our outreach programs vary from orphanages in India to local medical clinics in Los Angeles. We make a point to help those is need because lets face it, that is our ultimate purpose in life.</p>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="row">
+	<!-- <div class="row">
 		Photo carousel.
-	</div>
+	</div> -->
+</div>
 </div>
 <div class="container-fluid pad-top-bottom gray-background text-white">
 	<div class="container">
@@ -74,35 +161,113 @@ Data Center to the Cloud
 				<hr>
 			</div>
 			<div class="col-xs-12">
-				<div class="row">
+				<div class="row" style="font-size: 22px;">
 					<div class="col-md-4 col-md-offset-2">
-						<p>Excellent Benefits</p>
-						<p>Great Compensation</p>
-						<p>Customized Bonuses</p>
-						<p>Work From Home</p>
-						<p>Coding/Systems Bootcamps</p>
+						<p><i class="fa fa-smile-o" aria-hidden="true"></i> Excellent Benefits</p>
+						<p><i class="fa fa-money" aria-hidden="true"></i> Great Compensation</p>
+						<p><i class="fa fa-usd" aria-hidden="true"></i> Customized Bonuses</p>
+						<p><i class="fa fa-home" aria-hidden="true"></i> Work From Home</p>
+						<p><i class="fa fa-terminal" aria-hidden="true"></i> Coding/Systems Bootcamps</p>
 					</div>
 					<div class="col-md-4">
-						<p>Regular Team Outings</p>
-						<p>Accelerated Training</p>
-						<p>Travel Around the World</p>
-						<p>Auto and Phone Allowance</p>
-						<p>Education Reimbursement</p>
+						<p><i class="fa fa-calendar" aria-hidden="true"></i> Regular Team Outings</p>
+						<p><i class="fa fa-leanpub" aria-hidden="true"></i> Accelerated Training</p>
+						<p><i class="fa fa-plane" aria-hidden="true"></i> Travel Around the World</p>
+						<p><i class="fa fa-car" aria-hidden="true"></i> Auto and Phone Allowance</p>
+						<p><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education Reimbursement</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="container">
+<div class="container pad-top-bottom">
 
 	<div id="opportunities" class="row">
 		<div class="col-xs-12 text-center">
 			<h1>Opportunities @ Mibura</h1>
+			<br><br>
+		</div>
+		<div class="col-xs-12">
+			<h3>HQ: Los Angeles</h3>
+			<table class="table table-striped">
+				<tbody>
+
+				{% for job in jobs %}
+					{% if job.country == "USA" %}
+					<tr>
+						<td>
+							<div style="font-size: 22px;">{{job.position}}</div>
+							<div>{{job.location}}</div>
+						</td>
+						<td class="text-right">
+							<a class="btn btn-primary btn-lg" href="{% url 'career' job.slug %}">View Job</a>
+						</td>
+					</tr>
+					{% else %}
+
+					<tr>
+						<td class="text-center">No Jobs Found</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
+			<h3>International: Bangalore, India</h3>
+			<table class="table table-striped">
+				<tbody>
+
+				{% for job in jobs %}
+					{% if job.country == "India" %}
+					<tr>
+						<td>
+							<h4>{{job.position}}</h4>
+							<p>{{job.location}}</p>
+						</td>
+						<td>
+							<a href=""></a>
+						</td>
+					</tr>
+					{% else %}
+
+					<tr>
+						<td class="text-center">No Jobs Found</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
+			<h3>International: Germany</h3>
+			<table class="table table-striped">
+				<tbody>
+
+				{% for job in jobs %}
+					{% if job.country == "Germany" %}
+					<tr>
+						<td>
+							<h4>{{job.position}}</h4>
+							<p>{{job.location}}</p>
+						</td>
+						<td>
+							<a href=""></a>
+						</td>
+					</tr>
+					{% else %}
+
+					<tr>
+						<td class="text-center">No Jobs Found</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
 
-	
 
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'js/pagescroll.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,134 @@
+<!-- Modal -->
+<div style="color: #000;" class="modal fade" id="ServicesModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">
+					<h3>Our Solutions &amp; Services</h3>
+				</h4>
+			</div>
+			<div class="modal-body" style="font-size: 24px;">
+				<div class="row match-my-cols text-center" style="overflow: hidden;">
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-book" aria-hidden="true"></i><br>
+						Education
+						<br>
+						<hr>
+						<span class="solutions-content">
+							Create a personalized, collaborative learning environment and improve outcomes with innovative consulting and technology solutions.
+						</span> 
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-bolt" aria-hidden="true"></i><br>
+						Energy
+						<br><hr>
+						<span class="solutions-content">
+							Get the right IT solutions to transform and refine your business processes so you can make energy-smart decisions fast.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-credit-card" aria-hidden="true"></i><br>
+						Financial Services
+						<br>
+						<hr>
+						<span class="solutions-content">
+							New business models and technologies allow you to connect with customers and adapt in today’s complex and unpredictable economic environment.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-university" aria-hidden="true"></i><br>
+						Government
+						<br><hr><span class="solutions-content">
+						Transform for the future with proven strategies and government-focused solutions that ultimately benefit and protect the citizens you serve.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-medkit" aria-hidden="true"></i><br>
+						Healthcare
+						<br><hr><span class="solutions-content">
+						Create information-driven healthcare and accelerate innovation with Dell Healthcare technology solutions.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-archive" aria-hidden="true"></i><br>
+						Manufacturing
+						<br><hr><span class="solutions-content">
+						Deploy manufacturing solutions for cost savings and performance improvements, and align your operations with customers and suppliers.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-shopping-bag" aria-hidden="true"></i><br>
+						Retail
+						<br><hr><span class="solutions-content">
+						Build a next-generation retail experience across all channels with end-to-end IT solutions.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-wrench" aria-hidden="true"></i><br>
+						Original Equipment Manufacturers
+						<br><hr><span class="solutions-content">
+						Power your intellectual property (IP) and accelerate your time-to-market by leveraging the expertise and technology of Dell OEM Solutions.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-film" aria-hidden="true"></i><br>
+						Telecommunications, Media, and Entertainment
+						<br><hr><span class="solutions-content">
+						Innovate your IT quickly and profitably by managing the present and future states of big data through cost-effective, open-standards solutions.
+						</span>
+					</div>
+					<div class="col-xs-6 col-md-3 solutions-card">
+						<i class="fa fa-desktop" aria-hidden="true"></i>
+						<br>
+						Web Development
+						<br>
+						<hr>
+						<span class="solutions-content">
+							Focus on innovation, not infrastructure, with web development solutions designed for internet companies, scale-out architectures, cloud and big data.
+						</span>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<style type="text/css">
+.solutions-card:hover {
+		cursor: pointer;
+		background: #FAFAFA;
+	}
+	.solutions-card {
+		font-size: 16px;
+		padding: 15px;
+		margin-bottom: 25px;
+		background: #FFFFFF;
+		position: static;
+		transition: 0.2s background;
+	}
+	.solutions-content {
+		padding: 15px;
+		z-index: 10000;
+		position: fixed;
+		width: 250px;
+		height: auto;
+		margin-top: -20px;
+		margin-left: -120px;
+		background: white;
+		border-radius: 5px;
+		border: 1px solid;
+		display: none;
+	}
+</style>
+
+<script type="text/javascript">
+	$('.solutions-card').hover(
+		function() {
+		$(this).find("span:first-of-type").show()
+		},
+		function() {
+			$(this).find("span:first-of-type").hide()
+		}
+	)
+</script>

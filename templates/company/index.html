@@ -18,6 +18,23 @@ Company
 	padding-top: 100px;
 }
 
+.company-team-section {
+	width: 100%;
+	height: auto;
+}
+
+
+.bootcamp {
+	color: #FFFFFF;
+	padding-top: 250px;
+	padding-bottom: 250px;
+	height: 600px;
+	background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5) ), url({% static 'images/company/bootcamp.jpg' %});
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
 .panel-top {
 	border: 0;
 }
@@ -158,6 +175,11 @@ Company
 	</div> -->
 </div>
 </div>
+
+<div class="company-team-section">
+	<img class="img-responsive" src="{% static 'images/company/team.jpg' %}">
+</div>
+
 <div class="container-fluid pad-top-bottom gray-background text-white">
 	<div class="container">
 		<div class="row">
@@ -189,6 +211,20 @@ Company
 		</div>
 	</div>
 </div>
+
+<div class="container-fluid bootcamp">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h3>Spring 2017 Coding Boot Camp @ Mibura</h3>
+			<h4>
+				<a href="{% static 'files/MiburaBootCamp2017.pdf' %}">Click Here to See the Outline</a>
+			</h4>
+		</div>
+	</div>	
+</div>
+</div>
+
 <div class="container pad-top-bottom">
 
 	<div id="opportunities" class="row">
@@ -196,7 +232,7 @@ Company
 			<h1>Opportunities @ Mibura</h1>
 			<br><br>
 		</div>
-		<div class="col-xs-12">
+		<div class="col-xs-12 col-md-10 col-md-offset-1">
 			<h3>HQ: Los Angeles</h3>
 			<table class="table table-striped">
 				<tbody>
@@ -273,7 +309,7 @@ Company
 	</div>
 </div>
 
-<div class="container-fluid ltgray-background">
+<div class="container-fluid pad-top-bottom ltgray-background">
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 text-center">

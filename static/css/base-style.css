@@ -20,6 +20,23 @@ h4 {
 	line-height: 45px;
 }
 
+@media (max-width: 767px) {
+	h1 {
+		font-size: 5em;
+	}
+
+	h2 {
+		font-size: 4em;
+	}
+	h3 {
+		font-size: 2.8em;
+	}
+	h4 {
+		font-size: 1.6em;
+		line-height: 45px;
+	}
+}
+
 /* Buttons */
 
 .btn-blue {

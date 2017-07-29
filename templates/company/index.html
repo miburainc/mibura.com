@@ -18,7 +18,7 @@ Company
 	padding-top: 100px;
 }
 
-.panel {
+.panel-top {
 	border: 0;
 }
 
@@ -28,6 +28,14 @@ Company
 	padding: 10px;
 }
 
+.panel-body-equal-height {
+	height: 160px;
+}
+
+.panel-body-no-pad {
+	padding: 0;
+}
+
 .panel-equal-height-lg p {
 	font-size: 18px;
 	line-height: 22px;
@@ -35,8 +43,8 @@ Company
 
 .panel-body {
 	display: table;
-  width: 100%;
-  text-align: center;
+	width: 100%;
+	text-align: center;
 }
 
 .blue-circle {
@@ -109,7 +117,7 @@ Company
 			</h1>
 		</div>
 		<div class="col-xs-12 col-md-4">
-			<div class="panel panel-default">
+			<div class="panel-top panel-default">
 				<div class="panel-body">
 					<div class="blue-circle">
 						<i class="fa fa-code" aria-hidden="true"></i>
@@ -121,7 +129,7 @@ Company
 			</div>
 		</div>
 		<div class="col-xs-12 col-md-4">
-			<div class="panel panel-default">
+			<div class="panel-top panel-default">
 				<div class="panel-body">
 					<div class="blue-circle">
 						<i class="fa fa-handshake-o" aria-hidden="true"></i>
@@ -133,7 +141,7 @@ Company
 			</div>
 		</div>
 		<div class="col-xs-12 col-md-4">
-			<div class="panel panel-default">
+			<div class="panel-top panel-default">
 				<div class="panel-body">
 					<div class="blue-circle">
 						<i class="fa fa-users" aria-hidden="true"></i>
@@ -263,6 +271,172 @@ Company
 			</table>
 		</div>
 	</div>
+</div>
+
+<div class="container-fluid ltgray-background">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h2>North America</h2>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Head Quarters
+					</h4>
+					<p>
+						10940 Wilshire Blvd 24th floor
+						<br>
+						Los Angeles, CA 90024
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/hq.jpg' %}" alt="HQ">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;LAX Data Center
+					</h4>
+					<p>
+						1920 E Maple Avenue
+						<br>
+						El Segundo, CA 90245
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/laxdatacenter.jpg' %}" alt="LAX Data Center">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Las Vegas Data Center
+					</h4>
+					<p>
+						3330 E Lone Mountain Rd
+						<br>
+						North Las Vegas, NV 89081
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/viawestlasvegas.jpg' %}" alt="LAX Data Center">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Oklahoma
+					</h4>
+					<p>
+						3800 N Classen Blvd
+						<br>
+						Oklahoma City, OK 73118
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/oklahomacity.jpg' %}" alt="LAX Data Center">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Federal
+					</h4>
+					<p>
+						12100 Sunset Hills Suites Reston
+						<br>
+						VA 20191 USA
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/reston.jpg' %}" alt="LAX Data Center">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 text-center">
+			<h2>International</h2>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Singapore
+					</h4>
+					<p>
+						1 Wallich Street, #10-01 Guoco Tower
+						<br>
+						Singapore 078881
+					</p>
+				</div>
+				<div class="panel-body">
+					<img class="img-responsive" src="{% static 'images/company/locations/singapore.jpg' %}" alt="HQ">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Dubai
+					</h4>
+					<p>
+						Dubai Shaikh Zayed Road
+						<br>
+						Dubai - United Arab Emirates
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/dubai.jpg' %}" alt="HQ">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;India
+					</h4>
+					<p>
+						Shivalaya, No TBD, Phase II, Whitefield Industrial Area, 
+						<br>
+						EPIP Zone, Whitefield, Bengaluru, Karnataka 560066, India
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/bangalore.jpg' %}" alt="HQ">
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-heading panel-body-equal-height">
+					<h4>
+						<i class="fa fa-globe" aria-hidden="true"></i> &nbsp;Germany
+					</h4>
+					<p>
+						Germany Erdgeschoss, Taunusanlage 1
+						<br>
+						60329 Frankfurt, Germany
+					</p>
+				</div>
+				<div class="panel-body panel-body-no-pad">
+					<img class="img-responsive" src="{% static 'images/company/locations/frankfurtgermany.jpg' %}" alt="HQ">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 

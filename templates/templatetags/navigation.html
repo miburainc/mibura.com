@@ -15,7 +15,7 @@
 			<div class="secondary-btns">
 
 				<a href="tel:1-800-862-5144"><i class="fa fa-phone" aria-hidden="true"></i></a>
-				<a href="" class="openSideNav"><i class="fa fa-bars" aria-hidden="true"></i></a>
+				<a href="" class="openSideNav"><i class="fa fa-bars navopen" aria-hidden="true"></i></a>
 			</div>
 			
 			
@@ -38,7 +38,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<p class="navbar-text navbar-lg-text">1.800.862.5144</p>
-				<li class="navbar-lg-text" style="padding-top: 3px;"><a href="#" class="openSideNav dropdown-toggle" data-toggle="offcanvas"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+				<li class="navbar-lg-text" style="padding-top: 3px;"><a href="#" class="openSideNav dropdown-toggle" data-toggle="offcanvas"><i class="fa fa-bars navopen" aria-hidden="true"></i></a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
@@ -58,7 +58,7 @@
 			</button> -->
 			<div class="secondary-btns">
 				<a href="tel:1-800-862-5144"><i class="fa fa-phone" aria-hidden="true"></i></a>
-				<a href="" class="openSideNav"><i class="fa fa-bars" aria-hidden="true"></i></a>
+				<a href="" class="openSideNav"><i class="fa fa-bars navopen" aria-hidden="true"></i></a>
 			</div>
 			<a class="navbar-brand" href="{% url 'index' %}">
 				<img src="{% static 'images/company/logo.png' %}">
@@ -73,7 +73,7 @@
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<p class="navbar-text navbar-lg-text">1.800.862.5144</p>
-				<li class="navbar-lg-text" style="padding-top: 3px;"><a href="#" class="openSideNav dropdown-toggle" data-toggle="offcanvas"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+				<li class="navbar-lg-text" style="padding-top: 3px;"><a href="#" class="openSideNav dropdown-toggle" data-toggle="offcanvas"><i class="fa fa-bars navopen" aria-hidden="true"></i></a></li>
 			</ul>
 		</div><!-- /.navbar-collapse -->
 	</div><!-- /.container-fluid -->
@@ -234,11 +234,11 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-$(document).mouseup(function(e) {
+$(document).click(function(e) {
     var container = $("#mySidenav");
-
+    var button = $(".openSideNav");
     // if the target of the click isn't the container nor a descendant of the container
-    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    if (!container.is(e.target) && !$(e.target).hasClass("openSideNav") && !$(e.target).hasClass("navopen") && container.has(e.target).length === 0) 
     {
         container.width("0");
     }

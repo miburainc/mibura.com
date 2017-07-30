@@ -145,3 +145,34 @@
 .nav-social-links a:hover {
   color: #176895;
 }
+
+
+/* Mobile buttons */
+#navbar-static .secondary-btns {
+	float: right;
+	font-size: 1.8em;
+	height: 50px;
+	padding: 15px 15px;
+	line-height: 20px;
+}
+#navbar-static .secondary-btns a {
+	color: white;
+	margin-right: 20px;
+}
+
+#navbar-fixed .secondary-btns {
+	float: right;
+	font-size: 1.8em;
+	height: 50px;
+	padding: 15px 15px;
+	line-height: 20px;
+}
+#navbar-fixed .secondary-btns a {
+	color: #333;
+	margin-right: 20px;
+}
+@media (min-width: 767px) {
+	.secondary-btns {
+		display: none;
+	}
+}

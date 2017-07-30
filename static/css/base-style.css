@@ -151,9 +151,11 @@ p {
 }
 
 .carousel-control.left {
+	color: #111;
 	background-image: none;
 }
 
 .carousel-control.right {
+	color: #111;
 	background-image: none;
 }

@@ -18,3 +18,10 @@
 #footer .footer-social-links a:hover {
 	color: #176895;
 }
+
+@media (max-width: 767px) {
+	.footer-social-links {
+		margin-top: 25px;
+		margin-bottom: 15px;
+	}
+}

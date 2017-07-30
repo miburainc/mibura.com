@@ -27,6 +27,16 @@
   left: 0;
 }
 
+@media (max-width: 767px) {
+	.fullscreen-bg__video {
+		display: none;
+	}
+	.fullscreen-bg:before {
+		background: none;
+	}
+}
+
+
 @media (min-aspect-ratio: 16/9) {
 	.fullscreen-bg__video {
 		height: 300%;

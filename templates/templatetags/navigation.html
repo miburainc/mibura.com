@@ -106,7 +106,7 @@
         </a>
         <!-- Slack -->
         <a href="#">
-            <i class="fa fa-slack" aria-hidden="true"></i>
+            <i class="fa fa-slack openchat" aria-hidden="true"></i>
         </a>
         <!-- LinkedIn -->
         <a href="https://www.linkedin.com/company/mibura-inc-">
@@ -233,6 +233,16 @@ $('.openSideNav').click(function(event) {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+
+$(document).mouseup(function(e) {
+    var container = $("#mySidenav");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        container.width("0");
+    }
+});
 
 	// Top Navbar
 

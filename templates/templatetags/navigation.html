@@ -234,7 +234,7 @@ function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
 
-$(document).click(function(e) {
+$(document).on('click touchstart', function(e) {
     var container = $("#mySidenav");
     var button = $(".openSideNav");
     // if the target of the click isn't the container nor a descendant of the container

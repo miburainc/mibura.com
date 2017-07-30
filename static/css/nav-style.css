@@ -40,10 +40,11 @@
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: #eeeeee;
+  background-color: #cccccc;
+  background-color: rgba(255,255,255, .4);
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #2b2b2b;
+  background-color: #ffffff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
@@ -114,4 +115,20 @@
 
 #navbar-static .navbar-text {
   color: #FFFFFF;
+}
+
+.sidenav a {
+  color: #818181;
+}
+
+.sidenav a:hover {
+  color: #CCC;
+}
+
+.nav-social-links a {
+  color: #2185d0;
+}
+
+.nav-social-links a:hover {
+  color: #176895;
 }

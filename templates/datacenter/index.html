@@ -13,11 +13,19 @@ Datacenter
 		color: #FFFFFF;
 		padding-top: 50px;
 		margin-top: -50px;
-		height: 500px;
+		min-height: 500px;
 		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/goldengate.jpg' %});
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
+	}
+	@media (max-width: 767px) {
+		#datacenter-header {
+			padding-bottom: 50px;
+		}
+		.col-xs-12 {
+			margin-bottom: 25px;
+		}
 	}
 	#datacenter-section-image {
 		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.65) ), url({% static 'images/backgrounds/datacenter.jpg' %});
@@ -45,50 +53,91 @@ Datacenter
 
 <div class="container-fluid pad-top-bottom gray-background text-white">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2 text-center">
+		<div style="margin-bottom: 50px;" class="col-md-8 col-md-offset-2 text-center">
 			<h4>The volume of data, services, and connected devices is growing at an exponential rate. In order to service this growth, companies and IT departments must undergo a significant transformation to develop smarter products and to deliver superior experiences for their customers. They must do all of this, while simultaneously lowering costs and improving performance of their older applications.</h4>
 			<a href="https://www-ssl.intel.com/content/www/us/en/cloud-computing/enterprise-cloud.html" target="_blank">The Modern Data Center Marketplace Starts With Intel: Learn More</a>
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 32px;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
 			<br>
 			IN STORAGE
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 32px;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
 			<br>
 			IN CONVERGED SYSTEMS
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 32px;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
 			<br>
 			IN CLOUD INFRASTRUCTURE
 		</div>
 	</div>
 </div>
+
+<div class="container-fluid pad-top-bottom">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-md-4">
+            <div style="padding-top: 5%; margin-left: 30%">
+            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
+            <img src="{% static 'images/icons/svg/bar-chart.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
+            </div>
+        
+            <br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E3 Family </p> <br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em;">Make business intelligence your competitive advantage.</p>
+            <br>
+            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e7-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E3 Family</a>
+		</div>
+		<div class="col-xs-12 col-md-4">
+            <div style="padding-top: 5%; margin-left: 30%;">
+            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
+            <img src="{% static 'images/icons/svg/upload.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
+            </div>
+
+            <br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E5 Family</p> <br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em;">At the heart of an agile, efficient data center that meets your diverse needs.</p>
+            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e5-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E5 Family</a>
+		</div>
+		<div class="col-xs-12 col-md-4">
+            <div style="padding-top: 5%; margin-left: 30%">
+            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
+            <img src="{% static 'images/icons/svg/car-speedometer.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
+            </div>
+        
+            <br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E7 Family</p><br>
+            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em">High-performance microservers and exceptional data graphics</p>
+            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e3-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E7 Family</a>
+		</div>
+	</div>
+</div>
+</div>
 <div class="container-fluid pad-top-bottom ltgray-background">
-	<div class="row text-center">
-		<div class="col-md-8 col-md-offset-2">
+	<div style="margin-bottom: 50px" class="row text-center">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
 			<h1>Optimize to Innovate</h1>
 			<h4>Along with running large enterprise applications, companies need to continuously develop the mobile applications and embedded software that will transform their products and services, while simultanously lowering costs and improving performance of their older applications. The only way to achieve these goals – to innovate and to optimize – is to transform the technology we use to deliver IT services</h4>
 		</div>
 	</div>
 	<div class="row text-center">
-		<div class="col-md-4">
+		<div class="col-xs-12 col-md-4">
 			<img class="ui image" style="max-height: 50px;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-modernize.png" alt="Modernize">
 			<br>
 			<h3>Modernize</h3>
 			<h4>Your IT Infrastructure</h4>
 			<p>The first step to become a Modern Data Center is to MODERNIZE the infrastructure components on which IT is built, leveraging converged infrastructure platforms.</p>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-12 col-md-4">
 			<img style="max-height: 50px;" class="ui centered tiny image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-automate.png" alt="Modernize">
 			<br>
 			<h3>Automate</h3>
 			<h4>Service Delivery with Software and APIs</h4>
 			<p>The second step to become a Modern Data Center is to AUTOMATE the delivery of IT services, software, and cloud integration</p>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-12 col-md-4">
 			<img style="max-height: 50px;" class="ui centered tiny image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-transform.png" alt="Modernize">
 			<br>
 			<h3>Transform</h3>
@@ -108,30 +157,30 @@ Datacenter
 		</div>
 		<br><br><br>
 		<div class="row text-center">
-			<div class="col-md-6">
+			<div class="col-xs-12 col-md-6">
 				<img style="display: block; margin: auto;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-converged.png">
 				<br>
 				<h4>Converged Infrastructure</h4>
 				<p>Our converged infrastructure solutions are easier, more cost-effective, and provide a much more successful way to run your IT. You get to deploy fully optimized, ready-to-go platforms that let you run your core business applications, services, and capabilities.</p>
-				<button type="button" class="btn btn-blue">CHAT NOW FOR A QUOTE</button>
+				<button type="button" class="btn btn-blue openchat">CHAT NOW FOR A QUOTE</button>
 			</div>
-			<div class="col-md-6">
+			<div class="col-xs-12 col-md-6">
 				<div class="row">
 					<div class="col-xs-6">
 						<h2>4.6x</h2>
-						<p>More applications deployed</p>
+						<p style="height: 32px;">More applications deployed</p>
 					</div>
 					<div class="col-xs-6">
 						<h2>4.4x</h2>
-						<p>Faster Time to Market</p>
+						<p style="height: 32px;">Faster Time to Market</p>
 					</div>
 					<div class="col-xs-6">
 						<h2>36%</h2>
-						<p>Lower costs</p>
+						<p style="height: 32px;">Lower costs</p>
 					</div>
 					<div class="col-xs-6">
 						<h2>41%</h2>
-						<p>Less Time Keeping the Lights on</p>
+						<p style="height: 32px;">Less Time Keeping the Lights on</p>
 					</div>
 				</div>
 			</div>
@@ -148,7 +197,7 @@ Datacenter
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-xs-12 col-md-3">
 				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-flash.png" class="ui image" style="max-height: 45px;">
 				<br>
 				<h3>Flash</h3>
@@ -160,9 +209,9 @@ Datacenter
 				</ul>
 				<hr>
 				<p>Flash storage is a pillar of the Modern Data Center, giving you consistent, predictable, low latency performance across your infrastructure, while dramatically reducing cost and complexity.</p>
-				<button type="button" class="btn btn-blue">FLASH SOLUTIONS</button>
+				<button type="button" class="btn btn-blue openchat">FLASH SOLUTIONS</button>
 			</div>
-			<div class="col-md-3">
+			<div class="col-xs-12 col-md-3">
 				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-cloud.png" class="ui image" style="max-height: 45px;">
 				<br>
 				<h3>Cloud-Enabled</h3>
@@ -174,9 +223,9 @@ Datacenter
 				</ul>
 				<hr>
 				<p>Cloud-enabling your infrastructure provides you the automation and agility you need to broker seamless IT services. Deploying and managing data and applications can begin right away, liberating your IT, and you, to tackle business needs.</p>
-				<button type="button" class="btn btn-blue">HYBRID CLOUD SOLUTIONS</button>
+				<button type="button" class="btn btn-blue openchat">HYBRID CLOUD SOLUTIONS</button>
 			</div>
-			<div class="col-md-3">
+			<div class="col-xs-12 col-md-3">
 				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-scale-out.png" class="ui image" style="max-height: 45px;">
 				<br>
 				<h3>Scale-Out</h3>
@@ -188,9 +237,9 @@ Datacenter
 				</ul>
 				<hr>
 				<p>Scale-out technology is designed to give you low cost of entry, and a single scale-out system that is elastic, allowing you to manage massive capacities, and changes, with very few resources.</p>
-				<button type="button" class="btn btn-blue">DATA LAKE SOLUTIONS</button>
+				<button type="button" class="btn btn-blue openchat">DATA LAKE SOLUTIONS</button>
 			</div>
-			<div class="col-md-3">
+			<div class="col-xs-12 col-md-3">
 				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-software-defined.png" class="ui image" style="max-height: 45px;">
 				<br>
 				<h3>Software Defined</h3>
@@ -201,7 +250,7 @@ Datacenter
 				</ul>
 				<hr>
 				<p>The software defined model allows you to automate the configuration and deployment of IT services, delivering greater business agility and a more flexible, programmable approach to managing data services.</p>
-				<button type="button" class="btn btn-blue">SOFTWARE DEFINED SOLUTIONS</button>
+				<button type="button" class="btn btn-blue openchat">SOFTWARE DEFINED SOLUTIONS</button>
 			</div>
 		</div>
 		
@@ -216,10 +265,10 @@ Datacenter
 				<h3>LEARN AND EXPAND SKILLS FOR THE MODERN DATA CENTER</h3>
 				<h4>EXPLORE THE MODERN DATA CENTER</h4>
 				<p>Interested in learning about the modern data center which takes virtualization to the next level with containers? Need a jumpstart on the software defined data center? Make an appointment for contacting your local sales engineer</p>
-				<button type="button" class="btn btn-blue">Talk now</button>
+				<button type="button" class="btn btn-blue openchat">Talk now</button>
 				<h4>EXPLORE ADDITIONAL EDUCATION OFFERINGS</h4>
 				<p>Find training to develop the skills you need to modernize your data center, transform IT, and compete in the new digital economy.</p>
-				<button type="button" class="btn btn-blue">Spring 2017 Bootcamp Schedule ></button>
+				<a class="btn btn-blue" target="_blank" href="{% static 'files/MiburaBootCamp2017.pdf' %}">Spring 2017 Bootcamp Schedule ></a>
 			</div>
 		</div>
 	</div>
@@ -227,26 +276,26 @@ Datacenter
 
 <div class="container-fluid pad-top-bottom">
 	<div class="container">
-		<div class="row text-center">
+		<div style="margin-bottom: 50px;" class="row text-center">
 			<div class="col-xs-12">
 				<h3>Business transformation depends on unparalleled protection and trust at every level.</h3>
 				<h4>Build a solid foundation of data protection, security, services and support to accelerate your journey to a Modern Data Center.</h4>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-security.png" width="46" alt=" ">
 				<br>
 				<h3>Data Protection</h3>
 				<p>Trust that your data is always protected wherever it lives with Dell EMC industry’s broadest portfolio of data protection software and storage solutions covering all consumption models, including on premises, virtual, hybrid and public clouds. Meet any SLA requirement with Continuous Availability, Replication, Snapshots, Backup and Archive all while driving down cost and complexity.</p>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-service.png" width="54" alt=" ">
 				<br>
 				<h3>Services</h3>
 				<p>Our globally recognized service experts worldwide leverage proven methodologies, industry best practices, and more than 10 years of service experience to assist customers in modernizing legacy applications and infrastructure, consolidating and migrating data centers, enabling developers to build cloud native apps, accelerate the return on technology investments and leveraging big data analytics to transform their business.</p>
 			</div>
-			<div class="col-md-4">
+			<div class="col-xs-12 col-md-4">
 				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-support.png" width="55" alt=" ">
 				<br>
 				<h3>Support</h3>
@@ -259,8 +308,8 @@ Datacenter
 
 <div id="datacenter-section-image" class="container-fluid pad-top-bottom text-white">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<h2>AN ORCHESTRATION OF COMPONENTS, OEM PARTNERSHIPS, AND A GLOBAL SERVICE DESK</h2>
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h3>AN ORCHESTRATION OF COMPONENTS, OEM PARTNERSHIPS, AND A GLOBAL SERVICE DESK</h3>
 			<h4>Modernizing, automating and transforming your data center are key for your digital transformation.</h4>
 		</div>
 	</div>

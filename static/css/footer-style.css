@@ -1,7 +1,20 @@
+#footer {
+	background-color: #1b1c1d;
+}
+
 #footer a {
 	color: #AAA;
 }
 
 #footer a:hover {
 	color: #FFF;
+}
+
+#footer .footer-social-links a {
+	font-size: 3.5em;
+	color: #2185d0;
+}
+
+#footer .footer-social-links a:hover {
+	color: #176895;
 }

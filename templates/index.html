@@ -13,6 +13,9 @@ Home
 
 <!-- <link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="{% static 'css/homepage-mobile.css' %}" /> -->
 <style type="text/css">
+	div {
+		/*border: 1px solid red;*/
+	}
 	@media (max-width: 767px) {
 		#landing-banner {
 			background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
@@ -192,11 +195,17 @@ Home
 			<h2>Working together to serve you better.</h2>
 			<h3>Our capabilities power real transformations for people and organizations everywhere—enabling you to innovate faster and embrace the next big opportunity</h3>
 		</div>
-		<!-- <div class="col-xs-12">
-			Partner Logos
-		</div> -->
 	</div>
 </div>
+
+<div class="container">
+	<div class="row">
+		<div id="partner-images" class="col-xs-12 col-md-10 col-md-offset-1">
+			{% include 'templatetags/homepage-sponsors.html' %}
+		</div>
+	</div>
+</div>
+
 
 {% endblock %}
 

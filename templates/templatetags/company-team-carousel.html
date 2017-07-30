@@ -1,0 +1,25 @@
+{% load static %}
+
+<style type="text/css">
+	#image-carousel {
+		height: 600px;
+		background: url("{% static 'images/company/team.jpg' %}") repeat-x;
+		background-size: cover;
+        width: 100%;
+        animation: slide 40s linear infinite;
+      }
+
+      @keyframes slide {
+        0% {
+            background-position: 0 0;
+        }
+
+        100% {
+            background-position: 2900px 0;
+        }
+      }
+  </style>
+
+<div id="image-carousel">
+	<div class="slide"></div>
+</div>

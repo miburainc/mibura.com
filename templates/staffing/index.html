@@ -11,12 +11,20 @@ Staff
 		color: #FFFFFF;
 		padding-top: 150px;
 		margin-top: -50px;
-		height: 500px;
-		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/services_banner.jpg' %});
+		min-height: 700px;
+		background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/services_banner.jpg' %});
 		background-position: center;
 		background-size: cover;
 		background-repeat: no-repeat;
 	}
+
+    .staffing-background-bottom {
+        color: #FFFFFF;
+        background-image: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/services_banner.jpg' %});
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
 	th {
 		font-weight: 900;
 	}
@@ -62,7 +70,7 @@ Staff
 <div class="container-fluid pad-top-bottom">
 <div class="container">
 	<div class="row text-center">
-		<div class="col-xs-12">
+		<div class="col-xs-12 pad-bottom">
 			<h3>Our Bench</h3>
 		</div>
 		<div class="col-xs-12 text-center">
@@ -213,14 +221,14 @@ Staff
                 </tbody>
             </table>
 		</div>
-		<div class="col-xs-12">
-			<button type="button" class="btn btn-success">Talk to a Staffing Expert Now</button>
+		<div class="col-xs-12 pad-top-bottom">
+			<button type="button" class="btn btn-success openchat">Talk to a Staffing Expert Now</button>
 		</div>
 	</div>
 </div>
 </div>
 
-<div class="staffing-background container-fluid text-white">
+<div class="staffing-background-bottom container-fluid text-white">
 <div class="container">
 	<div class="row text-center">
 		<div class="col-xs-12">

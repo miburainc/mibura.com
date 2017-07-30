@@ -92,6 +92,10 @@ Company
 		background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
 	}
 
+	#landing-banner {
+			background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
+		}
+
 	.fullscreen-bg__video {
 		display: none;
 	}
@@ -176,9 +180,8 @@ Company
 </div>
 </div>
 
-<div class="company-team-section">
-	<img class="img-responsive" src="{% static 'images/company/team.jpg' %}">
-</div>
+{% include 'templatetags/company-team-carousel.html' %}
+
 
 <div class="container-fluid pad-top-bottom gray-background text-white">
 	<div class="container">

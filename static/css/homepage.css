@@ -27,7 +27,7 @@
 }
 
 .city-background {
-	background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(https://res.cloudinary.com/mibura/image/upload/c_scale,e_brightness:-46,w_1600/v1500940139/wwdif_gvk4my.jpg);
+	background-image: linear-gradient( rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1) ), url(/static/images/backgrounds/wwdif.jpg);
 	background-position: center;
 	background-size: cover;
 	background-repeat: no-repeat;

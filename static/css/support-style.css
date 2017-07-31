@@ -1,3 +1,7 @@
+/* ********************* */
+/* Support Purchase Page */
+/* ********************* */
+
 #app .btn-success {
 	padding: 10px 20px;
 	color: #00b95f;
@@ -10,22 +14,52 @@
 }
 
 
+/* ********************* */
+/* Support Compare Table */
+/* ********************* */
 
-.list-altcolor li {
-	padding: 6px 0 6px 5px;
+table td {
+    color: #555;
 }
 
-.list-altcolor li:nth-child(odd) {
-	background-color: #F3F3F3;
+.table tbody td {
+    font-size: 18px;
 }
+
+.table thead th {
+    background-color: #0773ba; 
+    color: #FFF;
+    font-weight: 100;
+}
+.table thead th:not(:first-child) {
+    text-align: center;
+}
+.table tbody tr td:nth-child(2) {
+    background-color: #ffd220;
+    color: #222;
+}
+
+
+
+/* ******************* */
+/* Support Plan Panels */
+/* ******************* */
 
 .plan-panel {
-	height: 660px;
+    height: 660px;
 }
 
 .panel-heading {
-	background-color: #FFF!important;
-	border: 0;
+    background-color: #FFF!important;
+    border: 0;
+}
+
+.list-altcolor li {
+    padding: 6px 0 6px 5px;
+}
+
+.list-altcolor li:nth-child(odd) {
+    background-color: #F3F3F3;
 }
 
 .folded h2 {

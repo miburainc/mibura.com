@@ -138,6 +138,10 @@
   color: #CCC;
 }
 
+.navbar-fixed {
+  display: none;
+}
+
 
 /* Mobile buttons */
 #navbar-static .secondary-btns {
@@ -168,3 +172,30 @@
 		display: none;
 	}
 }
+
+/* Navbar Brand */
+
+.navbar-brand {
+  height: 55px;
+  padding: 0px;
+}
+
+.navbar-brand>img {
+  height: 100%;
+  padding: 15px;
+  width: auto;
+}
+
+/* Navbar Text */
+
+.navbar-lg-text {
+  /*padding-top: 10px;*/
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 24px;
+}
+
+.nav>li>p {
+  padding: 10px 15px;
+}
+

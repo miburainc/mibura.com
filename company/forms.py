@@ -9,7 +9,7 @@ from .models import Application
 class JobApplicationForm(forms.ModelForm):
 	class Meta:
 		model = Application
-		fields = ['name', 'job', 'location', 'country', 'cover', 'resume', 'comments']
+		fields = ['name', 'job', 'location', 'country', 'cover', 'resume', 'linkedin', 'comments']
 
 	def __init__(self, *args, **kwargs):
 		super(JobApplicationForm, self).__init__(*args, **kwargs)

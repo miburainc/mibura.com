@@ -44,6 +44,7 @@ class Application(models.Model):
 	comments = models.CharField(max_length=500, blank=True)
 
 	resume = models.FileField(upload_to='resumes/', null=True, blank=True)
+	linkedin = models.CharField(max_length=128, blank=True)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)

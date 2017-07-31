@@ -39,6 +39,10 @@ Datacenter
 	.infrastructure-content-body {
 		height: 170px;
 	}
+
+	.intel-panel-body {
+		height: 120px;
+	}
 </style>
 {% endblock %}
 
@@ -61,59 +65,81 @@ Datacenter
 			<a href="https://www-ssl.intel.com/content/www/us/en/cloud-computing/enterprise-cloud.html" target="_blank">The Modern Data Center Marketplace Starts With Intel: Learn More</a>
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220">#1</span>
 			<br>
-			IN STORAGE
+			<strong>IN STORAGE</strong>
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220">#1</span>
 			<br>
-			IN CONVERGED SYSTEMS
+			<strong>IN CONVERGED SYSTEMS</strong>
 		</div>
 		<div class="col-md-4 text-center">
-			<span style="font-size: 4em;color: #ffd220"><strong>#1</strong></span>
+			<span style="font-size: 4em;color: #ffd220">#1</span>
 			<br>
-			IN CLOUD INFRASTRUCTURE
+			<strong>IN CLOUD INFRASTRUCTURE</strong>
 		</div>
 	</div>
 </div>
 
 <div class="container-fluid pad-top-bottom">
 <div class="container">
-	<div class="row">
-		<div class="col-xs-12 col-md-4">
-            <div style="padding-top: 5%; margin-left: 30%">
-            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
-            <img src="{% static 'images/icons/svg/bar-chart.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
-            </div>
-        
-            <br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E3 Family </p> <br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em;">Make business intelligence your competitive advantage.</p>
-            <br>
-            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e7-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E3 Family</a>
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-bronze.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">BRONZE</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Bronze processors are performance optimized for small business and basic storage servers.
+			</p>
+			<p>
+				CPU cores: Up to 8<br>
+				Socket configurations: Up to 2<br>
+				Memory: Up to 1.5 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/bronze-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Bronze Processor</a>
 		</div>
-		<div class="col-xs-12 col-md-4">
-            <div style="padding-top: 5%; margin-left: 30%;">
-            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
-            <img src="{% static 'images/icons/svg/upload.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
-            </div>
-
-            <br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E5 Family</p> <br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em;">At the heart of an agile, efficient data center that meets your diverse needs.</p>
-            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e5-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E5 Family</a>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-silver.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">SILVER</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Silver processors offer the hardware-enhanced performance and security required for data center compute, network, and storage optimized for midsized and growing IT organizations.
+			</p>
+			<p>
+				CPU cores: Up to 12<br>
+				Socket configurations: Up to 2<br>
+				Memory: Up to 1.5 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/silver-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Silver Processor</a>
 		</div>
-		<div class="col-xs-12 col-md-4">
-            <div style="padding-top: 5%; margin-left: 30%">
-            <img src="{% static 'images/icons/svg/intel-xeon-badge.svg' %}" class="ui centered tiny image" style="filter: brightness(100%); display: inline;">
-            <img src="{% static 'images/icons/svg/car-speedometer.svg' %}" class="ui centered image" style="display: inline; padding-left: 2%" width="47px">
-            </div>
-        
-            <br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left;">Intel® Xeon® Processor E7 Family</p><br>
-            <p style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em">High-performance microservers and exceptional data graphics</p>
-            <a href="https://www-ssl.intel.com/content/www/us/en/processors/xeon/xeon-processor-e3-family.html" target="_blank" style="margin: 0px 22%;padding-left: 8%;text-align: left; font-size: 1em; display: inherit;">Learn more about the Intel® Xeon® Processor E7 Family</a>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-gold.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">GOLD</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Gold processors offer high performance, advanced reliability, and hardware-enhanced security optimized for demanding data center, hybrid-cloud compute, network, and storage workloads.
+			</p>
+			<p>
+				CPU cores: Up to 22<br>
+				Socket configurations: Up to 4<br>
+				Memory: Up to 6 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/gold-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Gold Processor</a>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-platinum.jpg' %}" class="img-responsive">        
+			<h4 style="margin-top: 5px;">PLATINUM</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Platinum processors offer the industry’s best performance for mission-critical and hybrid cloud workloads, real-time analytics, machine learning, and artificial intelligence, with monumental leaps in I/O, memory, storage, and network technologies.
+			</p>
+			<p>
+				CPU cores: Up to 28<br>
+				Socket configurations: 8+<br>
+				Memory: Up to 12 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/platinum-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Platinum Processor</a>
 		</div>
 	</div>
 </div>

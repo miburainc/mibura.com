@@ -2,21 +2,16 @@
 	background-color: #1b1c1d;
 }
 
-#footer a {
+.footer a {
 	color: #AAA;
 }
 
-#footer a:hover {
+.footer a:hover {
 	color: #FFF;
 }
 
 #footer .footer-social-links a {
 	font-size: 3.5em;
-	color: #2185d0;
-}
-
-#footer .footer-social-links a:hover {
-	color: #176895;
 }
 
 @media (max-width: 767px) {
@@ -24,4 +19,18 @@
 		margin-top: 25px;
 		margin-bottom: 15px;
 	}
+}
+
+
+
+a.link-blue, .link-blue a {
+	color: #2185d0;
+}
+
+a.link-blue:visited, .link-blue:active {
+	color: #2185d0;
+}
+
+a.link-blue:hover, .link-blue > a:hover {
+	color: #4dc1ff;
 }

@@ -162,6 +162,13 @@ p {
 	background-image: none;
 }
 
+/* Bootstrap modals */
+body.modal-open {
+    overflow: visible;
+    position: absolute;
+    width: 100%;
+    height:100%;
+}
 
 /* Override Bootstrap panels */
 

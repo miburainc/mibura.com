@@ -131,7 +131,7 @@ Home
 			We know the Hybrid Cloud!</h4>
 			<p></p>
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#SolutionsModal">
+			<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#SolutionsModal">
 				Click Here to learn more
 			</button>
 			
@@ -206,6 +206,28 @@ Home
 			{% include 'templatetags/homepage-sponsors.html' %}
 		</div>
 	</div>
+</div>
+
+<!-- Large modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
+</div>
+
+<!-- Small modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      ...
+    </div>
+  </div>
 </div>
 
 {% include 'templatetags/modals/homepage-solutionsandservices.html' %}

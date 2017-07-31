@@ -150,13 +150,13 @@
 .solutions-card:hover {
 	color: #666;
 	cursor: pointer;
-	background: #FAFAFA;
+	background: #ffffff;
 }
 .solutions-card {
 	font-size: 16px;
 	padding: 15px;
 	margin-bottom: 25px;
-	background: #FFFFFF;
+	background: transparent;
 	position: static;
 	transition: 0.2s background;
 }

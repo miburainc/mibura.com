@@ -134,7 +134,7 @@ Home
 			<button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#myModal">
 				Click Here to learn more
 			</button>
-			{% include 'templatetags/modals/homepage-solutionsandservices.html' %}
+			
 		</div>
 	</div>	
 </div>
@@ -187,7 +187,6 @@ Home
 					Click Here to learn more
 				</button>
 			</div>
-			{% include 'templatetags/modals/homepage-industries.html' %}
 		</div>
 	</div>	
 </div>
@@ -209,6 +208,8 @@ Home
 	</div>
 </div>
 
+{% include 'templatetags/modals/homepage-solutionsandservices.html' %}
+{% include 'templatetags/modals/homepage-industries.html' %}
 
 {% endblock %}
 

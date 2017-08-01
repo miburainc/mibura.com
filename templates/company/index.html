@@ -86,7 +86,23 @@ Company
 	background: white;
 }
 
+#landing-banner h1 {
+	margin-top: 5%;
+}
+
+#landing-banner p {
+	font-size: 1.6em;
+	margin-top: 50px;
+}
+
+#landing-banner a {
+	margin-top: 12%;
+	font-size: 1.5em;
+	color: #4dc1ff;
+}
+
 @media (max-width: 767px) {
+
 	.fullscreen-bg {
 		background: url('{% static 'images/company/landing/header.jpg' %}') center center / cover no-repeat;
 	}
@@ -97,6 +113,20 @@ Company
 
 	.fullscreen-bg__video {
 		display: none;
+	}
+
+	#landing-banner h1 {
+		margin-top: 5%;
+		font-size: 2.4em;
+	}
+	#landing-banner p {
+		margin-top: 50px;
+		font-size: 1.1em;
+	}
+	#landing-banner a {
+		margin-top: 8%;
+		font-size: 1.1em;
+		color: #4dc1ff;
 	}
 }
 
@@ -116,13 +146,15 @@ Company
 <div class="container">
 	<div class="row text-center">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
-			<h2>
-				Our Journey from the Data Center to the Cloud
-			</h2>
+			<h1>
+				Our Journey from the 
+				<br>
+				Data Center to the Cloud
+			</h1>
 			<p>
 				10 YEARS AGO we started with the goal to simplify consulting for enterprise technology. As we progressed, customers asked us to take it one step further and sell hardware. THEN they asked us to dedicate teams and support environments around the globe. With Cloud adoption in the enterprise growing at an unprecedented rate, timing couldn't be better for our flexible On-Premise &amp; Cloud support. TODAY we are taking everything that we've done, simplifying into its basic elements, to provide fast growing support options that are twice the value and half the cost of traditional support.
 			</p>
-			<a style="font-size: 20px;" href="#opportunities" id="scroll-opp">Join our team and be at the forefront of of the digital revolution <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a href="#opportunities" id="scroll-opp">Join our team and be at the forefront of of the digital revolution <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 		</div>		
 	</div>
 </div>

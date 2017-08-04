@@ -2,13 +2,6 @@
 /* Support Purchase Page */
 /* ********************* */
 
-#app .btn-success {
-	padding: 10px 20px;
-	color: #00b95f;
-	background: transparent;
-	border: 1px solid #00b95f;
-}
-
 #cart {
 	background: white;
 }

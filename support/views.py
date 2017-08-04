@@ -2,6 +2,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from django.conf import settings
+
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -23,10 +25,13 @@ def index(request):
 	View function for home page of site.
 	"""
 	# Render the HTML template index.html with the data in the context variable
+	context = {}
+	context['DEBUG'] = settings.DEBUG
+
 	return render(
 		request,
 		'support/support.html',
-		{}
+		context
 	)
 
 def purchase(request):
@@ -35,10 +40,13 @@ def purchase(request):
 	"""
 
 	# Render the HTML template index.html with the data in the context variable
+	context = {}
+	context['DEBUG'] = settings.DEBUG
+	print(context)
 	return render(
 		request,
 		'support/purchase.html',
-		
+		context
 	)
 
 @csrf_exempt

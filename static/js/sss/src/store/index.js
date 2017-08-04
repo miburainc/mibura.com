@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import SSSFormSteps from './modules/sss_formsteps'
 import SSSCart from './modules/sss_cart'
 
-import {PLANS, API_ROOT} from './values'
+import {PLANS, API_ROOT, product_multiplier} from './values'
 
 import createLogger from '../scripts/logger'
 
@@ -17,11 +17,13 @@ export const store = new Vuex.Store({
     plans: PLANS,
     api_root: API_ROOT,
     errors: {},
+    multiplier: product_multiplier,
   },
   getters: {
+    getMultiplier: state => state.multiplier,
     getPlans: state => state.plans,
     getAPIRoot: state => state.api_root,
-    getErrors: state => state.errors
+    getErrors: state => state.errors,
   },
   mutations: {
     increment (state) {

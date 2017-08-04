@@ -37,13 +37,12 @@ export default {
 }
 
 #cart {
-	margin-top: -77px;
+	margin-top: -80px;
 	border-top: 1px inset #AAA;
 	width: 100%;
 	position: absolute;
 	left: 0px;
 	top: 100%;
-	height: 400px;
 }
 
 </style>

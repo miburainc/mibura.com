@@ -5,12 +5,14 @@ from .models import *
 # Register your models here.
 
 class ClientAdmin(admin.ModelAdmin):
-	fields = ['name', 'email', 'company']
+	fields = ['first_name', 'last_name', 'email', 'company']
 
 admin.site.register(Client, ClientAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ['brand', 'model', 'sku']
+	search_fields = ['brand', 'model', 'sku']
+	list_filter = ['brand', 'category']
+	list_display = ['brand', 'model', 'category', 'sku', 'release']
 
 admin.site.register(Product, ProductAdmin)
 

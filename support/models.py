@@ -6,6 +6,13 @@ PLAN_CHOICES = (
 	("blck", "Black"),
 )
 
+PRODUCT_CATEGORIES = (
+	("servers", "Servers"),
+	("storage", "Storage Appliances"),
+	("firewall", "Firewalls"),
+	("netswitch", "Network Switches"),
+)
+
 class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
@@ -23,11 +30,17 @@ class Product(models.Model):
 	model = models.CharField(max_length=128)
 	sku = models.CharField(max_length=128)
 
+	category = models.CharField(max_length=32, choices=PRODUCT_CATEGORIES)
 	price_silver = models.FloatField(default=0.0)
 	price_gold = models.FloatField(default=0.0)
 	price_black = models.FloatField(default=0.0)
 
 	with_cloud = models.FloatField(default=0.0)
+
+	release = models.DateField(blank=True)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.brand + " : " + self.model
@@ -80,7 +93,7 @@ class Cart(models.Model):
 
 
 class ClientProduct(models.Model):
-	client = models.ForeignKey(Subscription)
+	client = models.ForeignKey(Client)
 	product = models.ForeignKey(Product)
 
 	serial_number = models.CharField(max_length=128, blank=True)

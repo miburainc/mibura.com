@@ -11,10 +11,12 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
         	'brand', 
         	'model', 
         	'sku', 
+            'category',
         	'price_silver',
         	'price_gold',
         	'price_black',
         	'with_cloud',
+            'release',
         )
 
 class CloudSerializer(serializers.HyperlinkedModelSerializer):

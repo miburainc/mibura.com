@@ -20,7 +20,10 @@ export function ValidateFormSteps(current_form, form_steps) {
 	}
 
 	for (let i=0; i<form_steps.length; i++) {
-		let current_form_item = current_form[form_steps[i].form.name]
+		let val = document.getElementById([form_steps[i].form.name]).value
+		let item_val = current_form[form_steps[i].form.name]
+		console.log("Validate: " + val)
+		let current_form_item = item_val ? item_val : val
 
 		if (form_steps[i].required) {
 			errors.errors[form_steps[i].form.name] = []
@@ -58,7 +61,7 @@ export function ValidateFormSteps(current_form, form_steps) {
 							break;
 						case "min":
 							console.log("Validate Length Min")
-							if (current_form_item.length > parseInt(value)) {
+							if (current_form_item.length >= parseInt(value)) {
 								valid = true
 							}
 							else {
@@ -69,7 +72,7 @@ export function ValidateFormSteps(current_form, form_steps) {
 							break;
 						case "max":
 							console.log("Validate Length Max")
-							if (current_form_item.length < parseInt(value)) {
+							if (current_form_item.length <= parseInt(value)) {
 								valid = true
 							}
 							else {

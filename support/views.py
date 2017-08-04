@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from django.http import HttpResponse
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -8,7 +9,8 @@ from rest_framework.response import Response
 from .models import Product, Cloud
 from .serializers import ProductSerializer, CloudSerializer
 
-
+import json
+import stripe
 
 # Pages
 
@@ -34,6 +36,23 @@ def purchase(request):
 		'support/purchase.html',
 		
 	)
+
+@csrf_exempt
+def save_client_json(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		print('Raw Data: "%s"' % data)
+	return HttpResponse("OK")
+
+@csrf_exempt
+def save_cart_json(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		print(data)
+		for obj in data:
+			for key2 in obj:
+				print('%s: %s' % (key2, obj[key2]))
+	return HttpResponse("OK")
 
 
 # API

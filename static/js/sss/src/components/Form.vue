@@ -136,6 +136,7 @@ export default {
 		}
 	},
 	mounted () {
+		console.log(this.get_api_root)
 		console.log("Created()")
 		axios.get(this.get_api_root + '/cloud')
 			.then((response) => {
@@ -187,7 +188,7 @@ export default {
 						if (this.current_step == this.step_names.client_address) {
 							this.serverSetClient()
 						}
-						
+
 						this.past_step = this.current_step
 						let data = this.formsteps[this.current_step].data
 						

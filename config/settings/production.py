@@ -5,6 +5,9 @@ import raven, logging
 
 DEBUG = get_env_variable('DJANGO_DEBUG')
 
+if DEBUG == "False":
+    DEBUG = False
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # DB_URL = get_env_variable('DATABASE_URL')

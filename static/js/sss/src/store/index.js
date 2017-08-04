@@ -8,6 +8,8 @@ import {PLANS, API_ROOT, product_multiplier} from './values'
 
 import createLogger from '../scripts/logger'
 
+import * as TYPE from './types'
+
 Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production'
@@ -15,6 +17,7 @@ const debug = process.env.NODE_ENV !== 'production'
 export const store = new Vuex.Store({
   state: {
     plans: PLANS,
+    current_plan: 'silver',
     api_root: API_ROOT,
     errors: {},
     multiplier: product_multiplier,
@@ -24,6 +27,7 @@ export const store = new Vuex.Store({
     getPlans: state => state.plans,
     getAPIRoot: state => state.api_root,
     getErrors: state => state.errors,
+    getCurrentPlan: state => state.current_plan,
   },
   mutations: {
     increment (state) {
@@ -34,6 +38,9 @@ export const store = new Vuex.Store({
     },
     clearErrors (state) {
       Vue.set(state, 'errors', {})
+    },
+    [TYPE.SET_CURRENT_PLAN]: (state, value) => {
+      state.current_plan = value
     }
   },
   actions: {
@@ -42,6 +49,26 @@ export const store = new Vuex.Store({
     },
     clearErrors({commit}) {
       commit('clearErrors')
+    },
+    setCurrentPlan({commit}, value) {
+      console.log("setCurrentPlan")
+      
+      let val = value.target.value
+      let result = ''
+      val = parseInt(val)
+      switch(val) {
+        case 0:
+          result = 'silver'
+          break;
+        case 1:
+          result = 'gold'
+          break;
+        case 2:
+          result = 'black'
+          break;
+      }
+      console.log(result)
+      commit(TYPE.SET_CURRENT_PLAN, result)
     }
   },
   modules: {

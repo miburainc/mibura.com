@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import * as TYPE from '../types'
+
+import cart from '../api/cart'
+
 import {step_names} from '../values'
+
 const state = {
 	cart: [],
+	cart_id: -1,
+	cart_ref: '',
 	support_months: 12,
 	current_item_id: null,
 }
@@ -45,6 +51,12 @@ const mutations = {
 	},
 	[TYPE.CART_CLEAR]: (state) => {
 		state.cart = []
+	},
+	[TYPE.CART_SET_ID]: (state, value) => {
+		state.cart_id = value
+	},
+	[TYPE.CART_SET_REF]: (state, value) => {
+		state.cart_ref = value
 	}
 }
 
@@ -81,12 +93,31 @@ const actions = {
 		let val = payload.target.value
 		
 		commit(TYPE.SET_SUPPORT_MONTHS, val*12)
+	},
+	setCartId({commit}, value) {
+		commit(TYPE.CART_SET_ID, value)
+	},
+	saveCart({state, rootState, commit}, client) {
+		console.log(rootState)
+		cart.getOrCreateCart(
+			{
+				email: client.email,
+				client: client.pk,
+				reference: 'asdfasdf',
+				products: state.cart,
+				plan: rootState.current_plan,
+			},
+			(response) => {
+				commit(TYPE.CART_SET_ID, response.data.pk)
+				commit(TYPE.CART_SET_REF, response.data.reference)
+			});
 	}
 }
 
 const getters = {
 	getCart: state => state.cart,
 	getSupportMonths: state => state.support_months,
+	getCartReference: state => state.cart_ref,
 }
 
 export default {

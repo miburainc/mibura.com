@@ -5,7 +5,7 @@ from .models import *
 # Register your models here.
 
 class ClientAdmin(admin.ModelAdmin):
-	fields = ['first_name', 'last_name', 'email', 'company']
+	list_display = ['first_name', 'last_name', 'email', 'company']
 
 admin.site.register(Client, ClientAdmin)
 
@@ -17,17 +17,20 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class CartAdmin(admin.ModelAdmin):
+	search_fields = ['reference']
 	list_display = ['client', 'reference', 'date_created', 'date_updated']
 
 admin.site.register(Cart, CartAdmin)
 
 class ClientProductAdmin(admin.ModelAdmin):
-	list_display = ['client', 'product', 'serial_number']
+	search_fields = ['product', 'brand', 'model', 'client']
+	list_filter = ['client', 'product', 'brand']
+	list_display = ['client', 'product', 'brand', 'model', 'serial_number']
 
 admin.site.register(ClientProduct, ClientProductAdmin)
 
 class SubscriptionAdmin(admin.ModelAdmin):
-	list_display = ['client', 'plan', 'price', 'date_created', 'date_updated']
+	list_display = ['client', 'plan', 'price', 'date_begin', 'date_created', 'date_updated']
 
 admin.site.register(Subscription, SubscriptionAdmin)
 

@@ -1,6 +1,8 @@
 import * as TYPE from '../types'
 import Vue from 'vue'
 
+import client from '../api/client'
+
 import {form_steps} from '../values'
 
 const state = {
@@ -33,12 +35,15 @@ const mutations = {
 	},
 	[TYPE.SET_PAYMENT_TOKEN]: (state, value) => {
 		state.payment_token = value
-	}
+	},
 }
 
 const actions = {
 	addProduct({commit}, payload) {
 		commit(TYPE.ADD_PRODUCT, payload)
+	},
+	addCloud({commit}, value) {
+		commit(TYPE.ADD_CLOUD, value)
 	},
 	setCurrentItem({commit}, payload) {
 		commit(TYPE.SET_CURRENT_ITEM, payload)
@@ -57,6 +62,17 @@ const actions = {
 	},
 	setPaymentToken({commit}, value) {
 		commit(TYPE.SET_PAYMENT_TOKEN, value)
+	},
+	serverSetClient({state, commit, dispatch}) {
+		client.getOrCreateClient(
+			state.client_info,
+			(response) => {
+				console.log(response)
+				commit(TYPE.SET_CLIENT_PROP, {prop: 'pk', data: response.data.pk})
+			},
+			(error) => {
+				console.log("error")
+			})
 	}
 }
 

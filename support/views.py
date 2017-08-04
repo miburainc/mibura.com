@@ -5,9 +5,13 @@ from django.http import HttpResponse
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
+from rest_framework.request import Request
 
-from .models import Product, Cloud
-from .serializers import ProductSerializer, CloudSerializer
+from .models import Product, Cloud, Client, Cart, ClientProduct
+from .serializers import CartSerializer, ProductSerializer, CloudSerializer, ClientSerializer
+
+from scripts.dotdict import dotdict
 
 import json
 import stripe
@@ -38,6 +42,41 @@ def purchase(request):
 	)
 
 @csrf_exempt
+def get_create_client(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data) # access properties with . instead of []
+
+		obj,created = Client.objects.get_or_create(email=data.email)
+		if created:
+			obj.first_name = data.first_name
+			obj.last_name = data.last_name
+			obj.phone = data.phone
+			obj.company = data.company
+			obj.street = data.street
+			if data.street2:
+				obj.street2 = data.street2
+			obj.city = data.city
+			obj.country = data.country
+			obj.zipcode = data.zipcode
+			obj.save()
+			serialized = ClientSerializer(obj)
+			response_json = JSONRenderer().render(serialized.data)
+
+			return HttpResponse(response_json, status=201)
+		else:
+			for field,value in obj.__dict__.items():
+				print(field)
+				if not value and field in data:
+					setattr(obj, field, data[field])
+					obj.save()
+				print(value)
+		serialized = ClientSerializer(obj)
+		response_json = JSONRenderer().render(serialized.data)
+
+		return HttpResponse(response_json, status=200)
+
+@csrf_exempt
 def save_client_json(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
@@ -45,14 +84,32 @@ def save_client_json(request):
 	return HttpResponse("OK")
 
 @csrf_exempt
-def save_cart_json(request):
+def get_create_cart(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
-		print(data)
-		for obj in data:
-			for key2 in obj:
-				print('%s: %s' % (key2, obj[key2]))
-	return HttpResponse("OK")
+		data = dotdict(data)
+
+		if not data.client:
+			HttpResponse("No Client ID", status=400)
+		print(data.client)
+		client = Client.objects.get(pk=data.client)
+		cart,created = Cart.objects.get_or_create(client=client, reference=data.reference)
+		
+		for prod in data.products:
+			prod = dotdict(prod)
+			obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn)
+			if not obj in cart.products.all():
+				cart.products.add(obj)
+		print(data.plan)
+		cart.plan = data.plan
+		cart.save()
+		serializer_context = {
+			'request': Request(request),
+		}
+		serialized = CartSerializer(cart, context=serializer_context)
+		response_json = JSONRenderer().render(serialized.data)
+
+	return HttpResponse(response_json, status=200)
 
 
 # API

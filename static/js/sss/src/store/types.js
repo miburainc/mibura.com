@@ -1,3 +1,5 @@
+export const CART_SET_ID = 'CART_SET_ID'
+export const CART_SET_REF = 'CART_SET_REF'
 export const CART_ADD_ITEM = 'CART_ADD_ITEM'
 export const CART_REMOVE_ITEM = 'CART_REMOVE_ITEM'
 export const CART_EDIT_ITEM = 'CART_EDIT_ITEM'
@@ -6,6 +8,7 @@ export const CART_CLEAR = 'CART_CLEAR'
 export const SET_CLIENT_PROP = 'SET_CLIENT_PROP'
 
 export const ADD_PRODUCT = 'ADD_PRODUCT'
+export const ADD_CLOUD = 'ADD_CLOUD'
 
 export const SET_CURRENT_ITEM = 'SET_CURRENT_ITEM'
 export const SET_CURRENT_ITEM_PROP = 'SET_CURRENT_ITEM_PROP'
@@ -16,3 +19,5 @@ export const SET_CURRENT_FORM_STEP = 'SET_CURRENT_FORM_STEP'
 export const SET_PAYMENT_TOKEN = 'SET_PAYMENT_TOKEN'
 
 export const SET_SUPPORT_MONTHS = 'SET_SUPPORT_MONTHS'
+
+export const SET_CURRENT_PLAN = 'SET_CURRENT_PLAN'

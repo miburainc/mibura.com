@@ -52,23 +52,19 @@
 						:min="2">
 					</autocomplete>
 					<!-- Cloud -->
-					<autocomplete
-						v-else-if="data.src && current_step==3"
-						:url="get_api_root + '/cloud'"
-						anchor="name"
-						data-root="results"
-						param="cloud"
-						class-name="form-input"
-						:custom-params="{format: 'json'}"
-						:name="data.form.name"
+					<select 
+						v-else-if="data.src && current_step==step_names.cloud"
 						:id="data.form.name"
-						:init-value="get_current_item_prop(data.form.name)"
-						:placeholder="data.placeholder"
-						:on-ajax-loaded="logData"
-						:on-select="(obj) => { setFormItemAutoselect(obj, data.form.name);
-							buttonAction(obj, 'next'); }"
-						:min="2">
-					</autocomplete>
+						:name="data.form.name"
+					>
+						<option value="none">None</option>
+						<option
+							v-for="cloud in cloud"
+							:value="cloud.pk"
+						>
+								{{cloud.name}}
+						</option>
+					</select>
 					<div v-else-if="data.form.type=='stripe'">
 						<div id="card-element" class="field"></div>
 						<div class="outcome">
@@ -97,7 +93,7 @@
 					</div>
 				</div>
 
-			<button type="button" v-for="btn in formsteps[current_step].buttons" :class="btn.class" @click="buttonAction(this, btn.script)">{{btn.label}}</button>
+			<button type="button" v-for="btn in formsteps[current_step].buttons" :class="btn.class" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			<h4 v-if="form_error" class="text-red">
 				{{ formsteps[current_step].error }}
 			</h4>
@@ -114,6 +110,9 @@
 import Autocomplete from 'vue2-autocomplete-js';
 
 import {mapGetters, mapActions} from 'vuex'
+
+import moment from 'moment'
+import axios from 'axios'
 
 import Velocity from 'velocity-animate'
 import 'velocity-animate/velocity.ui';
@@ -133,7 +132,19 @@ export default {
 			formTransitionTime: 800,
 			past_step: 0,
 			step_names: step_names,
+			cloud: [],
 		}
+	},
+	mounted () {
+		console.log("Created()")
+		axios.get(this.get_api_root + '/cloud')
+			.then((response) => {
+				console.log(response.data.results)
+				this.cloud = response.data.results
+			})
+			.catch((error) => {
+				console.error(error)
+			})
 	},
 	methods: {
 		...mapActions({
@@ -147,13 +158,15 @@ export default {
 			clearCurrentItem: 'clearCurrentItem',
 			set_client_prop: 'setClientProp',
 			set_payment_token: 'setPaymentToken',
+			add_cloud: 'addCloud',
+			serverSetClient: 'serverSetClient',
 		}),
 		logData(obj) {	// Function for testing ajax replies
 			console.log("logData")
 			console.log(obj)
 		},
 		buttonAction(el, scr) {
-			let temp = document.getElementById(this.formsteps[this.current_step].data[0].form.name).value
+			let temp = document.forms.item(0).elements[0].value
 			scr = scr.split(',')
 			for (let i=0; i<scr.length; i++) {
 				switch (scr[i]) {
@@ -162,7 +175,19 @@ export default {
 						this.set_current_form_step(0)
 						this.formTimeoutNext()
 						break;
+					case "skip":
+						this.set_current_form_step(this.current_step+1)
+						this.formTimeoutNext()
+						break;
 					case "next":
+
+						// If step is end of client entry
+						// Check server for client info
+						// If not on server, create in server
+						if (this.current_step == this.step_names.client_address) {
+							this.serverSetClient()
+						}
+						
 						this.past_step = this.current_step
 						let data = this.formsteps[this.current_step].data
 						
@@ -170,9 +195,6 @@ export default {
 							let formstep = this.formsteps[this.current_step].data;
 							let name = formstep[i].form.name;
 							if (!this.get_current_item_prop(name)) {
-								console.log(
-									document.getElementById(name).value
-									)
 								let val = document.getElementById(name).value
 								this.setFormItem(val, formstep[i])
 							}
@@ -195,11 +217,38 @@ export default {
 							this.set_current_form_step(this.current_step+1)
 						}
 						this.formTimeoutNext()
+
+						
+
 						break;
 					case "back":
 						this.past_step = this.current_step
 						this.set_current_form_step(this.current_step-1)
 						this.formTimeoutNext()
+						break;
+					case "addcloud":
+						if (temp=="none") {
+							break;
+						}
+						let cloud = {};
+						for (let i=0; i<this.cloud.length; i++) {
+							if (this.cloud[i].pk == temp) {
+								cloud = this.cloud[i]
+							}
+						}
+						console.log(cloud)
+						let cloud_obj = {
+								sku: 'none',
+								category: 'cloud',
+								price_silver: 1,
+								price_gold: 1,
+								price_black: 1,
+								with_cloud: 1,
+								brand: cloud.name,
+								model: '',
+								release: moment().format("YYYY-MM-DD"),
+							}
+						this.add_cart_item(cloud_obj)
 						break;
 					case "additem":
 						let model = this.get_current_item_prop('model')

@@ -41,6 +41,10 @@ export const product_multiplier = {
 		start_value: 1.0, // multiplier on plan
 		increment: 0.10, // 10% every 6 months
 	},
+	cloud: {
+		start_value: 1.0, // multiplier on plan
+		increment: 0.10, // 10% every 6 months
+	},
 	servers: {
 		start_value: 1.0, // multiplier on plan
 		increment: 0.10, // 10% every 6 months
@@ -201,13 +205,13 @@ export const form_steps = [
 			{
 				label: "Skip",
 				class: "btn btn-outline-default",
-				script: "next"
+				script: "skip"
 
 			},
 			{
 				label: "Next",
 				class: "btn btn-outline-success",
-				script: "next"
+				script: "next,addcloud"
 
 			},
 		],

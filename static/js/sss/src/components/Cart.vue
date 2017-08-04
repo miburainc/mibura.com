@@ -1,14 +1,14 @@
 <template>
 
-<div id="sss-cart">
-	<div class="row" :style="{'background-color': plans[current_plan].color, 'color': current_plan == 2 ? 'white' : 'black' }">
+<div id="sss-cart" :style="cartStyle">
+	<div class="row" :style="cartHeaderStyle">
 		<div class="col-xs-6 col-md-4">
 			<h2 class="cart-tray" :style="textColorPlan">${{ getGrandTotal }}</h2>
 		</div>
 		<div class="col-md-4">
 			<div class="text-center" :style="textColorPlan">Plan
 			<div class="form-group">
-				<select class="form-control" v-model="current_plan" :style="textColorPlan">
+				<select class="form-control" v-model="current_plan" @change="setCurrentPlan" :style="textColorPlan">
 					<option v-for="(p, index) in plans" :value="index">{{p.name}}</option>
 				</select>
 			</div>
@@ -49,13 +49,16 @@
 			</table>
 			<div class="btn-group">
 				<button type="button" class="btn btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Add Item</button>
-				<button type="button" class="btn btn-info"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud Provider</button>
+				<button type="button" class="btn btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud Provider</button>
 				<button type="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload Quote</button>
 				<button type="button" class="btn btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
 			</div>
 				
 			<hr><br>
-
+			<div class="pull-right">
+				<h4>Cart Reference Code: {{get_cart_reference}}</h4>
+				
+			</div>
 			<div>
 				<h4>Your information:</h4>
 				<div v-if="Object.keys(getClientInfo).length > 0">
@@ -68,20 +71,30 @@
 					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 				</div>
 			</div>
+			
 			<div style="color: black; width: 50%; margin: 0 auto;">
 				<div class="form-group">
-					<label style="color: black;">Months</label>
-					<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths">
+					<!-- <label style="color: black;">Months</label>
+					<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
 					<label style="color: black;">Years</label>
-					<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="any" name="years" @change="setSupportYears" :value="getSupportMonths/12">
+					<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 				</div>
 				<div style="color: black;" class="text-right">
 					Estimate Total: ${{ getGrandTotal }}
 					<br>
 					<div class="btn-group">
-						<button type="button" class="btn btn-info" @click="saveCart"><i class="fa fa-phone" aria-hidden="true"></i> Speak with Sales</button>
-						<button type="button" class="btn btn-primary"><i class="fa fa-cart-arrow-down" aria-hidden="true"></i> Get Quote</button>
-						<button type="button" class="btn btn-success" @click="formPurchase"><i class="fa fa-check" aria-hidden="true"></i> Purchase Support</button>
+						<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
+							<i class="fa fa-phone" aria-hidden="true"></i>
+							&nbsp;Speak with Sales
+						</button>
+						<button type="button" class="btn btn-primary">
+							<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+							&nbsp;Get Quote
+						</button>
+						<button type="button" class="btn btn-success" @click="formPurchase">
+							<i class="fa fa-check" aria-hidden="true"></i>
+							&nbsp;Purchase Support
+						</button>
 					</div>
 					
 				</div>
@@ -119,10 +132,10 @@ export default {
 			'setSupportYears',
 			'clearCart',
 			'setCurrentFormStep',
+			'serverSetClient',
+			'saveCart',
+			'setCurrentPlan',
 		]),
-		saveCart() {
-			axios.post(URL_ROOT+'/support/save-cart/',JSON.stringify(this.cart))
-		},
 		formPurchase() {
 			if (this.cart.length < 1) {
 				this.buttonStartNewItem()
@@ -134,13 +147,17 @@ export default {
 				this.buttonStartPayment()
 			}
 			else {
-
+				this.serverSetClient()
 				alert("Purchase success!")
 			}
 		},
 		buttonStartPayment() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
 			this.setCurrentFormStep(step_names.payment)
+		},
+		buttonStartCloud() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+			this.setCurrentFormStep(step_names.cloud)
 		},
 		buttonStartNewItem() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
@@ -149,6 +166,17 @@ export default {
 		buttonStartClientInfo() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
 			this.setCurrentFormStep(step_names.client_info)
+		},
+		buttonPhoneSupport() {
+			if (!this.getClientInfo) {
+				this.buttonStartClientInfo()
+			}
+			else if (this.cart.length < 1) {
+				this.buttonStartNewItem()
+			}
+			else {
+				this.saveCart(this.getClientInfo)
+			}
 		},
 		clear_cart() {
 			if (confirm("Are you sure you want to clear your cart?") == true) {
@@ -237,6 +265,7 @@ export default {
 			getMultiplier: 'getMultiplier',
 			getClientInfo: 'getClientInfo',
 			get_payment_token: 'getPaymentToken',
+			get_cart_reference: 'getCartReference',
 		}),
 		getTotal() {
 			let total = 0;
@@ -251,6 +280,15 @@ export default {
 		},
 		textColorPlan() {
 			return {'color': this.current_plan == 2 ? 'white' : 'black' }
+		},
+		cartStyle() {
+
+		},
+		cartHeaderStyle() {
+			return {
+				'background-color': this.plans[this.current_plan].color, 
+				'color': this.current_plan == 2 ? 'white' : 'black'
+			}
 		}
 	}
 }

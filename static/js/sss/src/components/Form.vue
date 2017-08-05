@@ -19,7 +19,7 @@
 					<!-- brand -->
 					<autocomplete
 						v-if="data.src && current_step==step_names.brand"
-						:url="get_api_root + '/productcomplete'"
+						:url="get_api_root + 'productcomplete'"
 						data-root="results"
 						anchor="brand"
 						param="brand"
@@ -37,7 +37,7 @@
 					<!-- model -->
 					<autocomplete
 						v-else-if="data.src && current_step==1"
-						:url="get_api_root + '/productcomplete'"
+						:url="get_api_root + 'productcomplete'"
 						anchor="model"
 						data-root="results"
 						param="model"
@@ -138,7 +138,7 @@ export default {
 	mounted () {
 		console.log(this.get_api_root)
 		console.log("Created()")
-		axios.get(this.get_api_root + '/cloud')
+		axios.get(this.get_api_root + 'cloud')
 			.then((response) => {
 				console.log(response.data.results)
 				this.cloud = response.data.results

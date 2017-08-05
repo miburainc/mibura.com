@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const actions = {
 	getOrCreateClient(client_obj, success, error) {
-		axios.post(URL_ROOT + '/support/get-or-create-client/', client_obj)
+		axios.post(URL_ROOT + 'support/get-or-create-client/', client_obj)
 		.then((response) => {
 			success(response)
 		})
@@ -13,7 +13,7 @@ const actions = {
 		})
 	},
 	getOrCreateSubscription(client_obj, success, error) {
-		axios.post(URL_ROOT + '/support/get-or-create-subscription/', client_obj)
+		axios.post(URL_ROOT + 'support/get-or-create-subscription/', client_obj)
 		.then((response) => {
 			success(response)
 		})

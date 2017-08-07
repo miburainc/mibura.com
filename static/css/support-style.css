@@ -20,6 +20,14 @@
     font-weight: 100;
 }
 
+/* Support form */
+
+#app #purchase-form option {
+    color: black;
+}
+#app #purchase-form select {
+    color: inherit;
+}
 
 /* ********************* */
 /* Support Compare Table */

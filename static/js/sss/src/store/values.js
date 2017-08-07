@@ -1,3 +1,4 @@
+console.log(SET_URL_ROOT)
 console.log(SET_URL_ROOT == undefined)
 
 if (SET_URL_ROOT == undefined) {

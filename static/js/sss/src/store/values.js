@@ -1,3 +1,5 @@
+console.log(SET_URL_ROOT == undefined)
+
 if (SET_URL_ROOT == undefined) {
 	var SET_URL_ROOT = false
 }
@@ -5,8 +7,13 @@ if (SET_API_ROOT == undefined) {
 	var SET_API_ROOT = false
 }
 
+
+
 export var URL_ROOT = SET_URL_ROOT ? SET_URL_ROOT : "http://localhost:8000/"
 export var API_ROOT = SET_API_ROOT ? SET_API_ROOT : "http://localhost:8000/support/api/"
+
+console.log(URL_ROOT)
+console.log(API_ROOT)
 
 export const PLANS = [
 	{

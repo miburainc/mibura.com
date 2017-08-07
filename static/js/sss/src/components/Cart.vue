@@ -254,7 +254,7 @@ export default {
 				price += (product_price * inc)
 			}
 			for (let i=0; i<price_iterations; i++) {
-				price += product_price + (price * inc)
+				price += product_price + (product_price * inc)
 			}
 			return price
 		}

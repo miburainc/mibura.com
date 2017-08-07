@@ -1,6 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 
 from django.conf import settings
 
@@ -18,7 +19,9 @@ from scripts.dotdict import dotdict
 import json
 import stripe
 
+#################
 # Pages
+#################
 
 def index(request):
 	"""
@@ -48,6 +51,10 @@ def purchase(request):
 		'support/purchase.html',
 		context
 	)
+
+#################
+# Api endpoints 
+#################
 
 @csrf_exempt
 def get_create_client(request):
@@ -105,7 +112,13 @@ def get_create_cart(request):
 		
 		for prod in data.products:
 			prod = dotdict(prod)
-			obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn)
+			
+			try:
+				prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
+			except ObjectDoesNotExist:
+				prod_obj = Product(brand=prod.brand, model=prod.model, category='none', sku='NONE', price_silver=1.0, price_gold=1.5, price_black=2.0, with_cloud=1.5)
+
+			obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
 			if not obj in cart.products.all():
 				cart.products.add(obj)
 		print(data.plan)
@@ -119,8 +132,7 @@ def get_create_cart(request):
 
 	return HttpResponse(response_json, status=200)
 
-
-# API
+# Django Rest Framework
 
 class CloudViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = Cloud.objects.all().order_by('-name')

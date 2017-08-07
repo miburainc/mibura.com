@@ -12,6 +12,7 @@ PLAN_CHOICES = (
 )
 
 PRODUCT_CATEGORIES = (
+	("none", "**No Category**"),
 	("servers", "Servers"),
 	("storage", "Storage Appliances"),
 	("network", "Networking"),
@@ -107,10 +108,13 @@ class Subscription(models.Model):
 	def __str__(self):
 		return self.client.get_full_name() + ": " + self.plan
 
+from scripts.sss_pricing import product_price
+
 class Cart(models.Model):
 	email = models.CharField(max_length=128)
 	client = models.ForeignKey(Client)
 	products = models.ManyToManyField(ClientProduct)
+	length = models.FloatField(default=.5)
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
@@ -121,3 +125,9 @@ class Cart(models.Model):
 
 	def __str__(self):
 		return self.client.get_full_name() + " Cart " + str(self.date_created)
+
+	def get_total_price(self):
+		total = 0
+		for prd in self.products.all():
+			total += product_price(prd, self.plan, self.length)
+		return total

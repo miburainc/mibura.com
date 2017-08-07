@@ -1,3 +1,10 @@
+if (SET_URL_ROOT == undefined) {
+	var SET_URL_ROOT = false
+}
+if (SET_API_ROOT == undefined) {
+	var SET_API_ROOT = false
+}
+
 export var URL_ROOT = SET_URL_ROOT ? SET_URL_ROOT : "http://localhost:8000/"
 export var API_ROOT = SET_API_ROOT ? SET_API_ROOT : "http://localhost:8000/support/api/"
 

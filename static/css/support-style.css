@@ -11,6 +11,15 @@
     color: white;
 }
 
+/* Purchase Page Cart Table */
+
+#app .table thead th {
+    padding: 5px;
+    background-color: #0773ba; 
+    color: #FFF;
+    font-weight: 100;
+}
+
 
 /* ********************* */
 /* Support Compare Table */
@@ -21,18 +30,21 @@ table td {
 }
 
 .table tbody td {
+    padding-left: 10px;
     font-size: 18px;
 }
 
-.table thead th {
+#compare-table > .table thead th {
+    padding-left: 10px;
     background-color: #0773ba; 
     color: #FFF;
     font-weight: 100;
 }
-.table thead th:not(:first-child) {
+
+#compare-table > .table thead th:not(:first-child) {
     text-align: center;
 }
-.table tbody tr td:nth-child(2) {
+#compare-table > .table tbody tr td:nth-child(2) {
     background-color: #ffd220;
     color: #222;
 }

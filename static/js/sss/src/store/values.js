@@ -11,10 +11,10 @@ if (SET_API_ROOT == undefined) {
 
 
 export var URL_ROOT = window.SET_URL_ROOT ? window.SET_URL_ROOT : "http://localhost:8000/"
-export var API_ROOT = SET_API_ROOT ? SET_API_ROOT : "http://localhost:8000/support/api/"
+export var API_ROOT = window.SET_API_ROOT ? window.SET_API_ROOT : "http://localhost:8000/support/api/"
 
-console.log(URL_ROOT)
-console.log(API_ROOT)
+console.log("URL_ROOT: " + URL_ROOT)
+console.log("API_ROOT: " + API_ROOT)
 
 export const PLANS = [
 	{

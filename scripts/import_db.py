@@ -38,10 +38,10 @@ SHEETS = [
 
 # Main App
 def App(wb, name):
-	print("**********")
+	print("*************")
 	print("***", name, "***")
-	print("**********")
-	
+	print("*************")
+
 	SHEET_NAME = name
 	SHEET_LENGTH = wb[SHEET_NAME].max_row
 

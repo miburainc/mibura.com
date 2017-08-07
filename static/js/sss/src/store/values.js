@@ -92,7 +92,7 @@ export const form_steps = [
 				},
 				validate: {
 					type: "text",
-					min: 3,
+					min: 1,
 				}
 			},
 		],
@@ -191,7 +191,7 @@ export const form_steps = [
 				script: "start,additem"
 			},
 			{
-				label: "Next",
+				label: "Add and Checkout",
 				class: "btn btn-outline-success",
 				script: "next,additem"
 

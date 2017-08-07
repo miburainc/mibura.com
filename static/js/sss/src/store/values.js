@@ -1,8 +1,8 @@
-console.log(SET_URL_ROOT)
-console.log(SET_URL_ROOT == undefined)
+console.log(window.SET_URL_ROOT)
+console.log(window.SET_URL_ROOT == undefined)
 
-if (SET_URL_ROOT == undefined) {
-	var SET_URL_ROOT = false
+if (window.SET_URL_ROOT == undefined) {
+	var window.SET_URL_ROOT = false
 }
 if (SET_API_ROOT == undefined) {
 	var SET_API_ROOT = false
@@ -10,7 +10,7 @@ if (SET_API_ROOT == undefined) {
 
 
 
-export var URL_ROOT = SET_URL_ROOT ? SET_URL_ROOT : "http://localhost:8000/"
+export var URL_ROOT = window.SET_URL_ROOT ? window.SET_URL_ROOT : "http://localhost:8000/"
 export var API_ROOT = SET_API_ROOT ? SET_API_ROOT : "http://localhost:8000/support/api/"
 
 console.log(URL_ROOT)

@@ -2,7 +2,7 @@ console.log(window.SET_URL_ROOT)
 console.log(window.SET_URL_ROOT == undefined)
 
 if (window.SET_URL_ROOT == undefined) {
-	var window.SET_URL_ROOT = false
+	window.SET_URL_ROOT = false
 }
 if (SET_API_ROOT == undefined) {
 	var SET_API_ROOT = false

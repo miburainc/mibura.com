@@ -168,7 +168,9 @@ export default {
 			this.setCurrentFormStep(step_names.client_info)
 		},
 		buttonPhoneSupport() {
-			if (!this.getClientInfo) {
+			console.log("buttonPhoneSupport")
+			console.log(Object.keys(this.getClientInfo).length>0)
+			if (Object.keys(this.getClientInfo).length<1) {
 				this.buttonStartClientInfo()
 			}
 			else if (this.cart.length < 1) {

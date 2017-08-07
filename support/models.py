@@ -78,7 +78,7 @@ class ClientProduct(models.Model):
 	brand = models.CharField(max_length=64, blank=True)
 	model = models.CharField(max_length=64, blank=True)
 
-	serial_number = models.CharField(max_length=128, blank=True)
+	serial_number = models.CharField(max_length=128, null=True, blank=True)
 	device_age = models.IntegerField(default=0)
 	additional_info = models.TextField(blank=True)
 

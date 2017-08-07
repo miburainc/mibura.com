@@ -68,11 +68,11 @@ export const product_multiplier = {
 		start_value: 1.0, // multiplier on plan
 		increment: 0.20, // 20% every 6 months
 	},
-	firewall: {
+	network: {
 		start_value: 1.0, // multiplier on plan
 		increment: 0.10, // 10% every 6 months
 	},
-	netswitch: {
+	appliances: {
 		start_value: 1.0, // multiplier on plan
 		increment: 0.10, // 10% every 6 months
 	},

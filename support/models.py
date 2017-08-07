@@ -14,8 +14,8 @@ PLAN_CHOICES = (
 PRODUCT_CATEGORIES = (
 	("servers", "Servers"),
 	("storage", "Storage Appliances"),
-	("firewall", "Firewalls"),
-	("netswitch", "Network Switches"),
+	("network", "Networking"),
+	("appliances", "Appliances"),
 )
 
 class Cloud(models.Model):

@@ -92,7 +92,7 @@ class ClientProduct(models.Model):
 class Subscription(models.Model):
 	client = models.ForeignKey(Client)
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
-	products = models.ManyToManyField(ClientProduct)
+	products = models.ManyToManyField(ClientProduct,blank=True)
 
 	length = models.FloatField(default=1)
 	price = models.FloatField(default=0.0)

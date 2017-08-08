@@ -3,6 +3,7 @@ import * as TYPE from '../types'
 
 import cart from '../api/cart'
 
+import {makeid} from '../../scripts/util'
 import {step_names} from '../values'
 
 const state = {
@@ -103,13 +104,33 @@ const actions = {
 			{
 				email: client.email,
 				client: client.pk,
-				reference: 'asdfasdf',
+				reference: makeid(8),
 				products: state.cart,
 				plan: rootState.current_plan,
+				length: state.support_months/12,
 			},
 			(response) => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
+			});
+	},
+	checkout({state, rootState, commit, dispatch}) {
+		let client = rootState.SSSFormSteps.client_info
+		if (!state.cart_ref) {
+			dispatch('saveCart', client)
+		}
+		let data = {
+			client: client.pk,
+			cart: state.cart_ref,
+			length: state.support_months/12,
+			stripe_token: rootState.SSSFormSteps.payment_token
+		}
+		console.log(client)
+		console.log(state.cart_ref)
+		cart.checkout(
+			data,
+			(response) => {
+				console.log(response)
 			});
 	}
 }

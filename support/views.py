@@ -1,7 +1,8 @@
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils import timezone
 
 from django.conf import settings
 
@@ -11,13 +12,14 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 
-from .models import Product, Cloud, Client, Cart, ClientProduct
+from .models import Product, Cloud, Client, Cart, ClientProduct, Subscription
 from .serializers import CartSerializer, ProductSerializer, CloudSerializer, ClientSerializer
 
 from scripts.dotdict import dotdict
 
-import json
+import json, math
 import stripe
+stripe.api_key = 'sk_test_zq3p8xe6dyIJrJbcomYpY2Ps'
 
 #################
 # Pages
@@ -108,8 +110,9 @@ def get_create_cart(request):
 			HttpResponse("No Client ID", status=400)
 		print(data.client)
 		client = Client.objects.get(pk=data.client)
-		cart,created = Cart.objects.get_or_create(client=client, reference=data.reference)
-		
+		cart,created = Cart.objects.get_or_create(client=client, reference=data.reference, email=data.email)
+		cart.products.clear()
+
 		for prod in data.products:
 			prod = dotdict(prod)
 			
@@ -123,6 +126,7 @@ def get_create_cart(request):
 				cart.products.add(obj)
 		print(data.plan)
 		cart.plan = data.plan
+		cart.length = data.length
 		cart.save()
 		serializer_context = {
 			'request': Request(request),
@@ -131,6 +135,31 @@ def get_create_cart(request):
 		response_json = JSONRenderer().render(serialized.data)
 
 	return HttpResponse(response_json, status=200)
+
+@csrf_exempt
+def checkout(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
+		print(data)
+		client = get_object_or_404(Client, pk=data.client)
+		cart = get_object_or_404(Cart, reference=data.cart)
+		total = cart.get_total_price()
+		stripe_total = math.floor(total*100)
+		stripe.Charge.create(
+			amount=stripe_total,
+			currency="usd",
+			source=data.stripe_token, # obtained with Stripe.js
+			description="Charge for " + client.email
+		)
+		sub = Subscription(client=client, plan=cart.plan, length=data.length, price=total, date_begin=timezone.now())
+		sub.save()
+		sub.products.add(*cart.products.all())
+
+		print(data.client)
+		print(data.cart)
+		print(data.stripe_token)
+	return HttpResponse({'result': True}, status=200)
 
 # Django Rest Framework
 

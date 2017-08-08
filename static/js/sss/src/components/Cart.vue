@@ -135,6 +135,7 @@ export default {
 			'serverSetClient',
 			'saveCart',
 			'setCurrentPlan',
+			'checkout',
 		]),
 		formPurchase() {
 			if (this.cart.length < 1) {
@@ -148,7 +149,7 @@ export default {
 			}
 			else {
 				this.serverSetClient()
-				alert("Purchase success!")
+				this.checkout()
 			}
 		},
 		buttonStartPayment() {

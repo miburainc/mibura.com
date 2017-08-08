@@ -67,5 +67,5 @@ def product_price(product, plan, length):
 	print("base:", result)
 	for l in range(0,int(length*2)):
 		result += base_price + (base_price*increment)
-	print("final", result)
+	print("final:",int(length*2), result)
 	return result

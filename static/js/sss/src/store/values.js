@@ -58,7 +58,7 @@ export const product_multiplier = {
 	},
 	cloud: {
 		start_value: 1.0, // multiplier on plan
-		increment: 0.10, // 10% every 6 months
+		increment: 0.0, // 10% every 6 months
 	},
 	servers: {
 		start_value: 1.0, // multiplier on plan

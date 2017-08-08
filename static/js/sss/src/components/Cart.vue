@@ -225,8 +225,10 @@ export default {
 			let product_price = this.getProductPrice(cart_index)
 			let inc = this.getMultiplier[product.category].increment
 			let product_age = this.getProductAge(product)
+			
 			let price = product_price
 			for (let e=0; e<product_age; e++) {
+				console.log(e)
 				price += (product_price * inc)
 			}
 			return price
@@ -252,16 +254,28 @@ export default {
 		getProductSubtotal(cart_index) {
 			let product = this.cart[cart_index]
 			let product_price = this.getProductPrice(cart_index)
-			let product_age = product.release ? this.getProductAge(product) : 2
+			let product_age = this.getProductAge(product)
 			let price_iterations = this.getSupportMonths/6
 			let inc = this.getMultiplier[product.category].increment
-			let price = product_price
+			let price = 0.0
+			// console.log("getProductSubtotal")
+			// console.log(product_age)
 			for (let e=0; e<product_age; e++) {
+				// console.log("in product_age")
+				// console.log(e)
 				price += (product_price * inc)
 			}
+			// console.log("after age calc")
+			// console.log(price)
 			for (let i=0; i<price_iterations; i++) {
+				// console.log("in length calc")
+				// console.log(i)
+				// console.log(price)
+				// console.log("Tax", product_price * inc)
 				price += product_price + (product_price * inc)
 			}
+			// console.log("after length calc")
+			// console.log(price)
 			return price
 		}
 	},

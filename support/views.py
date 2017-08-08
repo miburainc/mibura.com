@@ -83,11 +83,9 @@ def get_create_client(request):
 			return HttpResponse(response_json, status=201)
 		else:
 			for field,value in obj.__dict__.items():
-				print(field)
 				if not value and field in data:
 					setattr(obj, field, data[field])
 					obj.save()
-				print(value)
 		serialized = ClientSerializer(obj)
 		response_json = JSONRenderer().render(serialized.data)
 

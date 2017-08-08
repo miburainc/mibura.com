@@ -59,10 +59,9 @@ def product_price(product, plan, length):
 	date_start = product.product.release
 	date_now = date.today()
 	diff = math.floor(months_between(date_start, date_now) / 6)
-	result = base_price
+	result = 0.0
 	increment = product_multiplier[product.product.category]['increment']
 	for i in range(0,diff):
-		print(result)
 		result += base_price * increment
 	print("base:", result)
 	for l in range(0,int(length*2)):
@@ -72,7 +71,7 @@ def product_price(product, plan, length):
 
 def cloud_price(cloud, plan, length):
 	base_price = (plan_prices[plan] * cloud.price_modifier) / 2
-	result = base_price
+	result = 0.0
 	for l in range(0,int(length*2)):
 		result += base_price
 	return result

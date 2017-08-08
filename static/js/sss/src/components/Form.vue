@@ -69,9 +69,9 @@
 						<div id="card-element" class="field"></div>
 						<div class="outcome">
 							<div class="error" role="alert"></div>
-							<div class="success">
+<!-- 							<div class="success">
 								Success! Your Stripe token is <span class="token"></span>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<input 
@@ -93,15 +93,16 @@
 					</div>
 				</div>
 
-			<button type="button" v-for="btn in formsteps[current_step].buttons" :class="btn.class" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button type="button" v-for="btn in formsteps[current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			<h4 v-if="form_error" class="text-red">
 				{{ formsteps[current_step].error }}
 			</h4>
 			
-			<!-- Fade effects -->
+			<!-- End Fade effects -->
 			</div>
 			</transition>	
 		</form>
+
 	</div>
 </template>
 
@@ -121,6 +122,7 @@ import { ValidateFormSteps } from '../scripts/functions'
 import { forEachValue } from '../scripts/util'
 
 import {step_names} from '../store/values'
+import velocity from 'velocity-animate'
 
 export default {
 	data () {
@@ -245,11 +247,15 @@ export default {
 								price_gold: 1,
 								price_black: 1,
 								with_cloud: 1,
+								type: 'cloud',
 								brand: cloud.name,
 								model: '',
 								release: moment().format("YYYY-MM-DD"),
 							}
 						this.add_cart_item(cloud_obj)
+						break;
+					case "review":
+						velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 						break;
 					case "additem":
 						let model = this.get_current_item_prop('model')
@@ -267,6 +273,7 @@ export default {
 								price_gold: 1,
 								price_black: 1,
 								with_cloud: 1,
+								type: 'product',
 							}
 						}
 						this.add_cart_item(
@@ -339,16 +346,12 @@ export default {
 						card.mount('#card-element');
 						var self = this;
 						function setOutcome(result) {
-							var successElement = document.querySelector('.success');
 							var errorElement = document.querySelector('.error');
-							successElement.classList.remove('visible');
 							errorElement.classList.remove('visible');
 							if (result.token) {
 								// Use the token to create a charge or a customer
 								// https://stripe.com/docs/charges
-								successElement.querySelector('.token').textContent = result.token.id;
 								self.set_payment_token(result.token.id);
-								successElement.classList.add('visible');
 							} else if (result.error) {
 								errorElement.textContent = result.error.message;
 								errorElement.classList.add('visible');
@@ -357,7 +360,7 @@ export default {
 						card.on('change', function(event) {
 							setOutcome(event);
 						});
-						document.querySelector('form').addEventListener('submit', function(e) {
+						document.querySelector('#btn_review').addEventListener('click', function(e) {
 							e.preventDefault();
 							var form = document.querySelector('form');
 							var extraDetails = {
@@ -547,13 +550,13 @@ input[type=text], select, .form-control {
 	font-weight: 400;
 	border: 1px solid #8493A8;
 	border-radius: 4px;
-  color: #ffffff;
-  outline: none;
-  height: 48px;
-  line-height: 48px;
-  padding: 0 20px;
-  cursor: text;
-  width: 100%;
+	color: #ffffff;
+	outline: none;
+	height: 48px;
+	line-height: 48px;
+	padding: 0 20px;
+	cursor: text;
+	width: 100%;
 }
 
 .field:focus,

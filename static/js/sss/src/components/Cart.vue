@@ -34,7 +34,10 @@
 						<td colspan="3">None</td>
 					</tr>
 					<tr v-else v-for="(item, index) in cart">
-						<td>{{item.brand}} {{item.model}}</td>
+						<td>
+							<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
+							{{item.brand}} {{item.model}}
+						</td>
 						<td class="text-center">
 							${{ numWithCommas(getProductSubtotal(index)) }}
 						</td>
@@ -57,7 +60,9 @@
 			<hr><br>
 			<div class="pull-right">
 				<h4>Cart Reference Code: {{get_cart_reference}}</h4>
-				
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+					Launch demo modal
+				</button>
 			</div>
 			<div>
 				<h4>Your information:</h4>

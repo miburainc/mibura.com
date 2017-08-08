@@ -100,11 +100,12 @@ const actions = {
 	},
 	saveCart({state, rootState, commit}, client) {
 		console.log(rootState)
+		let ref = state.cart_ref ? state.cart_ref : makeid(8)
 		cart.getOrCreateCart(
 			{
 				email: client.email,
 				client: client.pk,
-				reference: makeid(8),
+				reference: ref,
 				products: state.cart,
 				plan: rootState.current_plan,
 				length: state.support_months/12,

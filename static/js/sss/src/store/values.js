@@ -477,7 +477,7 @@ export const form_steps = [
 			},
 			{
 				label: "Review",
-				class: "btn btn-outline-success",
+				class: "btn btn-outline-success payment-button",
 				script: "review"
 			},
 		],

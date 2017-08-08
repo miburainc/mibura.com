@@ -115,6 +115,7 @@ class Cart(models.Model):
 	client = models.ForeignKey(Client)
 	products = models.ManyToManyField(ClientProduct)
 	length = models.FloatField(default=.5)
+	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 

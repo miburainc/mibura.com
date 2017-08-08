@@ -56,6 +56,9 @@ if not DEBUG:
 	X_FRAME_OPTIONS = 'DENY'
 
 
+# Stripe
+PINAX_STRIPE_SECRET_KEY=get_env_variable('STRIPE_SECRET_KEY')
+
 # Logging
 
 # Sentry Configuration

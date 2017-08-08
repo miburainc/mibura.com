@@ -34,6 +34,13 @@ def get_cat(value):
 SHEETS = [
 	'DELL',
 	'HP',
+	'ORACLE',
+	'CISCO',
+	'EMC',
+	'HITACHI',
+	'NETAPP',
+	'IBM',
+	'SUPERMICRO',
 ]
 
 # Main App
@@ -51,6 +58,8 @@ def App(wb, name):
 		category = wb[SHEET_NAME].cell(column=3, row=row).value
 		print(row, ":", model, ":", category)
 		cat_final = get_cat(category.lower())
+
+		brand = brand.replace(" ", "")
 
 		if model != None:
 			# print(cat_final)

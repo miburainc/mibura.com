@@ -69,3 +69,10 @@ def product_price(product, plan, length):
 		result += base_price + (base_price*increment)
 	print("final:",int(length*2), result)
 	return result
+
+def cloud_price(cloud, plan, length):
+	base_price = (plan_prices[plan] * cloud.price_modifier) / 2
+	result = base_price
+	for l in range(0,int(length*2)):
+		result += base_price
+	return result

@@ -4,6 +4,7 @@ from django.db import models
 from datetime import datetime, timedelta
 from pytz import timezone
 
+from scripts.sss_pricing import product_price, cloud_price
 
 PLAN_CHOICES = (
 	("silver", "Silver"),
@@ -108,7 +109,6 @@ class Subscription(models.Model):
 	def __str__(self):
 		return self.client.get_full_name() + ": " + self.plan
 
-from scripts.sss_pricing import product_price
 
 class Cart(models.Model):
 	email = models.CharField(max_length=128)
@@ -131,4 +131,6 @@ class Cart(models.Model):
 		total = 0
 		for prd in self.products.all():
 			total += product_price(prd, self.plan, self.length)
+		for cloud in self.cloud.all():
+			total += cloud_price(cloud, self.plan, self.length)
 		return total

@@ -4,7 +4,7 @@
 # Excel sheet provided by Imran
 import os,sys
 
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 import django
 from django.core.files import File
@@ -80,6 +80,21 @@ def App(wb, name):
 				prod.price_black = 2.0
 			if prod.with_cloud == 0.0:
 				prod.with_cloud = 1.5
+			if prod.release == date.today():
+				prod.release = date.today() - timedelta(1)
+			
+			# Adjust SKU
+			cat = ""
+			if prod.category == "servers":
+				cat = "SRV"
+			elif prod.category == "storage":
+				cat = "STG"
+			elif prod.category == "network":
+				cat = "NET"
+			elif prod.category == "appliances":
+				cat = "APP"
+			prod.sku = prod.brand[0].upper() + cat + '-' + '{0:04d}'.format(row)
+			
 			prod.save()
 
 			if created:

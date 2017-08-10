@@ -4,6 +4,8 @@ DEBUG = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SECRET_KEY = 'asjdfhih238r7hufhb2873r8723rasbf'
+
 DATABASES = {
 	'default': {
         'ENGINE': 'django.db.backends.sqlite3',

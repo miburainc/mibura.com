@@ -71,21 +71,15 @@ def App(wb, name):
 				prod = Product.objects.get(brand=brand, model=model)
 			except ObjectDoesNotExist:
 				created = True
-				prod = Product(brand=brand, model=model, release=date.today() - timedelta(1), category=cat_final)
+				prod = Product(brand=brand, model=model, release=date.today() - timedelta(1), category=cat_final, price_silver=1.0, price_gold=1.0, price_black=1.0)
 
 			if prod.category == None:
 				prod.category = cat_final
-			
-			if prod.price_silver != 1.0:
-				prod.price_silver = 1.0
-			if prod.price_gold != 1.0:
-				prod.price_gold = 1.0
-			if prod.price_black != 1.0:
-				prod.price_black = 1.0
 
-			if prod.release == date.today():
-				prod.release = date.today() - timedelta(1)
-			
+			# DEV NOTES
+			# Change SKU to iterate only within category
+			# Not whole brand as it does now
+
 			# Adjust SKU
 			cat = ""
 			if prod.category == "servers":

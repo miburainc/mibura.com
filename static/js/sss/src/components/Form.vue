@@ -242,7 +242,7 @@ export default {
 						console.log(cloud)
 						let cloud_obj = {
 								sku: 'none',
-								category: 'cloud',
+								category: this.get_multiplier('cloud'),
 								price_silver: 1,
 								price_gold: 1,
 								price_black: 1,
@@ -434,6 +434,7 @@ export default {
 			get_api_root: 'getAPIRoot',
 			get_errors: 'getErrors',
 			get_client_info: 'getClientInfo',
+			get_multiplier: 'getMultiplier',
 		}),
 	},
 	// get_api_root: 'getAPIRoot',

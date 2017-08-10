@@ -101,9 +101,7 @@
 							&nbsp;Purchase Support
 						</button>
 					</div>
-					
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -176,14 +174,15 @@ export default {
 		buttonPhoneSupport() {
 			console.log("buttonPhoneSupport")
 			console.log(Object.keys(this.getClientInfo).length>0)
-			if (Object.keys(this.getClientInfo).length<1) {
-				this.buttonStartClientInfo()
-			}
-			else if (this.cart.length < 1) {
+			if (this.cart.length < 1) {
 				this.buttonStartNewItem()
+			}
+			else if (Object.keys(this.getClientInfo).length<1) {
+				this.buttonStartClientInfo()
 			}
 			else {
 				this.saveCart(this.getClientInfo)
+				$('#chatModal').modal('show')
 			}
 		},
 		clear_cart() {

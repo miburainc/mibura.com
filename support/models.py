@@ -99,6 +99,7 @@ class Client(models.Model):
 
 class Plan(models.Model):
 	name = models.CharField(max_length=64)
+	short_name = models.CharField(max_length=16)
 	color = models.CharField(max_length=12)
 	price = models.FloatField(default=0.0)
 

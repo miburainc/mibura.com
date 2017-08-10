@@ -92,7 +92,7 @@
 							<i class="fa fa-phone" aria-hidden="true"></i>
 							&nbsp;Speak with Sales
 						</button>
-						<button type="button" class="btn btn-primary">
+						<button type="button" class="btn btn-primary" @click="buttonGetPDF">
 							<i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
 							&nbsp;Get Quote
 						</button>
@@ -173,7 +173,6 @@ export default {
 		},
 		buttonPhoneSupport() {
 			console.log("buttonPhoneSupport")
-			console.log(Object.keys(this.getClientInfo).length>0)
 			if (this.cart.length < 1) {
 				this.buttonStartNewItem()
 			}
@@ -183,6 +182,19 @@ export default {
 			else {
 				this.saveCart(this.getClientInfo)
 				$('#chatModal').modal('show')
+			}
+		},
+		buttonGetPDF() {
+			console.log("buttonGetPDF")
+			if (this.cart.length < 1) {
+				this.buttonStartNewItem()
+			}
+			else if (Object.keys(this.getClientInfo).length<1) {
+				this.buttonStartClientInfo()
+			}
+			else {
+				this.saveCart(this.getClientInfo)
+				$('#pdfModal').modal('show')
 			}
 		},
 		clear_cart() {

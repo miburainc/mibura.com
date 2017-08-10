@@ -149,12 +149,14 @@ export const form_steps = [
 				placeholder: "Serial Number",
 				src: "",
 				dest: "cart.#.sn",
-				required: false,
+				required: true,
 				form: {
 					type: "text",
 					name: "serialnumber"
 				},
-				validate: {},
+				validate: {
+					min: 3
+				},
 			},
 			{
 				placeholder: "Device Age (Years)",
@@ -198,7 +200,7 @@ export const form_steps = [
 			},
 		],
 		title: "Additional Information",
-		text: "These fields are all optional, but please supply us with as much information as you can to ensure we provide you with the best support!",
+		text: "",
 		error: "",
 		step: 0,
 	},

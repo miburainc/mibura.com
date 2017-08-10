@@ -11,6 +11,16 @@ const actions = {
 		.catch((error) => {
 			console.error(error)
 		})
+	},
+	getPlans(success) {
+		console.log("products.js/getPlans")
+		axios.get(API_ROOT + 'plans/')
+		.then((response) => {
+			success(response)
+		})
+		.catch((error) => {
+			console.error(error)
+		})
 	}
 }
 

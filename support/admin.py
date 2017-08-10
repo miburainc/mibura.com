@@ -45,6 +45,6 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 
 class PlanAdmin(admin.ModelAdmin):
-	list_display = ['name', 'price', 'color',]
+	list_display = ['name', 'short_name', 'price', 'color',]
 
 admin.site.register(Plan, PlanAdmin)

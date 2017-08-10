@@ -108,7 +108,7 @@
 
 <script>
 
-import Autocomplete from 'vue2-autocomplete-js';
+import Autocomplete from './autocomplete';
 
 import {mapGetters, mapActions} from 'vuex'
 

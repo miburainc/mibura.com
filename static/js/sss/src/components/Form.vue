@@ -11,14 +11,14 @@
 			>
 			<div v-if="show">
 			
-				<h2 class="text-center">{{ formsteps[current_step].title }}</h2>
-				<h4 class="text-center">{{ formsteps[current_step].text }}</h4>
+				<h2 class="text-center">{{ get_formsteps[get_current_step].title }}</h2>
+				<h4 class="text-center">{{ get_formsteps[get_current_step].text }}</h4>
 				
-				<div v-for="data in formsteps[current_step].data" class="form-group">
+				<div v-for="data in get_formsteps[get_current_step].data" class="form-group">
 					<label :for="data.form.name">{{ data.placeholder }}</label>
 					<!-- brand -->
 					<autocomplete
-						v-if="data.src && current_step==step_names.brand"
+						v-if="data.src && get_current_step==step_names.brand"
 						:url="get_api_root + 'productcomplete'"
 						data-root="results"
 						anchor="brand"
@@ -36,7 +36,7 @@
 					</autocomplete>
 					<!-- model -->
 					<autocomplete
-						v-else-if="data.src && current_step==1"
+						v-else-if="data.src && get_current_step==1"
 						:url="get_api_root + 'productcomplete'"
 						anchor="model"
 						data-root="results"
@@ -53,7 +53,7 @@
 					</autocomplete>
 					<!-- Cloud -->
 					<select 
-						v-else-if="data.src && current_step==step_names.cloud"
+						v-else-if="data.src && get_current_step==step_names.cloud"
 						:id="data.form.name"
 						:name="data.form.name"
 					>
@@ -93,9 +93,9 @@
 					</div>
 				</div>
 
-			<button type="button" v-for="btn in formsteps[current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button type="button" v-for="btn in get_formsteps[get_current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			<h4 v-if="form_error" class="text-red">
-				{{ formsteps[current_step].error }}
+				{{ get_formsteps[get_current_step].error }}
 			</h4>
 			
 			<!-- End Fade effects -->
@@ -174,12 +174,12 @@ export default {
 			for (let i=0; i<scr.length; i++) {
 				switch (scr[i]) {
 					case "start":
-						this.past_step = this.current_step
+						this.past_step = this.get_current_step
 						this.set_current_form_step(0)
 						this.formTimeoutNext()
 						break;
 					case "skip":
-						this.set_current_form_step(this.current_step+1)
+						this.set_current_form_step(this.get_current_step+1)
 						this.formTimeoutNext()
 						break;
 					case "next":
@@ -187,15 +187,15 @@ export default {
 						// If step is end of client entry
 						// Check server for client info
 						// If not on server, create in server
-						if (this.current_step == this.step_names.client_address) {
+						if (this.get_current_step == this.step_names.client_address) {
 							this.serverSetClient()
 						}
 
-						this.past_step = this.current_step
-						let data = this.formsteps[this.current_step].data
+						this.past_step = this.get_current_step
+						let data = this.get_formsteps[this.get_current_step].data
 						
-						for (let i=0; i<this.formsteps[this.current_step].data.length; i++) {
-							let formstep = this.formsteps[this.current_step].data;
+						for (let i=0; i<this.get_formsteps[this.get_current_step].data.length; i++) {
+							let formstep = this.get_formsteps[this.get_current_step].data;
 							let name = formstep[i].form.name;
 							if (!this.get_current_item_prop(name)) {
 								let val = document.getElementById(name).value
@@ -217,7 +217,7 @@ export default {
 						}
 						else {
 							this.clear_errors()
-							this.set_current_form_step(this.current_step+1)
+							this.set_current_form_step(this.get_current_step+1)
 						}
 						this.formTimeoutNext()
 
@@ -225,8 +225,8 @@ export default {
 
 						break;
 					case "back":
-						this.past_step = this.current_step
-						this.set_current_form_step(this.current_step-1)
+						this.past_step = this.get_current_step
+						this.set_current_form_step(this.get_current_step-1)
 						this.formTimeoutNext()
 						break;
 					case "addcloud":
@@ -316,7 +316,7 @@ export default {
 		},
 		setItemProp () {
 			console.log("setItemProp ------")			
-			this.set_current_form_step(this.current_step + 1)
+			this.set_current_form_step(this.get_current_step + 1)
 		},
 		formTimeoutNext() {
 			this.show = false;
@@ -324,7 +324,7 @@ export default {
 				this.show = true;
 				setTimeout(() => {
 					document.forms[0].elements[0].focus();
-					if (this.current_step==this.step_names.payment) {
+					if (this.get_current_step==this.step_names.payment) {
 						var stripe = Stripe('pk_test_8TjNbehh0cqmd01HFq3DIawx');
 						var elements = stripe.elements();
 						var card = elements.create('card', {
@@ -381,7 +381,7 @@ export default {
 			el.style.opacity = 1
 		},
 		animateEnter(el, done) {
-			let transition = this.current_step >= this.past_step ? 'transition.slideRightIn' : 'transition.slideLeftIn'
+			let transition = this.get_current_step >= this.past_step ? 'transition.slideRightIn' : 'transition.slideLeftIn'
 			Velocity(
 				el,
 				transition,
@@ -394,7 +394,7 @@ export default {
 			)
 		},
 		animateLeave(el, done) {
-			let transition = this.current_step > this.past_step ? 'transition.slideLeftOut' : 'transition.slideRightOut'
+			let transition = this.get_current_step > this.past_step ? 'transition.slideLeftOut' : 'transition.slideRightOut'
 			Velocity(
 				el,
 				transition,
@@ -427,8 +427,8 @@ export default {
 		...mapGetters({
 			get_product: 'getProduct',
 			get_all_products: 'getAllProducts',
-			formsteps: 'getFormSteps',
-			current_step: 'getCurrentFormStep',
+			get_formsteps: 'getFormSteps',
+			get_current_step: 'getCurrentFormStep',
 			get_current_item_prop: 'getCurrentItemProp',
 			get_current_item: 'getCurrentItem',
 			get_api_root: 'getAPIRoot',

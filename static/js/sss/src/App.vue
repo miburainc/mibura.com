@@ -35,6 +35,8 @@
 import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
 
+import {mapActions} from 'vuex'
+
 export default {
 	name: 'app',
 	data () {
@@ -44,6 +46,14 @@ export default {
 	components: {
 		SupportForm,
 		SupportCart,
+	},
+	methods: {
+		...mapActions({
+			'set_category_multipliers': 'setCategoryMultipliers',
+		})
+	},
+	created() {
+		this.set_category_multipliers()
 	}
 }
 </script>

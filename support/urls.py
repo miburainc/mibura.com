@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 router.register(r'products', views.ProductViewSet)
 router.register(r'productcomplete', views.ProductAutocompleteViewSet)
 router.register(r'cloud', views.CloudViewSet)
+router.register(r'categories', views.CategoriesViewSet)
 
 
 urlpatterns = [

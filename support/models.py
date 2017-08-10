@@ -6,6 +6,9 @@ from pytz import timezone
 
 from scripts.sss_pricing import product_price, cloud_price
 
+from scripts.freshbooks.client import get_client, create_client
+from scripts.freshbooks.estimates import create_estimate
+
 PLAN_CHOICES = (
 	("silver", "Silver"),
 	("gold", "Gold"),
@@ -20,6 +23,7 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
+
 class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
@@ -31,18 +35,27 @@ class Cloud(models.Model):
 	def __str__(self):
 		return self.name
 
+class ProductCategory(models.Model):
+	name = models.CharField(max_length=32)
+	category_code = models.CharField(max_length=32, blank=True)
+	price_multiplier = models.FloatField(default=1.0)
+	yearly_tax = models.FloatField(default=0.1)
+
+	def __str__(self):
+		return self.category_code
+
+	class Meta:
+		verbose_name_plural = "Product Categories"
 
 class Product(models.Model):
 	brand = models.CharField(max_length=128)
 	model = models.CharField(max_length=128)
 	sku = models.CharField(max_length=128)
 
-	category = models.CharField(max_length=32, choices=PRODUCT_CATEGORIES)
+	category = models.ForeignKey(ProductCategory, null=True, blank=True)
 	price_silver = models.FloatField(default=0.0)
 	price_gold = models.FloatField(default=0.0)
 	price_black = models.FloatField(default=0.0)
-
-	with_cloud = models.FloatField(default=0.0)
 
 	release = models.DateField(blank=True)
 
@@ -67,11 +80,30 @@ class Client(models.Model):
 	country = models.CharField(max_length=64)
 	zipcode = models.CharField(max_length=64)
 	
+	freshbooks_id = models.CharField(max_length=32,blank=True)
+	dynamicscrm_id = models.CharField(max_length=32,blank=True)
+
 	def get_full_name(self):
 		return self.first_name + " " + self.last_name
 
+	def get_freshbooks_id(self):
+		if not self.freshbooks_id:
+			print("no freshbooks id")
+		pass
+
+	def get_dynamicscrm_id(self):
+		pass
+
 	def __str__(self):
 		return self.get_full_name()
+
+class Plan(models.Model):
+	name = models.CharField(max_length=64)
+	color = models.CharField(max_length=12)
+	price = models.FloatField(default=0.0)
+
+	def __str__(self):
+		return self.name
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)

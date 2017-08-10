@@ -2,8 +2,14 @@ from rest_framework import serializers
 
 from .models import *
 
+class ProductCategorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = ProductCategory
+		fields = ('name', 'category_code', 'yearly_tax', 'price_multiplier')
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.ModelSerializer):
+	category = ProductCategorySerializer(many=False)
+
 	class Meta:
 		model = Product
 		lookup_field = 'sku'
@@ -15,7 +21,6 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
 			'price_silver',
 			'price_gold',
 			'price_black',
-			'with_cloud',
 			'release',
 		)
 

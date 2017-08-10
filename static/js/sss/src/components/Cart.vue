@@ -199,13 +199,7 @@ export default {
 			let num = x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			return num
 		},
-		getProductAge(product) {
-			let product_release = moment(product.release)
-			let today = moment()
-			let age_months = today.diff(product_release, 'months')
-			let age = age_months / 6
-			return Math.round(age)
-		},
+		
 		editItem(id, index) {
 			this.editCartItem({
 				id: id,
@@ -219,65 +213,70 @@ export default {
 				index: index
 			})
 		},
-		getProductBasePrice(cart_index) {
-			let cost = 0
-			let product = this.cart[cart_index]
-			let product_price = this.getProductPrice(cart_index)
-			let inc = this.getMultiplier[product.category].increment
-			let product_age = this.getProductAge(product)
-			
-			let price = product_price
-			for (let e=0; e<product_age; e++) {
-				// console.log(e)
-				price += (product_price * inc)
-			}
-			return price
+		// 
+		// Product Pricing //
+		// 
+		getProductAge(product) {
+			let product_release = moment(product.release)
+			let today = moment()
+			let age_months = today.diff(product_release, 'months')
+			let age = age_months / 6
+			return Math.round(age)
 		},
 		getProductPrice(cart_index) {
+			// 
+			// Calculate product price depending on plan selected by customer
+			// 
 			let cost = 0
+			let product = this.cart[cart_index]
+			let plan_name = ''
 			switch(this.current_plan) {
 				case 0:
 					// Silver
-					cost = (this.cart[cart_index].price_silver * this.plans[this.current_plan].cost) / 2
+					plan_name = 'silver'
 					break;
 				case 1:
 					// Gold
-					cost = (this.cart[cart_index].price_gold * this.plans[this.current_plan].cost) / 2
+					plan_name = 'gold'
 					break;
 				case 2:
 					// Black
-					cost = (this.cart[cart_index].price_black * this.plans[this.current_plan].cost) / 2
+					plan_name = 'black'
 					break;
 			}
+			// Product multiplier per plan e.g 1.0x
+			let pp = product['price_'+plan_name]
+			// Product Category multiplier e.g 1.2x
+			let pm = product.category.price_multiplier
+			// Plan base product price e.g $49/yr
+			let pc = this.plans[this.current_plan].cost
+			// Calculation and then divided by half since plans are sold in 6 month increments
+			cost = (pp * pm * pc) / 2
 			return cost
 		},
 		getProductSubtotal(cart_index) {
+			//
+			// Get product line item price
+			//
 			let product = this.cart[cart_index]
 			let product_price = this.getProductPrice(cart_index)
 			let product_age = this.getProductAge(product)
+			// price_iterations - how many half year increments to add
 			let price_iterations = this.getSupportMonths/6
-			let inc = this.getMultiplier[product.category].increment
+			// inc - amount to add to base price based on product age
+			let inc = product.category.yearly_tax
+			
 			let price = 0.0
-			// console.log("getProductSubtotal")
-			// console.log(product.brand + " " + product.model)
-			// console.log(product_age)
+			// Calculate price base price depending on age
 			for (let e=0; e<product_age; e++) {
-				// console.log("in product_age")
-				// console.log(e)
 				price += (product_price * inc)
 			}
-			// console.log("after age calc")
-			// console.log(price)
+
+			// Calculate price into future for length of support bought by client
 			for (let i=0; i<price_iterations; i++) {
-				// console.log("in length calc")
-				// console.log(i)
-				// console.log("product_price", product_price)
-				// console.log(price)
-				// console.log("Tax", product_price * inc)
 				price += product_price + (product_price * inc)
 			}
-			// console.log("after length calc")
-			// console.log(price)
+
 			return price
 		}
 	},

@@ -12,8 +12,8 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 
-from .models import Product, Cloud, Client, Cart, ClientProduct, Subscription
-from .serializers import CartSerializer, ProductSerializer, CloudSerializer, ClientSerializer
+from .models import Product, ProductCategory, Cloud, Client, Cart, ClientProduct, Subscription
+from .serializers import CartSerializer, ProductSerializer, ProductCategorySerializer, CloudSerializer, ClientSerializer
 
 from scripts.dotdict import dotdict
 
@@ -176,6 +176,14 @@ class CloudViewSet(viewsets.ReadOnlyModelViewSet):
 		else:
 			queryset = Cloud.objects.all()
 		return queryset
+
+class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
+	"""
+	API endpoint that allows products to be viewed or edited.
+	"""
+	queryset = ProductCategory.objects.all().order_by('-name')
+	serializer_class = ProductCategorySerializer
+	lookup_field = 'name'
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 	"""

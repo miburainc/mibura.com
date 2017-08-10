@@ -6,6 +6,8 @@ import SSSCart from './modules/sss_cart'
 
 import {PLANS, API_ROOT, product_multiplier} from './values'
 
+import productApi from './api/products'
+
 import createLogger from '../scripts/logger'
 
 import * as TYPE from './types'
@@ -20,10 +22,20 @@ export const store = new Vuex.Store({
     current_plan: 'silver',
     api_root: API_ROOT,
     errors: {},
-    multiplier: product_multiplier,
+    multiplier: {},
   },
   getters: {
-    getMultiplier: state => state.multiplier,
+    getMultiplier: state => name => {
+      console.log('getMultiplier')
+      console.log(state)
+      console.log(name)
+      for (let i=0; i<state.multiplier.length; i++) {
+        let cat = state.multiplier[i]
+        if (cat.category_code == name) {
+          return cat
+        }
+      }
+    },
     getPlans: state => state.plans,
     getAPIRoot: state => state.api_root,
     getErrors: state => state.errors,
@@ -41,6 +53,9 @@ export const store = new Vuex.Store({
     },
     [TYPE.SET_CURRENT_PLAN]: (state, value) => {
       state.current_plan = value
+    },
+    [TYPE.SET_CATEGORY_MULTIPLIER]: (state, payload) => {
+      Vue.set(state, 'multiplier', payload)
     }
   },
   actions: {
@@ -69,6 +84,12 @@ export const store = new Vuex.Store({
       }
       console.log(result)
       commit(TYPE.SET_CURRENT_PLAN, result)
+    },
+    setCategoryMultipliers({commit}, payload) {
+      productApi.getProductCategories((response) => {
+        commit(TYPE.SET_CATEGORY_MULTIPLIER, response.data.results)
+      })
+      
     }
   },
   modules: {

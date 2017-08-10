@@ -38,3 +38,13 @@ class CloudAdmin(admin.ModelAdmin):
 	list_display = ['name', 'website', 'price_modifier',]
 
 admin.site.register(Cloud, CloudAdmin)
+
+class ProductCategoryAdmin(admin.ModelAdmin):
+	list_display = ['name', 'yearly_tax', 'category_code', 'price_multiplier',]
+
+admin.site.register(ProductCategory, ProductCategoryAdmin)
+
+class PlanAdmin(admin.ModelAdmin):
+	list_display = ['name', 'price', 'color',]
+
+admin.site.register(Plan, PlanAdmin)

@@ -171,6 +171,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Freshbooks
+FRESHBOOKS_URL = 'https://mibura.freshbooks.com/api/2.1/xml-in'
+FRESHBOOKS_AUTH = '1be9b30df4a59f7eb6b74fdbb82ba8ac'
+
 
 # STATIC FILE CONFIGURATION
 # ------------------------------------------------------------------------------

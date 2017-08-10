@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<request method="estimate.create">  
+<estimate>  
+<client_id></client_id>
+
+<status>draft</status>
+<discount>0</discount>
+<currency_code>USD</currency_code>
+<notes>Mibura Smart Support Estimate</notes>
+<terms></terms> 
+<first_name></first_name> <!-- (Optional) -->  
+<last_name></last_name> <!-- (Optional) -->  
+<organization></organization>  <!-- (Optional) -->  
+<p_street1></p_street1> <!-- (Optional) -->  
+<p_street2></p_street2> <!-- (Optional) -->  
+<p_city></p_city> <!-- (Optional) -->  
+<p_state></p_state> <!-- (Optional) -->  
+<p_country>USA</p_country> <!-- (Optional) -->  
+<p_code></p_code> <!-- (Optional) -->  
+
+<lines>
+</lines>  
+</estimate>  
+</request>  

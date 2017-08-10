@@ -1,0 +1,9 @@
+<!--?xml version="1.0" encoding="utf-8"?-->  
+<request method="client.list">  
+  <!-- Filter by email address (Optional) -->  
+  <email></email>
+  <page>1</page>
+  <per_page>25</per_page>
+  <!-- One of 'active', 'archived', 'deleted' -->  
+  <folder>active</folder>
+</request> 

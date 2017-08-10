@@ -25,10 +25,10 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
-def get_cat(value):
-	for i in PRODUCT_CATEGORIES:
-		if value==i[0]:
-			return value
+def get_cat(value, prods):
+	for i in prods:
+		if value==i.category_code:
+			return i
 	return False
 
 SHEETS = [
@@ -49,6 +49,8 @@ def App(wb, name):
 	print("***", name, "***")
 	print("*************")
 
+	product_categories = ProductCategory.objects.all()
+
 	SHEET_NAME = name
 	SHEET_LENGTH = wb[SHEET_NAME].max_row
 
@@ -57,7 +59,7 @@ def App(wb, name):
 		model = wb[SHEET_NAME].cell(column=2, row=row).value
 		category = wb[SHEET_NAME].cell(column=3, row=row).value
 		print(row, ":", model, ":", category)
-		cat_final = get_cat(category.lower())
+		cat_final = get_cat(category.lower(), product_categories.all())
 
 		brand = brand.replace(" ", "")
 
@@ -66,20 +68,21 @@ def App(wb, name):
 			# print(row, ": ", model)
 			created = False
 			try:
-				prod = Product.objects.get(brand=brand, model=model, category=cat_final)
+				prod = Product.objects.get(brand=brand, model=model)
 			except ObjectDoesNotExist:
 				created = True
-				prod = Product(brand=brand, model=model, release=datetime.now(), category=cat_final)
-				prod.save()
+				prod = Product(brand=brand, model=model, release=date.today() - timedelta(1), category=cat_final)
 
-			if prod.price_silver == 0.0:
+			if prod.category == None:
+				prod.category = cat_final
+			
+			if prod.price_silver != 1.0:
 				prod.price_silver = 1.0
-			if prod.price_gold == 0.0:
-				prod.price_gold = 1.5
-			if prod.price_black == 0.0:
-				prod.price_black = 2.0
-			if prod.with_cloud == 0.0:
-				prod.with_cloud = 1.5
+			if prod.price_gold != 1.0:
+				prod.price_gold = 1.0
+			if prod.price_black != 1.0:
+				prod.price_black = 1.0
+
 			if prod.release == date.today():
 				prod.release = date.today() - timedelta(1)
 			
@@ -110,7 +113,7 @@ if __name__ == '__main__':
 	os.chdir(BASE_DIR)
 	os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local')
 	django.setup()
-	from support.models import Product
+	from support.models import Product, ProductCategory
 
 	for sheet in SHEETS:
 		name = sheet.lower()

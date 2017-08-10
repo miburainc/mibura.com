@@ -4,7 +4,7 @@ Mibura Company Website
 ___
 # Development
 
-#### How to run django server locally:
+### How to run django server locally:
 
 Pull repository into a local folder
 Create a virtual environment with python 3.x
@@ -54,7 +54,7 @@ Run development server
 python manage.py runserver
 ```
 
-####  Front end development:
+###  Front end development:
 
 cd into the vuejs folder
 ```

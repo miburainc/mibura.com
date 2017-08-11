@@ -25,9 +25,9 @@
 			<h1 class="text-center">Cart</h1>
 			<table class="table table-condensed table-striped">
 				<thead>
-					<th>Product</th>
-					<th class="text-center">Subtotal</th>
-					<th class="text-right">Options</th>
+					<th :style="cartHeaderStyle">Product</th>
+					<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
+					<th class="text-right" :style="cartHeaderStyle">Options</th>
 				</thead>
 				<tbody>
 					<tr v-if="this.cart.length < 1" class="text-center">
@@ -60,8 +60,8 @@
 			<hr><br>
 			<div class="pull-right">
 				<h4>Cart Reference Code: {{get_cart_reference}}</h4>
-				<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-					Launch demo modal
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
+					View Terms and Conditions
 				</button>
 			</div>
 			<div>
@@ -141,6 +141,7 @@ export default {
 			'serverSetClient',
 			'serverGetEstimatePdf',
 			'setEstimatePdfFile',
+			'setAcceptedTerms',
 		]),
 		formPurchase() {
 			if (this.cart.length < 1) {
@@ -151,6 +152,9 @@ export default {
 			}
 			else if (!this.get_payment_token) {
 				this.buttonStartPayment()
+			}
+			else if (!this.get_accepted_terms) {
+				$('#termsModal').modal('show')
 			}
 			else {
 				this.serverSetClient().then(() => {
@@ -315,6 +319,7 @@ export default {
 			getClientInfo: 'getClientInfo',
 			get_payment_token: 'getPaymentToken',
 			get_cart_reference: 'getCartReference',
+			get_accepted_terms: 'getAcceptedTerms',
 		}),
 		getTotal() {
 			let total = 0;

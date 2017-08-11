@@ -24,6 +24,7 @@ export const store = new Vuex.Store({
     errors: {},
     multiplier: {},
     purchase_success: false,
+    accepted_terms: false,
   },
   getters: {
     getMultiplier: state => name => {
@@ -42,6 +43,7 @@ export const store = new Vuex.Store({
     getErrors: state => state.errors,
     getCurrentPlan: state => state.current_plan,
     getPurchaseSuccess: state => state.purchase_success,
+    getAcceptedTerms: state => state.accepted_terms,
   },
   mutations: {
     increment (state) {
@@ -61,9 +63,15 @@ export const store = new Vuex.Store({
     },
     [TYPE.SET_PURCHASE_SUCCESS]: (state, payload) => {
       state.purchase_success = payload
-    }
+    },
+    [TYPE.SET_ACCEPTED_TERMS]: (state, value) => {
+      state.accepted_terms = value
+    },
   },
   actions: {
+    setAcceptedTerms({commit}, value) {
+      commit(TYPE.SET_ACCEPTED_TERMS, value)
+    },
     setError({commit}, payload) {
       commit('setError', payload)
     },

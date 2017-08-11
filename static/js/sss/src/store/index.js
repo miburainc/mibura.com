@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex'
 
-import SSSFormSteps from './modules/sss_formsteps'
-import SSSCart from './modules/sss_cart'
+import Form from './modules/sss_form'
+import Cart from './modules/sss_cart'
 
 import {PLANS, API_ROOT, product_multiplier} from './values'
 
@@ -23,6 +23,7 @@ export const store = new Vuex.Store({
     api_root: API_ROOT,
     errors: {},
     multiplier: {},
+    purchase_success: false,
   },
   getters: {
     getMultiplier: state => name => {
@@ -40,6 +41,7 @@ export const store = new Vuex.Store({
     getAPIRoot: state => state.api_root,
     getErrors: state => state.errors,
     getCurrentPlan: state => state.current_plan,
+    getPurchaseSuccess: state => state.purchase_success,
   },
   mutations: {
     increment (state) {
@@ -56,6 +58,9 @@ export const store = new Vuex.Store({
     },
     [TYPE.SET_CATEGORY_MULTIPLIER]: (state, payload) => {
       Vue.set(state, 'multiplier', payload)
+    },
+    [TYPE.SET_PURCHASE_SUCCESS]: (state, payload) => {
+      state.purchase_success = payload
     }
   },
   actions: {
@@ -88,13 +93,15 @@ export const store = new Vuex.Store({
     setCategoryMultipliers({commit}, payload) {
       productApi.getProductCategories((response) => {
         commit(TYPE.SET_CATEGORY_MULTIPLIER, response.data.results)
-      })
-      
+      }) 
+    },
+    setPurchaseSuccess({commit}, payload) {
+      commit(TYPE.SET_PURCHASE_SUCCESS, payload)
     }
   },
   modules: {
-  	SSSFormSteps,
-    SSSCart,
+  	Form,
+    Cart,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

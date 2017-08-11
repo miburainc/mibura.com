@@ -6,7 +6,7 @@ from pytz import timezone
 
 from scripts.sss_pricing import product_price, cloud_price
 
-from scripts.freshbooks.client import get_client, create_client
+from scripts.freshbooks.client import get_client, find_client, create_client
 from scripts.freshbooks.estimates import create_estimate
 
 PLAN_CHOICES = (
@@ -88,8 +88,11 @@ class Client(models.Model):
 
 	def get_freshbooks_id(self):
 		if not self.freshbooks_id:
-			print("no freshbooks id")
-		pass
+			fid = find_client(self.first_name, self.last_name, self.email)
+			if fid:
+				self.freshbooks_id = fid
+				self.save()
+		return self.freshbooks_id
 
 	def get_dynamicscrm_id(self):
 		pass

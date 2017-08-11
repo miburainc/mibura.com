@@ -135,10 +135,11 @@ export default {
 			'setSupportYears',
 			'clearCart',
 			'setCurrentFormStep',
-			'serverSetClient',
 			'saveCart',
 			'setCurrentPlan',
 			'checkout',
+			'serverSetClient',
+			'serverGetEstimatePdf',
 		]),
 		formPurchase() {
 			if (this.cart.length < 1) {
@@ -151,8 +152,12 @@ export default {
 				this.buttonStartPayment()
 			}
 			else {
-				this.serverSetClient()
-				this.checkout()
+				this.serverSetClient().then(() => {
+					this.saveCart().then(() => {
+						this.checkout()
+					})
+				})
+				
 			}
 		},
 		buttonStartPayment() {
@@ -180,8 +185,11 @@ export default {
 				this.buttonStartClientInfo()
 			}
 			else {
-				this.saveCart(this.getClientInfo)
-				$('#chatModal').modal('show')
+				this.serverSetClient().then(() => {
+					this.saveCart()
+					$('#chatModal').modal('show')
+				})
+				
 			}
 		},
 		buttonGetPDF() {
@@ -194,6 +202,9 @@ export default {
 			}
 			else {
 				this.saveCart(this.getClientInfo)
+					.then(() => {
+						this.serverGetEstimatePdf()
+					})
 				$('#pdfModal').modal('show')
 			}
 		},

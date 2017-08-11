@@ -340,7 +340,7 @@ export const form_steps = [
 			{
 				placeholder: "Street 2",
 				src: "",
-				dest: "client.address.street_secondary",
+				dest: "client.address.street2",
 				required: false,
 				validate: {},
 				form: {

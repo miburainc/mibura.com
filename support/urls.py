@@ -18,6 +18,7 @@ urlpatterns = [
 	url(r'^save-client/$', views.save_client_json, name="save_client"),
 	url(r'^get-or-create-cart/$', views.get_create_cart, name="get_create_cart"),
 	url(r'^get-or-create-client/$', views.get_create_client, name="get_create_client"),
+	url(r'^get-estimate-pdf/$', views.get_estimate_pdf, name="get_estimate_pdf"),
 	url(r'^checkout/$', views.checkout, name="checkout"),
 ]
 

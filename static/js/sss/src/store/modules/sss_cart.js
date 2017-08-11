@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import * as TYPE from '../types'
 
+import freshbooks from '../api/freshbooks'
 import cart from '../api/cart'
 
 import {makeid} from '../../scripts/util'
@@ -12,20 +13,22 @@ const state = {
 	cart_ref: '',
 	support_months: 12,
 	current_item_id: null,
+	estimate_id: 0,
+	estimate_pdf: null,
 }
 
 const mutations = {
 	[TYPE.CART_ADD_ITEM]: (state, payload) => {
 		console.log("CART_ADD_ITEM")
-		if (payload.rootState.SSSFormSteps.current_item.hasOwnProperty('index')) {
+		if (payload.rootState.Form.current_item.hasOwnProperty('index')) {
 			console.log("Index found, editing")
-			let index = payload.rootState.SSSFormSteps.current_item.index;
+			let index = payload.rootState.Form.current_item.index;
 			console.log("Index: ", index)
 
 			
 			if (index >= 0) {
-				console.log("payload.rootState.SSSFormSteps.products")
-				console.log(payload.rootState.SSSFormSteps.products[payload.obj.model])
+				console.log("payload.rootState.Form.products")
+				console.log(payload.rootState.Form.products[payload.obj.model])
 				state.cart.splice(index, 1, payload.obj)
 			}
 		}
@@ -35,9 +38,9 @@ const mutations = {
 		}
 	},
 	[TYPE.CART_EDIT_ITEM]: (state, payload) => {
-		Vue.set(payload.rootState.SSSFormSteps, 'current_item', state.cart[payload.index])
+		Vue.set(payload.rootState.Form, 'current_item', state.cart[payload.index])
 		
-		Vue.set(payload.rootState.SSSFormSteps.current_item, 'index', payload.index);
+		Vue.set(payload.rootState.Form.current_item, 'index', payload.index);
 	},
 	[TYPE.CART_REMOVE_ITEM]: (state, payload) => {
 		if (state.cart[payload.index].id !== payload.id) {
@@ -58,6 +61,12 @@ const mutations = {
 	},
 	[TYPE.CART_SET_REF]: (state, value) => {
 		state.cart_ref = value
+	},
+	[TYPE.SET_ESTIMATE_ID]: (state, value) => {
+		state.estimate_id = value
+	},
+	[TYPE.GET_ESTIMATE_PDF]: (state, value) => {
+		state.estimate_pdf = value
 	}
 }
 
@@ -98,25 +107,39 @@ const actions = {
 	setCartId({commit}, value) {
 		commit(TYPE.CART_SET_ID, value)
 	},
-	saveCart({state, rootState, commit}, client) {
-		console.log(rootState)
+	saveCart({state, rootState, commit, dispatch}) {
 		let ref = state.cart_ref ? state.cart_ref : makeid(8)
-		cart.getOrCreateCart(
-			{
+		let client = rootState.Form.client_info
+		
+		return cart.getOrCreateCart({
 				email: client.email,
 				client: client.pk,
 				reference: ref,
 				products: state.cart,
 				plan: rootState.current_plan,
 				length: state.support_months/12,
-			},
-			(response) => {
+			}).then(response => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});
 	},
+	serverGetEstimatePdf({state, rootState, commit}) {
+		let client = rootState.Form.client_info
+		let cart_ref = state.cart_ref
+		console.log("serverGetEstimatePdf")
+		console.log("client", client)
+		console.log("cart_ref", cart_ref)
+		return freshbooks.getEstimatePDF(client, cart_ref)
+			.then(response => {
+				console.log("serverGetEstimatePdf__response")
+				console.log(response)
+				// commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
+				var blob=new Blob([response.data], {type:"application/pdf"});
+				commit(TYPE.GET_ESTIMATE_PDF, window.URL.createObjectURL(blob))
+			})
+	},
 	checkout({state, rootState, commit, dispatch}) {
-		let client = rootState.SSSFormSteps.client_info
+		let client = rootState.Form.client_info
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
 		}
@@ -124,7 +147,7 @@ const actions = {
 			client: client.pk,
 			cart: state.cart_ref,
 			length: state.support_months/12,
-			stripe_token: rootState.SSSFormSteps.payment_token
+			stripe_token: rootState.Form.payment_token
 		}
 		console.log(client)
 		console.log(state.cart_ref)
@@ -132,6 +155,7 @@ const actions = {
 			data,
 			(response) => {
 				console.log(response)
+				dispatch('setPurchaseSuccess', true)
 			});
 	}
 }
@@ -140,6 +164,8 @@ const getters = {
 	getCart: state => state.cart,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
+	getEstimatePDF: state => state.estimate_pdf,
+	getEstimateID: state => state.estimate_id,
 }
 
 export default {

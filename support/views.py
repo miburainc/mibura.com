@@ -2,9 +2,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.utils import timezone
+from django.utils import timezone, encoding
 
 from django.conf import settings
+
+from wsgiref.util import FileWrapper
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -15,9 +17,14 @@ from rest_framework.request import Request
 from .models import Product, ProductCategory, Cloud, Client, Cart, ClientProduct, Subscription
 from .serializers import CartSerializer, ProductSerializer, ProductCategorySerializer, CloudSerializer, ClientSerializer
 
-from scripts.dotdict import dotdict
+from scripts.freshbooks import estimates
 
-import json, math
+from scripts.dotdict import dotdict
+from scripts.sss_pricing import product_price, cloud_price
+
+
+
+import os, json, math
 import stripe
 stripe.api_key = 'sk_test_zq3p8xe6dyIJrJbcomYpY2Ps'
 
@@ -77,19 +84,16 @@ def get_create_client(request):
 			obj.country = data.country
 			obj.zipcode = data.zipcode
 			obj.save()
-			serialized = ClientSerializer(obj)
-			response_json = JSONRenderer().render(serialized.data)
 
-			return HttpResponse(response_json, status=201)
+			return HttpResponse(obj.pk, status=201)
 		else:
 			for field,value in obj.__dict__.items():
 				if not value and field in data:
 					setattr(obj, field, data[field])
-					obj.save()
-		serialized = ClientSerializer(obj)
-		response_json = JSONRenderer().render(serialized.data)
+			# After loop, save object and return
+			obj.save()
 
-		return HttpResponse(response_json, status=200)
+			return HttpResponse(obj.pk, status=200)
 
 @csrf_exempt
 def save_client_json(request):
@@ -137,6 +141,48 @@ def get_create_cart(request):
 		response_json = JSONRenderer().render(serialized.data)
 
 	return HttpResponse(response_json, status=200)
+
+@csrf_exempt
+def get_estimate_pdf(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+
+		data = dotdict(data)
+
+		if not data.client:
+			HttpResponse("No Client ID", status=400)
+		
+		client = get_object_or_404(Client, pk=int(data.client['pk']))
+		cart = get_object_or_404(Cart, client=client, reference=data.cart_reference)
+
+		items = []
+
+		for client_prod in cart.products.all():
+			items.append({
+				**client_prod.__dict__,
+				'type': 'product',
+				'cost': product_price(client_prod, cart.plan, cart.length)
+			})
+
+		for cloud in cart.cloud.all():
+			items.append({
+				'name': cloud.name,
+				'type': 'cloud',
+				'cost': cloud_price(cloud, cart.plan, cart.length)
+			})
+		
+		client.get_freshbooks_id()
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		pdf_status = estimates.get_estimate_pdf(estimate_id)
+		
+		file_name = "Mibura_SmartSupport_Estimate.pdf"
+		path_to_file = '/tmp/' + file_name
+		pdf = FileWrapper(open(path_to_file, 'rb'))
+		response = HttpResponse(pdf, content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		response['Content-Length'] = os.path.getsize(path_to_file)
+		return response
+	return HttpResponse('Not POST', status=400)
 
 @csrf_exempt
 def checkout(request):

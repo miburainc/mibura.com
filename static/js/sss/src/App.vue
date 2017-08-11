@@ -42,15 +42,14 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Terms and conditions</h4>
+						<h4 class="modal-title" id="myModalLabel">Receive Estimate</h4>
 					</div>
 					<div class="modal-body">
 						<h2>Download the PDF here:</h2>
-						<p><a id="pdf-link" href="">Link</a></p>
+						<p><a id="pdf-link" target="_blank" :download="'Mibura_SmartSupport_Estimate-' + new Date() + '.pdf'" :href="get_estimate_pdf">Link</a></p>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Accept</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
@@ -63,18 +62,21 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						<h4 class="modal-title" id="myModalLabel">Contact Sales</h4>
 					</div>
-					<div class="modal-body">
-						<h2>Contact Sales</h2>
+					<div class="modal-body text-center">
 						<h2>Cart Reference Code: {{get_cart_reference}}</h2>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Accept</button>
+						<a type="button" href="tel:1-800-862-5144" class="btn btn-success">Call Now <i class="fa fa-phone" aria-hidden="true"></i></a>
+						<button type="button" class="btn btn-info openchat">Chat Now <i class="fa fa-comment" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div v-if="get_purchase_success" class="row">
+			<success-screen></success-screen>
+		</div>
+		<div v-else class="row">
 			<div id="support-form" class="col-md-6 col-md-offset-3">
 				<support-form></support-form>
 			</div>
@@ -89,6 +91,7 @@
 
 import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
+import SuccessScreen from './components/SuccessScreen.vue'
 
 import {mapActions,mapGetters} from 'vuex'
 
@@ -101,10 +104,13 @@ export default {
 	components: {
 		SupportForm,
 		SupportCart,
+		SuccessScreen,
 	},
 	computed: {
 		...mapGetters({
 			get_cart_reference: 'getCartReference',
+			get_purchase_success: 'getPurchaseSuccess',
+			get_estimate_pdf: 'getEstimatePDF',
 		})
 	},
 	methods: {

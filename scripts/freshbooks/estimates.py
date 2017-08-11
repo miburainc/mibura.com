@@ -9,17 +9,16 @@ except ImportError:
 	import xml.etree.ElementTree as ET
 
 def create_estimate(client, plan, length, items):
+	print(client)
 	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/estimate_template.xml')
 	root = tree.getroot()
 	estimate = root[0]
 
-	status = ET.SubElement(estimate, 'status')
-
 	clientid = estimate.find('client_id')
-	clientid.text = client['id']
+	clientid.text = client['freshbooks_id']
 
 	terms = estimate.find('terms')
-	terms.text = 'Estimate for ' + plan + ' plan for ' + length + ' years.'
+	terms.text = 'Estimate for ' + plan + ' plan for ' + str(length) + ' years.'
 
 	first_name = estimate.find('first_name')
 	first_name.text = client['first_name']
@@ -31,10 +30,13 @@ def create_estimate(client, plan, length, items):
 	organization.text = client['company']
 
 	street1 = estimate.find('p_street1')
-	street1.text = client['street1']
+	street1.text = client['street']
 
 	street2 = estimate.find('p_street2')
-	street2.text = client['street2']
+	if client['street2']:
+		street2.text = client['street2']
+	else:
+		estimate.remove(street2)
 
 	city = estimate.find('p_city')
 	city.text = client['city']
@@ -46,39 +48,53 @@ def create_estimate(client, plan, length, items):
 	country.text = client['country']
 
 	zipcode = estimate.find('p_code')
-	zipcode.text = client['zipcode']
+	zipcode.text = str(client['zipcode'])
 
 	lines = estimate.find('lines')
 
 	for index,item in enumerate(items):
-		print(item['name'])
 		line = ET.Element('line')
 		name = ET.SubElement(line, 'name')
-		name.text = item['brand'] + ' ' + item['model']
 		description = ET.SubElement(line, 'description')
-		desc = 'SN: ' + item['serial_number'] + '\nAge: ' + item['age'] 
+		if item['type'] == 'product':
+			name.text = plan
+			desc = item['brand'] + ' ' + item['model'] + '\n' + item['serial_number'] + '\n' + 'Length: ' + str(length)
+		elif item['type'] == 'cloud':
+			name.text = item['name']
+			desc = "Cloud support"
 		description.text = desc
 		unit_cost = ET.SubElement(line, 'unit_cost')
-		unit_cost.text = item['cost']
+		unit_cost.text = str(round(item['cost'], 2))
 		quantity = ET.SubElement(line, 'quantity')
 		quantity.text = '1'
 		_type = ET.SubElement(line, 'type')
-		_type.text = item['type']
+		_type.text = 'item'# item['type']
 		lines.extend((line,))
 
-	return ET.tostring(root)
+	data = ET.tostring(root)
+
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	root = ET.fromstring(r.content)
+	estimate_id = root[0]
+	return estimate_id.text
 
 def get_estimate_pdf(estimate_id):
 	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/get_estimate_pdf.xml')
 	root = tree.getroot()
 	_id = root[0]
-	_id.text = estimate_id
+	_id.text = str(estimate_id)
 
 	input_xml = ET.tostring(root)
 	data = input_xml
 	headers = {'Content-Type': 'application/xml'}
 	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
 	# print(r)
+	file_name = "Mibura_SmartSupport_Estimate.pdf"
+	path_to_file = '/tmp/' + file_name
+	with open(path_to_file, 'wb') as f:
+		f.write(r.content)
+
 	return r.content
 
 def list_estimates(client_id):

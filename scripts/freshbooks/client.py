@@ -30,17 +30,17 @@ def list_clients(client):
 	for c in clients:
 		print('client_id', c.find('{http://www.freshbooks.com/api/}client_id').text)
 
-def find_client(search_client):
+def find_client(client_fname, client_lname, client_email):
 	"""  """
 	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_clients.xml')
 	root = tree.getroot()
+
 	email = root.find('email')
-	email.text = search_client['email']
+	email.text = client_email
 	input_xml = ET.tostring(root)
 	data = input_xml
 	headers = {'Content-Type': 'application/xml'}
 	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-	# print(r)
 	root = ET.fromstring(r.content)
 	clients = root[0]
 	for client in clients:
@@ -48,11 +48,9 @@ def find_client(search_client):
 		last_name = client.find('{http://www.freshbooks.com/api/}last_name').text
 		email = client.find('{http://www.freshbooks.com/api/}email').text
 		client_id = client.find('{http://www.freshbooks.com/api/}client_id').text
-		if first_name == search_client['first_name'] and last_name == search_client['last_name'] and email == search_client['email']:
-			# response = {
-			# 	'client_id': client_id,
-			# }
+		if first_name == client_fname and last_name == client_lname:
 			return client_id
+	return False
 
 def get_client(client):
 	pass

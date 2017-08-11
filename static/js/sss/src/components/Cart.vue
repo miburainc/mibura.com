@@ -359,6 +359,10 @@ h1, h2, h3, h4, table, thead, tbody, span, div, p, form {
 	color: #000000;
 }
 
+h2 {
+	font-weight: 300;
+	font-size: 2.5em
+}
 
 
 </style>

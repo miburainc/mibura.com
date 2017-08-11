@@ -62,6 +62,7 @@ def purchase(request):
 def get_create_client(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
 
 		obj,created = Client.objects.get_or_create(email=data.email)
@@ -82,6 +83,7 @@ def get_create_client(request):
 
 			return HttpResponse(response_json, status=201)
 		else:
+			obj.save()
 			for field,value in obj.__dict__.items():
 				if not value and field in data:
 					setattr(obj, field, data[field])

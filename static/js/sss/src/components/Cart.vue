@@ -140,6 +140,7 @@ export default {
 			'checkout',
 			'serverSetClient',
 			'serverGetEstimatePdf',
+			'setEstimatePdfFile',
 		]),
 		formPurchase() {
 			if (this.cart.length < 1) {
@@ -201,6 +202,9 @@ export default {
 				this.buttonStartClientInfo()
 			}
 			else {
+				// Reset pdf to nothing
+				this.setEstimatePdfFile(null);
+				// Send request for new pdf file
 				this.saveCart(this.getClientInfo)
 					.then(() => {
 						this.serverGetEstimatePdf()

@@ -13,6 +13,12 @@ function setError(key, value) {
 
 }
 
+export function toJSONLocal (date) {
+    var local = new Date(date);
+    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+}
+
 export function ValidateFormSteps(current_form, form_steps) {
 	let errors = {
 		valid: true,

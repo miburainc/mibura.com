@@ -65,7 +65,7 @@ const mutations = {
 	[TYPE.SET_ESTIMATE_ID]: (state, value) => {
 		state.estimate_id = value
 	},
-	[TYPE.GET_ESTIMATE_PDF]: (state, value) => {
+	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
 		state.estimate_pdf = value
 	}
 }
@@ -123,6 +123,9 @@ const actions = {
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});
 	},
+	setEstimatePdfFile({commit}, payload) {
+		commit(TYPE.SET_ESTIMATE_PDF, payload)
+	},
 	serverGetEstimatePdf({state, rootState, commit}) {
 		let client = rootState.Form.client_info
 		let cart_ref = state.cart_ref
@@ -135,7 +138,8 @@ const actions = {
 				console.log(response)
 				// commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
 				var blob=new Blob([response.data], {type:"application/pdf"});
-				commit(TYPE.GET_ESTIMATE_PDF, window.URL.createObjectURL(blob))
+				let file_url = window.URL.createObjectURL(blob)
+				commit(TYPE.SET_ESTIMATE_PDF, file_url)
 			})
 	},
 	checkout({state, rootState, commit, dispatch}) {

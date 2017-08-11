@@ -66,6 +66,7 @@
 						</option>
 					</select>
 					<div v-else-if="data.form.type=='stripe'">
+						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
 						<div id="card-element" class="field"></div>
 						<div class="outcome">
 							<div class="error" role="alert"></div>

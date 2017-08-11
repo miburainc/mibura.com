@@ -34,12 +34,13 @@ python manage.py createsuperuser
 ```
 
 Import Database data
+*Run the following commands in order as shown to prevent errors*
 
 ```
-python manage.py loaddata scripts/files/dbdumps/Clouds.txt
-python manage.py loaddata scripts/files/dbdumps/Products.txt
-python manage.py loaddata scripts/files/dbdumps/ProductCategory.txt
-python manage.py loaddata scripts/files/dbdumps/Plans.txt
+python manage.py loaddata support/data/Cloud.txt
+python manage.py loaddata support/data/ProductCategory.txt
+python manage.py loaddata support/data/Plan.txt
+python manage.py loaddata support/data/Product.txt
 ```
 
 *optional*

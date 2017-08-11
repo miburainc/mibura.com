@@ -460,7 +460,7 @@ export const form_steps = [
 				placeholder: "Card",
 				src: "",
 				dest: "payment.number",
-				required: true,
+				required: false,
 				validate: {
 					type: "text",
 				},

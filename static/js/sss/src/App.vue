@@ -42,13 +42,26 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Receive Estimate</h4>
+						<h4 class="modal-title" id="myModalLabel">Download or Print Estimate</h4>
 					</div>
 					<div class="modal-body">
-						<h2>Download the PDF here:</h2>
-						<p><a id="pdf-link" target="_blank" :download="'Mibura_SmartSupport_Estimate-' + new Date() + '.pdf'" :href="get_estimate_pdf">Link</a></p>
+						<div v-if="get_estimate_pdf">
+							<h4>Your estimate is ready!</h4>
+							<div id="pdf">
+  								<object width="100%" height="500" type="application/pdf" :data="get_estimate_pdf" id="pdf_content">
+    								<p>Insert your error message here, if the PDF cannot be displayed.</p>
+  								</object>
+							</div>
+						</div>
+						<div v-else>
+							<h4>Processing</h4>
+							<button class="btn btn-lg btn-success" type="button" disabled="true">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+							</button>
+						</div>
 					</div>
 					<div class="modal-footer">
+						<a v-if="get_estimate_pdf" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-success" id="pdf-link" target="_blank" :href="get_estimate_pdf">Download PDF</a>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -93,6 +106,8 @@ import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
 import SuccessScreen from './components/SuccessScreen.vue'
 
+import {toJSONLocal} from './scripts/functions'
+
 import {mapActions,mapGetters} from 'vuex'
 
 export default {
@@ -116,7 +131,10 @@ export default {
 	methods: {
 		...mapActions({
 			'set_category_multipliers': 'setCategoryMultipliers',
-		})
+		}),
+		localDate(date) {
+			return toJSONLocal(date)
+		}
 	},
 	created() {
 		this.set_category_multipliers()

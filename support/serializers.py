@@ -34,6 +34,15 @@ class CloudSerializer(serializers.HyperlinkedModelSerializer):
 			'pk',
 		)
 
+class DiscountSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Discount
+		fields = (
+			'year_threshold', 
+			'discount_percent', 
+			'pk',
+		)
+
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Client

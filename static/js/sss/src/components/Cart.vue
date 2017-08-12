@@ -3,7 +3,7 @@
 <div id="sss-cart" :style="cartStyle">
 	<div class="row" :style="cartHeaderStyle">
 		<div class="col-xs-6 col-md-4">
-			<h2 class="cart-tray" :style="textColorPlan">${{ getGrandTotal }}</h2>
+			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
 		</div>
 		<div class="col-md-4">
 			<div class="text-center" :style="textColorPlan">Plan
@@ -27,11 +27,12 @@
 				<thead>
 					<th :style="cartHeaderStyle">Product</th>
 					<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
+					<th v-if="getCurrentDiscount" class="text-center" :style="cartHeaderStyle">Discount Price</th>
 					<th class="text-right" :style="cartHeaderStyle">Options</th>
 				</thead>
 				<tbody>
 					<tr v-if="this.cart.length < 1" class="text-center">
-						<td colspan="3">None</td>
+						<td colspan="4">None</td>
 					</tr>
 					<tr v-else v-for="(item, index) in cart">
 						<td>
@@ -40,6 +41,9 @@
 						</td>
 						<td class="text-center">
 							${{ numWithCommas(getProductSubtotal(index)) }}
+						</td>
+						<td v-if="getCurrentDiscount" class="text-center">
+							${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
 						</td>
 						<td class="text-right">
 							<div class="btn-group">
@@ -85,7 +89,10 @@
 					<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 				</div>
 				<div style="color: black;" class="text-right">
-					Estimate Total: ${{ getGrandTotal }}
+					SubTotal: ${{ numWithCommas(getTotal) }}<br>
+					%{{getCurrentDiscount*100}} Discount: &nbsp;
+					- ${{numWithCommas(getGrandTotal*getCurrentDiscount)}}<br>
+					<strong>Estimate Total: ${{ numWithCommas(getGrandTotal) }}</strong>
 					<br>
 					<div class="btn-group">
 						<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
@@ -116,7 +123,7 @@ import axios from 'axios'
 
 import { mapGetters, mapActions } from 'vuex'
 
-import {URL_ROOT,step_names} from '../store/values'
+import {URL_ROOT,API_ROOT,step_names} from '../store/values'
 
 import moment from 'moment'
 import velocity from 'velocity-animate'
@@ -125,7 +132,19 @@ export default {
 	data () {
 		return {
 			current_plan: 0,
+			discounts: [],
+			current_discount: 0.0,
 		}
+	},
+	created() {
+		axios.get(API_ROOT+'discounts')
+			.then((response) => {
+				console.log(response)
+				this.discounts = response.data.results
+			})
+			.catch((error) => {
+				console.error(error)
+			})
 	},
 	methods: {
 		...mapActions([
@@ -324,16 +343,29 @@ export default {
 			get_cart_reference: 'getCartReference',
 			get_accepted_terms: 'getAcceptedTerms',
 		}),
+		getCurrentDiscount() {
+			console.log("getCurrentDiscount")
+			console.log(this.getSupportMonths/12)
+			let d = 0.0
+			for (let i=0; i<this.discounts.length; i++) {
+				if (this.getSupportMonths/12 >= this.discounts[i].year_threshold) {
+					d = this.discounts[i].discount_percent
+				}
+			}
+			return d
+		},
 		getTotal() {
 			let total = 0;
 			for (let i=0; i<this.cart.length; i++) {
 				total += this.getProductSubtotal(i)
 			}
+			
 			return total
 		},
 		getGrandTotal() {
 			let total = this.getTotal
-			return this.numWithCommas(total)
+			let final = total - (total * this.getCurrentDiscount)
+			return final
 		},
 		textColorPlan() {
 			return {'color': this.current_plan == 2 ? 'white' : 'black' }

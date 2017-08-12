@@ -10,7 +10,7 @@ router.register(r'products', views.ProductViewSet)
 router.register(r'productcomplete', views.ProductAutocompleteViewSet)
 router.register(r'cloud', views.CloudViewSet)
 router.register(r'categories', views.CategoriesViewSet)
-
+router.register(r'discounts', views.DiscountViewSet)
 
 urlpatterns = [
 	url(r'^$', views.index, name="index"),

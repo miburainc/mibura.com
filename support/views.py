@@ -14,8 +14,8 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 
-from .models import Product, ProductCategory, Cloud, Client, Cart, ClientProduct, Subscription
-from .serializers import CartSerializer, ProductSerializer, ProductCategorySerializer, CloudSerializer, ClientSerializer
+from .models import *
+from .serializers import *
 
 from scripts.freshbooks import estimates
 
@@ -145,9 +145,21 @@ def get_create_cart(request):
 @csrf_exempt
 def get_previous_estimate(request):
 	if request.method == 'POST':
-		estimate_id = request.body
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
 
+		estimate_ref = data.estimate_ref
+		client_id = data.client_id
+
+		if not data.client_id:
+			HttpResponse("No Client ID", status=400)
+
+		client = get_object_or_404(Client, pk=int(client_id))
 		cart = get_object_or_404(Cart, freshbooks_id=estimate_id)
+
+		freshbooks_client_id = client.get_freshbooks_id()
+		estimate_id = find_estimate(freshbooks_client_id, estimate_id)
+		estimate_data = get_estimate(estimate_id)
 
 		serializer_context = {
 			'request': Request(request),
@@ -248,6 +260,7 @@ class CloudViewSet(viewsets.ReadOnlyModelViewSet):
 			queryset = Cloud.objects.all()
 		return queryset
 
+
 class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 	"""
 	API endpoint that allows products to be viewed or edited.
@@ -255,6 +268,14 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 	queryset = ProductCategory.objects.all().order_by('-name')
 	serializer_class = ProductCategorySerializer
 	lookup_field = 'name'
+
+class DiscountViewSet(viewsets.ReadOnlyModelViewSet):
+	"""
+	API endpoint that allows products to be viewed or edited.
+	"""
+	queryset = Discount.objects.all().order_by('-year_threshold')
+	serializer_class = DiscountSerializer
+	lookup_field = 'pk'
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 	"""

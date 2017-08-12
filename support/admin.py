@@ -48,3 +48,8 @@ class PlanAdmin(admin.ModelAdmin):
 	list_display = ['name', 'short_name', 'price', 'color',]
 
 admin.site.register(Plan, PlanAdmin)
+
+class DiscountAdmin(admin.ModelAdmin):
+	list_display = ['year_threshold', 'discount_percent']
+
+admin.site.register(Discount, DiscountAdmin)

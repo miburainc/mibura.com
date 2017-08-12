@@ -23,6 +23,13 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
+class Discount(models.Model):
+	year_threshold = models.FloatField(default=0.0)
+	discount_percent = models.FloatField(default=0.1)
+
+	def __str__(self):
+		return "Discount at " + str(self.year_threshold) + " years: " + str(self.discount_percent)
+
 
 class Cloud(models.Model):
 	name = models.CharField(max_length=128)

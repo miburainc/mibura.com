@@ -349,7 +349,9 @@ export default {
 			let d = 0.0
 			for (let i=0; i<this.discounts.length; i++) {
 				if (this.getSupportMonths/12 >= this.discounts[i].year_threshold) {
-					d = this.discounts[i].discount_percent
+					if (this.discounts[i].discount_percent > d) {
+						d = this.discounts[i].discount_percent
+					}
 				}
 			}
 			return d

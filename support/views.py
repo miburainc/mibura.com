@@ -273,7 +273,7 @@ class DiscountViewSet(viewsets.ReadOnlyModelViewSet):
 	"""
 	API endpoint that allows products to be viewed or edited.
 	"""
-	queryset = Discount.objects.all().order_by('-year_threshold')
+	queryset = Discount.objects.all().order_by('year_threshold')
 	serializer_class = DiscountSerializer
 	lookup_field = 'pk'
 

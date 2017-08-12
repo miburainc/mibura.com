@@ -30,7 +30,7 @@ class CloudSerializer(serializers.HyperlinkedModelSerializer):
 		fields = (
 			'name', 
 			'image', 
-			'price_modifier',
+			'price_multiplier',
 			'pk',
 		)
 

@@ -140,7 +140,23 @@ def get_create_cart(request):
 		serialized = CartSerializer(cart, context=serializer_context)
 		response_json = JSONRenderer().render(serialized.data)
 
-	return HttpResponse(response_json, status=200)
+		return HttpResponse(response_json, status=200)
+
+@csrf_exempt
+def get_previous_estimate(request):
+	if request.method == 'POST':
+		estimate_id = request.body
+
+		cart = get_object_or_404(Cart, freshbooks_id=estimate_id)
+
+		serializer_context = {
+			'request': Request(request),
+		}
+		serialized = CartSerializer(cart, context=serializer_context)
+		response_json = JSONRenderer().render(serialized.data)
+
+		return HttpResponse(response_json, status=200)
+
 
 @csrf_exempt
 def get_estimate_pdf(request):
@@ -173,6 +189,15 @@ def get_estimate_pdf(request):
 		
 		client.get_freshbooks_id()
 		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		
+		if cart.freshbooks_id:
+			cart.pk = None
+			cart.freshbooks_id = estimate_id
+			cart.save()
+		else:
+			cart.freshbooks_id = estimate_id
+			cart.save()
+		
 		pdf_status = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"

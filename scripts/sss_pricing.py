@@ -43,7 +43,7 @@ def product_price(product, plan, length):
 	return result
 
 def cloud_price(cloud, plan, length):
-	base_price = (plan_prices[plan] * cloud.price_modifier) / 2
+	base_price = (plan_prices[plan] * cloud.price_multiplier) / 2
 	result = 0.0
 	for l in range(0,int(length*2)):
 		result += base_price

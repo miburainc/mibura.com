@@ -35,7 +35,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class CloudAdmin(admin.ModelAdmin):
-	list_display = ['name', 'website', 'price_modifier',]
+	list_display = ['name', 'website', 'price_multiplier',]
 
 admin.site.register(Cloud, CloudAdmin)
 

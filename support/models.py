@@ -27,7 +27,7 @@ PRODUCT_CATEGORIES = (
 class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
-	price_modifier = models.FloatField(default=0.0)
+	price_multiplier = models.FloatField(default=1.0)
 
 	color = models.CharField(max_length=64, blank=True)
 	image = models.ImageField(upload_to='images/cloud/', blank=True)
@@ -156,6 +156,7 @@ class Cart(models.Model):
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
 	reference = models.CharField(max_length=128) # Reference code for client to use
+	freshbooks_id = models.CharField(max_length=32, blank=True)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)

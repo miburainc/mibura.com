@@ -242,14 +242,12 @@ export default {
 								cloud = this.cloud[i]
 							}
 						}
-						console.log(cloud)
 						let cloud_obj = {
 								sku: 'none',
 								category: this.get_multiplier('cloud'),
-								price_silver: 1,
-								price_gold: 1,
-								price_black: 1,
-								with_cloud: 1,
+								price_silver: cloud.price_multiplier,
+								price_gold: cloud.price_multiplier,
+								price_black: cloud.price_multiplier,
 								type: 'cloud',
 								brand: cloud.name,
 								model: '',

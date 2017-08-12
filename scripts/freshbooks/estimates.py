@@ -117,6 +117,21 @@ def list_estimates(client_id):
 	for e in estimates:
 		print('estimate_id', e.find('{http://www.freshbooks.com/api/}estimate_id').text)
 
+def get_estimate(estimate_id):
+	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/get_estimate.xml')
+	root = tree.getroot()
+	eid = root.find('estimate_id')
+	eid.text = estimate_id
+	input_xml = ET.tostring(root)
+
+	data = input_xml
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	# print(r)
+	root = ET.fromstring(r.content)
+	return True
+
+
 def find_estimate(client_id, estimate_reference_number):
 	"""  """
 	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_estimates.xml')

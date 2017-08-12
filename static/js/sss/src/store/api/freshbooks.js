@@ -18,11 +18,21 @@ const actions = {
 			responseType: 'arraybuffer'
 		}).then((response) => {
 			return response
-		})
-		.catch((error) => {
+		}).catch((error) => {
 			console.error(error)
 		})
 	},
+	request_past_estimate(client_id, estimate_ref) {
+		return axios({
+			method: 'post',
+			url: URL_ROOT + 'support/get-previous-estimate/',
+			data: {'client': client_id, 'estimate_ref': estimate_ref},
+		}).then((response) => {
+			return response
+		}).catch((error) => {
+			console.error(error)
+		})
+	}
 }
 
 export default {

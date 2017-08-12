@@ -35,6 +35,25 @@
 				</div>
 			</div>
 		</div>
+		<!-- Input Estimate ID -->
+		<div class="modal fade" id="estimateIdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Open Estimate</h4>
+					</div>
+					<div class="modal-body" style="overflow-y: scroll;">
+						<h4>Input Estimate ID</h4>
+						<input style="color: #000000;" type="text" name="estimate_id" class="form-control" v-model="estimate_id">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" @click="requestPastQuote">Request</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Price Confirmation -->
 		<div class="modal fade" id="cartPriceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -48,7 +67,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Accept</button>
+						<button type="button" class="btn btn-primary">Submit Payment</button>
 					</div>
 				</div>
 			</div>
@@ -93,7 +112,7 @@
 						<h4 class="modal-title" id="myModalLabel">Contact Sales</h4>
 					</div>
 					<div class="modal-body text-center">
-						<h2>Cart Reference Code: {{get_cart_reference}}</h2>
+						<h3>Cart Reference Code<br>{{get_cart_reference}}</h3>
 					</div>
 					<div class="modal-footer">
 						<a type="button" href="tel:1-800-862-5144" class="btn btn-success">Call Now <i class="fa fa-phone" aria-hidden="true"></i></a>
@@ -131,6 +150,7 @@ export default {
 	name: 'app',
 	data () {
 		return {
+			estimate_id: ''
 		}
 	},
 	components: {
@@ -149,7 +169,11 @@ export default {
 		...mapActions({
 			'set_category_multipliers': 'setCategoryMultipliers',
 			'set_accepted_terms': 'setAcceptedTerms',
+			request_past_quote: 'ServerRequestPastEstimate'
 		}),
+		requestPastQuote() {
+			this.request_past_quote(this.estimate_id)
+		},
 		localDate(date) {
 			return toJSONLocal(date)
 		}

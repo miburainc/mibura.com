@@ -53,7 +53,7 @@
 			<div class="btn-group">
 				<button type="button" class="btn btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Add Item</button>
 				<button type="button" class="btn btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud Provider</button>
-				<button type="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload Quote</button>
+				<button type="button" class="btn btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Input Quote ID</button>
 				<button type="button" class="btn btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
 			</div>
 				
@@ -196,6 +196,9 @@ export default {
 				})
 				
 			}
+		},
+		buttonGetEstimate() {
+			$('#estimateIdModal').modal('show')
 		},
 		buttonGetPDF() {
 			console.log("buttonGetPDF")

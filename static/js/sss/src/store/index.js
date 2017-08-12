@@ -6,6 +6,8 @@ import Cart from './modules/sss_cart'
 
 import {PLANS, API_ROOT, product_multiplier} from './values'
 
+import freshbooks from './api/freshbooks'
+
 import productApi from './api/products'
 
 import createLogger from '../scripts/logger'
@@ -69,6 +71,12 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
+    ServerRequestPastEstimate({commit, state, rootState}, estimate_ref) {
+      client_id = rootState.Form.client_info.pk
+      freshbooks.request_past_estimate(client_id, estimate_ref).then((response) => {
+        console.log(response)
+      })
+    },
     setAcceptedTerms({commit}, value) {
       commit(TYPE.SET_ACCEPTED_TERMS, value)
     },

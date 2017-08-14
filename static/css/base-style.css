@@ -11,7 +11,7 @@ html, body {
 
 body {
 	font-family: 'Roboto Condensed', sans-serif;
-	font-weight: 100; 
+	font-weight: 300; 
 }
 
 h1 {
@@ -30,10 +30,12 @@ h3 {
 h4 {
 	font-size: 1.6em;
 	line-height: 40px;
+	font-weight: 300;
 }
 
 p {
 	font-size: 1.2em;
+	font-weight: 300;
 }
 
 @media (max-width: 767px) {

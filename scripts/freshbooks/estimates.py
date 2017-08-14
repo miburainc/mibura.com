@@ -10,7 +10,7 @@ except ImportError:
 
 def create_estimate(client, plan, length, items):
 	print(client)
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/estimate_template.xml')
+	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/create_estimate.xml')
 	root = tree.getroot()
 	estimate = root[0]
 

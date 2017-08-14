@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone, encoding
+from datetime import datetime
 
 from django.conf import settings
 
@@ -81,6 +82,7 @@ def get_create_client(request):
 			if data.street2:
 				obj.street2 = data.street2
 			obj.city = data.city
+			obj.state = data.state
 			obj.country = data.country
 			obj.zipcode = data.zipcode
 			obj.save()
@@ -202,13 +204,8 @@ def get_estimate_pdf(request):
 		client.get_freshbooks_id()
 		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
 		
-		if cart.freshbooks_id:
-			cart.pk = None
-			cart.freshbooks_id = estimate_id
-			cart.save()
-		else:
-			cart.freshbooks_id = estimate_id
-			cart.save()
+		cart.freshbooks_id = estimate_id
+		cart.save()
 		
 		pdf_status = estimates.get_estimate_pdf(estimate_id)
 		
@@ -224,12 +221,14 @@ def get_estimate_pdf(request):
 @csrf_exempt
 def checkout(request):
 	if request.method == 'POST':
+		print("Checkout View")
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 		print(data)
 		client = get_object_or_404(Client, pk=data.client)
 		cart = get_object_or_404(Cart, reference=data.cart)
 		total = cart.get_total_price()
+		print(total)
 		stripe_total = math.floor(total*100)
 		stripe.Charge.create(
 			amount=stripe_total,
@@ -237,7 +236,9 @@ def checkout(request):
 			source=data.stripe_token, # obtained with Stripe.js
 			description="Charge for " + client.email
 		)
-		sub = Subscription(client=client, plan=cart.plan, length=data.length, price=total, date_begin=timezone.now())
+		time = datetime.now()
+		print("time", time)
+		sub = Subscription(client=client, plan=cart.plan, length=data.length, price=total, date_begin=time)
 		sub.save()
 		sub.products.add(*cart.products.all())
 

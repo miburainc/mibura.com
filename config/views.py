@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 import cloudinary
 
@@ -16,3 +17,6 @@ def index(request):
 		'index.html',
 		context
 	)
+
+def ssl_verification(request):
+	return HttpResponse(open('static/ssl/937697B349ECB0FB31EF5BAE50010670.txt').read())

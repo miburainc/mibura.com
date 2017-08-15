@@ -58,14 +58,15 @@ INSTALLED_APPS = [
     'datacenter',
     'staffing',
     'support',
+    'freshbooks',
+    'dynamicscrm',
 ]
 
 # CORS
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    'localhost:8080',
-    '127.0.0.1:8080',
+    'localhost',
+    '127.0.0.1',
     'herokuapp.com',
 )
 

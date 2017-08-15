@@ -53,3 +53,9 @@ class DiscountAdmin(admin.ModelAdmin):
 	list_display = ['year_threshold', 'discount_percent']
 
 admin.site.register(Discount, DiscountAdmin)
+
+class EstimateTextAdmin(admin.ModelAdmin):
+	list_filter = ['plan', 'category']
+	list_display = ['item', 'category', 'plan', 'cloud', 'short_description']
+
+admin.site.register(EstimateText, EstimateTextAdmin)

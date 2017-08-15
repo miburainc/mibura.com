@@ -1,3 +1,4 @@
+from django.template.defaultfilters import truncatechars
 from django.conf import settings
 from django.db import models
 
@@ -22,6 +23,15 @@ PRODUCT_CATEGORIES = (
 	("network", "Networking"),
 	("appliances", "Appliances"),
 )
+
+class Plan(models.Model):
+	name = models.CharField(max_length=64)
+	short_name = models.CharField(max_length=16)
+	color = models.CharField(max_length=12)
+	price = models.FloatField(default=0.0)
+
+	def __str__(self):
+		return self.name
 
 class Discount(models.Model):
 	year_threshold = models.FloatField(default=0.0)
@@ -115,14 +125,6 @@ class Client(models.Model):
 	def __str__(self):
 		return self.get_full_name()
 
-class Plan(models.Model):
-	name = models.CharField(max_length=64)
-	short_name = models.CharField(max_length=16)
-	color = models.CharField(max_length=12)
-	price = models.FloatField(default=0.0)
-
-	def __str__(self):
-		return self.name
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
@@ -186,3 +188,18 @@ class Cart(models.Model):
 		for cloud in self.cloud.all():
 			total += cloud_price(cloud, self.plan, self.length)
 		return total
+
+class EstimateText(models.Model):
+	item = models.CharField(max_length=256)
+	description = models.TextField()
+	cloud = models.ForeignKey(Cloud, null=True, blank=True)
+
+	plan = models.ForeignKey(Plan, null=True, blank=True)
+	category = models.ForeignKey(ProductCategory)
+
+	@property
+	def short_description(self):
+		return truncatechars(self.description, 100)
+
+	def __str__(self):
+		return self.item

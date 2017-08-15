@@ -1,5 +1,6 @@
 from django.conf import settings
 
+import sys
 import requests
 
 try:
@@ -13,7 +14,7 @@ def create_estimate(client, plan, length, items):
 	plan_obj = Plan.objects.get(short_name=plan)
 	categories = ProductCategory.objects.all()
 
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/create_estimate.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/create_estimate.xml')
 	root = tree.getroot()
 	estimate = root[0]
 
@@ -56,18 +57,23 @@ def create_estimate(client, plan, length, items):
 	lines = estimate.find('lines')
 
 	for index,item in enumerate(items):
-		cat = categories.get(category_code=item['type'])
+		print("item type:",item['type'])
+		print(item)
+		cat = categories.get(category_code=item['category'])
 		line = ET.Element('line')
 		name = ET.SubElement(line, 'name')
 		description = ET.SubElement(line, 'description')
 		if item['type'] == 'product':
 			text = EstimateText.objects.get(plan=plan_obj, category=cat)
 			name.text = text.item
+			desc = text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(length) + ' years.')
 		elif item['type'] == 'cloud':
 			cloud = Cloud.objects.get(name=item['name'])
-			text = EstimateText.objects.get(plan=plan_obj, category=cat, cloud=cloud)
+			print("cloud: ",cloud)
+			text = EstimateText.objects.get(category=cat, cloud=cloud)
 			name.text = text.item
-		description.text = text.description
+			desc = text.description
+		description.text = desc
 		unit_cost = ET.SubElement(line, 'unit_cost')
 		unit_cost.text = str(round(item['cost'], 2))
 		quantity = ET.SubElement(line, 'quantity')
@@ -85,7 +91,7 @@ def create_estimate(client, plan, length, items):
 	return estimate_id.text
 
 def get_estimate_pdf(estimate_id):
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/get_estimate_pdf.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/get_estimate_pdf.xml')
 	root = tree.getroot()
 	_id = root[0]
 	_id.text = str(estimate_id)
@@ -103,7 +109,7 @@ def get_estimate_pdf(estimate_id):
 	return r.content
 
 def list_estimates(client_id):
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_estimates.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
 	root = tree.getroot()
 	_id = root.find('estimate_id')
 	_id.text = client_id
@@ -123,7 +129,7 @@ def list_estimates(client_id):
 		print('estimate_id', e.find('{http://www.freshbooks.com/api/}estimate_id').text)
 
 def get_estimate(estimate_id):
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/get_estimate.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/get_estimate.xml')
 	root = tree.getroot()
 	eid = root.find('estimate_id')
 	eid.text = estimate_id
@@ -139,7 +145,7 @@ def get_estimate(estimate_id):
 
 def find_estimate(client_id, estimate_reference_number):
 	"""  """
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_estimates.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
 	root = tree.getroot()
 	_id = root.find('client_id')
 	_id.text = client_id
@@ -163,3 +169,103 @@ def find_estimate(client_id, estimate_reference_number):
 
 
 
+
+
+def create_client(client_obj):
+	print(client_obj)
+	tree = ET.ElementTree(file='freshbooks/xml_templates/create_client.xml')
+	root = tree.getroot()
+	client = root[0]
+
+	first_name = client.find('first_name')
+	first_name.text = client_obj['first_name']
+
+	last_name = client.find('last_name')
+	last_name.text = client_obj['last_name']
+
+	email = client.find('email')
+	email.text = client_obj['email']
+
+	organization = client.find('organization')
+	organization.text = client_obj['company']
+
+	phone = client.find('work_phone')
+	phone.text = client_obj['phone']
+
+	street1 = client.find('p_street1')
+	street1.text = client_obj['street']
+
+	street2 = client.find('p_street2')
+	if client_obj['street2'] != '':
+		street2.text = client_obj['street2']
+	else:
+		client.remove(street2)
+
+	city = client.find('p_city')
+	city.text = client_obj['city']
+
+	state = client.find('p_state')
+	state.text = client_obj['state']
+
+	country = client.find('p_country')
+	country.text = client_obj['country']
+
+	zipcode = client.find('p_code')
+	zipcode.text = client_obj['zipcode']
+
+	data = ET.tostring(root)
+
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	root = ET.fromstring(r.content)
+	client_id = root[0]
+	return client_id.text
+
+def list_clients(client):
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_clients.xml')
+	root = tree.getroot()
+	email = root.find('email')
+	email.text = client['email']
+	input_xml = ET.tostring(root)
+	data = input_xml
+	print('\n\n')
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	# print(r)
+	print(r.content)
+	print('\n')
+	root = ET.fromstring(r.content)
+	print(root)
+	clients = root[0]
+	print(clients)
+	for c in clients:
+		print('client_id', c.find('{http://www.freshbooks.com/api/}client_id').text)
+
+def find_client(client_fname, client_lname, client_email):
+	"""  """
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_clients.xml')
+	root = tree.getroot()
+
+	email = root.find('email')
+	email.text = client_email
+	input_xml = ET.tostring(root)
+	data = input_xml
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	root = ET.fromstring(r.content)
+
+	client_id = ""
+
+	clients = root[0]
+	for client in clients:
+		first_name = client.find('{http://www.freshbooks.com/api/}first_name').text
+		last_name = client.find('{http://www.freshbooks.com/api/}last_name').text
+		email = client.find('{http://www.freshbooks.com/api/}email').text
+		client_id = client.find('{http://www.freshbooks.com/api/}client_id').text
+		if first_name == client_fname and last_name == client_lname:
+			return client_id
+
+	return False
+
+def get_client(client):
+	pass

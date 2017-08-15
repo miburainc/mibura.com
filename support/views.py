@@ -18,12 +18,10 @@ from rest_framework.request import Request
 from .models import *
 from .serializers import *
 
-from scripts.freshbooks import estimates
+from freshbooks import api
 
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
-
-
 
 import os, json, math
 import stripe
@@ -55,7 +53,7 @@ def purchase(request):
 	# Render the HTML template index.html with the data in the context variable
 	context = {}
 	context['DEBUG'] = settings.DEBUG
-	print(context)
+	
 	return render(
 		request,
 		'support/purchase.html',
@@ -191,6 +189,7 @@ def get_estimate_pdf(request):
 			items.append({
 				**client_prod.__dict__,
 				'type': 'product',
+				'category': client_prod.product.category,
 				'cost': product_price(client_prod, cart.plan, cart.length)
 			})
 
@@ -198,16 +197,17 @@ def get_estimate_pdf(request):
 			items.append({
 				'name': cloud.name,
 				'type': 'cloud',
+				'category': 'cloud',
 				'cost': cloud_price(cloud, cart.plan, cart.length)
 			})
 		
 		client.get_freshbooks_id()
-		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		estimate_id = api.create_estimate(client.__dict__, cart.plan, cart.length, items)
 		
 		cart.freshbooks_id = estimate_id
 		cart.save()
 		
-		pdf_status = estimates.get_estimate_pdf(estimate_id)
+		pdf_status = api.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
 		path_to_file = '/tmp/' + file_name
@@ -250,7 +250,7 @@ def checkout(request):
 # Django Rest Framework
 
 class CloudViewSet(viewsets.ReadOnlyModelViewSet):
-	queryset = Cloud.objects.all().order_by('-name')
+	queryset = Cloud.objects.all().order_by('name')
 	serializer_class = CloudSerializer
 
 	def get_queryset(self):
@@ -258,7 +258,7 @@ class CloudViewSet(viewsets.ReadOnlyModelViewSet):
 		if cloud:
 			queryset = Cloud.objects.filter(name__icontains=cloud)
 		else:
-			queryset = Cloud.objects.all()
+			queryset = Cloud.objects.all().order_by('name')
 		return queryset
 
 
@@ -294,7 +294,7 @@ class ProductAutocompleteViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = ProductSerializer
 	
 	def get_queryset(self):
-		queryset = Product.objects.all()
+		queryset = Product.objects.all().order_by('-model')
 		brand = self.request.query_params.get('brand', None)
 		model = self.request.query_params.get('model', None)
 		if brand:

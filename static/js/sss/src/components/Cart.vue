@@ -91,7 +91,7 @@
 				<div style="color: black;" class="text-right">
 					SubTotal: ${{ numWithCommas(getTotal) }}<br>
 					%{{getCurrentDiscount*100}} Discount: &nbsp;
-					- ${{numWithCommas(getGrandTotal*getCurrentDiscount)}}<br>
+					- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
 					<strong>Estimate Total: ${{ numWithCommas(getGrandTotal) }}</strong>
 					<br>
 					<div class="btn-group">

@@ -13,6 +13,12 @@ function setError(key, value) {
 
 }
 
+export function toJSONLocal (date) {
+    var local = new Date(date);
+    local.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    return local.toJSON().slice(0, 10);
+}
+
 export function ValidateFormSteps(current_form, form_steps) {
 	let errors = {
 		valid: true,
@@ -22,12 +28,10 @@ export function ValidateFormSteps(current_form, form_steps) {
 	for (let i=0; i<form_steps.length; i++) {
 		let val = document.getElementById([form_steps[i].form.name]).value
 		let item_val = current_form[form_steps[i].form.name]
-		console.log("Validate: " + val)
 		let current_form_item = item_val ? item_val : val
 
 		if (form_steps[i].required) {
 			errors.errors[form_steps[i].form.name] = []
-			console.log(current_form_item)
 
 			if (current_form_item == undefined || current_form_item == "") {
 				errors["valid"] = false
@@ -39,7 +43,6 @@ export function ValidateFormSteps(current_form, form_steps) {
 					switch(key) {
 						case "type":
 							let valid = false;
-							console.log("Validate Type")
 							switch (value) {
 								case "text":
 									valid = /^\w+( \w+)*$/.test(current_form_item)
@@ -60,7 +63,6 @@ export function ValidateFormSteps(current_form, form_steps) {
 							}
 							break;
 						case "min":
-							console.log("Validate Length Min")
 							if (current_form_item.length >= parseInt(value)) {
 								valid = true
 							}
@@ -71,7 +73,6 @@ export function ValidateFormSteps(current_form, form_steps) {
 							}
 							break;
 						case "max":
-							console.log("Validate Length Max")
 							if (current_form_item.length <= parseInt(value)) {
 								valid = true
 							}

@@ -36,6 +36,12 @@ const mutations = {
 	[TYPE.SET_PAYMENT_TOKEN]: (state, value) => {
 		state.payment_token = value
 	},
+	[TYPE.SET_CLIENT]: (state, payload) => {
+		Vue.set(state, 'client_info', payload)
+	},
+	[TYPE.CLEAR_CLIENT]: (state, payload) => {
+		Vue.set(state, 'client_info', {})
+	},
 }
 
 const actions = {
@@ -64,14 +70,9 @@ const actions = {
 		commit(TYPE.SET_PAYMENT_TOKEN, value)
 	},
 	serverSetClient({state, commit, dispatch}) {
-		client.getOrCreateClient(
-			state.client_info,
-			(response) => {
-				console.log(response)
-				commit(TYPE.SET_CLIENT_PROP, {prop: 'pk', data: response.data.pk})
-			},
-			(error) => {
-				console.log("error")
+		return client.getOrCreateClient(
+			state.client_info).then(response => {
+				commit(TYPE.SET_CLIENT_PROP, {prop: 'pk', data: response.data})
 			})
 	}
 }

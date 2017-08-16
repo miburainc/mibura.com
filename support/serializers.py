@@ -30,7 +30,16 @@ class CloudSerializer(serializers.HyperlinkedModelSerializer):
 		fields = (
 			'name', 
 			'image', 
-			'price_modifier',
+			'price_multiplier',
+			'pk',
+		)
+
+class DiscountSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Discount
+		fields = (
+			'year_threshold', 
+			'discount_percent', 
 			'pk',
 		)
 
@@ -58,7 +67,9 @@ class CartSerializer(serializers.ModelSerializer):
 		fields = (
 			'pk',
 			'email', 
-			'client', 
+			'client',
+			'length',
 			'reference',
 			'products',
+			'plan'
 		)

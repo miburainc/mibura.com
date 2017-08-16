@@ -1,6 +1,8 @@
 from .base import *
 import raven, logging
 
+SECRET_KEY = get_env_variable("SECRET_KEY")
+
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DEBUG = get_env_variable('DJANGO_DEBUG')

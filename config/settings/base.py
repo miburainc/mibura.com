@@ -34,9 +34,6 @@ def get_env_variable(var_name):
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_env_variable("SECRET_KEY")
-
 
 # Application definition
 
@@ -61,24 +58,26 @@ INSTALLED_APPS = [
     'datacenter',
     'staffing',
     'support',
+    'freshbooks',
+    'dynamicscrm',
 ]
 
 # CORS
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    'localhost:8080',
-    '127.0.0.1:8080',
-    'herokuapp.com',
+    'localhost',
+    '127.0.0.1',
+    '.herokuapp.com',
+    '.mibura.com',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = (
-    'localhost:8000',
-    'localhost:8080',
+    'localhost',
     '127.0.0.1',
-    'herokuapp.com',
+    '.herokuapp.com',
+    '.mibura.com',
 )
 
 # REST API

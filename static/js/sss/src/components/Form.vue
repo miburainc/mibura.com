@@ -66,6 +66,7 @@
 						</option>
 					</select>
 					<div v-else-if="data.form.type=='stripe'">
+						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
 						<div id="card-element" class="field"></div>
 						<div class="outcome">
 							<div class="error" role="alert"></div>
@@ -108,7 +109,7 @@
 
 <script>
 
-import Autocomplete from 'vue2-autocomplete-js';
+import Autocomplete from './autocomplete';
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -138,11 +139,8 @@ export default {
 		}
 	},
 	mounted () {
-		console.log(this.get_api_root)
-		console.log("Created()")
 		axios.get(this.get_api_root + 'cloud')
 			.then((response) => {
-				console.log(response.data.results)
 				this.cloud = response.data.results
 			})
 			.catch((error) => {
@@ -162,7 +160,7 @@ export default {
 			set_client_prop: 'setClientProp',
 			set_payment_token: 'setPaymentToken',
 			add_cloud: 'addCloud',
-			serverSetClient: 'serverSetClient',
+			server_set_client: 'serverSetClient',
 		}),
 		logData(obj) {	// Function for testing ajax replies
 			console.log("logData")
@@ -183,28 +181,16 @@ export default {
 						this.formTimeoutNext()
 						break;
 					case "next":
-
-						// If step is end of client entry
-						// Check server for client info
-						// If not on server, create in server
-						if (this.get_current_step == this.step_names.client_address) {
-							this.serverSetClient()
-						}
-
-						this.past_step = this.get_current_step
+						// Grab current step data
 						let data = this.get_formsteps[this.get_current_step].data
-						
-						for (let i=0; i<this.get_formsteps[this.get_current_step].data.length; i++) {
-							let formstep = this.get_formsteps[this.get_current_step].data;
-							let name = formstep[i].form.name;
-							if (!this.get_current_item_prop(name)) {
-								let val = document.getElementById(name).value
-								this.setFormItem(val, formstep[i])
-							}
-						}
 
+						// Reset error messages
 						this.clear_errors()
+
+						// Validate all current form steps
 						let errors = ValidateFormSteps(this.get_current_item, data)
+						
+						// If errors exist
 						if (errors["valid"] == false)
 						{
 							forEachValue(errors["errors"], (value, key) => {
@@ -212,16 +198,33 @@ export default {
 									this.set_error({key: key, value: value})
 								})
 							})
-							
+							// cancel button action early
 							break;
 						}
 						else {
+							// Save all current form fields into vuex store
+							for (let i=0; i<data.length; i++) {
+								let name = data[i].form.name;
+								if (!this.get_current_item_prop(name)) {
+									let val = document.getElementById(name).value
+									this.setFormItem(val, data[i])
+								}
+							}
 							this.clear_errors()
-							this.set_current_form_step(this.get_current_step+1)
-						}
-						this.formTimeoutNext()
 
-						
+							// Proceed to next page of form
+							this.set_current_form_step(this.get_current_step+1)
+
+							// Call timeout function
+							this.formTimeoutNext()
+
+							// If step is end of client entry
+							// Check server for client info
+							// If not on server, create in server
+							if (this.get_current_step == this.step_names.payment) {
+								this.server_set_client()
+							}
+						}
 
 						break;
 					case "back":
@@ -239,14 +242,12 @@ export default {
 								cloud = this.cloud[i]
 							}
 						}
-						console.log(cloud)
 						let cloud_obj = {
 								sku: 'none',
 								category: this.get_multiplier('cloud'),
-								price_silver: 1,
-								price_gold: 1,
-								price_black: 1,
-								with_cloud: 1,
+								price_silver: cloud.price_multiplier,
+								price_gold: cloud.price_multiplier,
+								price_black: cloud.price_multiplier,
 								type: 'cloud',
 								brand: cloud.name,
 								model: '',
@@ -255,7 +256,40 @@ export default {
 						this.add_cart_item(cloud_obj)
 						break;
 					case "review":
-						velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+						// Grab current step data
+						let card_data = this.get_formsteps[this.get_current_step].data
+
+						// Reset error messages
+						this.clear_errors()
+
+						// Validate all current form steps
+						let card_errors = ValidateFormSteps(this.get_current_item, card_data)
+						
+						// If errors exist
+						if (card_errors["valid"] == false)
+						{
+							forEachValue(card_errors["errors"], (value, key) => {
+								value.map((val) => {
+									this.set_error({key: key, value: value})
+								})
+							})
+							// cancel button action early
+							break;
+						}
+						else {
+							// Save all current form fields into vuex store
+							for (let i=0; i<card_data.length; i++) {
+								let name = card_data[i].form.name;
+								if (!this.get_current_item_prop(name)) {
+									let val = document.getElementById(name).value
+									this.setFormItem(val, card_data[i])
+								}
+							}
+							this.clear_errors()
+
+							velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+						}
+						
 						break;
 					case "additem":
 						let model = this.get_current_item_prop('model')
@@ -272,7 +306,6 @@ export default {
 								price_silver: 1,
 								price_gold: 1,
 								price_black: 1,
-								with_cloud: 1,
 								type: 'product',
 							}
 						}
@@ -312,6 +345,9 @@ export default {
 				else {
 					this.set_client_prop({prop: dest_array[1], data: value})
 				}
+			}
+			else if (dest_array[0] == "payment") {
+				this.set_client_prop({prop: dest_array[1], data: value})
 			}
 		},
 		setItemProp () {

@@ -35,7 +35,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class CloudAdmin(admin.ModelAdmin):
-	list_display = ['name', 'website', 'price_modifier',]
+	list_display = ['name', 'website', 'price_multiplier',]
 
 admin.site.register(Cloud, CloudAdmin)
 
@@ -45,6 +45,17 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 admin.site.register(ProductCategory, ProductCategoryAdmin)
 
 class PlanAdmin(admin.ModelAdmin):
-	list_display = ['name', 'price', 'color',]
+	list_display = ['name', 'short_name', 'price', 'color',]
 
 admin.site.register(Plan, PlanAdmin)
+
+class DiscountAdmin(admin.ModelAdmin):
+	list_display = ['year_threshold', 'discount_percent']
+
+admin.site.register(Discount, DiscountAdmin)
+
+class EstimateTextAdmin(admin.ModelAdmin):
+	list_filter = ['plan', 'category']
+	list_display = ['item', 'category', 'plan', 'cloud', 'short_description']
+
+admin.site.register(EstimateText, EstimateTextAdmin)

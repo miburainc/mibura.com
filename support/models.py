@@ -1,3 +1,4 @@
+from django.template.defaultfilters import truncatechars
 from django.conf import settings
 from django.db import models
 
@@ -6,8 +7,7 @@ from pytz import timezone
 
 from scripts.sss_pricing import product_price, cloud_price
 
-from scripts.freshbooks.client import get_client, create_client
-from scripts.freshbooks.estimates import create_estimate
+from freshbooks import clients
 
 PLAN_CHOICES = (
 	("silver", "Silver"),
@@ -23,11 +23,27 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
+class Plan(models.Model):
+	name = models.CharField(max_length=64)
+	short_name = models.CharField(max_length=16)
+	color = models.CharField(max_length=12)
+	price = models.FloatField(default=0.0)
+
+	def __str__(self):
+		return self.name
+
+class Discount(models.Model):
+	year_threshold = models.FloatField(default=0.0)
+	discount_percent = models.FloatField(default=0.1)
+
+	def __str__(self):
+		return "Discount at " + str(self.year_threshold) + " years: " + str(self.discount_percent)
+
 
 class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
-	price_modifier = models.FloatField(default=0.0)
+	price_multiplier = models.FloatField(default=1.0)
 
 	color = models.CharField(max_length=64, blank=True)
 	image = models.ImageField(upload_to='images/cloud/', blank=True)
@@ -62,6 +78,8 @@ class Product(models.Model):
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
 
+	approved = models.BooleanField(default=True)
+
 	def __str__(self):
 		return self.brand + " : " + self.model
 
@@ -88,8 +106,19 @@ class Client(models.Model):
 
 	def get_freshbooks_id(self):
 		if not self.freshbooks_id:
-			print("no freshbooks id")
-		pass
+			fid = clients.find_client(self.first_name, self.last_name, self.email)
+			print(fid)
+			if fid:
+				print("fid not false:", fid)
+				self.freshbooks_id = fid
+				self.save()
+			else:
+				print("fid false:", fid)
+				fid = clients.create_client(self.__dict__)
+				print("after create_client:", fid)
+				self.freshbooks_id = fid
+				self.save()
+		return self.freshbooks_id
 
 	def get_dynamicscrm_id(self):
 		pass
@@ -97,13 +126,6 @@ class Client(models.Model):
 	def __str__(self):
 		return self.get_full_name()
 
-class Plan(models.Model):
-	name = models.CharField(max_length=64)
-	color = models.CharField(max_length=12)
-	price = models.FloatField(default=0.0)
-
-	def __str__(self):
-		return self.name
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
@@ -152,9 +174,11 @@ class Cart(models.Model):
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
 	reference = models.CharField(max_length=128) # Reference code for client to use
+	freshbooks_id = models.CharField(max_length=32, blank=True)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
+	replaced = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.client.get_full_name() + " Cart " + str(self.date_created)
@@ -166,3 +190,18 @@ class Cart(models.Model):
 		for cloud in self.cloud.all():
 			total += cloud_price(cloud, self.plan, self.length)
 		return total
+
+class EstimateText(models.Model):
+	item = models.CharField(max_length=256)
+	description = models.TextField()
+	cloud = models.ForeignKey(Cloud, null=True, blank=True)
+
+	plan = models.ForeignKey(Plan, null=True, blank=True)
+	category = models.ForeignKey(ProductCategory)
+
+	@property
+	def short_description(self):
+		return truncatechars(self.description, 100)
+
+	def __str__(self):
+		return self.item

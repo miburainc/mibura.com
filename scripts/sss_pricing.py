@@ -22,45 +22,18 @@ plan_prices = {
 	'black': 499
 }
 
-product_multiplier = {
-	'none': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.10, # 10% every 6 months
-	},
-	'cloud': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.10, # 10% every 6 months
-	},
-	'servers': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.10, # 10% every 6 months
-	},
-	'storage': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.20, # 20% every 6 months
-	},
-	'network': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.10, # 10% every 6 months
-	},
-	'appliances': {
-		'start_value': 1.0, # multiplier on plan
-		'increment': 0.10, # 10% every 6 months
-	},
-}
-
 def product_price(product, plan, length):
 	print("product_price")
 	print(product.product)
 	print(plan)
 	prd_plan_name = 'price_'+plan
 	product_plan_multiplier = getattr(product.product, prd_plan_name)
-	base_price = (plan_prices[plan] * product_plan_multiplier) / 2
+	base_price = (plan_prices[plan] * product.product.category.price_multiplier * product_plan_multiplier) / 2
 	date_start = product.product.release
 	date_now = date.today()
 	diff = math.floor(months_between(date_start, date_now) / 6)
 	result = 0.0
-	increment = product_multiplier[product.product.category]['increment']
+	increment = product.product.category.yearly_tax
 	for i in range(0,diff):
 		result += base_price * increment
 	print("base:", result)
@@ -70,7 +43,7 @@ def product_price(product, plan, length):
 	return result
 
 def cloud_price(cloud, plan, length):
-	base_price = (plan_prices[plan] * cloud.price_modifier) / 2
+	base_price = (plan_prices[plan] * cloud.price_multiplier) / 2
 	result = 0.0
 	for l in range(0,int(length*2)):
 		result += base_price

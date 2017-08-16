@@ -18,16 +18,19 @@ console.log("API_ROOT: " + API_ROOT)
 
 export const PLANS = [
 	{
+		code: "silver",
 		name: "Silver Pro",
 		cost: 49,
 		color: "#ebebeb"
 	},
 	{
+		code: "gold",
 		name: "Pure Gold",
 		cost: 99,
 		color: "#f4c730"
 	},
 	{
+		code: "black",
 		name: "Carbon Black",
 		cost: 499,
 		color: "#000000"
@@ -149,12 +152,14 @@ export const form_steps = [
 				placeholder: "Serial Number",
 				src: "",
 				dest: "cart.#.sn",
-				required: false,
+				required: true,
 				form: {
 					type: "text",
 					name: "serialnumber"
 				},
-				validate: {},
+				validate: {
+					min: 3
+				},
 			},
 			{
 				placeholder: "Device Age (Years)",
@@ -198,7 +203,7 @@ export const form_steps = [
 			},
 		],
 		title: "Additional Information",
-		text: "These fields are all optional, but please supply us with as much information as you can to ensure we provide you with the best support!",
+		text: "",
 		error: "",
 		step: 0,
 	},
@@ -338,7 +343,7 @@ export const form_steps = [
 			{
 				placeholder: "Street 2",
 				src: "",
-				dest: "client.address.street_secondary",
+				dest: "client.address.street2",
 				required: false,
 				validate: {},
 				form: {
@@ -458,7 +463,7 @@ export const form_steps = [
 				placeholder: "Card",
 				src: "",
 				dest: "payment.number",
-				required: true,
+				required: false,
 				validate: {
 					type: "text",
 				},

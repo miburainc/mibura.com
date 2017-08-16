@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <request method="estimate.list">  
-  <client_id>3</client_id>
+  <client_id></client_id>
 
   <page>1</page> 
-  <folder>active</folder>
 </request>  

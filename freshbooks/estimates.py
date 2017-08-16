@@ -7,7 +7,7 @@ try:
 except ImportError:
 	import xml.etree.ElementTree as ET
 
-from support.models import Plan, ProductCategory, Product, EstimateText
+from support.models import *
 
 def create_estimate(client, plan, length, items):
 	plan_obj = Plan.objects.get(short_name=plan)

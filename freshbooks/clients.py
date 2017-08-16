@@ -1,16 +1,16 @@
 from django.conf import settings
 
-import sys
-import requests
+import sys, requests
 
 try:
 	import xml.etree.cElementTree as ET
 except ImportError:
 	import xml.etree.ElementTree as ET
 
+
 def create_client(client_obj):
 	print(client_obj)
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/create_client.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/create_client.xml')
 	root = tree.getroot()
 	client = root[0]
 
@@ -59,7 +59,7 @@ def create_client(client_obj):
 	return client_id.text
 
 def list_clients(client):
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_clients.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_clients.xml')
 	root = tree.getroot()
 	email = root.find('email')
 	email.text = client['email']
@@ -80,7 +80,7 @@ def list_clients(client):
 
 def find_client(client_fname, client_lname, client_email):
 	"""  """
-	tree = ET.ElementTree(file='scripts/freshbooks/xml_templates/list_clients.xml')
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_clients.xml')
 	root = tree.getroot()
 
 	email = root.find('email')

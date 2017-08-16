@@ -18,7 +18,7 @@ from rest_framework.request import Request
 from .models import *
 from .serializers import *
 
-from freshbooks import api
+from freshbooks.estimates import *
 
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price

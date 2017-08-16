@@ -7,7 +7,7 @@ from pytz import timezone
 
 from scripts.sss_pricing import product_price, cloud_price
 
-from freshbooks import api
+from freshbooks.clients import find_client, create_client
 
 PLAN_CHOICES = (
 	("silver", "Silver"),

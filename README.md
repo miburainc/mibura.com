@@ -7,7 +7,9 @@ ___
 ### How to run django server locally:
 
 Pull repository into a local folder
-Create a virtual environment with python 3.x
+Create a virtual environment with python 3.5.x
+
+*Must use a version of python above 3.5*
 
 ```
 virtualenv -p python3 venv

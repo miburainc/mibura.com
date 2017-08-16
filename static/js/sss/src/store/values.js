@@ -18,16 +18,19 @@ console.log("API_ROOT: " + API_ROOT)
 
 export const PLANS = [
 	{
+		code: "silver",
 		name: "Silver Pro",
 		cost: 49,
 		color: "#ebebeb"
 	},
 	{
+		code: "gold",
 		name: "Pure Gold",
 		cost: 99,
 		color: "#f4c730"
 	},
 	{
+		code: "black",
 		name: "Carbon Black",
 		cost: 499,
 		color: "#000000"

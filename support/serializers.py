@@ -70,4 +70,5 @@ class CartSerializer(serializers.ModelSerializer):
 			'client', 
 			'reference',
 			'products',
+			'plan'
 		)

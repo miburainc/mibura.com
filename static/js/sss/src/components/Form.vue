@@ -306,7 +306,6 @@ export default {
 								price_silver: 1,
 								price_gold: 1,
 								price_black: 1,
-								with_cloud: 1,
 								type: 'product',
 							}
 						}
@@ -346,6 +345,9 @@ export default {
 				else {
 					this.set_client_prop({prop: dest_array[1], data: value})
 				}
+			}
+			else if (dest_array[0] == "payment") {
+				this.set_client_prop({prop: dest_array[1], data: value})
 			}
 		},
 		setItemProp () {

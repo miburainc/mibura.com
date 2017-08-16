@@ -36,6 +36,12 @@ const mutations = {
 	[TYPE.SET_PAYMENT_TOKEN]: (state, value) => {
 		state.payment_token = value
 	},
+	[TYPE.SET_CLIENT]: (state, payload) => {
+		Vue.set(state, 'client_info', payload)
+	},
+	[TYPE.CLEAR_CLIENT]: (state, payload) => {
+		Vue.set(state, 'client_info', {})
+	},
 }
 
 const actions = {

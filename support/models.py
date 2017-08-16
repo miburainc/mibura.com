@@ -178,6 +178,7 @@ class Cart(models.Model):
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
+	replaced = models.BooleanField(default=False)
 
 	def __str__(self):
 		return self.client.get_full_name() + " Cart " + str(self.date_created)

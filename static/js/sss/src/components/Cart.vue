@@ -8,8 +8,8 @@
 		<div class="col-md-4">
 			<div class="text-center" :style="textColorPlan">Plan
 			<div class="form-group">
-				<select class="form-control" v-model="current_plan" @change="setCurrentPlan" :style="textColorPlan">
-					<option v-for="(p, index) in plans" :value="index">{{p.name}}</option>
+				<select class="form-control" :value="current_plan" @change="setPlan" :style="textColorPlan">
+					<option v-for="(p, index) in plans" :value="p.code">{{p.name}}</option>
 				</select>
 			</div>
 			</div>
@@ -131,7 +131,7 @@ import velocity from 'velocity-animate'
 export default {
 	data () {
 		return {
-			current_plan: 0,
+			current_plan2: "silver",
 			discounts: [],
 			current_discount: 0.0,
 		}
@@ -162,6 +162,10 @@ export default {
 			'setEstimatePdfFile',
 			'setAcceptedTerms',
 		]),
+		setPlan(el) {
+			let val = el.target.value
+			this.setCurrentPlan(val)
+		},
 		formPurchase() {
 			if (this.cart.length < 1) {
 				this.buttonStartNewItem()
@@ -283,15 +287,15 @@ export default {
 			let product = this.cart[cart_index]
 			let plan_name = ''
 			switch(this.current_plan) {
-				case 0:
+				case 'silver':
 					// Silver
 					plan_name = 'silver'
 					break;
-				case 1:
+				case 'gold':
 					// Gold
 					plan_name = 'gold'
 					break;
-				case 2:
+				case 'black':
 					// Black
 					plan_name = 'black'
 					break;
@@ -301,7 +305,7 @@ export default {
 			// Product Category multiplier e.g 1.2x
 			let pm = product.category.price_multiplier
 			// Plan base product price e.g $49/yr
-			let pc = this.plans[this.current_plan].cost
+			let pc = this.getPlans(this.current_plan).cost
 			// Calculation and then divided by half since plans are sold in 6 month increments
 			cost = (pp * pm * pc) / 2
 			return cost
@@ -330,7 +334,18 @@ export default {
 			}
 
 			return price
-		}
+		},
+		getPlans(plan) { 
+
+			console.log("in getPlans plan()", plan)
+			for (let i=0; i<this.plans.length; i++) {
+				console.log(i, this.plans[i])
+				if (this.plans[i].code == plan) {
+					return this.plans[i]
+				}
+			}
+			return false
+		},
 	},
 	computed: {
 		...mapGetters({
@@ -342,6 +357,7 @@ export default {
 			get_payment_token: 'getPaymentToken',
 			get_cart_reference: 'getCartReference',
 			get_accepted_terms: 'getAcceptedTerms',
+			current_plan: 'getCurrentPlan',
 		}),
 		getCurrentDiscount() {
 			console.log("getCurrentDiscount")
@@ -370,15 +386,19 @@ export default {
 			return final
 		},
 		textColorPlan() {
-			return {'color': this.current_plan == 2 ? 'white' : 'black' }
+			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
 		},
 		cartStyle() {
 
 		},
+		
 		cartHeaderStyle() {
+			console.log("cartHeaderStyle", this.current_plan)
+			let plan = this.getPlans(this.current_plan)
+			console.log("plan", plan)
 			return {
-				'background-color': this.plans[this.current_plan].color, 
-				'color': this.current_plan == 2 ? 'white' : 'black'
+				'background-color': plan.color, 
+				'color': this.current_plan == 'black' ? 'white' : 'black'
 			}
 		}
 	}

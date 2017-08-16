@@ -151,25 +151,14 @@ def get_previous_estimate(request):
 		data = dotdict(data)
 
 		estimate_ref = data.estimate_ref
-		client_id = data.client_id
 
-		if not data.client_id:
-			HttpResponse("No Client ID", status=400)
+		estimate_data = estimates.get_estimate(estimate_ref)
 
-		client = get_object_or_404(Client, pk=int(client_id))
-		cart = get_object_or_404(Cart, freshbooks_id=estimate_id)
+		print(estimate_data)
 
-		freshbooks_client_id = client.get_freshbooks_id()
-		estimate_id = find_estimate(freshbooks_client_id, estimate_id)
-		estimate_data = get_estimate(estimate_id)
+		response_json = json.dumps(estimate_data)
 
-		serializer_context = {
-			'request': Request(request),
-		}
-		serialized = CartSerializer(cart, context=serializer_context)
-		response_json = JSONRenderer().render(serialized.data)
-
-		return HttpResponse(response_json, status=200)
+		return HttpResponse(response_json, content_type="application/json", status=200)
 
 
 @csrf_exempt
@@ -206,6 +195,12 @@ def get_estimate_pdf(request):
 		client.get_freshbooks_id()
 		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
 		
+		if cart.freshbooks_id:
+			cart.pk = None
+			cart.reference = ""
+			cart.replaced = True
+			cart.save()
+
 		cart.freshbooks_id = estimate_id
 		cart.save()
 		

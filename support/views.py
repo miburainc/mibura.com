@@ -18,7 +18,7 @@ from rest_framework.request import Request
 from .models import *
 from .serializers import *
 
-from freshbooks.estimates import *
+from freshbooks import estimates
 
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
@@ -202,12 +202,12 @@ def get_estimate_pdf(request):
 			})
 		
 		client.get_freshbooks_id()
-		estimate_id = api.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
 		
 		cart.freshbooks_id = estimate_id
 		cart.save()
 		
-		pdf_status = api.get_estimate_pdf(estimate_id)
+		pdf_status = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
 		path_to_file = '/tmp/' + file_name

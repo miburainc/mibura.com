@@ -67,16 +67,15 @@ INSTALLED_APPS = [
 CORS_ORIGIN_WHITELIST = (
     'localhost',
     '127.0.0.1',
-    'herokuapp.com',
+    '.herokuapp.com',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = (
-    'localhost:8000',
-    'localhost:8080',
+    'localhost',
     '127.0.0.1',
-    'herokuapp.com',
+    '.herokuapp.com',
 )
 
 # REST API

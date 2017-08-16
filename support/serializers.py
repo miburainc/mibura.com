@@ -67,7 +67,8 @@ class CartSerializer(serializers.ModelSerializer):
 		fields = (
 			'pk',
 			'email', 
-			'client', 
+			'client',
+			'length',
 			'reference',
 			'products',
 			'plan'

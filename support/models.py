@@ -7,7 +7,7 @@ from pytz import timezone
 
 from scripts.sss_pricing import product_price, cloud_price
 
-from freshbooks.clients import find_client, create_client
+from freshbooks import clients
 
 PLAN_CHOICES = (
 	("silver", "Silver"),
@@ -106,7 +106,7 @@ class Client(models.Model):
 
 	def get_freshbooks_id(self):
 		if not self.freshbooks_id:
-			fid = api.find_client(self.first_name, self.last_name, self.email)
+			fid = clients.find_client(self.first_name, self.last_name, self.email)
 			print(fid)
 			if fid:
 				print("fid not false:", fid)
@@ -114,7 +114,7 @@ class Client(models.Model):
 				self.save()
 			else:
 				print("fid false:", fid)
-				fid = api.create_client(self.__dict__)
+				fid = clients.create_client(self.__dict__)
 				print("after create_client:", fid)
 				self.freshbooks_id = fid
 				self.save()

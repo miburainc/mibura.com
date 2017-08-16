@@ -116,7 +116,8 @@ export const store = new Vuex.Store({
         commit(TYPE.CLEAR_CLIENT)
         commit(TYPE.SET_CLIENT, response.data.client)
         commit(TYPE.SET_CURRENT_PLAN, response.data.cart.plan)
-      	$('#estimateIdModal').modal('hide')
+      	commit(TYPE.SET_SUPPORT_MONTHS, response.data.cart.length*12)
+        $('#estimateIdModal').modal('hide')
       })
     },
     setAcceptedTerms({commit}, value) {

@@ -22,8 +22,17 @@ def remove_namespace(doc, namespace):
 			elem.tag = elem.tag[nsl:]
 
 def create_estimate(client, plan, length, items):
+	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
 	categories = ProductCategory.objects.all()
+
+	active_discount = 0.0
+
+	for index, dis in enumerate(discount_list):
+		if float(length) >= dis.year_threshold:
+			if dis.discount_percent > active_discount:
+				active_discount = dis.discount_percent
+
 
 	tree = ET.ElementTree(file='freshbooks/xml_templates/create_estimate.xml')
 	root = tree.getroot()
@@ -31,6 +40,9 @@ def create_estimate(client, plan, length, items):
 
 	clientid = estimate.find('client_id')
 	clientid.text = client['freshbooks_id']
+
+	discount = estimate.find('discount')
+	discount.text = str(int(active_discount*100))
 
 	terms = estimate.find('terms')
 	terms.text = 'Estimate for ' + plan + ' plan for ' + str(length) + ' years.'
@@ -139,37 +151,12 @@ def list_estimates(client_id):
 	for e in estimates:
 		print('estimate_id', e.find('{http://www.freshbooks.com/api/}estimate_id').text)
 
-def get_estimate(estimate_num):
-	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
-	root = tree.getroot()
-
-	# Remove client id filter from list_estimates.xml
-	cid = root.find('client_id')
-	root.remove(cid)
-
-	input_xml = ET.tostring(root)
-
-	data = input_xml
-	headers = {'Content-Type': 'application/xml'}
-	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-
+def process_estimates(estimates, estimate_num):
 	response = {}
-
-	root = ET.fromstring(r.content)	
-
-	remove_namespace(root, u'http://www.freshbooks.com/api/')
-
-	estimates = root[0]
-
-	pages = estimates.attrib['pages']
-	print("Pages: ", pages)
-
-	for estimate in estimates.findall('estimate'):
+	for estimate in estimates:
 		estimate_id = str(int(estimate.find('estimate_id').text))
 		num = estimate.find('number')
 		if num.text == estimate_num:
-			print("estimate_id", estimate_id)
-			print("Estimate found")
 			client_id = estimate.find('client_id').text
 			client = Client.objects.get(freshbooks_id=client_id)
 
@@ -178,7 +165,6 @@ def get_estimate(estimate_num):
 
 			response['client'] = serialized.data
 
-			print(client)
 			lines = estimate.find('lines')
 			response['cart_items'] = []
 			cart = Cart.objects.get(freshbooks_id=estimate_id)
@@ -217,6 +203,58 @@ def get_estimate(estimate_num):
 					}
 				}
 				response['cart_items'].append(final_obj)
+	return response
+
+def get_estimate(estimate_num):
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
+	root = tree.getroot()
+
+	# Remove client id filter from list_estimates.xml
+	cid = root.find('client_id')
+	root.remove(cid)
+
+	input_xml = ET.tostring(root)
+
+	data = input_xml
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+
+	response = {}
+
+	response_root = ET.fromstring(r.content)	
+
+	remove_namespace(response_root, u'http://www.freshbooks.com/api/')
+
+	estimates = response_root[0]
+	estimate_list_current_page = estimates.attrib['page']
+	estimate_list_pages = estimates.attrib['pages']
+	for page_index in range(1,int(estimate_list_pages)+1):
+		if int(estimate_list_current_page) == page_index:
+			response = process_estimates(estimates.findall('estimate'), estimate_num)
+			if response != {}:
+				break
+		else:
+			# Get next page
+			xml_page_num = root.find('page')
+			xml_page_num.text = str(page_index)
+
+			input_xml = ET.tostring(root)
+
+			data = input_xml
+			headers = {'Content-Type': 'application/xml'}
+			r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+
+			response = {}
+
+			response_root = ET.fromstring(r.content)	
+
+			remove_namespace(response_root, u'http://www.freshbooks.com/api/')
+
+			estimates = response_root[0]
+
+			response = process_estimates(estimates.findall('estimate'), estimate_num)
+			if response != {}:
+				break
 
 	return response
 

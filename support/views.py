@@ -110,7 +110,6 @@ def get_create_cart(request):
 
 		if not data.client:
 			HttpResponse("No Client ID", status=400)
-		print(data.client)
 		client = Client.objects.get(pk=data.client)
 		cart,created = Cart.objects.get_or_create(client=client, reference=data.reference, email=data.email)
 		cart.products.clear()
@@ -132,7 +131,6 @@ def get_create_cart(request):
 				if not obj in cart.products.all():
 					cart.products.add(obj)
 				
-		print(data.plan)
 		cart.plan = data.plan
 		cart.length = data.length
 		cart.save()
@@ -153,8 +151,6 @@ def get_previous_estimate(request):
 		estimate_ref = data.estimate_ref
 
 		estimate_data = estimates.get_estimate(estimate_ref)
-
-		print(estimate_data)
 
 		response_json = json.dumps(estimate_data)
 

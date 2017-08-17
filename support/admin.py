@@ -17,7 +17,8 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 class CartAdmin(admin.ModelAdmin):
-	search_fields = ['reference']
+	list_filter = ['client', 'replaced']
+	search_fields = ['reference', 'freshbooks_id']
 	list_display = ['client', 'reference', 'date_created', 'date_updated']
 
 admin.site.register(Cart, CartAdmin)

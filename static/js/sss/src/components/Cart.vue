@@ -74,7 +74,7 @@
 					<div v-for="key in Object.keys(getClientInfo)">{{key}}: {{getClientInfo[key]}}
 					</div>
 					<br>
-					<button type="button" class="btn btn-link">Edit</button>
+					<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
 				</div>
 				<div v-else>
 					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
@@ -195,6 +195,10 @@ export default {
 		buttonStartCloud() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
 			this.setCurrentFormStep(step_names.cloud)
+		},
+		buttonEditClient() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+			this.setCurrentFormStep(step_names.client_info)
 		},
 		buttonStartNewItem() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });

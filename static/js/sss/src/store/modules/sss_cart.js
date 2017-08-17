@@ -39,7 +39,6 @@ const mutations = {
 	},
 	[TYPE.CART_EDIT_ITEM]: (state, payload) => {
 		Vue.set(payload.rootState.Form, 'current_item', state.cart[payload.index])
-		
 		Vue.set(payload.rootState.Form.current_item, 'index', payload.index);
 	},
 	[TYPE.CART_REMOVE_ITEM]: (state, payload) => {

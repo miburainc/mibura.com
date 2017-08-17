@@ -1,6 +1,7 @@
 from datetime import datetime
 from wsgiref.util import FileWrapper
 import os, json, math, stripe
+from copy import deepcopy
 
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
@@ -215,13 +216,22 @@ def get_estimate_pdf(request):
 		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
 		
 		if cart.freshbooks_id:
-			cart.pk = None
-			cart.reference = ""
+			old_cart = deepcopy(cart)
+			cart.reference = "replaced"
 			cart.replaced = True
 			cart.save()
 
-		cart.freshbooks_id = estimate_id
-		cart.save()
+			cart.pk = None
+			cart.save()
+			cart.replaced = False
+			cart.products.add(*old_cart.products.all())
+			cart.cloud.add(*old_cart.cloud.all())
+			cart.freshbooks_id = estimate_id
+			cart.reference = old_cart.reference
+			cart.save()
+		else:
+			cart.freshbooks_id = estimate_id
+			cart.save()
 		
 		pdf_status = estimates.get_estimate_pdf(estimate_id)
 		

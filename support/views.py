@@ -128,6 +128,7 @@ def get_create_cart(request):
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code='none')
 					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', price_silver=1.0, price_gold=1.5, price_black=2.0, approved=False)
+					prod_obj.save()
 
 				print(prod_obj)
 				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)

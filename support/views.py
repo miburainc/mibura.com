@@ -126,8 +126,10 @@ def get_create_cart(request):
 				try:
 					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
 				except ObjectDoesNotExist:
-					prod_obj = Product(brand=prod.brand, model=prod.model, category='none', sku='NONE', price_silver=1.0, price_gold=1.5, price_black=2.0, approved=False)
+					cat = ProductCategory.objects.get(category_code='none')
+					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', price_silver=1.0, price_gold=1.5, price_black=2.0, approved=False)
 
+				print(prod_obj)
 				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
 
 				if not obj in cart.products.all():

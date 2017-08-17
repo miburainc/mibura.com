@@ -47,7 +47,7 @@
 						</td>
 						<td class="text-right">
 							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>&nbsp;
+								<button v-if="item.type != 'cloud'" type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>&nbsp;
 								<button type="button" class="btn btn-sm btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
 							</div>
 						</td>
@@ -85,7 +85,7 @@
 				<div class="form-group">
 					<!-- <label style="color: black;">Months</label>
 					<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
-					<label style="color: black;">Years</label>
+					<label style="color: black;">{{writeOutSupportLength}}</label>
 					<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 				</div>
 				<div style="color: black;" class="text-right">
@@ -336,10 +336,7 @@ export default {
 			return price
 		},
 		getPlans(plan) { 
-
-			console.log("in getPlans plan()", plan)
 			for (let i=0; i<this.plans.length; i++) {
-				console.log(i, this.plans[i])
 				if (this.plans[i].code == plan) {
 					return this.plans[i]
 				}
@@ -360,8 +357,6 @@ export default {
 			current_plan: 'getCurrentPlan',
 		}),
 		getCurrentDiscount() {
-			console.log("getCurrentDiscount")
-			console.log(this.getSupportMonths/12)
 			let d = 0.0
 			for (let i=0; i<this.discounts.length; i++) {
 				if (this.getSupportMonths/12 >= this.discounts[i].year_threshold) {
@@ -393,13 +388,22 @@ export default {
 		},
 		
 		cartHeaderStyle() {
-			console.log("cartHeaderStyle", this.current_plan)
 			let plan = this.getPlans(this.current_plan)
-			console.log("plan", plan)
 			return {
 				'background-color': plan.color, 
 				'color': this.current_plan == 'black' ? 'white' : 'black'
 			}
+		},
+		writeOutSupportLength() {
+			let str = ""
+			let lenArray = String(this.getSupportMonths/12).split('.')
+			if (lenArray.length > 1) {
+				str = lenArray[0] + " Years & 6 months"
+			}
+			else {
+				str = lenArray[0] + " Years"
+			}
+			return str
 		}
 	}
 }

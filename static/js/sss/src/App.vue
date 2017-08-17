@@ -115,7 +115,7 @@
 						<h3>Cart Reference Code<br>{{get_cart_reference}}</h3>
 					</div>
 					<div class="modal-footer">
-						<a type="button" href="tel:1-800-862-5144" class="btn btn-success">Call Now <i class="fa fa-phone" aria-hidden="true"></i></a>
+						<a href="tel:1-800-862-5144" class="btn btn-primary">Call Now <i class="fa fa-phone" aria-hidden="true"></i></a>
 						<button type="button" class="btn btn-info openchat">Chat Now <i class="fa fa-comment" aria-hidden="true"></i></button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>

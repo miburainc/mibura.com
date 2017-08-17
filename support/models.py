@@ -69,11 +69,11 @@ class Product(models.Model):
 	sku = models.CharField(max_length=128)
 
 	category = models.ForeignKey(ProductCategory, null=True, blank=True)
-	price_silver = models.FloatField(default=0.0)
-	price_gold = models.FloatField(default=0.0)
-	price_black = models.FloatField(default=0.0)
+	price_silver = models.FloatField(default=1.0)
+	price_gold = models.FloatField(default=1.0)
+	price_black = models.FloatField(default=1.0)
 
-	release = models.DateField(blank=True)
+	release = models.DateField(null=True,blank=True)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)

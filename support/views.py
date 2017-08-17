@@ -1,13 +1,16 @@
+from datetime import datetime
+from wsgiref.util import FileWrapper
+import os, json, math, stripe
+
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone, encoding
-from datetime import datetime
-
-from django.conf import settings
-
-from wsgiref.util import FileWrapper
+from django.template import Context
+from django.template.loader import render_to_string, get_template
+from django.core.mail import EmailMessage
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -19,13 +22,29 @@ from .models import *
 from .serializers import *
 
 from freshbooks import estimates
-
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
 
-import os, json, math
-import stripe
-stripe.api_key = 'sk_test_zq3p8xe6dyIJrJbcomYpY2Ps'
+stripe.api_key = settings.PINAX_STRIPE_SECRET_KEY
+
+#################
+# Email
+#################
+
+def send_quote_email(recipient, subject, file):
+	to = [recipient]
+	from_email = 'cs@mibura.com'
+
+	ctx = {
+		'name': 'Brady Endres'
+	}
+
+	message = get_template('email/quote.html').render(ctx)
+	msg = EmailMessage(subject, message, to=to, from_email=from_email)
+	msg.attach_file(file)
+	msg.content_subtype = 'html'
+	msg.send()
+
 
 #################
 # Pages
@@ -126,7 +145,9 @@ def get_create_cart(request):
 				try:
 					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
 				except ObjectDoesNotExist:
-					prod_obj = Product(brand=prod.brand, model=prod.model, category='none', sku='NONE', price_silver=1.0, price_gold=1.5, price_black=2.0, approved=False)
+					cat = ProductCategory.objects.get(category_code="none")
+					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False)
+					prod_obj.save()
 
 				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
 
@@ -207,6 +228,7 @@ def get_estimate_pdf(request):
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
 		path_to_file = '/tmp/' + file_name
 		pdf = FileWrapper(open(path_to_file, 'rb'))
+
 		response = HttpResponse(pdf, content_type='application/pdf')
 		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
 		response['Content-Length'] = os.path.getsize(path_to_file)

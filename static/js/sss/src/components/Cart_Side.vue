@@ -56,7 +56,7 @@
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
 			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Cloud</button>
 			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Quote</button>
-			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Cart</button>
+			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
 		</div>
 		<br><br>
 		<div class="btn-group btn-2">
@@ -74,19 +74,27 @@
 			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
 		</div>
 		<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10">
-			<div>{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}</div>
-			<div>{{getClientInfo['email']}}</div>
-			<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
+			<div class="col-xs-6">
+				{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
+				{{getClientInfo['email']}}<br>
+				{{getClientInfo['company']}}<br>
+				{{getClientInfo['phone']}}
+			</div>
+			<div class="col-xs-6">
+				{{getClientInfo['street']}},
+				{{getClientInfo['street2']}}<br>
+				{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
+				{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
+			</div>
 		</div>
 		<div v-else class="pad-10">
 			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 		</div>
-
+		<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
+		<br><br>
 		
 		<div class="pad-10">
 			<div class="form-group">
-				<!-- <label style="color: black;">Months</label>
-				<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
 				<label style="color: black;">{{writeOutSupportLength}}</label>
 				<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			</div>
@@ -355,11 +363,15 @@ export default {
 			current_plan: 'getCurrentPlan',
 		}),
 		getCurrentDiscount() {
+			console.log("getCurrentDiscount")
 			let d = 0.0
 			for (let i=0; i<this.discounts.length; i++) {
+				console.log("discount", i)
 				if (this.getSupportMonths/12 >= this.discounts[i].year_threshold) {
 					if (this.discounts[i].discount_percent > d) {
+
 						d = this.discounts[i].discount_percent
+						console.log("setting discount:", d)
 					}
 				}
 			}

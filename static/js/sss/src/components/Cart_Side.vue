@@ -29,7 +29,7 @@
 			<thead>
 				<th :style="cartHeaderStyle">Product</th>
 				<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
-				<th v-if="getCurrentDiscount" class="text-center" :style="cartHeaderStyle">Options</th>
+				<th class="text-center" :style="cartHeaderStyle">Options</th>
 			</thead>
 			<tbody>
 				<tr v-if="this.cart.length < 1" class="text-center">
@@ -52,11 +52,11 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="btn-group">
+		<div class="btn-group btn-4">
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud</button>
-			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Quote ID</button>
-			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
+			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Cloud</button>
+			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Quote</button>
+			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Cart</button>
 		</div>
 		<br><br>
 		<div class="btn-group btn-2">
@@ -73,18 +73,17 @@
 		<div v-if="get_cart_reference">
 			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
 		</div>
-		<div v-if="Object.keys(getClientInfo).length > 0">
-			<div v-for="key in Object.keys(getClientInfo)">{{key}}: {{getClientInfo[key]}}
-			</div>
-			<br>
+		<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10">
+			<div>{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}</div>
+			<div>{{getClientInfo['email']}}</div>
 			<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
 		</div>
-		<div v-else>
+		<div v-else class="pad-10">
 			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 		</div>
 
 		
-		<div style="color: black;">
+		<div class="pad-10">
 			<div class="form-group">
 				<!-- <label style="color: black;">Months</label>
 				<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
@@ -415,13 +414,18 @@ export default {
 
 #side-cart {
 	margin-top: 15%;
+	border-radius: 5px;
 	border: 1px solid #000000;
 	background-color: white;
 }
 
-.btn-2 {
+.btn-2, .btn-4 {
 	width: 100%;
 }
+
+.btn-4 .btn {
+	width: 25%;
+} 
 
 .btn-2 .btn {
 	width: 50%!important;

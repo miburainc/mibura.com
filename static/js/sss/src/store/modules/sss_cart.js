@@ -122,6 +122,13 @@ const actions = {
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});
 	},
+	sendQuoteEmail({state}, payload) {
+		cart.sendQuoteEmail(state.cart_ref)
+		.then((response) => {
+			console.log(response)
+			$('#pdfModal').modal('hide')
+		})
+	},
 	setEstimatePdfFile({commit}, payload) {
 		commit(TYPE.SET_ESTIMATE_PDF, payload)
 	},

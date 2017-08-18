@@ -19,6 +19,15 @@ const actions = {
 		.catch((error) => {
 			console.error(error)
 		})
+	},
+	sendQuoteEmail(cart_ref) {
+		return axios.post(URL_ROOT + 'support/send-quote-email/', {cart_ref: cart_ref})
+		.then((response) => {
+			return response
+		})
+		.catch((error) => {
+			console.error(error)
+		})
 	}
 }
 

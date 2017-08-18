@@ -1,28 +1,35 @@
 <template>
 
-<div id="sss-cart" :style="cartStyle">
-	<div class="row no-pad" :style="cartHeaderStyle">
-		
-		<div class="col-xs-12">
-			<div class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}
-			<a :style="[textColorPlan, {'cursor': 'pointer', 'float': 'right'}]" @click="scrollDown">View Cart</a></div>
+<div id="side-cart">
+	<div :style="cartHeaderStyle">
+		<div class="text-center" style="padding: 10px;">
+			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
 		</div>
-		<div class="col-xs-12 no-pad">
-			<div class="no-pad" :style="textColorPlan">
-					<button class="btn-plan" v-for="(p, index) in plans" @click="setPlan" :style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}" :value="p.code">
-						{{p.name}}
-					</button>
+		<div>
+			<div class="text-center">
+				<button 
+					type="button" 
+					class="btn-plan" 
+					v-for="(p, index) in plans" 
+					:value="p.code"
+					@click="setPlan"
+					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}"
+				>
+					{{p.name}}
+				</button>
 			</div>
 			
 		</div>
+
 	</div>
-	<div class="col-xs-12" style="color: black; padding: 15px;">
-		<h1 class="text-center">Cart</h1>
+
+	<div style="color: black;">
+		<h4 class="text-center">Cart</h4>
 		<table class="table table-condensed table-striped">
 			<thead>
 				<th :style="cartHeaderStyle">Product</th>
 				<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
-				<th class="text-right" :style="cartHeaderStyle">Options</th>
+				<th v-if="getCurrentDiscount" class="text-center" :style="cartHeaderStyle">Options</th>
 			</thead>
 			<tbody>
 				<tr v-if="this.cart.length < 1" class="text-center">
@@ -36,11 +43,10 @@
 					<td class="text-center">
 						${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
 					</td>
-
 					<td class="text-right">
 						<div class="btn-group">
-							<button v-if="item.type != 'cloud'" type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
-							<button type="button" class="btn btn-sm btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
+							<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+							<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 						</div>
 					</td>
 				</tr>
@@ -49,57 +55,56 @@
 		<div class="btn-group">
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
 			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud</button>
-			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Open Quote</button>
+			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Quote ID</button>
 			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
 		</div>
-			
-		<hr><br>
-		<div class="pull-right">
-			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
-			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
-				Terms &amp; Conditions
+		<br><br>
+		<div class="btn-group btn-2">
+			<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
+				<i class="fa fa-phone" aria-hidden="true"></i>
+				&nbsp;Call Sales
+			</button>
+			<button type="button" class="btn btn-primary" @click="buttonGetPDF">
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+				&nbsp;Get Quote
 			</button>
 		</div>
-		<div>
-			<h4>Your information:</h4>
-			<div v-if="Object.keys(getClientInfo).length > 0">
-				<div v-for="key in Object.keys(getClientInfo)">{{key}}: {{getClientInfo[key]}}
-				</div>
-				<br>
-				<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
-			</div>
-			<div v-else>
-				<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
-			</div>
+			
+		<div v-if="get_cart_reference">
+			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
 		</div>
+		<div v-if="Object.keys(getClientInfo).length > 0">
+			<div v-for="key in Object.keys(getClientInfo)">{{key}}: {{getClientInfo[key]}}
+			</div>
+			<br>
+			<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
+		</div>
+		<div v-else>
+			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
+		</div>
+
 		
-		<div>
+		<div style="color: black;">
 			<div class="form-group">
 				<!-- <label style="color: black;">Months</label>
 				<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
 				<label style="color: black;">{{writeOutSupportLength}}</label>
 				<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			</div>
-			<div style="color: black;" class="text-right">
+			<div class="text-right pad-10">
 				SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<strong>Estimate Total: ${{ numWithCommas(getGrandTotal) }}</strong>
-				<br>
-				<div class="btn-group">
-					<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
-						<i class="fa fa-phone" aria-hidden="true"></i>
-						&nbsp;Call Sales
-					</button>
-					<button type="button" class="btn btn-primary" @click="buttonGetPDF">
-						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-						&nbsp;Get Quote
-					</button>
-					<button type="button" class="btn btn-success" @click="formPurchase">
-						<i class="fa fa-check" aria-hidden="true"></i>
-						&nbsp;Purchase
-					</button>
-				</div>
+				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
+			</div>
+			<div class="btn-group btn-2">
+				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
+					Terms &amp; Conditions
+				</button>
+				<button type="button" class="btn btn-success" @click="formPurchase">
+					<i class="fa fa-check" aria-hidden="true"></i>
+					&nbsp;Purchase
+				</button>
 			</div>
 		</div>
 	</div>
@@ -377,13 +382,11 @@ export default {
 		textColorPlan() {
 			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
 		},
-		cartStyle() {
-
-		},
 		
 		cartHeaderStyle() {
 			let plan = this.getPlans(this.current_plan)
 			return {
+				'padding-top': '10px',
 				'background-color': plan.color, 
 				'color': this.current_plan == 'black' ? 'white' : 'black'
 			}
@@ -406,8 +409,22 @@ export default {
 
 <style lang="scss" scoped>
 
-.no-pad {
-	padding: 0;
+.pad-10 {
+	padding: 10px;
+}
+
+#side-cart {
+	margin-top: 15%;
+	border: 1px solid #000000;
+	background-color: white;
+}
+
+.btn-2 {
+	width: 100%;
+}
+
+.btn-2 .btn {
+	width: 50%!important;
 }
 
 .btn-plan {
@@ -420,12 +437,8 @@ export default {
     outline: 0;
 }
 
-#sss-cart {
-	background: white;
-}
-
 .cart-tray {
-	font-size: 1.4em;
+	color: #000000;
 }
 
 h1, h2, h3, h4, table, thead, tbody, span, div, p, form {

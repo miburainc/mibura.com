@@ -32,19 +32,21 @@ stripe.api_key = settings.PINAX_STRIPE_SECRET_KEY
 # Email
 #################
 
-def send_quote_email(recipient, subject, file):
+def send_quote_email(name, recipient, subject, file):
 	to = [recipient]
 	from_email = 'cs@mibura.com'
 
+	print(name)
+
 	ctx = {
-		'name': 'Brady Endres'
+		'name': name,
 	}
 
 	message = get_template('email/quote.html').render(ctx)
 	msg = EmailMessage(subject, message, to=to, from_email=from_email)
 	msg.attach_file(file)
 	msg.content_subtype = 'html'
-	msg.send()
+	return msg.send()
 
 
 #################
@@ -180,6 +182,35 @@ def get_previous_estimate(request):
 
 		return HttpResponse(response_json, content_type="application/json", status=200)
 
+@csrf_exempt
+def email_estimate_pdf(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
+
+		cart_ref = data.cart_ref
+
+		cart = get_object_or_404(Cart, reference=cart_ref)
+
+		if not cart.freshbooks_id:
+			return HttpResponse('No Freshbooks id', status=400)
+
+		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_id)
+		
+		file_name = "Mibura_SmartSupport_Estimate.pdf"
+		path_to_file = '/tmp/' + file_name
+
+		f = open(path_to_file)
+		print(f)
+
+		print("cart email", cart.email)
+
+		email_sent = send_quote_email(cart.client.get_full_name(), cart.email, "Mibura Smart Support Quote", path_to_file)
+		print('email_sent', email_sent)
+		if email_sent:
+			return HttpResponse(status=200)
+
+	return HttpResponse(status=400)
 
 @csrf_exempt
 def get_estimate_pdf(request):
@@ -192,7 +223,7 @@ def get_estimate_pdf(request):
 			HttpResponse("No Client ID", status=400)
 		
 		client = get_object_or_404(Client, pk=int(data.client['pk']))
-		cart = get_object_or_404(Cart, client=client, reference=data.cart_reference)
+		cart = get_object_or_404(Cart, reference=data.cart_reference)
 
 		items = []
 

@@ -1,5 +1,5 @@
 <template>
-	<div id="app" class="container">
+	<div id="app" class="container-fluid">
 		<!-- Confirm Terms and conditions -->
 		<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -45,7 +45,7 @@
 					</div>
 					<div class="modal-body" style="overflow-y: scroll;">
 						<h4>Input Estimate ID</h4>
-						<input style="color: #000000;" type="text" name="estimate_id" class="form-control" v-model="estimate_id">
+						<input style="color: #000000;" type="text" name="estimate_id" class="form-control" v-model="estimate_id" autofocus>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -98,6 +98,7 @@
 					</div>
 					<div class="modal-footer">
 						<a v-if="get_estimate_pdf" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-success" id="pdf-link" target="_blank" :href="get_estimate_pdf">Download PDF</a>
+						<button v-if="get_estimate_pdf" type="button" class="btn btn-primary" @click="emailQuote">Receive in Email</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -126,10 +127,13 @@
 			<success-screen></success-screen>
 		</div>
 		<div v-else class="row">
-			<div id="support-form" class="col-md-6 col-md-offset-3">
+			<div id="support-form" class="col-xs-12 col-md-6 col-md-offset-3">
 				<support-form></support-form>
 			</div>
-			<div id="cart" class="col-xs-12">
+			<div id="side_cart" class="side-cart col-xs-12 col-md-3">
+				<side-cart></side-cart>
+			</div>
+			<div id="cart" class="mobile-cart col-xs-12">
 				<support-cart></support-cart>
 			</div>
 		</div>
@@ -140,6 +144,7 @@
 
 import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
+import SideCart from './components/Cart_Side.vue'
 import SuccessScreen from './components/SuccessScreen.vue'
 
 import {toJSONLocal} from './scripts/functions'
@@ -157,20 +162,26 @@ export default {
 		SupportForm,
 		SupportCart,
 		SuccessScreen,
+		SideCart
 	},
 	computed: {
 		...mapGetters({
 			get_cart_reference: 'getCartReference',
 			get_purchase_success: 'getPurchaseSuccess',
 			get_estimate_pdf: 'getEstimatePDF',
+			
 		})
 	},
 	methods: {
 		...mapActions({
 			'set_category_multipliers': 'setCategoryMultipliers',
 			'set_accepted_terms': 'setAcceptedTerms',
-			request_past_quote: 'ServerRequestPastEstimate'
+			request_past_quote: 'ServerRequestPastEstimate',
+			send_quote_email: 'sendQuoteEmail',
 		}),
+		emailQuote() {
+			this.send_quote_email()
+		},
 		requestPastQuote() {
 			this.request_past_quote(this.estimate_id)
 		},
@@ -186,6 +197,19 @@ export default {
 
 <style lang="scss">
 
+.mobile-cart {
+	display: none;
+}
+
+@media (max-width: 992px) {
+	.side-cart {
+		display: none;
+	}
+	.mobile-cart {
+		display: block;
+	}
+}
+
 .modal .modal-body {
     max-height: 420px;
     overflow-y: auto;
@@ -197,10 +221,11 @@ export default {
 }
 
 #cart {
-	margin-top: -80px;
+	margin-top: -64px;
 	border-top: 1px inset #AAA;
 	width: 100%;
 	position: absolute;
+	padding: 0;
 	left: 0px;
 	top: 100%;
 }

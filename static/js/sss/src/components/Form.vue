@@ -52,7 +52,11 @@
 						:min="2">
 					</autocomplete>
 					<!-- Cloud -->
-					<select 
+					<cloud-form 
+						v-else-if="data.src && get_current_step==step_names.cloud"
+						:clouds="cloud"
+					></cloud-form>
+					<!-- <select 
 						v-else-if="data.src && get_current_step==step_names.cloud"
 						:id="data.form.name"
 						:name="data.form.name"
@@ -64,7 +68,7 @@
 						>
 								{{cloud.name}}
 						</option>
-					</select>
+					</select> -->
 					<div v-else-if="data.form.type=='stripe'">
 						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
 						<div id="card-element" class="field"></div>
@@ -110,6 +114,7 @@
 <script>
 
 import Autocomplete from './autocomplete';
+import CloudForm from './FormCloud.vue'
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -168,6 +173,9 @@ export default {
 		},
 		buttonAction(el, scr) {
 			let temp = document.forms.item(0).elements[0].value
+			if (!temp) {
+				temp = "none"
+			}
 			scr = scr.split(',')
 			for (let i=0; i<scr.length; i++) {
 				switch (scr[i]) {
@@ -234,7 +242,7 @@ export default {
 						break;
 					case "addcloud":
 						if (temp=="none") {
-							break;
+							temp = this.get_current_cloud_selection
 						}
 						let cloud = {};
 						for (let i=0; i<this.cloud.length; i++) {
@@ -471,11 +479,13 @@ export default {
 			get_errors: 'getErrors',
 			get_client_info: 'getClientInfo',
 			get_multiplier: 'getMultiplier',
+			get_current_cloud_selection: 'getCurrentCloudSelection',
 		}),
 	},
 	// get_api_root: 'getAPIRoot',
 	components: {
-		Autocomplete
+		Autocomplete,
+		CloudForm
 	},
 	created () {
 		setTimeout(() => this.show = true, 200)

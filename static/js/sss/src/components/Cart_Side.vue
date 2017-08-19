@@ -25,33 +25,37 @@
 
 	<div style="color: black;">
 		<h4 class="text-center">Cart</h4>
-		<table class="table table-condensed table-striped">
+		<table id="cart-table-header" class="table table-condensed table-striped">
 			<thead>
 				<th :style="cartHeaderStyle">Product</th>
-				<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
-				<th class="text-center" :style="cartHeaderStyle">Options</th>
+				<th class="text-right" :style="cartHeaderStyle">Subtotal</th>
+				<th class="text-right" :style="cartHeaderStyle">Options</th>
 			</thead>
-			<tbody>
-				<tr v-if="this.cart.length < 1" class="text-center">
-					<td colspan="4">None</td>
-				</tr>
-				<tr v-else v-for="(item, index) in cart">
-					<td>
-						<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
-						{{item.brand}} {{item.model}}
-					</td>
-					<td class="text-center">
-						${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
-					</td>
-					<td class="text-right">
-						<div class="btn-group">
-							<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
-							<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
-						</div>
-					</td>
-				</tr>
-			</tbody>
 		</table>
+		<div style="max-height:150px;overflow:auto;margin-bottom:10px;">
+			<table class="table table-striped table-condensed table-hover">
+				<tbody class="cart-table-body">
+					<tr v-if="this.cart.length < 1" class="text-center">
+						<td colspan="4">None</td>
+					</tr>
+					<tr v-else v-for="(item, index) in cart">
+						<td>
+							<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
+							{{item.brand}} {{item.model}}
+						</td>
+						<td class="text-center">
+							${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
+						</td>
+						<td class="text-right">
+							<div class="btn-group">
+								<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+								<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 		<div class="btn-group btn-4">
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
 			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Cloud</button>
@@ -60,11 +64,11 @@
 		</div>
 		<br><br>
 		<div class="btn-group btn-2">
-			<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
+			<button type="button" class="btn btn-sm btn-info" @click="buttonPhoneSupport">
 				<i class="fa fa-phone" aria-hidden="true"></i>
 				&nbsp;Call Sales
 			</button>
-			<button type="button" class="btn btn-primary" @click="buttonGetPDF">
+			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetPDF">
 				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 				&nbsp;Get Quote
 			</button>
@@ -86,12 +90,11 @@
 				{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
 				{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
 			</div>
+			<button type="button" class="btn btn-xs btn-link" @click="buttonEditClient">Edit</button>
 		</div>
-		<div v-else class="pad-10">
+		<div v-else class="pad-10 text-center">
 			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 		</div>
-		<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
-		<br><br>
 		
 		<div class="pad-10">
 			<div class="form-group">
@@ -429,6 +432,14 @@ export default {
 	border-radius: 5px;
 	border: 1px solid #000000;
 	background-color: white;
+}
+
+#cart-table-header {
+	margin-bottom: 0;
+}
+
+.cart-table-body tr td {
+	font-size: 1.1em;
 }
 
 .btn-2, .btn-4 {

@@ -10,6 +10,7 @@ const state = {
 	products: {},
 	current_item: {},
 	current_form_step: 0,
+	current_cloud_selection: 1,
 	client_info: {},
 	payment_token: "",
 }
@@ -42,6 +43,9 @@ const mutations = {
 	[TYPE.CLEAR_CLIENT]: (state, payload) => {
 		Vue.set(state, 'client_info', {})
 	},
+	[TYPE.SET_CURRENT_CLOUD_SELECTION]: (state, selection) => {
+		state.current_cloud_selection = selection
+	}
 }
 
 const actions = {
@@ -74,6 +78,9 @@ const actions = {
 			state.client_info).then(response => {
 				commit(TYPE.SET_CLIENT_PROP, {prop: 'pk', data: response.data})
 			})
+	},
+	setCurrentCloudSelection({commit}, selection) {
+		commit(TYPE.SET_CURRENT_CLOUD_SELECTION, selection)
 	}
 }
 
@@ -86,6 +93,7 @@ const getters = {
 	getCurrentItemProp: state => prop => state.current_item[prop],
 	getClientInfo: state => state.client_info,
 	getPaymentToken: state => state.payment_token,
+	getCurrentCloudSelection: state => state.current_cloud_selection,
 }
 
 export default {

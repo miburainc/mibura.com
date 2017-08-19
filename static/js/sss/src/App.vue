@@ -228,6 +228,7 @@ export default {
 	padding: 0;
 	left: 0px;
 	top: 100%;
+	background: white;
 }
 
 </style>

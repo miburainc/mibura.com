@@ -127,10 +127,16 @@
 			<success-screen></success-screen>
 		</div>
 		<div v-else class="row">
-			<div id="support-form" class="col-xs-12 col-md-6 col-md-offset-3">
+			<div class="col-xs-12">
+				<progressbar></progressbar>
+			</div>
+			<div class="col-xs-12 col-md-3" style="padding: 0 5px;">
+				<notification v-for="(notification, index) in get_notifications" :data="notification" :index="index" :key="index"></notification>
+			</div>
+			<div id="support-form" class="col-xs-12 col-md-6">
 				<support-form></support-form>
 			</div>
-			<div id="side_cart" class="side-cart col-xs-12 col-md-3">
+			<div id="side_cart_container" class="side-cart col-xs-12 col-md-3">
 				<side-cart></side-cart>
 			</div>
 			<div id="cart" class="mobile-cart col-xs-12">
@@ -146,6 +152,8 @@ import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
 import SideCart from './components/Cart_Side.vue'
 import SuccessScreen from './components/SuccessScreen.vue'
+import Notification from './components/Notification.vue'
+import Progressbar from './components/ProgressBar.vue'
 
 import {toJSONLocal} from './scripts/functions'
 
@@ -162,13 +170,16 @@ export default {
 		SupportForm,
 		SupportCart,
 		SuccessScreen,
-		SideCart
+		SideCart,
+		Notification,
+		Progressbar
 	},
 	computed: {
 		...mapGetters({
 			get_cart_reference: 'getCartReference',
 			get_purchase_success: 'getPurchaseSuccess',
 			get_estimate_pdf: 'getEstimatePDF',
+			get_notifications: 'getNotifications',
 			
 		})
 	},
@@ -197,6 +208,10 @@ export default {
 
 <style lang="scss">
 
+h1, h2, h3, h4 {
+	margin: 0;
+}
+
 .mobile-cart {
 	display: none;
 }
@@ -210,6 +225,12 @@ export default {
 	}
 }
 
+#side_cart {
+	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
+	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
+	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
+}
+
 .modal .modal-body {
     max-height: 420px;
     overflow-y: auto;
@@ -217,7 +238,6 @@ export default {
 
 #support-form {
 	z-index: 100;
-	margin-top: 5%;
 }
 
 #cart {

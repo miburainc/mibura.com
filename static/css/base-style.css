@@ -77,6 +77,18 @@ p {
 	padding: 15px;
 }
 
+.pad-2 {
+	padding: 2px;
+}
+
+.pad-5 {
+	padding: 5px;
+}
+
+.pad-10 {
+	padding: 10px;
+}
+
 .pad-top-bottom {
 	padding-top: 75px;
 	padding-bottom: 75px;

@@ -13,6 +13,12 @@ const state = {
 	current_cloud_selection: 1,
 	client_info: {},
 	payment_token: "",
+	notifications: [
+		{message: "test!", type: "success"},
+		{message: "If you upgrade to gold, you get cloud support included for FREE!", type: "info"},
+		{message: "test!", type: "warning"},
+		{message: "test!", type: "danger"}
+	],
 }
 
 const mutations = {
@@ -45,10 +51,22 @@ const mutations = {
 	},
 	[TYPE.SET_CURRENT_CLOUD_SELECTION]: (state, selection) => {
 		state.current_cloud_selection = selection
+	},
+	[TYPE.ADD_NOTIFICATION]: (state, payload) => {
+		state.notifications.push(payload)
+	},
+	[TYPE.REMOVE_NOTIFICATION]: (state, index) => {
+		state.notifications.splice(index, 1)
 	}
 }
 
 const actions = {
+	addNotification({commit}, payload) {
+		commit(TYPE.ADD_NOTIFICATION, payload)
+	},
+	removeNotification({commit}, index) {
+		commit(TYPE.REMOVE_NOTIFICATION, index)
+	},
 	addProduct({commit}, payload) {
 		commit(TYPE.ADD_PRODUCT, payload)
 	},
@@ -94,6 +112,7 @@ const getters = {
 	getClientInfo: state => state.client_info,
 	getPaymentToken: state => state.payment_token,
 	getCurrentCloudSelection: state => state.current_cloud_selection,
+	getNotifications: state => state.notifications,
 }
 
 export default {

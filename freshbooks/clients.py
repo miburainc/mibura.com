@@ -9,7 +9,7 @@ except ImportError:
 
 
 def create_client(client_obj):
-	print(client_obj)
+	# print(client_obj)
 	tree = ET.ElementTree(file='freshbooks/xml_templates/create_client.xml')
 	root = tree.getroot()
 	client = root[0]

@@ -11,10 +11,10 @@ const actions = {
 			console.error(error)
 		})
 	},
-	checkout(cart_obj, success) {
-		axios.post(URL_ROOT + 'support/checkout/', cart_obj)
+	checkout(cart_obj) {
+		return axios.post(URL_ROOT + 'support/checkout/', cart_obj)
 		.then((response) => {
-			success(response)
+			return response
 		})
 		.catch((error) => {
 			console.error(error)

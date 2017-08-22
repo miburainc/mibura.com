@@ -27,10 +27,13 @@ export const store = new Vuex.Store({
     api_root: API_ROOT,
     errors: {},
     multiplier: {},
+    brands: [],
     purchase_success: false,
     accepted_terms: false,
+    stripe: {},
   },
   getters: {
+    getStripe: state => state.stripe,
     getMultiplier: state => name => {
       console.log('getMultiplier')
       console.log(state)
@@ -42,6 +45,7 @@ export const store = new Vuex.Store({
         }
       }
     },
+    getBrands: state => state.brands,
     getPlans: state => state.plans,
     getAPIRoot: state => state.api_root,
     getErrors: state => state.errors,
@@ -59,11 +63,17 @@ export const store = new Vuex.Store({
     clearErrors (state) {
       Vue.set(state, 'errors', {})
     },
+    [TYPE.SET_STRIPE_PROP]: (state, payload) => {
+      Vue.set(state.stripe, payload.prop, payload.value)
+    },
     [TYPE.SET_CURRENT_PLAN]: (state, value) => {
       state.current_plan = value
     },
     [TYPE.SET_CATEGORY_MULTIPLIER]: (state, payload) => {
       Vue.set(state, 'multiplier', payload)
+    },
+    [TYPE.SET_PRODUCT_BRANDS]: (state, payload) => {
+      state.brands = payload
     },
     [TYPE.SET_PURCHASE_SUCCESS]: (state, payload) => {
       state.purchase_success = payload
@@ -120,6 +130,9 @@ export const store = new Vuex.Store({
         $('#estimateIdModal').modal('hide')
       })
     },
+    setStripeProp({commit}, payload) {
+      commit(TYPE.SET_STRIPE_PROP, payload)
+    },
     setAcceptedTerms({commit}, value) {
       commit(TYPE.SET_ACCEPTED_TERMS, value)
     },
@@ -137,6 +150,11 @@ export const store = new Vuex.Store({
     setCategoryMultipliers({commit}, payload) {
       productApi.getProductCategories((response) => {
         commit(TYPE.SET_CATEGORY_MULTIPLIER, response.data.results)
+      }) 
+    },
+    setProductBrands({commit}, payload) {
+      productApi.getProductBrands((response) => {
+        commit(TYPE.SET_PRODUCT_BRANDS, response.data.results)
       }) 
     },
     setPurchaseSuccess({commit}, payload) {

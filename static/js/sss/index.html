@@ -10,6 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="style/support-style.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,600" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="node_modules/tippy.js/dist/tippy.css">
 		<style type="text/css">
 			body {
 				background: url('src/assets/images/support-purchase-bg.jpg') no-repeat center center fixed; 
@@ -23,6 +24,7 @@
 		</style>
 	</head>
 	<body>
+
 		<script type="text/javascript">
 			var SET_URL_ROOT = '';
 			var SET_API_ROOT = '';
@@ -35,11 +37,16 @@
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
 			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 			crossorigin="anonymous"></script>
+		<script 
+			src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+		<script src="node_modules/tippy.js/dist/tippy.min.js"></script>
 
 		
 		<div id="app"></div>
 		<script src="/dist/build.js"></script>
 		<script src="https://js.stripe.com/v3/"></script>
+		
 		
 		
 	</body>

@@ -19,6 +19,8 @@ const state = {
 
 const mutations = {
 	[TYPE.CART_ADD_ITEM]: (state, payload) => {
+		// NOTE TO SELF: REMOVE LOGIC FROM MUTATION !!!!
+
 		console.log("CART_ADD_ITEM")
 		if (payload.rootState.Form.current_item.hasOwnProperty('index')) {
 			console.log("Index found, editing")
@@ -33,7 +35,6 @@ const mutations = {
 			}
 		}
 		else {
-			console.log("Index not found, adding")
 			state.cart.push(payload.obj)
 		}
 	},
@@ -70,11 +71,29 @@ const mutations = {
 }
 
 const actions = {
-	addCartItem({commit, rootState}, payload) {
-		commit(TYPE.CART_ADD_ITEM, {
-			rootState: rootState,
-			obj: payload
-		})
+	addCartItem({commit, dispatch, state, rootState}, payload) {
+		let cloud_in_cart_already = false
+
+		if (payload.type == "cloud") {
+			console.log("Adding Cloud")
+			for (let i=0; i<state.cart.length; i++) {
+				if (state.cart[i].brand == payload.brand) {
+					dispatch('addNotification', {
+						type: "danger",
+						message: "You already have " + payload.brand + " in your cart!"
+					})
+					cloud_in_cart_already = true
+					return false;
+				}
+			}
+		}
+		if (!cloud_in_cart_already) {
+			commit(TYPE.CART_ADD_ITEM, {
+				rootState: rootState,
+				obj: payload
+			})
+		}
+		return true;
 	},
 	editCartItem({commit, state, rootState}, payload) {
 		console.log("Edit: " + payload.id)
@@ -148,7 +167,7 @@ const actions = {
 				commit(TYPE.SET_ESTIMATE_PDF, file_url)
 			})
 	},
-	checkout({state, rootState, commit, dispatch}) {
+	checkout({commit, dispatch, state, rootState}) {
 		let client = rootState.Form.client_info
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
@@ -157,16 +176,29 @@ const actions = {
 			client: client.pk,
 			cart: state.cart_ref,
 			length: state.support_months/12,
-			stripe_token: rootState.Form.payment_token
+			stripe_token: rootState.stripe.cc_payment_token
+		}
+
+		// Check if unverified items in cart
+		let can_checkout = true
+		for (let i=0; i<state.cart.length; i++) {
+			if (state.cart[i].sku=="none") {
+				can_checkout = false;
+			}
 		}
 		console.log(client)
 		console.log(state.cart_ref)
-		cart.checkout(
-			data,
-			(response) => {
-				console.log(response)
-				dispatch('setPurchaseSuccess', true)
-			});
+		if (can_checkout) {
+			cart.checkout(data)
+				.then((response) => {
+					console.log(response)
+					dispatch('setPurchaseSuccess', true)
+				})
+		}
+		else {
+			return false // Failed to checkout
+		}
+		
 	}
 }
 

@@ -11,27 +11,31 @@ html, body {
 
 body {
 	font-family: 'Roboto Condensed', sans-serif;
-	font-weight: 100; 
+	font-weight: 300; 
 }
-
 
 h1 {
 	font-size: 5em;
+	font-weight: 300;
 }
 
 h2 {
 	font-size: 4em;
+	font-weight: 300;
 }
 h3 {
 	font-size: 2.8em;
+	font-weight: 300;
 }
 h4 {
 	font-size: 1.6em;
 	line-height: 40px;
+	font-weight: 300;
 }
 
 p {
 	font-size: 1.2em;
+	font-weight: 300;
 }
 
 @media (max-width: 767px) {
@@ -71,6 +75,18 @@ p {
 
 .pad {
 	padding: 15px;
+}
+
+.pad-2 {
+	padding: 2px;
+}
+
+.pad-5 {
+	padding: 5px;
+}
+
+.pad-10 {
+	padding: 10px;
 }
 
 .pad-top-bottom {

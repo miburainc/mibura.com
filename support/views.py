@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from wsgiref.util import FileWrapper
 import os, json, math, stripe
 from copy import deepcopy
@@ -149,7 +149,7 @@ def get_create_cart(request):
 					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code="none")
-					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False)
+					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False, release=date.today() - timedelta(1))
 					prod_obj.save()
 
 				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
@@ -287,12 +287,23 @@ def checkout(request):
 		cart = get_object_or_404(Cart, reference=data.cart)
 		total = cart.get_total_price()
 		print(total)
-		stripe_total = math.floor(total*100)
+
+		discount_list = Discount.objects.all()
+
+		active_discount = 0.0
+
+		for index, dis in enumerate(discount_list):
+			if float(cart.length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+		
+		discount_total = total - total*active_discount
+		stripe_total = math.floor(discount_total*100)
 		stripe.Charge.create(
 			amount=stripe_total,
 			currency="usd",
 			source=data.stripe_token, # obtained with Stripe.js
-			description="Charge for " + client.email
+			description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 		)
 		time = datetime.now()
 		print("time", time)
@@ -352,7 +363,7 @@ class ProductAutocompleteViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = ProductSerializer
 	
 	def get_queryset(self):
-		queryset = Product.objects.all().order_by('-model')
+		queryset = Product.objects.filter(approved=True).order_by('-model')
 		brand = self.request.query_params.get('brand', None)
 		model = self.request.query_params.get('model', None)
 		if brand:

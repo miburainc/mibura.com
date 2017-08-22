@@ -121,7 +121,7 @@ import velocity from 'velocity-animate'
 export default {
 	data () {
 		return {
-			current_plan2: "silver",
+			// current_plan2: "silver",
 			discounts: [],
 			current_discount: 0.0,
 		}
@@ -151,6 +151,7 @@ export default {
 			'serverGetEstimatePdf',
 			'setEstimatePdfFile',
 			'setAcceptedTerms',
+			'addNotification',
 		]),
 		setPlan(el) {
 			let val = el.target.value
@@ -170,9 +171,29 @@ export default {
 				$('#termsModal').modal('show')
 			}
 			else {
+				console.log("Purchase -- ")
 				this.serverSetClient().then(() => {
 					this.saveCart().then(() => {
 						this.checkout()
+							.then((status) => {
+								console.log("after purchase callback")
+								console.log(status)
+								if (status == false) {
+									// Failed
+									this.addNotification({
+										message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
+										type: "danger"
+									})
+									this.addNotification({
+										message: "To speak with Mibura about your support plan, click 'Call Sales' to speak with a Mibura sales representative.",
+										type: "warning"
+									})
+									this.addNotification({
+										message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
+										type: "info"
+									})
+								}
+							})
 					})
 				})
 				
@@ -437,9 +458,7 @@ h2 {
 	font-size: 2.5em
 }
 
-h1, h2, h3, h4 {
-	margin: 0;
-}
+
 
 
 </style>

@@ -1,5 +1,6 @@
 <template>
 	<div id="purchase-form" class="row">
+		
 		<form v-on:submit.prevent>
 			<!-- Fade effects -->
 			<transition 
@@ -71,13 +72,7 @@
 					</select> -->
 					<div v-else-if="data.form.type=='stripe'">
 						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
-						<div id="card-element" class="field"></div>
-						<div class="outcome">
-							<div class="error" role="alert"></div>
-<!-- 							<div class="success">
-								Success! Your Stripe token is <span class="token"></span>
-							</div> -->
-						</div>
+						<stripe-form></stripe-form>
 					</div>
 					<input 
 					autofocus
@@ -115,6 +110,7 @@
 
 import Autocomplete from './autocomplete';
 import CloudForm from './FormCloud.vue'
+import StripeForm from './StripeForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -141,6 +137,7 @@ export default {
 			past_step: 0,
 			step_names: step_names,
 			cloud: [],
+			
 		}
 	},
 	mounted () {
@@ -163,11 +160,12 @@ export default {
 			clear_errors: 'clearErrors',
 			clearCurrentItem: 'clearCurrentItem',
 			set_client_prop: 'setClientProp',
-			set_payment_token: 'setPaymentToken',
 			add_cloud: 'addCloud',
 			server_set_client: 'serverSetClient',
+			add_notification: 'addNotification',
 		}),
-		logData(obj) {	// Function for testing ajax replies
+		logData(obj) {
+			// Function for testing ajax replies
 			console.log("logData")
 			console.log(obj)
 		},
@@ -185,10 +183,12 @@ export default {
 						this.formTimeoutNext()
 						break;
 					case "skip":
+						this.past_step = this.get_current_step
 						this.set_current_form_step(this.get_current_step+1)
 						this.formTimeoutNext()
 						break;
 					case "next":
+						this.past_step = this.get_current_step
 						// Grab current step data
 						let data = this.get_formsteps[this.get_current_step].data
 
@@ -251,19 +251,24 @@ export default {
 							}
 						}
 						let cloud_obj = {
-								sku: 'none',
+								sku: 'cloud',
 								category: this.get_multiplier('cloud'),
 								price_silver: cloud.price_multiplier,
-								price_gold: cloud.price_multiplier,
-								price_black: cloud.price_multiplier,
+								price_gold: 0.0,
+								price_black: 0.0,
 								type: 'cloud',
 								brand: cloud.name,
 								model: '',
 								release: moment().format("YYYY-MM-DD"),
 							}
 						this.add_cart_item(cloud_obj)
+							.then((value) => {
+								console.log("Added cloud: ", value)
+							})
+
 						break;
 					case "review":
+						this.past_step = this.get_current_step
 						// Grab current step data
 						let card_data = this.get_formsteps[this.get_current_step].data
 
@@ -310,10 +315,15 @@ export default {
 						else {
 							prd_info = {
 								sku: 'none',
-								category: 'none',
-								price_silver: 1,
-								price_gold: 1,
-								price_black: 1,
+								category: {
+									category_code: 'none',
+									name: 'None',
+									price_multiplier: 1.0,
+									yearly_tax: 0.1,
+								},
+								price_silver: 1.0,
+								price_gold: 1.0,
+								price_black: 1.0,
 								type: 'product',
 							}
 						}
@@ -359,64 +369,29 @@ export default {
 			}
 		},
 		setItemProp () {
-			console.log("setItemProp ------")			
 			this.set_current_form_step(this.get_current_step + 1)
 		},
 		formTimeoutNext() {
+			// This method hides and shows the form to ensure smooth animations
+			// It also removed old form inputs from the dom to ensure a fresh state obj each time the form changes
+			// I ran into issues with input values carrying from one input to the next due to Vuejs trying to modify the dom as little as possible.
 			this.show = false;
 			setTimeout(() => {
 				this.show = true;
+				// Set another timer to ensure dom elements are loaded before calling js
 				setTimeout(() => {
 					document.forms[0].elements[0].focus();
-					if (this.get_current_step==this.step_names.payment) {
-						var stripe = Stripe('pk_test_8TjNbehh0cqmd01HFq3DIawx');
-						var elements = stripe.elements();
-						var card = elements.create('card', {
-							style: {
-								base: {
-									iconColor: '#eca661',
-									color: '#ffffff',
-									lineHeight: '40px',
-									fontWeight: 300,
-									fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-									fontSize: '15px',
-
-									'::placeholder': {
-										color: '#CFD7E0',
-									},
-								},
-							}
-						});
-						card.mount('#card-element');
-						var self = this;
-						function setOutcome(result) {
-							var errorElement = document.querySelector('.error');
-							errorElement.classList.remove('visible');
-							if (result.token) {
-								// Use the token to create a charge or a customer
-								// https://stripe.com/docs/charges
-								self.set_payment_token(result.token.id);
-							} else if (result.error) {
-								errorElement.textContent = result.error.message;
-								errorElement.classList.add('visible');
-							}
-						}
-						card.on('change', function(event) {
-							setOutcome(event);
-						});
-						document.querySelector('#btn_review').addEventListener('click', function(e) {
-							e.preventDefault();
-							var form = document.querySelector('form');
-							var extraDetails = {
-								name: form.querySelector('input[name=cardholder-name]').value,
-							};
-							stripe.createToken(card, extraDetails).then(setOutcome);
+					if (this.get_current_step == this.step_names.cloud) {
+						this.add_notification({
+							message: "If you upgrade to Gold or Black plans, you get cloud support for free!",
+							type: "info"
 						});
 					}
 				}, 100)
 				
 				}, 
-				this.formTransitionTime)
+				this.formTransitionTime
+			)
 		},
 		animateBeforeEnter(el) {
 			el.style.opacity = 0
@@ -465,7 +440,7 @@ export default {
 				}
 			}
 			return val
-		}
+		},
 	},
 	computed: {
 		...mapGetters({
@@ -485,7 +460,8 @@ export default {
 	// get_api_root: 'getAPIRoot',
 	components: {
 		Autocomplete,
-		CloudForm
+		CloudForm,
+		StripeForm
 	},
 	created () {
 		setTimeout(() => this.show = true, 200)
@@ -498,6 +474,7 @@ export default {
 
 @import '../assets/vue2-autocomplete';
 @import '../assets/sass/form';
+
 
 .btn-outline-success {
 	padding: 10px 20px;
@@ -530,6 +507,10 @@ export default {
 	background: transparent;
 	background: rgba(255,255,255,.08);
 	border-color: #FFFFFF;
+}
+
+.btn:active, .btn:visited, .btn:focus {
+	outline: none !important;
 }
 
 .form-input-wrapper {

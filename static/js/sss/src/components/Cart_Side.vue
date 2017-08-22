@@ -1,6 +1,6 @@
 <template>
 
-<div id="side-cart">
+<div id="side_cart">
 	<div :style="cartHeaderStyle">
 		<div class="text-center" style="padding: 10px;">
 			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
@@ -13,8 +13,7 @@
 					v-for="(p, index) in plans" 
 					:value="p.code"
 					@click="setPlan"
-					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}"
-				>
+					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}">
 					{{p.name}}
 				</button>
 			</div>
@@ -166,6 +165,7 @@ export default {
 			'serverGetEstimatePdf',
 			'setEstimatePdfFile',
 			'setAcceptedTerms',
+			'addNotification',
 		]),
 		setPlan(el) {
 			let val = el.target.value
@@ -185,9 +185,29 @@ export default {
 				$('#termsModal').modal('show')
 			}
 			else {
+				console.log("Purchase -- ")
 				this.serverSetClient().then(() => {
 					this.saveCart().then(() => {
 						this.checkout()
+							.then((status) => {
+								console.log("after purchase callback")
+								console.log(status)
+								if (status == false) {
+									// Failed
+									this.addNotification({
+										message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
+										type: "danger"
+									})
+									this.addNotification({
+										message: "To speak with Mibura about your support plan, click 'Call Sales' to speak with a Mibura sales representative.",
+										type: "warning"
+									})
+									this.addNotification({
+										message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
+										type: "info"
+									})
+								}
+							})
 					})
 				})
 				
@@ -423,14 +443,10 @@ export default {
 
 <style lang="scss" scoped>
 
-.pad-10 {
-	padding: 10px;
-}
-
-#side-cart {
-	margin-top: 15%;
+#side_cart {
+	// margin-top: 15%;
 	border-radius: 5px;
-	border: 1px solid #000000;
+	border: 0px solid #444444;
 	background-color: white;
 }
 

@@ -13,12 +13,7 @@ const state = {
 	current_cloud_selection: 1,
 	client_info: {},
 	payment_token: "",
-	notifications: [
-		{message: "test!", type: "success"},
-		{message: "If you upgrade to gold, you get cloud support included for FREE!", type: "info"},
-		{message: "test!", type: "warning"},
-		{message: "test!", type: "danger"}
-	],
+	notifications: [],
 }
 
 const mutations = {

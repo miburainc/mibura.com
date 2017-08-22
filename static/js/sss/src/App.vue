@@ -208,6 +208,10 @@ export default {
 
 <style lang="scss">
 
+#app {
+	margin-top: 40px;
+}
+
 h1, h2, h3, h4 {
 	margin: 0;
 }

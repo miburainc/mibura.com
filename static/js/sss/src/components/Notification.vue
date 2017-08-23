@@ -1,7 +1,7 @@
 <template>
 	<div :class="['alert alert-dismissable', 'alert-'+data.type]" role="alert">
 		<button type="button" class="close" @click="remove_notification(index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		{{ data.message }}
+		<span v-html="data.message"></span>
 	</div>
 </template>
 

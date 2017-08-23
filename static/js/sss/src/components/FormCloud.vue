@@ -8,7 +8,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div v-for="(cloud, index) in clouds" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
-				<img :src="cloud.image" style="width: auto; height: 75px;">
+				<img class="clickable" @click="addCloudFunc(cloud.pk)" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
 			</div>
 	    </div>
 
@@ -34,7 +34,8 @@ import '../../library/carousel-swipe.js'
 
 export default {
 	props: [
-		'clouds'
+		'clouds',
+		'addCloudFunc'
 	],
 	data() {
 		return {
@@ -76,3 +77,11 @@ export default {
 }
 
 </script>
+
+<style>
+	
+.clickable:hover {
+	cursor: pointer;
+}
+
+</style>

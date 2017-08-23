@@ -169,16 +169,48 @@ export default {
 		]),
 		setPlan(el) {
 			let val = el.target.value
+			switch(val) {
+				case 'silver':
+					this.addNotification({
+						type: 'success',
+						message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+				case 'gold':
+					this.addNotification({
+						type: 'success',
+						message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+				case 'black':
+					this.addNotification({
+						type: 'success',
+						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+			}
 			this.setCurrentPlan(val)
 		},
 		formPurchase() {
 			if (this.cart.length < 1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please add items to your cart before clicking purchase!'
+				})
 				this.buttonStartNewItem()
 			}
 			else if (Object.keys(this.getClientInfo) < 10) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please fill out your information!'
+				})
 				this.buttonStartClientInfo()
 			}
 			else if (!this.get_payment_token) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please fill out your payment information!'
+				})
 				this.buttonStartPayment()
 			}
 			else if (!this.get_accepted_terms) {
@@ -235,10 +267,11 @@ export default {
 		},
 		buttonPhoneSupport() {
 			console.log("buttonPhoneSupport")
-			if (this.cart.length < 1) {
-				this.buttonStartNewItem()
-			}
-			else if (Object.keys(this.getClientInfo).length<1) {
+			if (Object.keys(this.getClientInfo).length<1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please provide your contact information.'
+				})
 				this.buttonStartClientInfo()
 			}
 			else {
@@ -255,9 +288,17 @@ export default {
 		buttonGetPDF() {
 			console.log("buttonGetPDF")
 			if (this.cart.length < 1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please add items to your cart!'
+				})
 				this.buttonStartNewItem()
 			}
 			else if (Object.keys(this.getClientInfo).length<1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please provide your contact information.'
+				})
 				this.buttonStartClientInfo()
 			}
 			else {

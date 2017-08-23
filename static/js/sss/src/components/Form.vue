@@ -56,6 +56,7 @@
 					<cloud-form 
 						v-else-if="data.src && get_current_step==step_names.cloud"
 						:clouds="cloud"
+						:addCloudFunc="addCloudItem"
 					></cloud-form>
 					<!-- <select 
 						v-else-if="data.src && get_current_step==step_names.cloud"
@@ -169,6 +170,46 @@ export default {
 			console.log("logData")
 			console.log(obj)
 		},
+		addCloudItem(cloud_pk) {
+			let cloud = {};
+			for (let i=0; i<this.cloud.length; i++) {
+				if (this.cloud[i].pk == cloud_pk) {
+					cloud = this.cloud[i]
+				}
+			}
+			let cloud_obj = {
+				sku: 'cloud',
+				category: this.get_multiplier('cloud'),
+				price_silver: cloud.price_multiplier,
+				price_gold: 0.0,
+				price_black: 0.0,
+				type: 'cloud',
+				brand: cloud.name,
+				model: '',
+				release: moment().format("YYYY-MM-DD"),
+			}
+			this.add_cart_item(cloud_obj)
+				.then((value) => {
+					console.log("Added cloud: ", value)
+					if (value == true) {
+						this.goToStep(this.get_current_step+1)
+					}
+				})
+		},
+		goToStep(step_num) {
+			// Proceed to next page of form
+			this.set_current_form_step(step_num)
+
+			// Call timeout function
+			this.formTimeoutNext()
+
+			// If step is end of client entry
+			// Check server for client info
+			// If not on server, create in server
+			if (step_num == this.step_names.payment) {
+				this.server_set_client()
+			}
+		},
 		buttonAction(el, scr) {
 			let temp = document.forms.item(0).elements[0].value
 			if (!temp) {
@@ -220,18 +261,7 @@ export default {
 							}
 							this.clear_errors()
 
-							// Proceed to next page of form
-							this.set_current_form_step(this.get_current_step+1)
-
-							// Call timeout function
-							this.formTimeoutNext()
-
-							// If step is end of client entry
-							// Check server for client info
-							// If not on server, create in server
-							if (this.get_current_step == this.step_names.payment) {
-								this.server_set_client()
-							}
+							this.goToStep(this.get_current_step+1)
 						}
 
 						break;
@@ -244,27 +274,7 @@ export default {
 						if (temp=="none") {
 							temp = this.get_current_cloud_selection
 						}
-						let cloud = {};
-						for (let i=0; i<this.cloud.length; i++) {
-							if (this.cloud[i].pk == temp) {
-								cloud = this.cloud[i]
-							}
-						}
-						let cloud_obj = {
-								sku: 'cloud',
-								category: this.get_multiplier('cloud'),
-								price_silver: cloud.price_multiplier,
-								price_gold: 0.0,
-								price_black: 0.0,
-								type: 'cloud',
-								brand: cloud.name,
-								model: '',
-								release: moment().format("YYYY-MM-DD"),
-							}
-						this.add_cart_item(cloud_obj)
-							.then((value) => {
-								console.log("Added cloud: ", value)
-							})
+						this.addCloudItem(temp)
 
 						break;
 					case "review":

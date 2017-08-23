@@ -102,7 +102,7 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Next",
-				class: "btn btn-outline-success",
+				class: "btn btn-lg btn-outline-success",
 				script: "next"
 
 			},
@@ -131,12 +131,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-outline-default",
+				class: "btn btn-lg btn-outline-default",
 				script: "back"
 			},
 			{
 				label: "Next",
-				class: "btn btn-outline-success",
+				class: "btn btn-lg btn-outline-success",
 				script: "next"
 
 			},
@@ -187,17 +187,17 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-outline-default",
+				class: "btn btn-lg btn-outline-default",
 				script: "back"
 			},
 			{
-				label: "Add Another",
-				class: "btn btn-outline-default",
+				label: "Add Another Product",
+				class: "btn btn-lg btn-outline-default",
 				script: "start,additem"
 			},
 			{
-				label: "Add and Checkout",
-				class: "btn btn-outline-success",
+				label: "Add and Continue",
+				class: "btn btn-lg btn-outline-success",
 				script: "next,additem"
 
 			},
@@ -223,14 +223,14 @@ export const form_steps = [
 		],
 		buttons: [
 			{
-				label: "Skip",
-				class: "btn btn-outline-default",
+				label: "I Don't Need Cloud Support",
+				class: "btn btn-lg btn-outline-default",
 				script: "skip"
 
 			},
 			{
-				label: "Next",
-				class: "btn btn-outline-success",
+				label: "Add and Continue",
+				class: "btn btn-lg btn-outline-success",
 				script: "next,addcloud"
 
 			},
@@ -313,8 +313,8 @@ export const form_steps = [
 		],
 		buttons: [
 			{
-				label: "Next",
-				class: "btn btn-outline-success",
+				label: "Continue",
+				class: "btn btn-lg btn-outline-success",
 				script: "next"
 
 			},
@@ -412,12 +412,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-outline-default",
+				class: "btn btn-lg btn-outline-default",
 				script: "back"
 			},
 			{
-				label: "Checkout",
-				class: "btn btn-outline-success",
+				label: "Continue to Payment",
+				class: "btn btn-lg btn-outline-success",
 				script: "next"
 
 			},
@@ -477,12 +477,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-outline-default",
+				class: "btn btn-lg btn-outline-default",
 				script: "back"
 			},
 			{
 				label: "Review",
-				class: "btn btn-outline-success payment-button",
+				class: "btn btn-lg btn-outline-success payment-button",
 				script: "review"
 			},
 		],

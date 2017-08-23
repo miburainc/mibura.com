@@ -80,7 +80,7 @@ const actions = {
 				if (state.cart[i].brand == payload.brand) {
 					dispatch('addNotification', {
 						type: "danger",
-						message: "You already have " + payload.brand + " in your cart!"
+						message: "You already have " + payload.brand + " in your cart!<br>Select another provider or click the Skip button."
 					})
 					cloud_in_cart_already = true
 					return false;

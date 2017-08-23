@@ -26,6 +26,8 @@ from freshbooks import estimates
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
 
+from dynamicscrm.api import createAccount
+
 stripe.api_key = settings.PINAX_STRIPE_SECRET_KEY
 
 #################
@@ -339,13 +341,33 @@ def checkout(request):
 		)
 		time = datetime.now()
 		print("time", time)
-		sub = Subscription(client=client, plan=cart.plan, length=data.length, price=total, date_begin=time)
+		sub = Subscription(
+			client=client, 
+			plan=cart.plan, 
+			length=data.length,
+			discount_percent=active_discount,
+			cart=cart,
+			subtotal=total,
+			price=discount_total, 
+			date_begin=time)
 		sub.save()
 		sub.products.add(*cart.products.all())
+		sub.cloud.add(*cart.cloud.all())
 
-		print(data.client)
-		print(data.cart)
-		print(data.stripe_token)
+		crm_res = createAccount({
+			"company": client.company,
+			"phone": client.phone,
+			"email": client.email,
+			"client_name": client.get_full_name(),
+			"address1": client.street,
+			"address2": client.street2,
+			"city": client.city,
+			"state": client.state,
+			"zipcode": client.zipcode,
+			"country": client.country,
+			"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
+		})
+		print(crm_res)
 	return HttpResponse({'result': True}, status=200)
 
 # Django Rest Framework

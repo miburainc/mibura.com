@@ -144,25 +144,6 @@ class ClientProduct(models.Model):
 	def __str__(self):
 		return str(self.product) if self.product else self.brand + " " + self.model
 
-class Subscription(models.Model):
-	client = models.ForeignKey(Client)
-	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
-	products = models.ManyToManyField(ClientProduct,blank=True)
-
-	length = models.FloatField(default=1)
-	price = models.FloatField(default=0.0)
-	discount_code = models.CharField(max_length=64, blank=True)
-
-	date_begin = models.DateTimeField(blank=True)
-	date_created = models.DateTimeField(auto_now_add=True)
-	date_updated = models.DateTimeField(auto_now=True)
-
-	def get_expiration(self):
-		return self.date_begin + timedelta(days=self.length*365)
-
-	def __str__(self):
-		return self.client.get_full_name() + ": " + self.plan
-
 
 class Cart(models.Model):
 	email = models.CharField(max_length=128)
@@ -190,6 +171,29 @@ class Cart(models.Model):
 		for cloud in self.cloud.all():
 			total += cloud_price(cloud, self.plan, self.length)
 		return total
+
+class Subscription(models.Model):
+	client = models.ForeignKey(Client)
+	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
+	cart = models.ForeignKey(Cart, blank=True, null=True)
+	products = models.ManyToManyField(ClientProduct,blank=True)
+	cloud = models.ManyToManyField(Cloud, blank=True)
+
+	length = models.FloatField(default=1)
+	subtotal = models.FloatField(default=0.0)
+	price = models.FloatField(default=0.0)
+	discount_percent = models.FloatField(default=0.0)
+	discount_code = models.CharField(max_length=64, blank=True)
+
+	date_begin = models.DateTimeField(blank=True)
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
+
+	def get_expiration(self):
+		return self.date_begin + timedelta(days=self.length*365)
+
+	def __str__(self):
+		return self.client.get_full_name() + ": " + self.plan
 
 class EstimateText(models.Model):
 	item = models.CharField(max_length=256)

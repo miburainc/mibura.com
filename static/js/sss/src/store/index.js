@@ -7,7 +7,7 @@ import Cart from './modules/sss_cart'
 import {PLANS, API_ROOT, product_multiplier} from './values'
 
 import freshbooks from './api/freshbooks'
-
+import plaid from './api/plaid'
 import productApi from './api/products'
 
 import createLogger from '../scripts/logger'
@@ -52,6 +52,17 @@ export const store = new Vuex.Store({
     getCurrentPlan: state => state.current_plan,
     getPurchaseSuccess: state => state.purchase_success,
     getAcceptedTerms: state => state.accepted_terms,
+    getPaymentToken: state => {
+      if (state.stripe.ach_payment_token) {
+        return state.stripe.ach_payment_token
+      }
+      else if (state.stripe.cc_payment_token) {
+        return state.stripe.cc_payment_token
+      }
+      else {
+        return ""
+      }
+    },
   },
   mutations: {
     increment (state) {
@@ -83,6 +94,15 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
+    plaidSendCredentials({commit, state}) {
+      plaid.sendPlaidCredentials(state.stripe.ach_account_id, state.stripe.ach_public_token)
+        .then((response) => {
+          commit(TYPE.SET_STRIPE_PROP, {
+            prop: 'ach_payment_token',
+            value: response.data
+          })
+        })
+    },
     ServerRequestPastEstimate({commit, state, rootState}, estimate_ref) {
       freshbooks.request_past_estimate(estimate_ref).then((response) => {
         console.log(response)

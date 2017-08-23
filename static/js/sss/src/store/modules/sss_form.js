@@ -105,7 +105,7 @@ const getters = {
 	getCurrentItem: state => state.current_item,
 	getCurrentItemProp: state => prop => state.current_item[prop],
 	getClientInfo: state => state.client_info,
-	getPaymentToken: state => state.payment_token,
+	
 	getCurrentCloudSelection: state => state.current_cloud_selection,
 	getNotifications: state => state.notifications,
 }

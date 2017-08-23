@@ -22,6 +22,7 @@ urlpatterns = [
 	url(r'^send-quote-email/$', views.email_estimate_pdf, name="send_quote_email"),
 	url(r'^get-previous-estimate/$', views.get_previous_estimate, name="get_previous_estimate"),
 	url(r'^checkout/$', views.checkout, name="checkout"),
+	url(r'^plaid-credentials/$', views.plaid_credentials, name="plaid_credentials"),
 ]
 
 urlpatterns += [

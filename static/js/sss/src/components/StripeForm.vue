@@ -1,16 +1,26 @@
 <template>
-	<div>
-		<div id="card-element" class="field"></div>
-		<div class="outcome">
-			<div class="error" role="alert"></div>
-			<!--
-			<div class="success">
-			Success! Your Stripe token is <span class="token"></span>
+	<div id="stripe-payment-form">
+		<ul class="nav nav-tabs">
+			<li role="presentation" :class="{active: payment_type=='card'}"><a href="#" @click="payment_type='card'">Credit Card</a></li>
+			<li role="presentation" :class="{active: payment_type=='ach'}"><a href="#" @click="payment_type='ach'">Bank ACH</a></li>
+		</ul>
+		<div class="payment-box">
+			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10">
+				<div id="card-element" class="field"></div>
+				<div class="outcome">
+					<div class="error" role="alert"></div>
+					<!--
+					<div class="success">
+					Success! Your Stripe token is <span class="token"></span>
+					</div>
+					-->
+				</div>
 			</div>
-			-->
-		</div>
-		<div>
-			<button id='linkButton' class="btn btn-link">Click here to pay by ACH</button>
+			
+			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10 text-center">
+				<button id='linkButton' class="btn btn-lg btn-outline-default">Click here to pay by ACH</button>
+				<!-- <button @click="sendplaidcredentials" class="btn btn-outline-default">Get Plaid Payment Token</button> -->
+			</div>
 		</div>
 	</div>
 </template>
@@ -20,26 +30,40 @@
 import {mapActions} from 'vuex'
 
 export default {
+	data() {
+		return {
+			payment_type: 'card',
+		}
+	},
 	props: [''],
 	methods: {
 		...mapActions([
 			'setPaymentToken',
-			'setStripeProp'
-		])
+			'setStripeProp',
+			'plaidSendCredentials'
+		]),
+		sendplaidcredentials() {
+			this.plaidSendCredentials()
+		}
 	},
 	mounted() {
 		var linkHandler = Plaid.create({
 			env: 'sandbox',
-			clientName: 'Stripe/Plaid Test',
-			key: '0e355574b026a7c38406d02a00bc4d',
+			clientName: 'MiBURA',
+			key: '87d5d9538ea6876052c9f655c91df8',
 			product: ['auth'],
 			selectAccount: true,
-			onSuccess: function(public_token, metadata) {
+			onSuccess: (public_token, metadata) => {
 				// Send the public_token and account ID to your app server.
-				console.log('public_token: ' + public_token);
-				console.log('account ID: ' + metadata.account_id);
+				// console.log('public_token: ' + public_token);
+				// console.log('account ID: ' + metadata.account_id);
+				// sendDataToBackendServer({
+				//   public_token: public_token,
+				//   account_id: metadata.account_id
+				// });
 				this.setStripeProp({prop: 'ach_public_token', value: public_token})
 				this.setStripeProp({prop: 'ach_account_id', value: metadata.account_id})
+				this.plaidSendCredentials()
 			},
 			onExit: function(err, metadata) {
 				// The user exited the Link flow.
@@ -102,11 +126,41 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 #linkButton {
 	margin-top: 10px;
 	padding-top: 0px;
+}
+
+.payment-box {
+	border-radius: 2px;
+	border-top: 1px solid #8493A8;
+}
+
+.nav-tabs {
+	border: none;
+}
+
+.nav-tabs li a {
+	color: white;
+}
+
+.nav-tabs li.active a {
+	border: 1px solid #8493A8;
+	background: rgba(255,255,255,0.1);
+	border-bottom: none;
+}
+
+.nav-tabs li a:hover {
+	border: 1px solid #8493A8;
+	border-bottom: 1px solid #8493A8;
+	background: rgba(255,255,255,0.2);
+	color: white;
+}
+
+.nav-tabs li a:active, .nav-tabs li a:visited {
+	color: white;
 }
 
 </style>

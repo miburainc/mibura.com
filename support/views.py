@@ -1,6 +1,6 @@
 from datetime import datetime, date, timedelta
 from wsgiref.util import FileWrapper
-import os, json, math, stripe
+import os, json, math, stripe, plaid
 from copy import deepcopy
 
 from django.conf import settings
@@ -85,6 +85,38 @@ def purchase(request):
 #################
 # Api endpoints 
 #################
+
+
+
+@csrf_exempt
+def plaid_credentials(request):
+	# plaid.Client.config({'url': 'https://tartan.plaid.com'})
+
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
+		data = dotdict(data) # access properties with . instead of []
+
+		plaid_account_id = data.ach_account_id
+		plaid_link_public_key = data.ach_public_key
+		print("plaid_account_id", plaid_account_id)
+		print("plaid_link_public_key", plaid_link_public_key)
+
+		client = plaid.Client(settings.PLAID_CLIENT_ID,
+				settings.PLAID_SECRET_KEY,
+				settings.PLAID_PUBLIC_KEY,
+				'sandbox')
+		print("client", client.__dict__)
+		exchange_token_response = client.Item.public_token.exchange(plaid_link_public_key)
+		print("exchange_token_response", exchange_token_response)
+		access_token = exchange_token_response['access_token']
+		stripe_response = client.Processor.stripeBankAccountTokenCreate(access_token, plaid_account_id)
+		bank_account_token = stripe_response['stripe_bank_account_token']
+
+		return HttpResponse(bank_account_token, status=200)
+
+
+	return HttpResponse("failed", status=400)
 
 @csrf_exempt
 def get_create_client(request):

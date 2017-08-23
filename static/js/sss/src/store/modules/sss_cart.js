@@ -172,11 +172,15 @@ const actions = {
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
 		}
+		let payment_token = rootState.stripe.ach_payment_token ? rootState.stripe.ach_payment_token : rootState.stripe.cc_payment_token
+		if (!payment_token) {
+			return false
+		}
 		let data = {
 			client: client.pk,
 			cart: state.cart_ref,
 			length: state.support_months/12,
-			stripe_token: rootState.stripe.cc_payment_token
+			stripe_token: payment_token
 		}
 
 		// Check if unverified items in cart

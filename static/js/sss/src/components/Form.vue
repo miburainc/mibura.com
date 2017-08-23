@@ -16,7 +16,14 @@
 				<h4 class="text-center">{{ get_formsteps[get_current_step].text }}</h4>
 				
 				<div v-for="data in get_formsteps[get_current_step].data" class="form-group">
-					<label :for="data.form.name">{{ data.placeholder }}</label>
+					<label 
+						:for="data.form.name"
+						:style="{
+							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
+						}"
+					>
+						{{ data.placeholder }}
+					</label>
 					<!-- brand -->
 					<autocomplete
 						v-if="data.src && get_current_step==step_names.brand"
@@ -76,7 +83,6 @@
 						<stripe-form></stripe-form>
 					</div>
 					<input 
-					autofocus
 					v-else 
 						:type="data.form.type" 
 						:id="data.form.name" 
@@ -86,7 +92,10 @@
 						:value="get_form_input_value(data)" 
 						@change="(el) => {
 							setFormItem(el.target.value, data) 
-							}"
+						}"
+						:style="{
+							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
+						}"
 					>
 
 					<div class="text-red" v-for="error in get_errors[data.form.name]">
@@ -212,6 +221,7 @@ export default {
 		},
 		buttonAction(el, scr) {
 			let temp = document.forms.item(0).elements[0].value
+			console.log(temp)
 			if (!temp) {
 				temp = "none"
 			}
@@ -353,6 +363,7 @@ export default {
 			console.log("Name: " + name)
 			console.log("Obj: ", obj)
 			this.set_current_item_prop({ prop: name, data: obj[name] })
+			this.set_current_item_prop({ prop: 'verified', data: true })
 
 			if (name == "model") {
 				this.addProduct({id: obj.model, data: obj})

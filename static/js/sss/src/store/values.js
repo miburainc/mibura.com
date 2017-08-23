@@ -95,7 +95,7 @@ export const form_steps = [
 				},
 				validate: {
 					type: "text",
-					min: 1,
+					min: 2,
 				}
 			},
 		],

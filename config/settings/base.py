@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sitemaps',
+
     # Libraries
     'rest_framework',
     'pinax.stripe',

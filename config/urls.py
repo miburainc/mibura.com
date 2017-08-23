@@ -18,6 +18,8 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
 
+from django.contrib.sitemaps.views import sitemap
+
 
 from . import views
 
@@ -25,12 +27,17 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^$', views.index, name="index"),
+    url(r'^index/', views.index, name="index"),
     url(r'^.well-known/pki-validation/$', views.ssl_verification, name="ssl-verification"),
     url(r'^company/', include('company.urls')),
     url(r'^datacenter/', include('datacenter.urls', namespace="datacenter")),
     url(r'^cloud/', include('cloud.urls', namespace="cloud")),
     url(r'^support/', include('support.urls', namespace="support")),
     url(r'^staffing/', include('staffing.urls', namespace="staffing")),
+    
+    # SEO
+    url(r'^robots\.txt$', views.robot_txt),
+    url(r'^sitemap\.xml$', views.sitemap)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

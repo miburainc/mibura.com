@@ -11,6 +11,14 @@ if DEBUG == "False":
     DEBUG = False
 
 
+# Stripe / Plaid
+
+STRIPE_SECRET_KEY = get_env_variable("STRIPE_SECRET_KEY")
+
+PLAID_CLIENT_ID = get_env_variable('PLAID_CLIENT_ID')
+PLAID_SECRET_KEY = get_env_variable("PLAID_SECRET_KEY")
+PLAID_PUBLIC_KEY = get_env_variable("PLAID_PUBLIC_KEY")
+
 # EMAIL
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -67,9 +75,6 @@ if not DEBUG:
 	CSRF_COOKIE_HTTPONLY = True
 	X_FRAME_OPTIONS = 'DENY'
 
-
-# Stripe
-PINAX_STRIPE_SECRET_KEY=get_env_variable('STRIPE_SECRET_KEY')
 
 # Logging
 

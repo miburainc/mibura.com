@@ -35,7 +35,7 @@ ALLOWED_HOSTS = ['*',]
 # Stripe
 
 PINAX_STRIPE_PUBLIC_KEY = "pk_test_jW4CJTGamhoH2cCxQljIKiwd"
-PINAX_STRIPE_SECRET_KEY = "sk_test_s6OUz394ThtpufTfUCAFJKwN"
+STRIPE_SECRET_KEY = "sk_test_s6OUz394ThtpufTfUCAFJKwN"
 PINAX_STRIPE_DEFAULT_PLAN = "dollar-yearly"
 PINAX_STRIPE_INVOICE_FROM_EMAIL = "cs@mibura.com"
 

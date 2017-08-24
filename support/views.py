@@ -28,7 +28,7 @@ from scripts.sss_pricing import product_price, cloud_price
 
 from dynamicscrm.api import createAccount
 
-stripe.api_key = settings.PINAX_STRIPE_SECRET_KEY
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 #################
 # Email

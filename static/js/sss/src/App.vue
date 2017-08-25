@@ -133,7 +133,7 @@
 			<div class="col-xs-12 col-md-3" style="padding: 0 5px;">
 				<notification v-for="(notification, index) in get_notifications" :data="notification" :index="index" :key="index"></notification>
 			</div>
-			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-6">
+			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-0">
 				<support-form></support-form>
 			</div>
 			<div id="side_cart_container" class="side-cart col-xs-12 col-md-3">

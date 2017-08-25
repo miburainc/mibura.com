@@ -3,8 +3,8 @@ import axios from 'axios'
 
 const actions = {
 	getEstimatePDF(client, cart_ref) {
-		console.log("freshbooks.js__getEstimatePDF")
-		console.log("post")
+		// console.log("freshbooks.js__getEstimatePDF")
+		// console.log("post")
 		let data_raw = {
 			'client': client,
 			'cart_reference': cart_ref

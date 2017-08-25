@@ -1,16 +1,20 @@
 import Vue from 'vue'
 import * as TYPE from '../types'
 
+import moment from 'moment'
+
 import freshbooks from '../api/freshbooks'
 import cart from '../api/cart'
 
 import {makeid} from '../../scripts/util'
-import {step_names} from '../values'
+import {PLANS, step_names} from '../values'
 
 const state = {
 	cart: [],
 	cart_id: -1,
 	cart_ref: '',
+	plans: PLANS,
+	current_plan: 'silver',
 	support_months: 12,
 	current_item_id: null,
 	estimate_id: 0,
@@ -18,19 +22,15 @@ const state = {
 }
 
 const mutations = {
+	[TYPE.SET_CURRENT_PLAN]: (state, value) => {
+		state.current_plan = value
+	},
 	[TYPE.CART_ADD_ITEM]: (state, payload) => {
 		// NOTE TO SELF: REMOVE LOGIC FROM MUTATION !!!!
 
-		console.log("CART_ADD_ITEM")
 		if (payload.rootState.Form.current_item.hasOwnProperty('index')) {
-			console.log("Index found, editing")
 			let index = payload.rootState.Form.current_item.index;
-			console.log("Index: ", index)
-
-			
 			if (index >= 0) {
-				console.log("payload.rootState.Form.products")
-				console.log(payload.rootState.Form.products[payload.obj.model])
 				state.cart.splice(index, 1, payload.obj)
 			}
 		}
@@ -75,7 +75,6 @@ const actions = {
 		let cloud_in_cart_already = false
 
 		if (payload.type == "cloud") {
-			console.log("Adding Cloud")
 			for (let i=0; i<state.cart.length; i++) {
 				if (state.cart[i].brand == payload.brand) {
 					dispatch('addNotification', {
@@ -96,7 +95,6 @@ const actions = {
 		return true;
 	},
 	editCartItem({commit, state, rootState}, payload) {
-		console.log("Edit: " + payload.id)
 		let global_payload = {
 			rootState: rootState,
 			index: payload.index,
@@ -134,7 +132,7 @@ const actions = {
 				client: client.pk,
 				reference: ref,
 				products: state.cart,
-				plan: rootState.current_plan,
+				plan: state.current_plan,
 				length: state.support_months/12,
 			}).then(response => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
@@ -144,7 +142,6 @@ const actions = {
 	sendQuoteEmail({state}, payload) {
 		cart.sendQuoteEmail(state.cart_ref)
 		.then((response) => {
-			console.log(response)
 			$('#pdfModal').modal('hide')
 		})
 	},
@@ -154,13 +151,8 @@ const actions = {
 	serverGetEstimatePdf({state, rootState, commit}) {
 		let client = rootState.Form.client_info
 		let cart_ref = state.cart_ref
-		console.log("serverGetEstimatePdf")
-		console.log("client", client)
-		console.log("cart_ref", cart_ref)
 		return freshbooks.getEstimatePDF(client, cart_ref)
 			.then(response => {
-				console.log("serverGetEstimatePdf__response")
-				console.log(response)
 				// commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
 				var blob=new Blob([response.data], {type:"application/pdf"});
 				let file_url = window.URL.createObjectURL(blob)
@@ -190,28 +182,131 @@ const actions = {
 				can_checkout = false;
 			}
 		}
-		console.log(client)
-		console.log(state.cart_ref)
 		if (can_checkout) {
 			cart.checkout(data)
 				.then((response) => {
-					console.log(response)
 					dispatch('setPurchaseSuccess', true)
 				})
 		}
 		else {
 			return false // Failed to checkout
 		}
-		
-	}
+	},
+
+	setCurrentPlan({commit}, value) {
+		commit(TYPE.SET_CURRENT_PLAN, value)
+    },
+
+	
 }
 
 const getters = {
+
+	// //////////////
+	// Products
+
+
+	
+	getProductAge: state => product => {
+		let product_release = moment(product.release)
+		let today = moment()
+		let age_months = today.diff(product_release, 'months')
+		let age = age_months / 6
+		return Math.round(age)
+	},
+	getProductPrice: (state,store) => cart_index => {
+		// 
+		// Calculate product price depending on plan selected by customer
+		// 
+		let cost = 0
+		let product = state.cart[cart_index]
+		let plan_name = ''
+		switch(store.getCurrentPlan) {
+			case 'silver':
+				// Silver
+				plan_name = 'silver'
+				break;
+			case 'gold':
+				// Gold
+				plan_name = 'gold'
+				break;
+			case 'black':
+				// Black
+				plan_name = 'black'
+				break;
+		}
+		// Product multiplier per plan e.g 1.0x
+		let pp = product['price_'+plan_name]
+		// Product Category multiplier e.g 1.2x
+		let pm = product.category.price_multiplier
+		// Plan base product price e.g $49/yr
+		console.log("getProductPrice")
+		console.log(store.getCurrentPlan)
+		let pc = store.getPlan(store.getCurrentPlan).cost
+		console.log('pc',pc)
+		// Calculation and then divided by half since plans are sold in 6 month increments
+		cost = (pp * pm * pc) / 2
+		return cost
+	},
+	getProductSubtotal: (state, store) => cart_index => {
+		//
+		// Get product line item price
+		//
+		let product = state.cart[cart_index]
+		let product_price = store.getProductPrice(cart_index)
+
+		let product_age = store.getProductAge(product)
+		// price_iterations - how many half year increments to add
+		let price_iterations = store.getSupportMonths/6
+		// inc - amount to add to base price based on product age
+		let inc = product.category.yearly_tax
+		
+		let price = 0.0
+		// Calculate price base price depending on age
+		for (let e=0; e<product_age; e++) {
+			price += (product_price * inc)
+		}
+
+		// Calculate price into future for length of support bought by client
+		for (let i=0; i<price_iterations; i++) {
+			price += product_price + (product_price * inc)
+		}
+
+		return price
+	},
+	// Total Cart Price
+	getTotal: (state, store) => {
+		let total = 0;
+		for (let i=0; i<state.cart.length; i++) {
+			total += store.getProductSubtotal(i)
+		}		
+		return total
+	},
+	getGrandTotal: (state, store) => {
+		let total = store.getTotal
+		let final = total - (total * store.getCurrentDiscount)
+		return final
+	},
 	getCart: state => state.cart,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
 	getEstimatePDF: state => state.estimate_pdf,
 	getEstimateID: state => state.estimate_id,
+	// Plans
+	getPlans: state => state.plans,
+	getCurrentPlan: state => state.current_plan,
+    getPlan: state => plan => {
+		console.log("getPlan", plan)
+		console.log(state.plans.length)
+		for (let i=0; i<state.plans.length; i++) {
+			if (state.plans[i].code == plan) {
+				console.log("Match found:")
+				console.log(state.plans[i].code, plan)
+				return state.plans[i]
+			}
+		}
+		return false
+	},
 }
 
 export default {

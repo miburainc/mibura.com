@@ -10,7 +10,7 @@
 				<button 
 					type="button" 
 					class="btn-plan" 
-					v-for="(p, index) in plans" 
+					v-for="(p, index) in getPlans" 
 					:value="p.code"
 					@click="setPlan"
 					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}">
@@ -135,20 +135,11 @@ import velocity from 'velocity-animate'
 export default {
 	data () {
 		return {
-			current_plan2: "silver",
-			discounts: [],
-			current_discount: 0.0,
+			
 		}
 	},
 	created() {
-		axios.get(API_ROOT+'discounts')
-			.then((response) => {
-				console.log(response)
-				this.discounts = response.data.results
-			})
-			.catch((error) => {
-				console.error(error)
-			})
+		
 	},
 	methods: {
 		...mapActions([
@@ -217,7 +208,6 @@ export default {
 				$('#termsModal').modal('show')
 			}
 			else {
-				console.log("Purchase -- ")
 				this.serverSetClient().then(() => {
 					this.saveCart().then(() => {
 						this.checkout()
@@ -266,7 +256,6 @@ export default {
 			this.setCurrentFormStep(step_names.client_info)
 		},
 		buttonPhoneSupport() {
-			console.log("buttonPhoneSupport")
 			if (Object.keys(this.getClientInfo).length<1) {
 				this.addNotification({
 					type: 'warning',
@@ -286,7 +275,6 @@ export default {
 			$('#estimateIdModal').modal('show')
 		},
 		buttonGetPDF() {
-			console.log("buttonGetPDF")
 			if (this.cart.length < 1) {
 				this.addNotification({
 					type: 'warning',
@@ -317,10 +305,7 @@ export default {
 				this.clearCart()
 			}
 		},
-		scrollDown() {
-			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
-			// window.scrollTo(0,);
-		},
+
 		numWithCommas(x) {
 			let num = x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			return num
@@ -339,85 +324,12 @@ export default {
 				index: index
 			})
 		},
-		// 
-		// Product Pricing //
-		// 
-		getProductAge(product) {
-			let product_release = moment(product.release)
-			let today = moment()
-			let age_months = today.diff(product_release, 'months')
-			let age = age_months / 6
-			return Math.round(age)
-		},
-		getProductPrice(cart_index) {
-			// 
-			// Calculate product price depending on plan selected by customer
-			// 
-			let cost = 0
-			let product = this.cart[cart_index]
-			let plan_name = ''
-			switch(this.current_plan) {
-				case 'silver':
-					// Silver
-					plan_name = 'silver'
-					break;
-				case 'gold':
-					// Gold
-					plan_name = 'gold'
-					break;
-				case 'black':
-					// Black
-					plan_name = 'black'
-					break;
-			}
-			// Product multiplier per plan e.g 1.0x
-			let pp = product['price_'+plan_name]
-			// Product Category multiplier e.g 1.2x
-			let pm = product.category.price_multiplier
-			// Plan base product price e.g $49/yr
-			let pc = this.getPlans(this.current_plan).cost
-			// Calculation and then divided by half since plans are sold in 6 month increments
-			cost = (pp * pm * pc) / 2
-			return cost
-		},
-		getProductSubtotal(cart_index) {
-			//
-			// Get product line item price
-			//
-			let product = this.cart[cart_index]
-			let product_price = this.getProductPrice(cart_index)
-			let product_age = this.getProductAge(product)
-			// price_iterations - how many half year increments to add
-			let price_iterations = this.getSupportMonths/6
-			// inc - amount to add to base price based on product age
-			let inc = product.category.yearly_tax
-			
-			let price = 0.0
-			// Calculate price base price depending on age
-			for (let e=0; e<product_age; e++) {
-				price += (product_price * inc)
-			}
-
-			// Calculate price into future for length of support bought by client
-			for (let i=0; i<price_iterations; i++) {
-				price += product_price + (product_price * inc)
-			}
-
-			return price
-		},
-		getPlans(plan) { 
-			for (let i=0; i<this.plans.length; i++) {
-				if (this.plans[i].code == plan) {
-					return this.plans[i]
-				}
-			}
-			return false
-		},
 	},
 	computed: {
 		...mapGetters({
 			cart: 'getCart',
-			plans: 'getPlans',
+			getPlans: 'getPlans',
+			getPlan: 'getPlan',
 			getSupportMonths: 'getSupportMonths',
 			getMultiplier: 'getMultiplier',
 			getClientInfo: 'getClientInfo',
@@ -425,41 +337,19 @@ export default {
 			get_cart_reference: 'getCartReference',
 			get_accepted_terms: 'getAcceptedTerms',
 			current_plan: 'getCurrentPlan',
+			getTotal: 'getTotal',
+			getProductSubtotal: 'getProductSubtotal',
+			getGrandTotal: 'getGrandTotal',
+			getCurrentDiscount: 'getCurrentDiscount',
+			get_discounts: 'getDiscounts',
 		}),
-		getCurrentDiscount() {
-			console.log("getCurrentDiscount")
-			let d = 0.0
-			for (let i=0; i<this.discounts.length; i++) {
-				console.log("discount", i)
-				if (this.getSupportMonths/12 >= this.discounts[i].year_threshold) {
-					if (this.discounts[i].discount_percent > d) {
 
-						d = this.discounts[i].discount_percent
-						console.log("setting discount:", d)
-					}
-				}
-			}
-			return d
-		},
-		getTotal() {
-			let total = 0;
-			for (let i=0; i<this.cart.length; i++) {
-				total += this.getProductSubtotal(i)
-			}
-			
-			return total
-		},
-		getGrandTotal() {
-			let total = this.getTotal
-			let final = total - (total * this.getCurrentDiscount)
-			return final
-		},
 		textColorPlan() {
 			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
 		},
 		
 		cartHeaderStyle() {
-			let plan = this.getPlans(this.current_plan)
+			let plan = this.getPlan(this.current_plan)
 			return {
 				'padding-top': '10px',
 				'background-color': plan.color, 

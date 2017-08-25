@@ -133,7 +133,7 @@
 			<div class="col-xs-12 col-md-3" style="padding: 0 5px;">
 				<notification v-for="(notification, index) in get_notifications" :data="notification" :index="index" :key="index"></notification>
 			</div>
-			<div id="support-form" class="col-xs-12 col-md-6">
+			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-6">
 				<support-form></support-form>
 			</div>
 			<div id="side_cart_container" class="side-cart col-xs-12 col-md-3">
@@ -180,13 +180,13 @@ export default {
 			get_purchase_success: 'getPurchaseSuccess',
 			get_estimate_pdf: 'getEstimatePDF',
 			get_notifications: 'getNotifications',
-			
 		})
 	},
 	methods: {
 		...mapActions({
-			'set_category_multipliers': 'setCategoryMultipliers',
-			'set_accepted_terms': 'setAcceptedTerms',
+			set_category_multipliers: 'setCategoryMultipliers',
+			set_discounts: 'setDiscounts',
+			set_accepted_terms: 'setAcceptedTerms',
 			request_past_quote: 'ServerRequestPastEstimate',
 			send_quote_email: 'sendQuoteEmail',
 		}),
@@ -202,6 +202,7 @@ export default {
 	},
 	created() {
 		this.set_category_multipliers()
+		this.set_discounts()
 	}
 }
 </script>
@@ -209,7 +210,7 @@ export default {
 <style lang="scss">
 
 #app {
-	margin-top: 40px;
+	padding-top: 40px;
 }
 
 h1, h2, h3, h4 {
@@ -241,17 +242,16 @@ h1, h2, h3, h4 {
 }
 
 #support-form {
-	z-index: 100;
+	display: block;
+	z-index: 0;
+	min-height: 100%;
+	min-height: 100vh;
 }
 
 #cart {
-	margin-top: -64px;
-	border-top: 1px inset #AAA;
 	width: 100%;
-	position: absolute;
 	padding: 0;
 	left: 0px;
-	top: 100%;
 	background: white;
 }
 

@@ -15,7 +15,7 @@ if DEBUG == "False":
 
 STRIPE_SECRET_KEY = get_env_variable("STRIPE_SECRET_KEY")
 
-PLAID_CLIENT_ID = get_env_variable('PLAID_CLIENT_ID')
+PLAID_CLIENT_ID = get_env_variable("PLAID_CLIENT_ID")
 PLAID_SECRET_KEY = get_env_variable("PLAID_SECRET_KEY")
 PLAID_PUBLIC_KEY = get_env_variable("PLAID_PUBLIC_KEY")
 

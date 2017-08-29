@@ -8,6 +8,8 @@ __pycache__/
 db.sqlite3
 .sqlite3
 
+._.DS_Store
+
 # C extensions
 *.so
 

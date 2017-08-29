@@ -48,7 +48,12 @@ const mutations = {
 		state.current_cloud_selection = selection
 	},
 	[TYPE.ADD_NOTIFICATION]: (state, payload) => {
-		state.notifications.push(payload)
+		state.notifications.splice(0, 0, payload)
+		
+		if(state.notifications.length > 3){
+			state.notifications.pop()
+		}
+		
 	},
 	[TYPE.REMOVE_NOTIFICATION]: (state, index) => {
 		state.notifications.splice(index, 1)

@@ -8,7 +8,7 @@
 		</div>
 		<div class="col-xs-12 no-pad">
 			<div class="no-pad" :style="textColorPlan">
-					<button class="btn-plan" v-for="(p, index) in get_plans" @click="setPlan" :style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}" :value="p.code">
+					<button class="btn-plan" v-for="(p, index) in get_plans" @click="setPlan" :style="{'color': p.color == '#000000' ? 'white' : 'black', backgroundColor: p.color}" :value="p.code">
 						{{p.name}}
 					</button>
 			</div>

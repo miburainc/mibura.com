@@ -95,11 +95,18 @@
 			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 		</div>
 		
-		<div class="pad-10">
+		<div>
 			<div class="form-group">
-				<label style="color: black;">{{writeOutSupportLength}}</label>
-				<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
+				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>
+				<div class="btn-group btn-2">
+					<button class="btn btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+					<button class="btn btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+				</div>
+				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			</div>
+		</div>
+
+		<div class="pad-10">
 			<div class="text-right pad-10">
 				SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
@@ -158,6 +165,7 @@ export default {
 			'setAcceptedTerms',
 			'addNotification',
 		]),
+
 		setPlan(el) {
 			let val = el.target.value
 			switch(val) {
@@ -360,10 +368,23 @@ export default {
 			let str = ""
 			let lenArray = String(this.getSupportMonths/12).split('.')
 			if (lenArray.length > 1) {
-				str = lenArray[0] + " Years & 6 months"
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year & 6 months"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years & 6 months"		
+				}
+				else{
+					str = "6 months"
+				}
 			}
 			else {
-				str = lenArray[0] + " Years"
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years"
+				}
 			}
 			return str
 		}

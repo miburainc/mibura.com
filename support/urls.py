@@ -15,6 +15,8 @@ router.register(r'discounts', views.DiscountViewSet)
 urlpatterns = [
 	url(r'^$', views.index, name="index"),
 	url(r'^purchase/$', views.purchase, name="purchase"),
+	
+	# API
 	url(r'^save-client/$', views.save_client_json, name="save_client"),
 	url(r'^get-or-create-cart/$', views.get_create_cart, name="get_create_cart"),
 	url(r'^get-or-create-client/$', views.get_create_client, name="get_create_client"),

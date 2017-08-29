@@ -131,8 +131,8 @@ class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
 	product = models.ForeignKey(Product, blank=True, null=True)
 
-	brand = models.CharField(max_length=64, blank=True)
-	model = models.CharField(max_length=64, blank=True)
+	brand = models.CharField(max_length=64, blank=True) # Take off
+	model = models.CharField(max_length=64, blank=True) # take off
 
 	serial_number = models.CharField(max_length=128, null=True, blank=True)
 	device_age = models.IntegerField(default=0)

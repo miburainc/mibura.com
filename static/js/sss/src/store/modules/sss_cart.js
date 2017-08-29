@@ -116,9 +116,11 @@ const actions = {
 		commit(TYPE.SET_SUPPORT_MONTHS, val)
 	},
 	setSupportYears({commit}, payload) {
-		let val = payload.target.value
-		
-		commit(TYPE.SET_SUPPORT_MONTHS, val*12)
+		let val = payload
+
+		if((val > 0) && (val <= 144)){
+			commit(TYPE.SET_SUPPORT_MONTHS, val)
+		}
 	},
 	setCartId({commit}, value) {
 		commit(TYPE.CART_SET_ID, value)

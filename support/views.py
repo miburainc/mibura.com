@@ -166,9 +166,12 @@ def get_create_cart(request):
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		if not data.client:
-			HttpResponse("No Client ID", status=400)
-		client = Client.objects.get(pk=data.client)
+		# if not data.client:
+			# HttpResponse("No Client ID", status=400)
+
+		client = get_object_or_404(Client, pk=data.client)
+
+		# client = Client.objects.get(pk=data.client)
 		cart,created = Cart.objects.get_or_create(client=client, reference=data.reference, email=data.email)
 		cart.products.clear()
 
@@ -252,9 +255,6 @@ def get_estimate_pdf(request):
 		data = json.loads(request.body.decode("utf-8"))
 
 		data = dotdict(data)
-
-		if not data.client:
-			HttpResponse("No Client ID", status=400)
 		
 		client = get_object_or_404(Client, pk=int(data.client['pk']))
 		cart = get_object_or_404(Cart, reference=data.cart_reference)

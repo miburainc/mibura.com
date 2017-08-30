@@ -225,7 +225,7 @@ export const form_steps = [
 			{
 				label: "Add and Continue",
 				class: "btn btn-lg btn-outline-success",
-				script: "next,addcloud"
+				script: "addcloud"
 
 			},
 		],

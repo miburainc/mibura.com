@@ -13,7 +13,12 @@
 					v-for="(p, index) in getPlans" 
 					:value="p.code"
 					@click="setPlan"
-					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}">
+					:style="{
+						color: p.color == '#000000' ? 'white' : 'black',
+						backgroundColor: p.color,
+						fontSize: '11px'
+					}"
+				>
 					{{p.name}}
 				</button>
 			</div>
@@ -99,8 +104,8 @@
 			<div class="form-group">
 				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>
 				<div class="btn-group btn-2">
-					<button class="btn btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
-					<button class="btn btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+					<button class="btn btn-sm btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+					<button class="btn btn-sm btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
 				</div>
 				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			</div>
@@ -114,10 +119,10 @@
 				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 			<div class="btn-group btn-2">
-				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
+				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
 					Terms &amp; Conditions
 				</button>
-				<button type="button" class="btn btn-success" @click="formPurchase">
+				<button type="button" class="btn btn-sm btn-success" @click="formPurchase">
 					<i class="fa fa-check" aria-hidden="true"></i>
 					&nbsp;Purchase
 				</button>

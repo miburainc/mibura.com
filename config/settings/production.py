@@ -25,7 +25,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = "smtp.office365.com"
 EMAIL_HOST_USER = "cs@mibura.com"
-EMAIL_HOST_PASSWORD = "^xHpb7S85xE8"
+EMAIL_HOST_PASSWORD = get_env_variable("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_DEFAULT_FROM = "cs@mibura.com"
@@ -35,7 +35,7 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 AZURE_SQL_DBNAME='postgres'
 AZURE_SQL_USER='miburasqluser'# @db-mibura-sql'
 AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
-AZURE_SQL_PASSWORD='AZkey123'
+AZURE_SQL_PASSWORD=get_env_variable('AZURE_SQL_PASSWORD')
 AZURE_SQL_PORT=5432
 AZURE_SQL_SSL=True
 

@@ -38,7 +38,8 @@ urlpatterns = [
     # SEO
     url(r'^robots\.txt$', views.robot_txt),
     url(r'^sitemap\.xml$', views.sitemap),
-
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

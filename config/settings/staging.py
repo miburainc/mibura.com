@@ -92,6 +92,10 @@ if not DEBUG:
 	X_FRAME_OPTIONS = 'DENY'
 
 
+
+# Staticfiles
+STATIC_ROOT = 'staticfiles'
+
 # Logging
 
 # Sentry Configuration

@@ -37,7 +37,11 @@ urlpatterns = [
     
     # SEO
     url(r'^robots\.txt$', views.robot_txt),
-    url(r'^sitemap\.xml$', views.sitemap)
+    url(r'^sitemap\.xml$', views.sitemap),
+
+    # Staticfiles
+    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

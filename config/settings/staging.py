@@ -68,7 +68,9 @@ FRESHBOOKS_AUTH = get_env_variable('FRESHBOOKS_AUTH')
 
 
 
-# MIDDLEWARE += []
+MIDDLEWARE += [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+]
 
 
 # SECURITY CONFIGURATION
@@ -94,7 +96,11 @@ if not DEBUG:
 
 
 # Staticfiles
-STATIC_ROOT = 'staticfiles'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Logging
 

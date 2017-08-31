@@ -173,19 +173,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Freshbooks
-FRESHBOOKS_URL = 'https://mibura.freshbooks.com/api/2.1/xml-in'
-FRESHBOOKS_AUTH = '1be9b30df4a59f7eb6b74fdbb82ba8ac'
-
-
-# FILES
-
-AZURE_ACCOUNT_NAME = 'blobdev01'
-AZURE_ACCOUNT_KEY = 'G3IK3KYOrpo5fyq0Z+u1aFJltZO62uL/VryW+A1z74BEDK3nryMuGpNik5DoDIOGOSPgss4ho77Rj8w3NRO1wQ=='
-AZURE_CONTAINER = 'dev-cont-01'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-
 
 
 # STATIC FILE CONFIGURATION
@@ -199,7 +186,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(ROOT_DIR.path('static')),
-    str(ROOT_DIR.path('support/static')),
+    str(ROOT_DIR.path('support/frontend/dist')),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -225,7 +212,7 @@ import cloudinary.uploader
 import cloudinary.api
 
 cloudinary.config( 
-  cloud_name = "mibura", 
-  api_key = "615747629617717", 
-  api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
+    cloud_name = "mibura", 
+    api_key = "615747629617717", 
+    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
 )

@@ -22,11 +22,10 @@ from rest_framework.request import Request
 from .models import *
 from .serializers import *
 
-from freshbooks import estimates
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
-
 from dynamicscrm.api import createAccount
+from freshbooks import estimates
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -436,19 +435,19 @@ class ProductAutocompleteViewSet(viewsets.ReadOnlyModelViewSet):
 
 		return queryset
 
-@api_view(['GET', 'POST'])
-def support_cart_create(request):
-	"""
-	List all snippets, or create a new snippet.
-	"""
-	if request.method == 'GET':
-		snippets = Product.objects.all()
-		serializer = SnippetSerializer(snippets, many=True)
-		return Response(serializer.data)
+# @api_view(['GET', 'POST'])
+# def support_cart_create(request):
+# 	"""
+# 	List all snippets, or create a new snippet.
+# 	"""
+# 	if request.method == 'GET':
+# 		snippets = Product.objects.all()
+# 		serializer = SnippetSerializer(snippets, many=True)
+# 		return Response(serializer.data)
 
-	elif request.method == 'POST':
-		serializer = SnippetSerializer(data=request.data)
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=status.HTTP_201_CREATED)
-		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# 	elif request.method == 'POST':
+# 		serializer = SnippetSerializer(data=request.data)
+# 		if serializer.is_valid():
+# 			serializer.save()
+# 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+# 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

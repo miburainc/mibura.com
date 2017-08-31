@@ -13,7 +13,7 @@ import os
 import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROOT_DIR = environ.Path(__file__) - 3  # (availlist/config/settings/base.py - 3 = availlist/)
+ROOT_DIR = environ.Path(__file__) - 3  # (mibura/config/settings/base.py - 3 = mibura/)
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -179,6 +179,8 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+
+print(STATIC_ROOT)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'

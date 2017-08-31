@@ -10,6 +10,9 @@ DEBUG = get_env_variable('DJANGO_DEBUG')
 if DEBUG == "False":
     DEBUG = False
 
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura.herokuapp.com', 'localhost', '127.0.0.1', ])
+
+INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
 
 # Stripe / Plaid
 
@@ -32,6 +35,8 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 
 # DB_URL = get_env_variable('DATABASE_URL')
 
+####  Azure
+
 AZURE_SQL_DBNAME='postgres'
 AZURE_SQL_USER='miburasqluser'# @db-mibura-sql'
 AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
@@ -45,11 +50,22 @@ DATABASES = {
     'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
 }
 
+
+# azure storage
+
+AZURE_ACCOUNT_NAME = 'blobdev01'
+AZURE_ACCOUNT_KEY = get_env_variable('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = 'dev-cont-01'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
 # End Azure
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['mibura.herokuapp.com', 'localhost', '127.0.0.1', ])
 
-INSTALLED_APPS += ['gunicorn', 'raven.contrib.django.raven_compat', ]
+# Freshbooks
+FRESHBOOKS_URL = 'https://mibura.freshbooks.com/api/2.1/xml-in'
+FRESHBOOKS_AUTH = get_env_variable('FRESHBOOKS_AUTH')
+
 
 
 # MIDDLEWARE += []

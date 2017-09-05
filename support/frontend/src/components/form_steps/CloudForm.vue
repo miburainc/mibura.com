@@ -30,7 +30,7 @@
 
 import {mapGetters, mapActions} from 'vuex'
 
-import '../../library/carousel-swipe.js'
+import '../../../library/carousel-swipe.js'
 
 export default {
 	props: [

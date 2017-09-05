@@ -12,6 +12,7 @@ from django.utils import timezone, encoding
 from django.template import Context
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
+from django.db.models import Q
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -49,6 +50,20 @@ def send_quote_email(name, recipient, subject, file):
 	msg.content_subtype = 'html'
 	return msg.send()
 
+def send_purchasesuccess_email(name, recipient, subject):
+	to = [recipient]
+	from_email = 'cs@mibura.com'
+
+	print(name)
+
+	ctx = {
+		'name': name,
+	}
+
+	message = get_template('email/purchase_success.html').render(ctx)
+	msg = EmailMessage(subject, message, to=to, from_email=from_email)
+	msg.content_subtype = 'html'
+	return msg.send()
 
 #################
 # Pages
@@ -339,7 +354,6 @@ def checkout(request):
 			description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 		)
 		time = datetime.now()
-		print("time", time)
 		sub = Subscription(
 			client=client, 
 			plan=cart.plan, 
@@ -366,7 +380,7 @@ def checkout(request):
 			"country": client.country,
 			"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
 		})
-		print(crm_res)
+		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase")
 	return HttpResponse({'result': True}, status=200)
 
 # Django Rest Framework
@@ -416,23 +430,21 @@ class ProductAutocompleteViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = ProductSerializer
 	
 	def get_queryset(self):
-		queryset = Product.objects.filter(approved=True).order_by('-model')
-		brand = self.request.query_params.get('brand', None)
-		model = self.request.query_params.get('model', None)
-		if brand:
-			queryset = queryset.filter(brand__icontains=brand)
-			if not model:
-				items, item_ids = [], []
-				for item in queryset:
-					if item.brand not in item_ids:
-						items.append(item)
-						item_ids.append(item.brand)
-						queryset = items
-		if model:
-			queryset = queryset.filter(model__icontains=model)
+		queryset = Product.objects.order_by('-model')
+		query_str = self.request.query_params.get('s', None)
+		# model = self.request.query_params.get('model', None)
+		if query_str:
+			for i in query_str.split(' '):
+				# queryset = queryset.filter(brand__icontains=brand)
+				queryset = queryset.filter(Q(brand__icontains=i) | Q(model__icontains=i))
+				# if not model:
+				# 	items, item_ids = [], []
+				# 	for item in queryset:
+				# 		if item.brand not in item_ids:
+				# 			items.append(item)
+				# 			item_ids.append(item.brand)
+				# 			queryset = items
 		
-			
-
 		return queryset
 
 # @api_view(['GET', 'POST'])

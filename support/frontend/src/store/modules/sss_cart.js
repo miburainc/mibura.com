@@ -19,6 +19,7 @@ const state = {
 	current_item_id: null,
 	estimate_id: 0,
 	estimate_pdf: null,
+	cart_changed: false,
 }
 
 const mutations = {
@@ -67,10 +68,16 @@ const mutations = {
 	},
 	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
 		state.estimate_pdf = value
+	},
+	[TYPE.CART_CHANGED]: (state, value) => {
+		state.cart_changed = value
 	}
 }
 
 const actions = {
+	setCartChanged({commit}, value) {
+		commit(TYPE.CART_CHANGED, value)
+	},
 	addCartItem({commit, dispatch, state, rootState}, payload) {
 		let cloud_in_cart_already = false
 
@@ -87,6 +94,7 @@ const actions = {
 			}
 		}
 		if (!cloud_in_cart_already) {
+			dispatch('setCartChanged', true)
 			commit(TYPE.CART_ADD_ITEM, {
 				rootState: rootState,
 				obj: payload
@@ -104,21 +112,24 @@ const actions = {
 		commit(TYPE.SET_CURRENT_ITEM, state.cart[payload.index])
 		commit(TYPE.SET_CURRENT_FORM_STEP, step_names.additional_info)
 	},
-	clearCart({commit}) {
+	clearCart({commit, dispatch}) {
+		dispatch('setCartChanged', true)
 		commit(TYPE.CART_CLEAR)
 	},
-	removeCartItem({commit}, payload) {
+	removeCartItem({commit, dispatch}, payload) {
+		dispatch('setCartChanged', true)
 		commit(TYPE.CART_REMOVE_ITEM, payload)
 	},
-	setSupportMonths({commit}, payload) {
+	setSupportMonths({commit, dispatch}, payload) {
 		let val = payload.target.value
-
+		dispatch('setCartChanged', true)
 		commit(TYPE.SET_SUPPORT_MONTHS, val)
 	},
-	setSupportYears({commit}, payload) {
+	setSupportYears({commit, dispatch}, payload) {
 		let val = payload
 
 		if((val > 0) && (val <= 144)){
+			dispatch('setCartChanged', true)
 			commit(TYPE.SET_SUPPORT_MONTHS, val)
 		}
 	},
@@ -137,6 +148,7 @@ const actions = {
 				plan: state.current_plan,
 				length: state.support_months/12,
 			}).then(response => {
+				dispatch('setCartChanged', false)
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});
@@ -195,7 +207,8 @@ const actions = {
 		}
 	},
 
-	setCurrentPlan({commit}, value) {
+	setCurrentPlan({commit, dispatch}, value) {
+		dispatch('setCartChanged', true)
 		commit(TYPE.SET_CURRENT_PLAN, value)
     },
 
@@ -294,6 +307,7 @@ const getters = {
 	getCartReference: state => state.cart_ref,
 	getEstimatePDF: state => state.estimate_pdf,
 	getEstimateID: state => state.estimate_id,
+	getCartChanged: state => state.cart_changed,
 	// Plans
 	getPlans: state => state.plans,
 	getCurrentPlan: state => state.current_plan,

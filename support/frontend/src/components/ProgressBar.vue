@@ -61,25 +61,25 @@ export default {
 			}
 		});
 
-		// document.getElementById('progressBar').addEventListener('click', (e) => {
-		// 	var offsets = $('#progressBar').offset();
-		// 	var left = offsets.left;
-		// 	var x = e.pageX - left;
+		document.getElementById('progressBar').addEventListener('click', (e) => {
+			var offsets = $('#progressBar').offset();
+			var left = offsets.left;
+			var x = e.pageX - left;
 
-		// 	let formsteps_length = this.get_formsteps.length
+			let formsteps_length = this.get_formsteps.length
 
-		// 	var startPos = document.getElementById('progressBar').position;
-		// 	var barWidth = $('#progressBar').width()
-		// 	var xconvert = x/barWidth;
+			var startPos = document.getElementById('progressBar').position;
+			var barWidth = $('#progressBar').width()
+			var xconvert = x/barWidth;
 			
-		// 	let roundnum = Math.floor(formsteps_length * xconvert)
+			let roundnum = Math.floor(formsteps_length * xconvert)
 
 			
 
-		// 	console.log(roundnum)
+			console.log(roundnum)
 
-		// 	this.set_current_form_step(roundnum)
-		// });
+			this.set_current_form_step(roundnum)
+		});
 	},
 	methods: {
 		...mapActions({

@@ -15,7 +15,11 @@
 				<h2 class="text-center">{{ get_formsteps[get_current_step].title }}</h2>
 				<h4 class="text-center">{{ get_formsteps[get_current_step].text }}</h4>
 				
-				<div v-for="data in get_formsteps[get_current_step].data" class="form-group">
+				<div v-if="get_current_step == 0">
+					<start-form :form="get_formsteps.filter((e)=>(e.step==0))"></start-form>
+				</div>
+
+				<div v-for="(data, index) in get_formsteps[get_current_step].data" class="form-group">
 					<label 
 						:for="data.form.name"
 						:style="{
@@ -29,13 +33,15 @@
 						v-if="data.src && get_current_step==step_names.brand"
 						:url="get_api_root + 'productcomplete'"
 						data-root="results"
-						anchor="brand"
-						param="brand"
+						label="brand"
+						anchor="model"
+						param="s"
 						class-name="form-input"
 						:custom-params="{format: 'json'}"
 						:name="data.form.name"
 						:id="data.form.name"
 						:init-value="get_current_item_prop(data.form.name)"
+						:process="processAjaxResult"
 						:on-ajax-loaded="logData"
 						:placeholder="data.placeholder"
 						:on-select="(obj) => { setFormItemAutoselect(obj, data.form.name);
@@ -78,12 +84,16 @@
 								{{cloud.name}}
 						</option>
 					</select> -->
-					<div v-else-if="data.form.type=='stripe'">
+					<div 
+						v-else-if="get_current_step==step_names.payment"
+
+					>
 						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
 						<stripe-form></stripe-form>
 					</div>
 					<input 
-					v-else 
+					v-else
+						:data-index="index"
 						:type="data.form.type" 
 						:id="data.form.name" 
 						:name="data.form.name" 
@@ -118,9 +128,14 @@
 
 <script>
 
-import Autocomplete from './autocomplete';
-import CloudForm from './FormCloud.vue'
-import StripeForm from './StripeForm.vue'
+// import Autocomplete from './autocomplete';
+import Autocomplete from 'vue2-autocomplete-js';
+
+import StartForm from './form_steps/StartForm.vue'
+import ProductForm from './form_steps/ProductForm.vue'
+import CloudForm from './form_steps/CloudForm.vue'
+// import CustomerForm from './form_steps/CustomerForm.vue'
+import PaymentForm from './form_steps/PaymentForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -136,6 +151,14 @@ import { forEachValue } from '../scripts/util'
 import {step_names} from '../store/values'
 import velocity from 'velocity-animate'
 
+const form_components = [
+	StartForm,
+	ProductForm,
+	CloudForm,
+	// CustomerForm,
+	PaymentForm
+]
+
 export default {
 	data () {
 		return {
@@ -147,7 +170,7 @@ export default {
 			past_step: 0,
 			step_names: step_names,
 			cloud: [],
-			
+			form_components: form_components
 		}
 	},
 	mounted () {
@@ -174,6 +197,10 @@ export default {
 			server_set_client: 'serverSetClient',
 			add_notification: 'addNotification',
 		}),
+
+		processAjaxResult(json) {
+			return json['results']
+		},
 		logData(obj) {
 			// Function for testing ajax replies
 			console.log("logData")
@@ -219,9 +246,14 @@ export default {
 				this.server_set_client()
 			}
 		},
+		formOnPressEnter() {
+
+			if (this.get_current_step == this.get_formsteps[this.get_current_step].data.length - 1) {
+
+			}
+		},
 		buttonAction(el, scr) {
 			let temp = document.forms.item(0).elements[0].value
-			console.log(temp)
 			if (!temp) {
 				temp = "none"
 			}
@@ -482,7 +514,8 @@ export default {
 	components: {
 		Autocomplete,
 		CloudForm,
-		StripeForm
+		PaymentForm,
+		StartForm
 	},
 	created () {
 		setTimeout(() => this.show = true, 200)

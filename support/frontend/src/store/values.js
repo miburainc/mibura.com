@@ -46,6 +46,7 @@ export const step_names = {
 	client_info: 4,
 	client_address: 5,
 	payment: 6,
+	checkout: 7,
 }
 
 export const product_multiplier = {
@@ -232,7 +233,7 @@ export const form_steps = [
 		title: "Cloud Provider",
 		text: "Add a cloud provider",
 		error: "",
-		step: 0,
+		step: 1,
 	},
 	{
 		data: [
@@ -316,7 +317,7 @@ export const form_steps = [
 		title: "Personal Information",
 		text: "",
 		error: "",
-		step: 1,
+		step: 2,
 	},
 	{
 		data: [
@@ -419,7 +420,7 @@ export const form_steps = [
 		title: "Address",
 		text: "",
 		error: "",
-		step: 1,
+		step: 2,
 	},
 	{
 		data: [
@@ -483,6 +484,6 @@ export const form_steps = [
 		title: "Payment",
 		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
 		error: "",
-		step: 1,
+		step: 3,
 	},
 ]

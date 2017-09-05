@@ -217,6 +217,34 @@ h1, h2, h3, h4 {
 	margin: 0;
 }
 
+.btn-2, .btn-3, .btn-4 {
+	width: 100%;
+}
+
+.btn-4 .btn {
+	width: 25%;
+} 
+
+.btn-3 button.btn {
+	margin: 0;
+	margin-left: 0!important;
+	border-radius: 0;
+	width: 33.33%;
+} 
+
+.btn-2 .btn {
+	margin: 0;
+	margin-left: 0!important;
+	border-radius: 0;
+	width: 50%!important;
+}
+
+.btn-plan {
+	width: 33.33%;
+	padding: 10px;
+	border: 0;
+}
+
 .mobile-cart {
 	display: none;
 }

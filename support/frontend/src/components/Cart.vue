@@ -140,6 +140,7 @@ export default {
 			'setEstimatePdfFile',
 			'setAcceptedTerms',
 			'addNotification',
+			'numWithCommas',
 		]),
 		setPlan(el) {
 			let val = el.target.value
@@ -254,10 +255,7 @@ export default {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 			// window.scrollTo(0,);
 		},
-		numWithCommas(x) {
-			let num = x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			return num
-		},
+
 		
 		editItem(id, index) {
 			this.editCartItem({
@@ -277,6 +275,7 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			numWithCommas: 'numWithCommas',
 			get_cart: 'getCart',
 			get_plans: 'getPlans',
 			get_plan: 'getPlan',
@@ -291,6 +290,7 @@ export default {
 			getProductSubtotal: 'getProductSubtotal',
 			getTotal: 'getTotal',
 			getGrandTotal: 'getGrandTotal',
+			get_cart_changed: 'getCartChanged',
 		}),
 		textColorPlan() {
 			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
@@ -333,12 +333,6 @@ export default {
 
 .no-pad {
 	padding: 0;
-}
-
-.btn-plan {
-	width: 33.33%;
-	padding: 10px;
-	border: 0;
 }
 
 .btn-plan:focus {

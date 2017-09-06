@@ -17,26 +17,42 @@
 					<tr v-for="(item, index) in getCart">
 						<td>{{ item.brand }}</td>
 						<td>{{ item.model }}</td>
-						<td>{{ getProductSubtotal(index) }}</td>
+						<td>${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 					</tr>
 				</tbody>
 			</table>
+			<p>
+			SubTotal: ${{ numWithCommas(getTotal) }}<br>
+				%{{getCurrentDiscount*100}} Discount: &nbsp;
+				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
+				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+			</p>
 		</div>
 	</div>
 </template>
 
 <script>
 
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
 	computed: {
 		...mapGetters([
+			'numWithCommas',
 			'getPlan',
 			'getCurrentPlan',
 			'getCart',
-			'getProductSubtotal',
 			'getCartReference',
+
+			'getProductSubtotal',
+			'getTotal',
+			'getGrandTotal',
+			'getCurrentDiscount',
+		])
+	},
+	methods: {
+		...mapActions([
+			
 		])
 	}
 }

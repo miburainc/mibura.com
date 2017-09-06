@@ -13,7 +13,7 @@ import os
 import environ
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROOT_DIR = environ.Path(__file__) - 3  # (availlist/config/settings/base.py - 3 = availlist/)
+ROOT_DIR = environ.Path(__file__) - 3  # (mibura/config/settings/base.py - 3 = mibura/)
 
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
@@ -70,7 +70,7 @@ INSTALLED_APPS = [
 CORS_ORIGIN_WHITELIST = (
     'localhost',
     '127.0.0.1',
-    '.herokuapp.com',
+    'mibura.herokuapp.com',
     '.mibura.com',
 )
 
@@ -79,7 +79,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = (
     'localhost',
     '127.0.0.1',
-    '.herokuapp.com',
+    'mibura.herokuapp.com',
     '.mibura.com',
 )
 
@@ -96,7 +96,6 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -173,19 +172,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Freshbooks
-FRESHBOOKS_URL = 'https://mibura.freshbooks.com/api/2.1/xml-in'
-FRESHBOOKS_AUTH = '1be9b30df4a59f7eb6b74fdbb82ba8ac'
-
-
-# FILES
-
-AZURE_ACCOUNT_NAME = 'blobdev01'
-AZURE_ACCOUNT_KEY = 'G3IK3KYOrpo5fyq0Z+u1aFJltZO62uL/VryW+A1z74BEDK3nryMuGpNik5DoDIOGOSPgss4ho77Rj8w3NRO1wQ=='
-AZURE_CONTAINER = 'dev-cont-01'
-
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-
 
 
 # STATIC FILE CONFIGURATION
@@ -193,13 +179,15 @@ DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 
+print(STATIC_ROOT)
+
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(ROOT_DIR.path('static')),
-    str(ROOT_DIR.path('support/static')),
+    str(ROOT_DIR.path('support/frontend/dist')),
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
@@ -209,7 +197,6 @@ STATICFILES_FINDERS = [
 ]
 
 
-# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Media Files
 
@@ -225,7 +212,7 @@ import cloudinary.uploader
 import cloudinary.api
 
 cloudinary.config( 
-  cloud_name = "mibura", 
-  api_key = "615747629617717", 
-  api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
+    cloud_name = "mibura", 
+    api_key = "615747629617717", 
+    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
 )

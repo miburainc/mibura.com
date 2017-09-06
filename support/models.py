@@ -63,27 +63,6 @@ class ProductCategory(models.Model):
 	class Meta:
 		verbose_name_plural = "Product Categories"
 
-class Product(models.Model):
-	brand = models.CharField(max_length=128)
-	model = models.CharField(max_length=128)
-	sku = models.CharField(max_length=128)
-
-	category = models.ForeignKey(ProductCategory, null=True, blank=True)
-	price_silver = models.FloatField(default=1.0)
-	price_gold = models.FloatField(default=1.0)
-	price_black = models.FloatField(default=1.0)
-
-	release = models.DateField(null=True,blank=True)
-
-	date_created = models.DateTimeField(auto_now_add=True)
-	date_updated = models.DateTimeField(auto_now=True)
-
-	approved = models.BooleanField(default=True)
-
-	def __str__(self):
-		return self.brand + " : " + self.model
-
-
 class Client(models.Model):
 	first_name = models.CharField(max_length=32)
 	last_name = models.CharField(max_length=32)
@@ -126,6 +105,30 @@ class Client(models.Model):
 	def __str__(self):
 		return self.get_full_name()
 
+class Product(models.Model):
+	brand = models.CharField(max_length=128)
+	model = models.CharField(max_length=128)
+	sku = models.CharField(max_length=128)
+
+	category = models.ForeignKey(ProductCategory, null=True, blank=True)
+	price_silver = models.FloatField(default=1.0)
+	price_gold = models.FloatField(default=1.0)
+	price_black = models.FloatField(default=1.0)
+
+	release = models.DateField(null=True,blank=True)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.brand + " : " + self.model
+
+class UnknownProduct(models.Model):
+	name = models.CharField(max_length=128)
+	serial_number = models.CharField(max_length=128, null=True, blank=True)
+	device_age = models.IntegerField(default=0)
+	additional_info = models.TextField(blank=True)
+	client = models.ForeignKey(Client)
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)

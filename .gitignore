@@ -32,6 +32,10 @@ wheels/
 
 .env
 
+# Security
+
+local.py
+
 # Javascript
 
 staticfiles/

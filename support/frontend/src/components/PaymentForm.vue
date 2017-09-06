@@ -18,8 +18,10 @@
 			</div>
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10 text-center">
+
 				<button id='linkButton' class="btn btn-lg btn-outline-default">Click here to pay by ACH</button>
-				<!-- <button @click="sendplaidcredentials" class="btn btn-outline-default">Get Plaid Payment Token</button> -->
+				
+
 			</div>
 		</div>
 	</div>

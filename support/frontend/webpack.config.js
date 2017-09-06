@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/main.js',
   // target: 'node',
   output: {
-    path: path.resolve(__dirname, './../static/vue'),
+    path: path.resolve(__dirname, './dist/supportbundle'),
     publicPath: '/dist/',
     filename: 'build.js'
   },

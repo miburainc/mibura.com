@@ -6,14 +6,19 @@
 			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
 		</div>
 		<div>
-			<div class="text-center">
+			<div class="btn-3">
 				<button 
 					type="button" 
-					class="btn-plan" 
+					class="btn-plan text-center" 
 					v-for="(p, index) in getPlans" 
 					:value="p.code"
 					@click="setPlan"
-					:style="{'color': p.color == '#000000' ? 'white' : 'black',backgroundColor: p.color}">
+					:style="{
+						color: p.color == '#000000' ? 'white' : 'black',
+						backgroundColor: p.color,
+						fontSize: '11px'
+					}"
+				>
 					{{p.name}}
 				</button>
 			</div>
@@ -31,7 +36,7 @@
 				<th class="text-right" :style="cartHeaderStyle">Options</th>
 			</thead>
 		</table>
-		<div style="max-height:150px;overflow:auto;margin-bottom:10px;">
+		<div style="max-height:150px;overflow:auto;margin-bottom:0px;">
 			<table class="table table-striped table-condensed table-hover">
 				<tbody class="cart-table-body">
 					<tr v-if="this.cart.length < 1" class="text-center">
@@ -55,11 +60,13 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="btn-group btn-4">
+		<button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
+		
+		<div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Cloud</button>
-			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Quote</button>
-			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
+			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
+			
+			
 		</div>
 		<br><br>
 		<div class="btn-group btn-2">
@@ -99,8 +106,8 @@
 			<div class="form-group">
 				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>
 				<div class="btn-group btn-2">
-					<button class="btn btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
-					<button class="btn btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+					<button class="btn btn-sm btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
+					<button class="btn btn-sm btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
 				</div>
 				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			</div>
@@ -114,10 +121,10 @@
 				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 			<div class="btn-group btn-2">
-				<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
+				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
 					Terms &amp; Conditions
 				</button>
-				<button type="button" class="btn btn-success" @click="formPurchase">
+				<button type="button" class="btn btn-sm btn-success" @click="formPurchase">
 					<i class="fa fa-check" aria-hidden="true"></i>
 					&nbsp;Purchase
 				</button>
@@ -136,6 +143,7 @@ import { mapGetters, mapActions } from 'vuex'
 
 import {URL_ROOT,API_ROOT,step_names} from '../store/values'
 
+
 import moment from 'moment'
 import velocity from 'velocity-animate'
 
@@ -145,8 +153,10 @@ export default {
 			
 		}
 	},
-	created() {
-		
+	mounted() {
+		let x = 1
+		let num = this.numWithCommas(x)
+		console.log("mounted", num)
 	},
 	methods: {
 		...mapActions([
@@ -279,9 +289,6 @@ export default {
 				
 			}
 		},
-		buttonGetEstimate() {
-			$('#estimateIdModal').modal('show')
-		},
 		buttonGetPDF() {
 			if (this.cart.length < 1) {
 				this.addNotification({
@@ -298,13 +305,15 @@ export default {
 				this.buttonStartClientInfo()
 			}
 			else {
-				// Reset pdf to nothing
-				this.setEstimatePdfFile(null);
-				// Send request for new pdf file
-				this.saveCart(this.getClientInfo)
-					.then(() => {
-						this.serverGetEstimatePdf()
-					})
+				if (this.get_cart_changed) {
+					// Reset pdf to nothing
+					this.setEstimatePdfFile(null);
+					// Send request for new pdf file
+					this.saveCart(this.getClientInfo)
+						.then(() => {
+							this.serverGetEstimatePdf()
+						})
+				}
 				$('#pdfModal').modal('show')
 			}
 		},
@@ -314,10 +323,7 @@ export default {
 			}
 		},
 
-		numWithCommas(x) {
-			let num = x.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			return num
-		},
+		
 		
 		editItem(id, index) {
 			this.editCartItem({
@@ -335,6 +341,7 @@ export default {
 	},
 	computed: {
 		...mapGetters({
+			numWithCommas: 'numWithCommas',
 			cart: 'getCart',
 			getPlans: 'getPlans',
 			getPlan: 'getPlan',
@@ -350,6 +357,7 @@ export default {
 			getGrandTotal: 'getGrandTotal',
 			getCurrentDiscount: 'getCurrentDiscount',
 			get_discounts: 'getDiscounts',
+			get_cart_changed: 'getCartChanged',
 		}),
 
 		textColorPlan() {
@@ -408,24 +416,6 @@ export default {
 
 .cart-table-body tr td {
 	font-size: 1.1em;
-}
-
-.btn-2, .btn-4 {
-	width: 100%;
-}
-
-.btn-4 .btn {
-	width: 25%;
-} 
-
-.btn-2 .btn {
-	width: 50%!important;
-}
-
-.btn-plan {
-	width: 33.33%;
-	padding: 10px;
-	border: 0;
 }
 
 .btn-plan:focus {

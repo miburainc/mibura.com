@@ -106,6 +106,7 @@ const actions = {
 	},
 	clearCart({commit}) {
 		commit(TYPE.CART_CLEAR)
+		commit(TYPE.SET_CURRENT_FORM_STEP, 0)
 	},
 	removeCartItem({commit}, payload) {
 		commit(TYPE.CART_REMOVE_ITEM, payload)

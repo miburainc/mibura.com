@@ -151,13 +151,18 @@ export default {
 		}
 	},
 	mounted () {
-		axios.get(this.get_api_root + 'cloud')
+		let self = this
+		function get_cloud(){
+			axios.get(self.get_api_root + 'cloud')
 			.then((response) => {
-				this.cloud = response.data.results
+				self.cloud = response.data.results
 			})
 			.catch((error) => {
 				console.error(error)
+				setTimeout(get_cloud,5000)
 			})
+		}
+		get_cloud()
 	},
 	methods: {
 		...mapActions({
@@ -325,35 +330,48 @@ export default {
 						
 						break;
 					case "additem":
-						let model = this.get_current_item_prop('model')
-						let prd = this.get_all_products
-						let prd_info = null;
 
-						if (prd.hasOwnProperty(model)) {
-							prd_info = prd[model]
+						if (errors["valid"] == false)
+						{
+							forEachValue(errors["errors"], (value, key) => {
+								value.map((val) => {
+									this.set_error({key: key, value: value})
+								})
+							})
+							// cancel button action early
+							break;
 						}
 						else {
-							prd_info = {
-								sku: 'none',
-								category: {
-									category_code: 'none',
-									name: 'None',
-									price_multiplier: 1.0,
-									yearly_tax: 0.1,
-								},
-								price_silver: 1.0,
-								price_gold: 1.0,
-								price_black: 1.0,
-								type: 'product',
+							let model = this.get_current_item_prop('model')
+							let prd = this.get_all_products
+							let prd_info = null;
+
+							if (prd.hasOwnProperty(model)) {
+								prd_info = prd[model]
 							}
+							else {
+								prd_info = {
+									sku: 'none',
+									category: {
+										category_code: 'none',
+										name: 'None',
+										price_multiplier: 1.0,
+										yearly_tax: 0.1,
+									},
+									price_silver: 1.0,
+									price_gold: 1.0,
+									price_black: 1.0,
+									type: 'product',
+								}
+							}
+							this.add_cart_item(
+								{
+									...prd_info,
+									...this.get_current_item
+								}
+							)
+							this.clearCurrentItem()
 						}
-						this.add_cart_item(
-							{
-								...prd_info,
-								...this.get_current_item
-							}
-						)
-						this.clearCurrentItem()
 						break;
 				}
 			}

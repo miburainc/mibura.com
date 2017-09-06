@@ -290,7 +290,7 @@ export default {
 				})
 				this.buttonStartNewItem()
 			}
-			else if (Object.keys(this.getClientInfo).length<1) {
+			else if (Object.keys(this.getClientInfo).length<10) {
 				this.addNotification({
 					type: 'warning',
 					message: 'Please provide your contact information.'

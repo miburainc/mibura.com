@@ -14,9 +14,6 @@
 			
 				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
 				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
-				
-
-				
 
 				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]"></component>
 

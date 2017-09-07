@@ -39,10 +39,10 @@
 		<div style="max-height:150px;overflow:auto;margin-bottom:0px;">
 			<table class="table table-striped table-condensed table-hover">
 				<tbody class="cart-table-body">
-					<tr v-if="this.cart.length < 1" class="text-center">
+					<tr v-if="this.getCart.length < 1" class="text-center">
 						<td colspan="4">None</td>
 					</tr>
-					<tr v-else v-for="(item, index) in cart">
+					<tr v-else v-for="(item, index) in getCart">
 						<td>
 							<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
 							{{item.brand}} {{item.model}}
@@ -80,8 +80,8 @@
 			</button>
 		</div>
 			
-		<div v-if="get_cart_reference">
-			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
+		<div v-if="getCartReference">
+			<h4>Cart Reference Code: {{getCartReference}}</h4>
 		</div>
 		<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10">
 			<div class="col-xs-6">
@@ -201,7 +201,7 @@ export default {
 			this.setCurrentPlan(val)
 		},
 		formPurchase() {
-			if (this.cart.length < 1) {
+			if (this.getCart.length < 1) {
 				this.addNotification({
 					type: 'warning',
 					message: 'Please add items to your cart before clicking purchase!'
@@ -215,14 +215,14 @@ export default {
 				})
 				this.buttonStartClientInfo()
 			}
-			else if (!this.get_payment_token) {
+			else if (!this.getPaymentToken) {
 				this.addNotification({
 					type: 'warning',
 					message: 'Please fill out your payment information!'
 				})
 				this.buttonStartPayment()
 			}
-			else if (!this.get_accepted_terms) {
+			else if (!this.getAcceptedTerms) {
 				$('#termsModal').modal('show')
 			}
 			else {
@@ -267,7 +267,7 @@ export default {
 		},
 		buttonStartNewItem() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
-			this.setCurrentFormStep(step_names.brand)
+			this.setCurrentFormStep(step_names.item)
 		},
 		buttonStartClientInfo() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
@@ -290,7 +290,7 @@ export default {
 			}
 		},
 		buttonGetPDF() {
-			if (this.cart.length < 1) {
+			if (this.getCart.length < 1) {
 				this.addNotification({
 					type: 'warning',
 					message: 'Please add items to your cart!'
@@ -305,7 +305,7 @@ export default {
 				this.buttonStartClientInfo()
 			}
 			else {
-				if (this.get_cart_changed) {
+				if (this.getCartChanged) {
 					// Reset pdf to nothing
 					this.setEstimatePdfFile(null);
 					// Send request for new pdf file
@@ -340,36 +340,35 @@ export default {
 		},
 	},
 	computed: {
-		...mapGetters({
-			numWithCommas: 'numWithCommas',
-			cart: 'getCart',
-			getPlans: 'getPlans',
-			getPlan: 'getPlan',
-			getSupportMonths: 'getSupportMonths',
-			getMultiplier: 'getMultiplier',
-			getClientInfo: 'getClientInfo',
-			get_payment_token: 'getPaymentToken',
-			get_cart_reference: 'getCartReference',
-			get_accepted_terms: 'getAcceptedTerms',
-			current_plan: 'getCurrentPlan',
-			getTotal: 'getTotal',
-			getProductSubtotal: 'getProductSubtotal',
-			getGrandTotal: 'getGrandTotal',
-			getCurrentDiscount: 'getCurrentDiscount',
-			get_discounts: 'getDiscounts',
-			get_cart_changed: 'getCartChanged',
-		}),
+		...mapGetters([
+			'numWithCommas',
+			'getCart',
+			'getPlans',
+			'getPlan',
+			'getSupportMonths',
+			'getMultiplier',
+			'getClientInfo',
+			'getPaymentToken',
+			'getCartReference',
+			'getAcceptedTerms',
+			'getCurrentPlan',
+			'getTotal',
+			'getProductSubtotal',
+			'getGrandTotal',
+			'getCurrentDiscount',
+			'getCartChanged',
+		]),
 
 		textColorPlan() {
-			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
+			return {'color': this.getCurrentPlan == 'black' ? 'white' : 'black' }
 		},
 		
 		cartHeaderStyle() {
-			let plan = this.getPlan(this.current_plan)
+			let plan = this.getPlan(this.getCurrentPlan)
 			return {
 				'padding-top': '10px',
 				'background-color': plan.color, 
-				'color': this.current_plan == 'black' ? 'white' : 'black'
+				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
 			}
 		},
 		writeOutSupportLength() {

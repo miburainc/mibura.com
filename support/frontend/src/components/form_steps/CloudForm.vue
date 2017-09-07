@@ -8,7 +8,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div v-for="(cloud, index) in clouds" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
-				<img class="clickable" @click="addCloudFunc(cloud.pk)" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
+				<img class="clickable" @click="addCloudItem(cloud.pk)" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
 			</div>
 	    </div>
 
@@ -29,6 +29,8 @@
 <script>
 
 import {mapGetters, mapActions} from 'vuex'
+import moment from 'moment'
+import axios from 'axios'
 
 import '../../../library/carousel-swipe.js'
 
@@ -42,17 +44,75 @@ export default {
 			selected_cloud: -1,
 		}
 	},
+
 	methods: {
 		...mapActions([
+			'setCurrentFormStep',
 			'setCurrentCloudSelection',
-		])
+			'setCloudProviders',
+			'addCartItem',
+		]),
+		goToStep(step_num) {
+
+			// Proceed to next page of form
+			this.setCurrentFormStep(step_num)
+
+			// Call timeout function
+			// this.formTimeoutNext()
+
+			// If step is end of client entry
+			// Check server for client info
+			// If not on server, create in server
+			// if (step_num == this.step_names.payment) {
+				// this.server_set_client()
+			// }
+		},
+		addCloudItem(cloud_pk) {
+			let cloud = {};
+			for (let i=0; i<this.getCloudProviders.length; i++) {
+				if (this.getCloudProviders[i].pk == cloud_pk) {
+					cloud = this.getCloudProviders[i]
+				}
+			}
+			let cloud_obj = {
+				sku: 'cloud',
+				category: this.getMultiplier('cloud'),
+				price_silver: cloud.price_multiplier,
+				price_gold: 0.0,
+				price_black: 0.0,
+				type: 'cloud',
+				brand: cloud.name,
+				model: '',
+				release: moment().format("YYYY-MM-DD"),
+			}
+			this.addCartItem(cloud_obj)
+				.then((value) => {
+					console.log("Added cloud: ", value)
+					if (value == true) {
+						this.goToStep(this.getCurrentFormStep+1)
+					}
+				})
+		},
 	},
 	computed: {
 		...mapGetters([
-			'getCurrentCloudSelection'
+			'getCurrentCloudSelection',
+			'getCloudProviders',
+			'getMultiplier',
+			'getCurrentFormStep',
+			'getAPIRoot',
 		])
 	},
 	mounted() {
+		axios.get(this.getAPIRoot + 'cloud')
+			.then((response) => {
+				this.setCloudProviders(response.data.results)
+			})
+			.catch((error) => {
+				console.error(error)
+				setTimeout(get_cloud,5000)
+			})
+		
 		// $(".carousel").swipe({
 		// 	swipe: function(event, direction, distance, duration, fingerCount, fingerData)
 		// 	{

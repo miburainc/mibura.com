@@ -1,11 +1,11 @@
 <template>
 	
 <div>
-	<div class="form-group" ref="input">
+	<div class="form-group">
 
 		<label>Product Name</label>
 		<autocomplete
-			:url="get_api_root + 'productcomplete'"
+			:url="getAPIRoot + 'productcomplete'"
 			data-root="results"
 			label="brand"
 			anchor="model"
@@ -14,20 +14,20 @@
 			:custom-params="{format: 'json'}"
 			:name="form.data[0].form.name"
 			:id="form.data[0].form.name"
-			:init-value="get_current_item_prop(form.data[0].form.name)"
+			:init-value="getCurrentItemProp(form.data[0].form.name)"
 			:process="processAjaxResult"
 			:placeholder="form.data[0].placeholder"
 			:on-select="(obj) => { setFormItemAutoselect(obj, form.data[0].form.name);}"
 			:min="2"
 			:onInput="resetVerified">
 		</autocomplete>
-		<div class="text-red" v-if="get_errors[form.data[0].form.name]">
-			{{ get_errors[form.data[0].form.name][0] }}
+		<div class="text-red" v-if="getErrors[form.data[0].form.name]">
+			{{ getErrors[form.data[0].form.name][0] }}
 		</div>
 
 		<!-- <autocomplete
             v-if=“data.src && get_current_step==step_names.brand”
-            :url=“get_api_root + ‘productcomplete’”
+            :url=“getAPIRoot + ‘productcomplete’”
             label=“brand”
             anchor=“model”
             param=“s”
@@ -35,7 +35,7 @@
             :custom-params=“{format: ‘json’}”
             :name=“data.form.name”
             :id=“data.form.name”
-            :init-value=“get_current_item_prop(data.form.name)”
+            :init-value=“getCurrentItemProp(data.form.name)”
             :process=“processAjaxResult”
             :on-ajax-loaded=“logData”
             :placeholder=“data.placeholder”
@@ -44,9 +44,9 @@
             :min=“2”>
         </autocomplete> -->
 
-		<div v-for="(step, index) in form.data" v-if="index > 0" 
+		<div ref="input" v-for="(step, index) in form.data" v-if="index > 0" 
 			:style="{
-					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && get_current_item_prop('verified') == true) ? 'none' : 'block'
+					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
 				}">
 			
 			<label>{{ step.placeholder }}</label>
@@ -63,7 +63,7 @@
 					setFormItem(el.target.value, step) 
 				}"
 			>
-			<div class="text-red" v-for="error in get_errors[step.form.name]">
+			<div class="text-red" v-for="error in getErrors[step.form.name]">
 				{{ error }}
 			</div>
 
@@ -96,9 +96,9 @@ export default {
 
 	},
 	methods: {
-		...mapActions({
-			set_current_item_prop: 'setCurrentItemProp',
-		}),
+		...mapActions([
+			'setCurrentItemProp',
+		]),
 		formHandleEnter(index) {
 			// console.log(this.$refs)
 			// console.log(this.$refs.input)
@@ -112,9 +112,9 @@ export default {
 		setFormItemAutoselect (obj, name) {
 			console.log("Name: " + name)
 			console.log("Obj: ", obj)
-			this.set_current_item_prop({ prop: "brand", data: obj["brand"] })
-			this.set_current_item_prop({ prop: "model", data: obj["model"] })
-			this.set_current_item_prop({ prop: 'verified', data: true })
+			this.setCurrentItemProp({ prop: "brand", data: obj["brand"] })
+			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
+			this.setCurrentItemProp({ prop: 'verified', data: true })
 
 			// if (name == "model") {
 			// 	this.addProduct({id: obj.model, data: obj})
@@ -126,7 +126,7 @@ export default {
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {
-				this.set_current_item_prop({prop: dest_array[2], data: value})
+				this.setCurrentItemProp({prop: dest_array[2], data: value})
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
@@ -147,30 +147,29 @@ export default {
 			let dest_array = obj.dest.split('.')
 			let val = ""
 			if (dest_array[0] == "cart") {
-				val =  this.get_current_item_prop(dest_array[2])
+				val =  this.getCurrentItemProp(dest_array[2])
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					val = this.get_client_info[dest_array[2]]
+					val = this.getClientInfo[dest_array[2]]
 				}
 				else {
-					val =  this.get_client_info[dest_array[1]]
+					val =  this.getClientInfo[dest_array[1]]
 				}
 			}
 			return val
 		},
 		resetVerified(){
-			this.set_current_item_prop({ prop: 'verified', data: false })
+			this.setCurrentItemProp({ prop: 'verified', data: false })
 		}
 	},
 	computed: {
-		...mapGetters({
-			get_client_info: 'getClientInfo',
-			get_current_item_prop: 'getCurrentItemProp',
-			get_api_root: 'getAPIRoot',
-			get_errors: 'getErrors',
-
-		})
+		...mapGetters([
+			'getClientInfo',
+			'getCurrentItemProp',
+			'getAPIRoot',
+			'getErrors',
+		])
 		
 	}
 }

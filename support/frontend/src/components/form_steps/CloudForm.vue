@@ -23,7 +23,11 @@
 			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="color: white;"></span>
 			<span class="sr-only">Next</span>
 		</a>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		</div>
 	</div>
+	
 </template>
 
 <script>
@@ -34,8 +38,10 @@ import '../../../library/carousel-swipe.js'
 
 export default {
 	props: [
+		'form',
 		'clouds',
-		'addCloudFunc'
+		'addCloudFunc',
+		'buttonAction'
 	],
 	data() {
 		return {

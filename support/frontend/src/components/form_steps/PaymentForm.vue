@@ -24,6 +24,9 @@
 
 			</div>
 		</div>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		</div>
 	</div>
 </template>
 
@@ -37,7 +40,7 @@ export default {
 			payment_type: 'card',
 		}
 	},
-	props: [''],
+	props: ['form', 'buttonAction'],
 	methods: {
 		...mapActions([
 			'setPaymentToken',

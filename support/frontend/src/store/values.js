@@ -210,7 +210,7 @@ export const form_steps = [
 		text: "Add a cloud provider",
 		error: "",
 		step: 1,
-		buttonStyle: ""
+		buttonStyle: "text-align: center;"
 	},
 	{
 		data: [

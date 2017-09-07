@@ -74,7 +74,7 @@
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
 			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
-			<button class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(none, 'skip')">Skip to Cloud Services</button>
+			<button v-if="getCart.length" class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(none, 'skip')">Skip to Cloud Services</button>
 		</div>
 	</div>
 	<!-- div class="button-group">
@@ -182,6 +182,7 @@ export default {
 			'getCurrentItemProp',
 			'getAPIRoot',
 			'getErrors',
+			'getCart'
 		])
 		
 	}
@@ -207,5 +208,7 @@ export default {
 	background: rgba(94, 164, 217,.08);
 	// border: 1px solid #FFFFFF;
 }
+
+
 	
 </style>

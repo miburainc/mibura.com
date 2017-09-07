@@ -285,6 +285,11 @@ export const form_steps = [
 		],
 		buttons: [
 			{
+				label: "Back",
+				class: "btn btn-lg btn-outline-default",
+				script: "back"
+			},
+			{
 				label: "Continue",
 				class: "btn btn-lg btn-outline-success",
 				script: "next"

@@ -515,7 +515,7 @@ export default {
 	transition: 0.2s background, 0.2s color;
 }
 
-.btn-outline-success:hover {
+.btn-outline-success:hover{
 	padding: 10px 20px;
 	color: #00ec85;
 	border-color: #00dc7c;
@@ -526,18 +526,10 @@ export default {
 
 .btn-outline-default {
 	padding: 10px 20px;
-	color: #8493A8;
+	color: #8493A8;	
 	background: transparent;
 	border: 1px solid #8493A8;
 	transition: 0.2s background, 0.2s color;
-}
-
-.btn-outline-default:hover {
-	padding: 10px 20px;
-	color: #FFFFFF;
-	background: transparent;
-	background: rgba(255,255,255,.08);
-	border-color: #FFFFFF;
 }
 
 .btn:active, .btn:visited, .btn:focus {

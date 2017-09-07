@@ -53,14 +53,14 @@ export default {
 		]),
 		formHandleEnter(index) {
 			
-			if(index < this.$refs.input.length){
+			if((index+1) < this.$refs.input.length){
 				console.log(this.$refs)
 				console.log(index)
 				this.$refs.input[index+1].children[1].focus();	
 			}
 			else{
 				//PUT BUTTON ACTION
-				console.log("Button Action Here--")
+				buttonAction(null, "next")
 			}
 			
 		},

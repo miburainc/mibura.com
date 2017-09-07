@@ -41,7 +41,6 @@ import '../../../library/carousel-swipe.js'
 export default {
 	props: [
 		'form',
-		'clouds',
 		'buttonAction'
 	],
 	data() {

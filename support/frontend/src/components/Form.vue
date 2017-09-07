@@ -26,7 +26,7 @@
 					 <label 
 
 
-				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]" :clouds="cloud"></component>
+				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]"></component>
 
 				<div v-for="(form, index) in getFormSteps" class="form-group">
 					<!-- <label 
@@ -159,20 +159,18 @@ export default {
 		
 	},
 	methods: {
-		...mapActions({
-			add_cart_item: 'addCartItem',
-			remove_item: 'removeCartItem',
-			addProduct: 'addProduct',
-			set_current_item_prop: 'setCurrentItemProp',
-			set_current_form_step: 'setCurrentFormStep',
-			set_error: 'setError',
-			clear_errors: 'clearErrors',
-			clearCurrentItem: 'clearCurrentItem',
-			set_client_prop: 'setClientProp',
-			add_cloud: 'addCloud',
-			server_set_client: 'serverSetClient',
-			add_notification: 'addNotification',
-		}),
+		...mapActions([
+			'addCartItem',
+			'addProduct',
+			'setCurrentItemProp',
+			'setCurrentFormStep',
+			'setError',
+			'clearErrors',
+			'clearCurrentItem',
+			'setClientProp',
+			'serverSetClient',
+			'addNotification',
+		]),
 
 		
 		logData(obj) {
@@ -183,14 +181,14 @@ export default {
 		
 		skipToCloud() {
 			this.past_step = this.getCurrentFormStep
-			this.set_current_form_step(this.getCurrentFormStep+1)
+			this.setCurrentFormStep(this.getCurrentFormStep+1)
 			this.formTimeoutNext()
-			this.clear_errors()
+			this.clearErrors()
 		},
 		goToStep(step_num) {
 
 			// Proceed to next page of form
-			this.set_current_form_step(step_num)
+			this.setCurrentFormStep(step_num)
 
 			// Call timeout function
 			this.formTimeoutNext()
@@ -199,7 +197,7 @@ export default {
 			// Check server for client info
 			// If not on server, create in server
 			if (step_num == this.step_names.payment) {
-				this.server_set_client()
+				this.serverSetClient()
 			}
 		},
 		formOnPressEnter() {
@@ -219,30 +217,30 @@ export default {
 			// If errors exist
 			if(scr == "back" && this.getCurrentFormStep > 0){
 				this.past_step = this.getCurrentFormStep
-				this.set_current_form_step(this.getCurrentFormStep-1)
+				this.setCurrentFormStep(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
-				this.clear_errors()
+				this.clearErrors()
 			}
 			if (errors["valid"] == false)
 			{
 				forEachValue(errors["errors"], (value, key) => {
 					value.map((val) => {
-						this.set_error({key: key, value: value})
+						this.setError({key: key, value: value})
 					})
 				})
 			}
 			else {
-				this.clear_errors()
+				this.clearErrors()
 				for (let i=0; i<scr.length; i++) {
 					switch (scr[i]) {
 						case "start":
 							this.past_step = this.getCurrentFormStep
-							this.set_current_form_step(1)
+							this.setCurrentFormStep(1)
 							this.formTimeoutNext()
 							break;
 						case "skip":
 							this.past_step = this.getCurrentFormStep
-							this.set_current_form_step(this.getCurrentFormStep+1)
+							this.setCurrentFormStep(this.getCurrentFormStep+1)
 							this.formTimeoutNext()
 							break;
 						case "next":
@@ -320,7 +318,7 @@ export default {
 									type: 'product',
 								}
 							}
-							this.add_cart_item(
+							this.addCartItem(
 								{
 									...prd_info,
 									...this.getCurrentItem
@@ -337,22 +335,22 @@ export default {
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {
-				this.set_current_item_prop({prop: dest_array[2], data: value})
+				this.setCurrentItemProp({prop: dest_array[2], data: value})
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					this.set_client_prop({prop: dest_array[2], data: value})
+					this.setClientProp({prop: dest_array[2], data: value})
 				}
 				else {
-					this.set_client_prop({prop: dest_array[1], data: value})
+					this.setClientProp({prop: dest_array[1], data: value})
 				}
 			}
 			else if (dest_array[0] == "payment") {
-				this.set_client_prop({prop: dest_array[1], data: value})
+				this.setClientProp({prop: dest_array[1], data: value})
 			}
 		},
 		setItemProp () {
-			this.set_current_form_step(this.getCurrentFormStep + 1)
+			this.setCurrentFormStep(this.getCurrentFormStep + 1)
 		},
 		formTimeoutNext() {
 			// This method hides and shows the form to ensure smooth animations
@@ -365,7 +363,7 @@ export default {
 				setTimeout(() => {
 					document.forms[0].elements[0].focus();
 					if (this.getCurrentFormStep == this.step_names.cloud) {
-						this.add_notification({
+						this.addNotification({
 							message: "If you upgrade to Gold or Black plans, you get cloud support for free!",
 							type: "info"
 						});

@@ -293,7 +293,8 @@ export default {
 						
 						case "addcloud":
 
-							let temp = document.forms.item(0).elements[0].value
+							let temp = document.getElementById('cloudprovider').value
+							console.log(temp)
 
 							if (temp=="none") {
 								temp = this.getCurrentCloudSelection

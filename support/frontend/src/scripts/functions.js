@@ -24,9 +24,11 @@ export function ValidateFormSteps(current_form, form_steps) {
 		valid: true,
 		errors: {}
 	}
+	console.log(form_steps.length)
 
 	for (let i=0; i<form_steps.length; i++) {
-		let val = document.getElementById([form_steps[i].form.name]).value
+		console.log(form_steps[i].form.name)
+		let val = document.getElementById(form_steps[i].form.name).value
 		let item_val = current_form[form_steps[i].form.name]
 		let current_form_item = item_val ? item_val : val
 

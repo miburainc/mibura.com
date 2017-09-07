@@ -1,33 +1,42 @@
 <template>
 	
 <div>
-	<div class="form-group" >
-		<div class="col-xs-12 text-center">
-			<h1>Success!</h1>
-		</div>
-		<div style="background: white;" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3 text-center">
+	<div class="container-fluid">
+		<div style="padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
 			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
 			<h4>Cart Reference Code: {{ getCartReference }}</h4>
-			<table class="table table-hover table-striped">
+			<table class="table table-outline">
 				<thead>
-					<th>Brand</th>
-					<th>Model</th>
+					<th>Product</th>
 					<th>Price</th>
 				</thead>
 				<tbody>
 					<tr v-for="(item, index) in getCart">
-						<td>{{ item.brand }}</td>
-						<td>{{ item.model }}</td>
-						<td>${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+						<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
+						<td style="color:white;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 					</tr>
 				</tbody>
 			</table>
-			<p>
+			<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10" style="display:inline-block;">
+				<div class="col-xs-6">
+					{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
+					{{getClientInfo['email']}}<br>
+					{{getClientInfo['company']}}<br>
+					{{getClientInfo['phone']}}
+				</div>
+				<div class="col-xs-6">
+					{{getClientInfo['street']}}, {{getClientInfo['street2']}}<br>
+					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
+					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
+				</div>
+			</div>
+			<br><br><br>
+			<div>
 			SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
 				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
-			</p>
+			</div>
 		</div>
 	</div>
 </div>

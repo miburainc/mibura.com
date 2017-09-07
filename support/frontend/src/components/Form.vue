@@ -18,7 +18,7 @@
 				<!-- Dynamic component to switch between form steps -->
 				<component 
 					:is="currentComponent" 
-					:form="getFormSteps[get_current_step]"
+					:form="getFormSteps[getCurrentFormStep]"
 					:buttonAction="buttonAction" />
 				
 				<!--

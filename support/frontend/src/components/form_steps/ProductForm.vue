@@ -103,6 +103,7 @@ export default {
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
+			'setClientProp'
 		]),
 		formHandleEnter(index) {
 			
@@ -141,14 +142,14 @@ export default {
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					this.set_client_prop({prop: dest_array[2], data: value})
+					this.setClientProp({prop: dest_array[2], data: value})
 				}
 				else {
-					this.set_client_prop({prop: dest_array[1], data: value})
+					this.setClientProp({prop: dest_array[1], data: value})
 				}
 			}
 			else if (dest_array[0] == "payment") {
-				this.set_client_prop({prop: dest_array[1], data: value})
+				this.setClientProp({prop: dest_array[1], data: value})
 			}
 		},
 		buttonGetEstimate() {

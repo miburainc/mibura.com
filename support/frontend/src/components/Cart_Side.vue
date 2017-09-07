@@ -153,11 +153,6 @@ export default {
 			
 		}
 	},
-	mounted() {
-		let x = 1
-		let num = this.numWithCommas(x)
-		console.log("mounted", num)
-	},
 	methods: {
 		...mapActions([
 			'editCartItem',

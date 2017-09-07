@@ -1,7 +1,8 @@
 <template>
 	<div id="purchase-form" class="row">
 		
-		<form v-on:submit.prevent>
+		<!-- <form v-on:submit.prevent> -->
+		<form>
 			<!-- Fade effects -->
 			<transition 
 				v-bind:css="false"
@@ -292,7 +293,6 @@ export default {
 						case "addcloud":
 
 							let temp = document.getElementById('cloudprovider').value
-							console.log(temp)
 
 							if (temp=="none") {
 								temp = this.getCurrentCloudSelection

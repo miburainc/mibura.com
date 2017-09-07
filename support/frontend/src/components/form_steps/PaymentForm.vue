@@ -25,19 +25,19 @@
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10">
 
-				<label>Name on Bank Account</label>
-				<input class="form-control" style="height: 45px;" type="text" name="cardholder-name"  placeholder="Name on card"/>
-				<label>Phone on Bank Account</label>
-				<input class="form-control" style="height: 45px;" type="tel" name="ccphone"  placeholder="Cardholder Phone"/>
+				<label>Name</label>
+				<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Name"/>
+				<label>Phone</label>
+				<input class="form-control" style="height: 45px;" type="tel" name="bank-phone"  placeholder="Phone"/>
 
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-sm-6">
-						<button v-show="payment_type=='ach'	" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
+						<button type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
 						</div>
 						<div class="col-sm-6">
-							<label>Bank</label>
-							<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Bank"/>
+							<label>Account Number</label>
+							<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Account Number"/>
 							<label>Routing Number</label>
 							<input class="form-control" style="height: 45px;" type="tel" name="routing-number"  placeholder="Routing Number"/>
 						</div>

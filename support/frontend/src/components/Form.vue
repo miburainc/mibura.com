@@ -117,6 +117,7 @@ import ProductForm from './form_steps/ProductForm.vue'
 import CloudForm from './form_steps/CloudForm.vue'
 import AddressForm from './form_steps/AddressForm.vue'
 import ClientForm from './form_steps/ClientForm.vue'
+import ReviewForm from './form_steps/ReviewForm.vue'
 import PaymentForm from './form_steps/PaymentForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
@@ -139,6 +140,7 @@ const form_components = [
 	CloudForm,
 	ClientForm,
 	AddressForm,
+	ReviewForm,
 	PaymentForm
 ]
 

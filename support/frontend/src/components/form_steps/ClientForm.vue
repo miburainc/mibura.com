@@ -60,7 +60,7 @@ export default {
 			}
 			else{
 				//PUT BUTTON ACTION
-				buttonAction(null, "next")
+				this.buttonAction(null, "next")
 			}
 			
 		},

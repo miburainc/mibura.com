@@ -408,6 +408,29 @@ export const form_steps = [
 	},
 	{
 		data: [
+			
+			
+		],
+		buttons: [
+			{
+				label: "Back",
+				class: "btn btn-lg btn-outline-default",
+				script: "back"
+			},
+			{
+				label: "Review",
+				class: "btn btn-lg btn-outline-success payment-button",
+				script: "review"
+			},
+		],
+		title: "Review",
+		text: "review",
+		error: "",
+		step: 3,
+		buttonStyle: ""
+	},
+	{
+		data: [
 			{
 				placeholder: "Name on card",
 				src: "",
@@ -453,29 +476,6 @@ export const form_steps = [
 		],
 		title: "Payment",
 		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
-		error: "",
-		step: 3,
-		buttonStyle: ""
-	},
-	{
-		data: [
-			
-			
-		],
-		buttons: [
-			{
-				label: "Back",
-				class: "btn btn-lg btn-outline-default",
-				script: "back"
-			},
-			{
-				label: "Review",
-				class: "btn btn-lg btn-outline-success payment-button",
-				script: "review"
-			},
-		],
-		title: "Review",
-		text: "review",
 		error: "",
 		step: 3,
 		buttonStyle: ""

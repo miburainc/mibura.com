@@ -2,33 +2,32 @@
 	
 <div>
 	<div class="form-group" >
-
-		<div ref="input" v-for="(step, index) in form.data" 
-			:style="{
-					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
-				}">
-			
-			<label>{{ step.placeholder }}</label>
-			<input 
-				@keyup.enter.prevent="formHandleEnter(index)"
-				:data-index="index"
-				:type="step.form.type" 
-				:id="step.form.name" 
-				:name="step.form.name" 
-				:placeholder="step.placeholder" 
-				class="form-control" 
-				:value="get_form_input_value(step)" 
-				@change="(el) => {
-					setFormItem(el.target.value, step) 
-				}"
-			>
-			<div class="text-red" v-for="error in getErrors[step.form.name]">
-				{{ error }}
-			</div>
-
+		<div class="col-xs-12 text-center">
+			<h1>Success!</h1>
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div style="background: white;" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3 text-center">
+			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
+			<h4>Cart Reference Code: {{ getCartReference }}</h4>
+			<table class="table table-hover table-striped">
+				<thead>
+					<th>Brand</th>
+					<th>Model</th>
+					<th>Price</th>
+				</thead>
+				<tbody>
+					<tr v-for="(item, index) in getCart">
+						<td>{{ item.brand }}</td>
+						<td>{{ item.model }}</td>
+						<td>${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+			SubTotal: ${{ numWithCommas(getTotal) }}<br>
+				%{{getCurrentDiscount*100}} Discount: &nbsp;
+				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
+				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+			</p>
 		</div>
 	</div>
 </div>
@@ -126,6 +125,15 @@ export default {
 			'getClientInfo',
 			'getCurrentItemProp',
 			'getErrors',
+			'numWithCommas',
+			'getPlan',
+			'getCurrentPlan',
+			'getCart',
+			'getCartReference',
+			'getProductSubtotal',
+			'getTotal',
+			'getGrandTotal',
+			'getCurrentDiscount',
 
 		])
 		

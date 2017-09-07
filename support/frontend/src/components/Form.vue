@@ -32,7 +32,6 @@
 					<autocomplete
 						v-if="data.src && get_current_step==step_names.brand"
 						:url="get_api_root + 'productcomplete'"
-						data-root="results"
 						label="brand"
 						anchor="model"
 						param="s"
@@ -52,13 +51,14 @@
 					<autocomplete
 						v-else-if="data.src && get_current_step==1"
 						:url="get_api_root + 'productcomplete'"
+						label="brand"
 						anchor="model"
-						data-root="results"
-						param="model"
+						param="s"
 						class-name="form-input"
 						:custom-params="{brand: get_current_item_prop('brand'), format: 'json'}"
 						:name="data.form.name"
 						:id="data.form.name"
+						:process="processAjaxResult"
 						:init-value="get_current_item_prop(data.form.name)"
 						:placeholder="data.placeholder"
 						:on-select="(obj) => { setFormItemAutoselect(obj, data.form.name);
@@ -89,7 +89,7 @@
 
 					>
 						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
-						<stripe-form></stripe-form>
+						<payment-form></payment-form>
 					</div>
 					<input 
 					v-else

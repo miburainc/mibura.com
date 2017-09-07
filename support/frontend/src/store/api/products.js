@@ -1,5 +1,5 @@
 import {URL_ROOT, API_ROOT} from '../values'
-import axios from 'axios'
+import axios from './api-config'
 
 const actions = {
 	getProductCategories(success) {

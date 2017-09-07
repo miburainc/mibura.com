@@ -47,7 +47,7 @@ export default {
 
 	},
 	methods: {
-		...mapActions([]
+		...mapActions([
 			'setCurrentItemProp'
 		]),
 		formHandleEnter(index) {

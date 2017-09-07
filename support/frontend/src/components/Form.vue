@@ -18,7 +18,7 @@
 				<!-- Dynamic component to switch between form steps -->
 				<component 
 					:is="currentComponent" 
-					:form="getFormSteps[get_current_step]"
+					:form="getFormSteps[getCurrentFormStep]"
 					:buttonAction="buttonAction" />
 				
 				<!--
@@ -185,6 +185,32 @@ export default {
 			this.formTimeoutNext()
 			this.clearErrors()
 		},
+		addCloudItem(cloud_pk) {
+			let cloud = {};
+			for (let i=0; i<this.getCloudProviders.length; i++) {
+				if (this.getCloudProviders[i].pk == cloud_pk) {
+					cloud = this.getCloudProviders[i]
+				}
+			}
+			let cloud_obj = {
+				sku: 'cloud',
+				category: this.getMultiplier('cloud'),
+				price_silver: cloud.price_multiplier,
+				price_gold: 0.0,
+				price_black: 0.0,
+				type: 'cloud',
+				brand: cloud.name,
+				model: '',
+				release: moment().format("YYYY-MM-DD"),
+			}
+			this.addCartItem(cloud_obj)
+				.then((value) => {
+					console.log("Added cloud: ", value)
+					if (value == true) {
+						this.goToStep(this.getCurrentFormStep+1)
+					}
+				})
+		},
 		goToStep(step_num) {
 
 			// Proceed to next page of form
@@ -262,12 +288,9 @@ export default {
 						case "addcloud":
 
 							let temp = document.forms.item(0).elements[0].value
-							if (!temp) {
-								temp = "none"
-							}
 
 							if (temp=="none") {
-								temp = this.get_current_cloud_selection
+								temp = this.getCurrentCloudSelection
 							}
 							this.addCloudItem(temp)
 
@@ -429,6 +452,8 @@ export default {
 			'getFormSteps',
 			'getCurrentFormStep',
 			'getCurrentItemProp',
+			'getCloudProviders',
+			'getMultiplier',
 			'getCurrentItem',
 			'getAPIRoot',
 			'getErrors',

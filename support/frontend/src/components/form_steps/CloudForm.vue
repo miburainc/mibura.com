@@ -8,7 +8,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div v-for="(cloud, index) in getCloudProviders" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
-				<img class="clickable" @click="addCloudItem(cloud.pk)" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
+				<img class="clickable" @click="(el) => {buttonAction(el, 'addcloud')}" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
 			</div>
 	    </div>
 
@@ -53,7 +53,7 @@ export default {
 		...mapActions([
 			'setCurrentFormStep',
 			'setCurrentCloudSelection',
-			'addCartItem',
+			
 		]),
 		goToStep(step_num) {
 
@@ -70,40 +70,12 @@ export default {
 				// this.server_set_client()
 			// }
 		},
-		addCloudItem(cloud_pk) {
-			let cloud = {};
-			for (let i=0; i<this.getCloudProviders.length; i++) {
-				if (this.getCloudProviders[i].pk == cloud_pk) {
-					cloud = this.getCloudProviders[i]
-				}
-			}
-			let cloud_obj = {
-				sku: 'cloud',
-				category: this.getMultiplier('cloud'),
-				price_silver: cloud.price_multiplier,
-				price_gold: 0.0,
-				price_black: 0.0,
-				type: 'cloud',
-				brand: cloud.name,
-				model: '',
-				release: moment().format("YYYY-MM-DD"),
-			}
-			this.addCartItem(cloud_obj)
-				.then((value) => {
-					console.log("Added cloud: ", value)
-					if (value == true) {
-						this.goToStep(this.getCurrentFormStep+1)
-					}
-				})
-		},
+		
 	},
 	computed: {
 		...mapGetters([
 			'getCurrentCloudSelection',
 			'getCloudProviders',
-			'getMultiplier',
-			'getCurrentFormStep',
-			'getAPIRoot',
 		])
 	},
 	mounted() {

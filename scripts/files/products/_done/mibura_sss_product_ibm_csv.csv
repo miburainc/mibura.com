@@ -1,0 +1,183 @@
+brand,model,category
+IBM,Power4 (p4) and Power4+ (p4+),Servers
+IBM,AS/400,Servers
+IBM,3490E Tape Cartridges,Storage
+IBM,3570 tape Cartridges and Magazines,Storage
+IBM,3590 Tape Cartridges,Storage
+IBM,3590E Tape Cartridges,Storage
+IBM,3592 Tape Cartridge,Storage
+IBM,3996 Optical Cartridge,Storage
+IBM,Blade Servers,Servers
+IBM,BladeCenter Chassis,Servers
+IBM,Bluemix Virtual Servers,Servers
+IBM,Cisco MDS 9148S 16G Multilayer Fabric Switch for IBM System Storage,Network
+IBM,Cisco MDS 9396S 16G Multilayer Fabric Switch,Network
+IBM,Cisco MDS 9706 Multilayer Director for IBM System Storage,Network
+IBM,Cisco MDS 9710 Multilayer Director,Network
+IBM,Cisco MDS 9718 Multilayer,Network
+IBM,DeepFlash 150,Storage
+IBM,DeepFlash Elastic Storage Server,Storage
+IBM,DLT 4000,Storage
+IBM,DLT 7000 ,Storage
+IBM,DLTtape VS1,Storage
+IBM,"DS8870 (961, 96E)",Storage
+IBM,DS8880 ,Storage
+IBM,"DS8880 (984, 985, 986, 982)",Storage
+IBM,DS8880F,Storage
+IBM,DS8884 ,Storage
+IBM,"DS8884 (984, 84E)",Storage
+IBM,DS8884F (984),Storage
+IBM,DS8886 ,Storage
+IBM,"DS8886 (985, 85E) ",Storage
+IBM,"DS8886 (986, 86E)",Storage
+IBM,DS8886F (985),Storage
+IBM,DS8886F (986),Storage
+IBM,DS8888F (988),Storage
+IBM,Elastic Storage Server (ESS),Servers
+IBM,eServers,Servers
+IBM,FlashSystem 900,Storage
+IBM,FlashSystem 9840-AE2,Storage
+IBM,FlashSystem 9843-AE2,Storage
+IBM,FlashSystem A9000,Storage
+IBM,FlashSystem A9000R,Storage
+IBM,FlashSystem A9835-415R,Storage
+IBM,FlashSystem A9836-415,Storage
+IBM,FlashSystem A9837-415R,Storage
+IBM,FlashSystem A9838-415,Storage
+IBM,FlashSystem V9000,Storage
+IBM,Flex System p260 Compute Nodes,Servers
+IBM,Flex System p460 Compute Nodes,Servers
+IBM,IBM 7226 Multimedia Storage Enclosure,Storage
+IBM,"Legacy IBM Multiprise (2003, 7060)",Servers
+IBM,LinuxONE Emperor L30,Servers
+IBM,LinuxONE Emperor L63,Servers
+IBM,LinuxONE Emperor L96,Servers
+IBM,LinuxONE Emperor LC9,Servers
+IBM,LinuxONE Emperor LE1,Servers
+IBM,LinuxONE Rockhopper L10,Servers
+IBM,LinuxONE Rockhopper L20,Servers
+IBM,LTO 1 Data Cartridge,Storage
+IBM,LTO 2 Data Cartridge,Storage
+IBM,LTO 3 Data Cartridge,Storage
+IBM,LTO 4 Data Cartridge,Storage
+IBM,LTO 5 Data Cartridge,Storage
+IBM,LTO 6 Data Cartridge,Storage
+IBM,LTO 7 Data Cartridge,Storage
+IBM,LTO Ultrium 1.5 TB rewritable Data Cartridge,Storage
+IBM,LTO Ultrium 1.5 TB WORM Cartridge,Storage
+IBM,LTO Ultrium 100 GB Data Cartridge,Storage
+IBM,LTO Ultrium 200 GB Data Cartridge,Storage
+IBM,LTO Ultrium 4 800 GB Data Cartridge,Storage
+IBM,LTO Ultrium 400 GB Data Cartridge,Storage
+IBM,LTO Ultrium 400 GB rewritable Data Cartridge,Storage
+IBM,LTO Ultrium 400 GB WORM Cartridge,Storage
+IBM,LTO Ultrium 5 1.5 TB Data Cartridge,Storage
+IBM,LTO Ultrium 6 Data Cartridge,Storage
+IBM,LTO Ultrium 6 WORM Cartridge,Storage
+IBM,LTO Ultrium 7,Storage
+IBM,LTO Ultrium 7 data cartridge,Storage
+IBM,LTO Ultrium 7 WORM cartridge,Storage
+IBM,LTO Ultrium 800 GB Data Cartridge 3589-011,Storage
+IBM,LTO Ultrium 800 GB WORM Cartridge 3589-033,Storage
+IBM,LTO Ultrium Universal Cleaning Cartridge,Storage
+IBM,LTO Ultrium Universal Cleaning Cartridge 3589-004,Storage
+IBM,MDS 9250i Multiservice Fabric Switch,Network
+IBM,Power Enterprise Systems for the cloud,Servers
+IBM,Power S821L,Servers
+IBM,Power S822L,Servers
+IBM,Power System E850,Servers
+IBM,Power System E850C,Servers
+IBM,Power System E880,Servers
+IBM,Power System S812L,Servers
+IBM,Power System S812LC,Servers
+IBM,Power System S814,Servers
+IBM,Power System S821LC,Servers
+IBM,Power System S822,Servers
+IBM,Power System S822L,Servers
+IBM,Power System S822LC for Big Data,Servers
+IBM,Power System S822LC for Commercial Computing,Servers
+IBM,Power System S822LC for High Performance Computing,Servers
+IBM,Power System S824,Servers
+IBM,Power System S824L (with NVIDIA technology),Servers
+IBM,Power5 (i5) and Power5+ (i5+),Servers
+IBM,Power5 (p5) and Power5+ (p5+),Servers
+IBM,Power6 (i6),Servers
+IBM,Power6 (p6),Servers
+IBM,Power7 (i7),Servers
+IBM,Power7 (p7),Servers
+IBM,PurePower System,Servers
+IBM,RS6000 (RISC),Servers
+IBM,S/390 9672,Servers
+IBM,SDLT 600,Servers
+IBM,Spectrum Archive,Storage
+IBM,Sterling Managed AS2 Gateway,Network
+IBM,Storage Networking SAN256B-6,Network
+IBM,Storage Networking SAN512B-6,Network
+IBM,Storage Networking SAN64B-6,Network
+IBM,Storwize V5000,Storage
+IBM,Storwize V5010,Storage
+IBM,Storwize V5020,Storage
+IBM,Storwize V5030F,Storage
+IBM,Storwize V7000,Storage
+IBM,Storwize V7000 Unified ,Storage
+IBM,Storwize V7000F,Storage
+IBM,Super DLTtape,Storage
+IBM,System i/iSeries Servers,Servers
+IBM,System Networking SAN24B-5,Storage
+IBM,System Networking SAN96B-5,Storage
+IBM,System Storage SAN06B-R,Storage
+IBM,System Storage SAN24B-4 Express,Storage
+IBM,System Storage SAN384B-2,Storage
+IBM,System Storage SAN42B-R,Storage
+IBM,System Storage SAN48B-5,Storage
+IBM,System Storage SAN768B-2 ,Storage
+IBM,System x,Appliances
+IBM,Tape Cartridge 3592 Type D,Storage
+IBM,TS1130 Tape Drive,Storage
+IBM,TS1140 (3592),Storage
+IBM,TS1140 Tape Drive,Storage
+IBM,TS1150 Tape Drive,Storage
+IBM,TS2250 Tape Drive,Storage
+IBM,TS2250 Tape Drive Model H5S,Storage
+IBM,TS2260 Tape Drive,Storage
+IBM,TS2260 tape drive Model H6S,Storage
+IBM,TS2270 Model 3580 H7S,Storage
+IBM,TS2270 Tape Drive,Storage
+IBM,TS2360 Model 3580 S63,Storage
+IBM,TS2360 Tape Drive Express,Storage
+IBM,TS2900 Tape Autoloader,Storage
+IBM,TS3100 E9U,Storage
+IBM,TS3100 model 3573 L2U,Storage
+IBM,TS3100 Tape Library,Storage
+IBM,TS3100 Tape Library model L2U,Storage
+IBM,TS3200 model 3573 L4U,Storage
+IBM,TS3200 Tape Library,Storage
+IBM,TS3200 Tape Library model L4U,Storage
+IBM,TS3310 Tape Library,Storage
+IBM,TS3576 model L5B,Storage
+IBM,TS4500 Tape Library,Storage
+IBM,VersaStack,Storage
+IBM,VersaStack with IBM FlashSystem V9000,Storage
+IBM,VersaStack with IBM SAN Volume Controller,Storage
+IBM,VersaStack with IBM Storwize V5000,Storage
+IBM,VersaStack with IBM Storwize V7000,Storage
+IBM,x86,Servers
+IBM,XIV Storage System 2810-314,Storage
+IBM,XIV Storage System 2812-314,Storage
+IBM,xSeries,Servers
+IBM,z10 BC (2098),Servers
+IBM,z10 EC (2097),Servers
+IBM,z114 (2818),Servers
+IBM,z13,Servers
+IBM,z13s,Servers
+IBM,z196 (2817),Servers
+IBM,z800 (2066),Servers
+IBM,z890 (2086),Servers
+IBM,z9 BC (2096),Servers
+IBM,z9 EC (2094),Servers
+IBM,z900 (2064),Servers
+IBM,z990 (2084),Servers
+IBM,zBC12,Servers
+IBM,zEC12,Servers
+IBM,zEC12 (2827),Servers
+IBM,zEnterprise,Servers

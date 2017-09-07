@@ -2,12 +2,12 @@
 	<div id="cloud-selector-formstep" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<!-- <ol class="carousel-indicators">
-			<li v-for="(cloud, index) in clouds" data-target="#cloud-selector-formstep" :data-slide-to="index" :class="{'active': index==0}"></li>
+			<li v-for="(cloud, index) in getCloudProviders" data-target="#cloud-selector-formstep" :data-slide-to="index" :class="{'active': index==0}"></li>
 		</ol> -->
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
-			<div v-for="(cloud, index) in clouds" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
+			<div v-for="(cloud, index) in getCloudProviders" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
 				<img class="clickable" @click="addCloudItem(cloud.pk)" :src="cloud.image" style="width: auto; height: 75px;" :alt="cloud.name">
 			</div>
 	    </div>
@@ -36,7 +36,6 @@ import '../../../library/carousel-swipe.js'
 
 export default {
 	props: [
-		'clouds',
 		'addCloudFunc'
 	],
 	data() {
@@ -49,7 +48,6 @@ export default {
 		...mapActions([
 			'setCurrentFormStep',
 			'setCurrentCloudSelection',
-			'setCloudProviders',
 			'addCartItem',
 		]),
 		goToStep(step_num) {
@@ -104,14 +102,6 @@ export default {
 		])
 	},
 	mounted() {
-		axios.get(this.getAPIRoot + 'cloud')
-			.then((response) => {
-				this.setCloudProviders(response.data.results)
-			})
-			.catch((error) => {
-				console.error(error)
-				setTimeout(get_cloud,5000)
-			})
 		
 		// $(".carousel").swipe({
 		// 	swipe: function(event, direction, distance, duration, fingerCount, fingerData)

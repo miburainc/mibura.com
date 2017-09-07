@@ -98,7 +98,7 @@ export const form_steps = [
 		text: "",
 		error: "",
 		step: 0,
-		buttonStyle: "text-align: center;"
+		buttonStyle: "text-align: center; margin-top: 12px;"
 	},
 	{	//item
 		data: [
@@ -175,7 +175,7 @@ export const form_steps = [
 		text: "Please type the brand or model of your item",
 		error: "We aren't sure if we support this brand or model.  Please check the spelling, or contact us to find out if we can support it!",
 		step: 0,
-		buttonStyle: ""
+		buttonStyle: "margin-top: 14px;"
 	},
 	
 	{
@@ -210,7 +210,7 @@ export const form_steps = [
 		text: "Add a cloud provider",
 		error: "",
 		step: 1,
-		buttonStyle: "text-align: center;"
+		buttonStyle: "text-align: center; margin-top: 50px;"
 	},
 	{
 		data: [
@@ -295,7 +295,7 @@ export const form_steps = [
 		text: "",
 		error: "",
 		step: 2,
-		buttonStyle: ""
+		buttonStyle: "margin-top: 14px;"
 	},
 	{
 		data: [
@@ -399,7 +399,7 @@ export const form_steps = [
 		text: "",
 		error: "",
 		step: 2,
-		buttonStyle: ""
+		buttonStyle: "margin-top: 14px;"
 	},
 	{
 		data: [
@@ -432,21 +432,7 @@ export const form_steps = [
 					name: "ccphone",
 					class: "field",
 				}
-			},
-			{
-				placeholder: "Card",
-				src: "",
-				dest: "payment.number",
-				required: false,
-				validate: {
-					type: "text",
-				},
-				form: {
-					type: "stripe",
-					name: "ccnumber",
-				}
-			},
-			
+			}			
 		],
 		buttons: [
 			{
@@ -466,4 +452,27 @@ export const form_steps = [
 		step: 3,
 		buttonStyle: ""
 	},
+	{
+		data: [
+			
+			
+		],
+		buttons: [
+			{
+				label: "Back",
+				class: "btn btn-lg btn-outline-default",
+				script: "back"
+			},
+			{
+				label: "Review",
+				class: "btn btn-lg btn-outline-success payment-button",
+				script: "review"
+			},
+		],
+		title: "Review",
+		text: "review",
+		error: "",
+		step: 3,
+		buttonStyle: ""
+	}
 ]

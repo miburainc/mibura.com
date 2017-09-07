@@ -249,6 +249,13 @@ export default {
 				this.formTimeoutNext()
 				this.clearErrors()
 			}
+			// If errors exist
+			else if(scr == "skip"){
+				this.past_step = this.getCurrentFormStep
+				this.setCurrentFormStep(this.getCurrentFormStep+1)
+				this.formTimeoutNext()
+				this.clearErrors()
+			}
 			if (errors["valid"] == false)
 			{
 				forEachValue(errors["errors"], (value, key) => {
@@ -264,11 +271,6 @@ export default {
 						case "start":
 							this.past_step = this.getCurrentFormStep
 							this.setCurrentFormStep(1)
-							this.formTimeoutNext()
-							break;
-						case "skip":
-							this.past_step = this.getCurrentFormStep
-							this.setCurrentFormStep(this.getCurrentFormStep+1)
 							this.formTimeoutNext()
 							break;
 						case "next":

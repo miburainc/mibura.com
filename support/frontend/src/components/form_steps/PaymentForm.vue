@@ -5,7 +5,13 @@
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a href="#" @click="payment_type='ach'">Bank ACH</a></li>
 		</ul>
 		<div class="payment-box">
+
 			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10">
+				<label>Name on Card</label>
+				<input class="form-control" style="height: 45px;" type="text" name="cardholder-name"  placeholder="Name on card"/>
+				<label>Cardholder Phone</label>
+				<input class="form-control" style="height: 45px;" type="tel" name="ccphone"  placeholder="Cardholder Phone"/>
+				<label>Card Info</label>
 				<div id="card-element" class="field"></div>
 				<div class="outcome">
 					<div class="error" role="alert"></div>
@@ -17,15 +23,31 @@
 				</div>
 			</div>
 			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10 text-center">
+			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10">
 
-				<button id='linkButton' class="btn btn-lg btn-outline-default">Click here to pay by ACH</button>
-				
+				<label>Name on Bank Account</label>
+				<input class="form-control" style="height: 45px;" type="text" name="cardholder-name"  placeholder="Name on card"/>
+				<label>Phone on Bank Account</label>
+				<input class="form-control" style="height: 45px;" type="tel" name="ccphone"  placeholder="Cardholder Phone"/>
 
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6">
+						<button v-show="payment_type=='ach'	" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
+						</div>
+						<div class="col-sm-6">
+							<label>Bank</label>
+							<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Bank"/>
+							<label>Routing Number</label>
+							<input class="form-control" style="height: 45px;" type="tel" name="routing-number"  placeholder="Routing Number"/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
 			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			
 		</div>
 	</div>
 </template>
@@ -133,10 +155,6 @@ export default {
 
 <style lang="scss" scoped>
 
-#linkButton {
-	margin-top: 10px;
-	padding-top: 0px;
-}
 
 .payment-box {
 	border-radius: 2px;

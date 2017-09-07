@@ -56,7 +56,7 @@ export default {
 			if(index < this.$refs.input.length){
 				console.log(this.$refs)
 				console.log(index)
-				this.$refs.input[index].children[1].focus();	
+				this.$refs.input[index+1].children[1].focus();	
 			}
 			else{
 				//PUT BUTTON ACTION

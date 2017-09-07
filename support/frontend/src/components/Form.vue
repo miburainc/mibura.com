@@ -116,6 +116,7 @@ import StartForm from './form_steps/StartForm.vue'
 import ProductForm from './form_steps/ProductForm.vue'
 import CloudForm from './form_steps/CloudForm.vue'
 import AddressForm from './form_steps/AddressForm.vue'
+import ClientForm from './form_steps/ClientForm.vue'
 import PaymentForm from './form_steps/PaymentForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
@@ -136,6 +137,7 @@ const form_components = [
 	StartForm,
 	ProductForm,
 	CloudForm,
+	ClientForm,
 	AddressForm,
 	PaymentForm
 ]
@@ -247,6 +249,13 @@ export default {
 				this.formTimeoutNext()
 				this.clearErrors()
 			}
+			// If errors exist
+			else if(scr == "skip"){
+				this.past_step = this.getCurrentFormStep
+				this.setCurrentFormStep(this.getCurrentFormStep+1)
+				this.formTimeoutNext()
+				this.clearErrors()
+			}
 			if (errors["valid"] == false)
 			{
 				forEachValue(errors["errors"], (value, key) => {
@@ -262,11 +271,6 @@ export default {
 						case "start":
 							this.past_step = this.getCurrentFormStep
 							this.setCurrentFormStep(1)
-							this.formTimeoutNext()
-							break;
-						case "skip":
-							this.past_step = this.getCurrentFormStep
-							this.setCurrentFormStep(this.getCurrentFormStep+1)
 							this.formTimeoutNext()
 							break;
 						case "next":
@@ -492,15 +496,18 @@ export default {
 	background: transparent;
 	border: 1px solid #3285C4;
 	transition: 0.2s background, 0.2s color;
-}
 
-.btn-outline-info:hover {
-	padding: 10px 20px;
-	color: #5EA4D9;
-	border-color: #5EA4D9;
-	background: transparent;
-	background: rgba(94, 164, 217,.08);
-	// border: 1px solid #FFFFFF;
+	&:hover {
+		padding: 10px 20px;
+		color: #5EA4D9;
+		border-color: #5EA4D9;
+		background: transparent;
+		background: rgba(94, 164, 217,.08);
+		// border: 1px solid #FFFFFF;
+	}
+	&:visited {
+		color: #3285C4;
+	}
 }
 
 .btn-outline-success {
@@ -509,15 +516,18 @@ export default {
 	background: transparent;
 	border: 1px solid #00a25c;
 	transition: 0.2s background, 0.2s color;
-}
 
-.btn-outline-success:hover {
-	padding: 10px 20px;
-	color: #00ec85;
-	border-color: #00dc7c;
-	background: transparent;
-	background: rgba(0,250,144,.08);
-	// border: 1px solid #FFFFFF;
+	&:hover {
+		padding: 10px 20px;
+		color: #00ec85;
+		border-color: #00dc7c;
+		background: transparent;
+		background: rgba(0,250,144,.08);
+		// border: 1px solid #FFFFFF;
+	}
+	&:focus {
+		color: #00ec85;
+	}
 }
 
 .btn-outline-default {
@@ -526,14 +536,18 @@ export default {
 	background: transparent;
 	border: 1px solid #8493A8;
 	transition: 0.2s background, 0.2s color;
-}
 
-.btn-outline-default:hover {
-	padding: 10px 20px;
-	color: #FFFFFF;
-	background: transparent;
-	background: rgba(255,255,255,.08);
-	border-color: #FFFFFF;
+	&:hover {
+		padding: 10px 20px;
+		color: #FFFFFF;
+		background: transparent;
+		background: rgba(255,255,255,.08);
+		border-color: #FFFFFF;
+	}
+
+	&:focus {
+		color: #FFFFFF;
+	}
 }
 
 .btn:active, .btn:visited, .btn:focus {

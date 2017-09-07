@@ -74,6 +74,7 @@
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
 			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(null, 'skip')">Skip to Cloud Services</button>
 		</div>
 	</div>
 	<!-- div class="button-group">
@@ -103,6 +104,7 @@ export default {
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
+			'setClientProp'
 		]),
 		formHandleEnter(index) {
 			
@@ -113,7 +115,7 @@ export default {
 			}
 			else{
 				//PUT BUTTON ACTION
-				console.log("Button Action Here--")
+				this.buttonAction(null, "next,additem")
 			}
 			
 		},
@@ -141,14 +143,14 @@ export default {
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					this.set_client_prop({prop: dest_array[2], data: value})
+					this.setClientProp({prop: dest_array[2], data: value})
 				}
 				else {
-					this.set_client_prop({prop: dest_array[1], data: value})
+					this.setClientProp({prop: dest_array[1], data: value})
 				}
 			}
 			else if (dest_array[0] == "payment") {
-				this.set_client_prop({prop: dest_array[1], data: value})
+				this.setClientProp({prop: dest_array[1], data: value})
 			}
 		},
 		buttonGetEstimate() {
@@ -188,5 +190,22 @@ export default {
 </script>
 
 <style lang="scss">
+
+.btn-outline-info {
+	padding: 10px 20px;
+	color: #3285C4;
+	background: transparent;
+	border: 1px solid #3285C4;
+	transition: 0.2s background, 0.2s color;
+}
+
+.btn-outline-info:hover {
+	padding: 10px 20px;
+	color: #5EA4D9;
+	border-color: #5EA4D9;
+	background: transparent;
+	background: rgba(94, 164, 217,.08);
+	// border: 1px solid #FFFFFF;
+}
 	
 </style>

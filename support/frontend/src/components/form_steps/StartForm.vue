@@ -1,14 +1,20 @@
 <template>
 	
 <div>
+	<br><br>
 	<h2 class="text-center">
 		Welcome to Mibura Smart Support
 	</h2>
-
-	<div class="button-group">
+	<br>
+	<h4 class="text-center">
+		We're here to help! Just tell us what items or cloud services you need support for.
+	</h4>
+	<br><br>
+<!-- 
+	<div class="button-group" style="text-align: center;">
 		<button class="btn btn-lg btn-outline-success">I'm a new customer</button>
 		<button class="btn btn-lg btn-outline-default">I'm ready to pay for an existing quote</button>
-	</div>
+	</div> -->
 </div>
 
 </template>
@@ -25,6 +31,7 @@ export default {
 	methods: {
 		...mapActions({
 			set_current_item_prop: 'setCurrentItemProp',
+			set_current_form_step: 'setCurrentFormStep'
 		}),
 		formHandleEnter(index) {
 			// console.log(this.$refs)

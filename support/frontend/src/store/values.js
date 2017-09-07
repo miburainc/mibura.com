@@ -39,14 +39,13 @@ export const PLANS = [
 // yearly compound ??
 
 export const step_names = {
-	brand: 0,
-	model: 1,
-	additional_info: 2,
-	cloud: 3,
-	client_info: 4,
-	client_address: 5,
-	payment: 6,
-	checkout: 7,
+	start: 0,
+	item: 1,
+	cloud: 2,
+	client_info: 3,
+	client_address: 4,
+	payment: 5,
+	checkout: 6,
 }
 
 export const product_multiplier = {
@@ -77,72 +76,46 @@ export const product_multiplier = {
 }
 
 export const form_steps = [
-	{
+	{	//start screen
+		data: [
+			
+		],
+		buttons: [
+			{
+				label: "I'm a new customer",
+				class: "btn btn-lg btn-outline-success",
+				script: "next"
+
+			},
+			{
+				label: "I'm ready to pay for an existing quote",
+				class: "btn btn-lg btn-outline-default",
+				script: "pay"
+
+			}
+		],
+		title: "",
+		text: "",
+		error: "",
+		step: 0,
+		buttonStyle: "text-align: center;"
+	},
+	{	//item
 		data: [
 			{
-				placeholder: "Brand Name",
-				src: "brand",
+				placeholder: "Item Name",
+				src: "item",
 				dest: "cart.#.brand",
 				required: true,
 				form: {
 					type: "text",
-					name: "brand",
+					name: "model",
 				},
 				validate: {
 					type: "text",
 					min: 2,
 				}
 			},
-		],
-		buttons: [
-			{
-				label: "Next",
-				class: "btn btn-lg btn-outline-success",
-				script: "next"
-
-			},
-		],
-		title: "Brand",
-		text: "Please type your hardware's brand",
-		error: "We aren't sure if we support this brand.  Please check the spelling, or contact us to find out if we can support it!",
-		step: 0,
-	},
-	{
-		data: [
-			{
-				placeholder: "Model Name",
-				src: "model",
-				dest: "cart.#.model",
-				required: true,
-				form: {
-					type: "text",
-					name: "model"
-				},
-				validate: {
-					min: 3
-				},
-			},
-		],
-		buttons: [
-			{
-				label: "Back",
-				class: "btn btn-lg btn-outline-default",
-				script: "back"
-			},
-			{
-				label: "Next",
-				class: "btn btn-lg btn-outline-success",
-				script: "next"
-
-			},
-		],
-		title: "Model",
-		text: "Please type the model name.",
-		error: "We aren't sure if we support this model.  Please check the spelling, or contact us to find out if we can support it!",	
-		step: 0,
-	},
-	{
-		data: [
 			{
 				placeholder: "Serial Number",
 				src: "",
@@ -177,7 +150,7 @@ export const form_steps = [
 					name: "additionalinfo",
 					type: "textarea"
 				}
-			},
+			}
 		],
 		buttons: [
 			{
@@ -186,9 +159,10 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Add Another Product",
-				class: "btn btn-lg btn-outline-default",
+				label: "Add another",
+				class: "btn btn-lg btn-outline-success",
 				script: "start,additem"
+
 			},
 			{
 				label: "Add and Continue",
@@ -197,11 +171,13 @@ export const form_steps = [
 
 			},
 		],
-		title: "Additional Information",
-		text: "",
-		error: "",
+		title: "Item",
+		text: "Please type the brand or model of your item",
+		error: "We aren't sure if we support this brand or model.  Please check the spelling, or contact us to find out if we can support it!",
 		step: 0,
+		buttonStyle: ""
 	},
+	
 	{
 		data: [
 			{
@@ -234,6 +210,7 @@ export const form_steps = [
 		text: "Add a cloud provider",
 		error: "",
 		step: 1,
+		buttonStyle: ""
 	},
 	{
 		data: [
@@ -318,6 +295,7 @@ export const form_steps = [
 		text: "",
 		error: "",
 		step: 2,
+		buttonStyle: ""
 	},
 	{
 		data: [
@@ -421,6 +399,7 @@ export const form_steps = [
 		text: "",
 		error: "",
 		step: 2,
+		buttonStyle: ""
 	},
 	{
 		data: [
@@ -485,5 +464,6 @@ export const form_steps = [
 		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
 		error: "",
 		step: 3,
+		buttonStyle: ""
 	},
 ]

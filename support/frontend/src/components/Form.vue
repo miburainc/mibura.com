@@ -15,62 +15,29 @@
 				<h2 class="text-center">{{ get_formsteps[get_current_step].title }}</h2>
 				<h4 class="text-center">{{ get_formsteps[get_current_step].text }}</h4>
 				
-				<div v-if="get_current_step == 0">
-					<start-form :form="get_formsteps.filter((e)=>(e.step==0))"></start-form>
-				</div>
 
-				<div v-for="(data, index) in get_formsteps[get_current_step].data" class="form-group">
-					<label 
-						:for="data.form.name"
+				
+
+				<component :is="currentComponent" :form="get_formsteps[get_current_step]"></component>
+
+				<div v-for="(form, index) in get_formsteps" class="form-group">
+					<!-- <label 
+						:for="form.data.form.name"
 						:style="{
-							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
+							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
 						}"
 					>
-						{{ data.placeholder }}
-					</label>
-					<!-- brand -->
-					<autocomplete
-						v-if="data.src && get_current_step==step_names.brand"
-						:url="get_api_root + 'productcomplete'"
-						label="brand"
-						anchor="model"
-						param="s"
-						class-name="form-input"
-						:custom-params="{format: 'json'}"
-						:name="data.form.name"
-						:id="data.form.name"
-						:init-value="get_current_item_prop(data.form.name)"
-						:process="processAjaxResult"
-						:on-ajax-loaded="logData"
-						:placeholder="data.placeholder"
-						:on-select="(obj) => { setFormItemAutoselect(obj, data.form.name);
-							buttonAction(obj, 'next'); }"
-						:min="2">
-					</autocomplete>
-					<!-- model -->
-					<autocomplete
-						v-else-if="data.src && get_current_step==1"
-						:url="get_api_root + 'productcomplete'"
-						label="brand"
-						anchor="model"
-						param="s"
-						class-name="form-input"
-						:custom-params="{brand: get_current_item_prop('brand'), format: 'json'}"
-						:name="data.form.name"
-						:id="data.form.name"
-						:process="processAjaxResult"
-						:init-value="get_current_item_prop(data.form.name)"
-						:placeholder="data.placeholder"
-						:on-select="(obj) => { setFormItemAutoselect(obj, data.form.name);
-							buttonAction(obj, 'next'); }"
-						:min="2">
-					</autocomplete>
+
+						{{ form.data.placeholder }}
+					</label> -->
 					<!-- Cloud -->
-					<cloud-form 
-						v-else-if="data.src && get_current_step==step_names.cloud"
+
+					<!-- <cloud-form 
+						v-if="form.src && get_current_step==step_names.cloud"
 						:clouds="cloud"
 						:addCloudFunc="addCloudItem"
-					></cloud-form>
+					></cloud-form> -->
+
 					<!-- <select 
 						v-else-if="data.src && get_current_step==step_names.cloud"
 						:id="data.form.name"
@@ -84,7 +51,8 @@
 								{{cloud.name}}
 						</option>
 					</select> -->
-					<div 
+
+					<!-- <div 
 						v-else-if="get_current_step==step_names.payment"
 
 					>
@@ -111,12 +79,16 @@
 					<div class="text-red" v-for="error in get_errors[data.form.name]">
 						{{ error }}
 					</div>
+					 -->
 				</div>
 
-			<button type="button" v-for="btn in get_formsteps[get_current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<div v-bind:style="get_formsteps[get_current_step].buttonStyle"> 	
+				<button type="button" v-for="btn in get_formsteps[get_current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			</div>
 			<h4 v-if="form_error" class="text-red">
 				{{ get_formsteps[get_current_step].error }}
 			</h4>
+				
 			
 			<!-- End Fade effects -->
 			</div>
@@ -129,7 +101,7 @@
 <script>
 
 // import Autocomplete from './autocomplete';
-import Autocomplete from 'vue2-autocomplete-js';
+
 
 import StartForm from './form_steps/StartForm.vue'
 import ProductForm from './form_steps/ProductForm.vue'
@@ -170,17 +142,23 @@ export default {
 			past_step: 0,
 			step_names: step_names,
 			cloud: [],
-			form_components: form_components
+			form_components: form_components,
+			componentIndex: 0
 		}
 	},
 	mounted () {
-		axios.get(this.get_api_root + 'cloud')
+		let self = this
+		function get_cloud(){
+			axios.get(self.get_api_root + 'cloud')
 			.then((response) => {
-				this.cloud = response.data.results
+				self.cloud = response.data.results
 			})
 			.catch((error) => {
 				console.error(error)
+				setTimeout(get_cloud,5000)
 			})
+		}
+		get_cloud()
 	},
 	methods: {
 		...mapActions({
@@ -198,9 +176,7 @@ export default {
 			add_notification: 'addNotification',
 		}),
 
-		processAjaxResult(json) {
-			return json['results']
-		},
+		
 		logData(obj) {
 			// Function for testing ajax replies
 			console.log("logData")
@@ -233,6 +209,7 @@ export default {
 				})
 		},
 		goToStep(step_num) {
+
 			// Proceed to next page of form
 			this.set_current_form_step(step_num)
 
@@ -253,46 +230,45 @@ export default {
 			}
 		},
 		buttonAction(el, scr) {
-			let temp = document.forms.item(0).elements[0].value
-			if (!temp) {
-				temp = "none"
-			}
+			
 			scr = scr.split(',')
-			for (let i=0; i<scr.length; i++) {
-				switch (scr[i]) {
-					case "start":
-						this.past_step = this.get_current_step
-						this.set_current_form_step(0)
-						this.formTimeoutNext()
-						break;
-					case "skip":
-						this.past_step = this.get_current_step
-						this.set_current_form_step(this.get_current_step+1)
-						this.formTimeoutNext()
-						break;
-					case "next":
-						this.past_step = this.get_current_step
-						// Grab current step data
-						let data = this.get_formsteps[this.get_current_step].data
 
-						// Reset error messages
-						this.clear_errors()
+			// Grab current step data
+			let data = this.get_formsteps[this.get_current_step].data
 
-						// Validate all current form steps
-						let errors = ValidateFormSteps(this.get_current_item, data)
-						
-						// If errors exist
-						if (errors["valid"] == false)
-						{
-							forEachValue(errors["errors"], (value, key) => {
-								value.map((val) => {
-									this.set_error({key: key, value: value})
-								})
-							})
-							// cancel button action early
+			let errors = ValidateFormSteps(this.get_current_item, data)
+			// If errors exist
+			if(scr == "back" && this.get_current_step > 0){
+				this.past_step = this.get_current_step
+				this.set_current_form_step(this.get_current_step-1)
+				this.formTimeoutNext()
+				this.clear_errors()
+			}
+			if (errors["valid"] == false)
+			{
+				forEachValue(errors["errors"], (value, key) => {
+					value.map((val) => {
+						this.set_error({key: key, value: value})
+					})
+				})
+			}
+			else {
+				this.clear_errors()
+				for (let i=0; i<scr.length; i++) {
+					switch (scr[i]) {
+						case "start":
+							this.past_step = this.get_current_step
+							this.set_current_form_step(1)
+							this.formTimeoutNext()
 							break;
-						}
-						else {
+						case "skip":
+							this.past_step = this.get_current_step
+							this.set_current_form_step(this.get_current_step+1)
+							this.formTimeoutNext()
+							break;
+						case "next":
+							this.past_step = this.get_current_step
+
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
 								let name = data[i].form.name;
@@ -301,47 +277,27 @@ export default {
 									this.setFormItem(val, data[i])
 								}
 							}
-							this.clear_errors()
 
 							this.goToStep(this.get_current_step+1)
-						}
 
-						break;
-					case "back":
-						this.past_step = this.get_current_step
-						this.set_current_form_step(this.get_current_step-1)
-						this.formTimeoutNext()
-						break;
-					case "addcloud":
-						if (temp=="none") {
-							temp = this.get_current_cloud_selection
-						}
-						this.addCloudItem(temp)
-
-						break;
-					case "review":
-						this.past_step = this.get_current_step
-						// Grab current step data
-						let card_data = this.get_formsteps[this.get_current_step].data
-
-						// Reset error messages
-						this.clear_errors()
-
-						// Validate all current form steps
-						let card_errors = ValidateFormSteps(this.get_current_item, card_data)
-						
-						// If errors exist
-						if (card_errors["valid"] == false)
-						{
-							forEachValue(card_errors["errors"], (value, key) => {
-								value.map((val) => {
-									this.set_error({key: key, value: value})
-								})
-							})
-							// cancel button action early
 							break;
-						}
-						else {
+						
+						case "addcloud":
+
+							let temp = document.forms.item(0).elements[0].value
+							if (!temp) {
+								temp = "none"
+							}
+
+							if (temp=="none") {
+								temp = this.get_current_cloud_selection
+							}
+							this.addCloudItem(temp)
+
+							break;
+						case "review":
+							this.past_step = this.get_current_step
+							
 							// Save all current form fields into vuex store
 							for (let i=0; i<card_data.length; i++) {
 								let name = card_data[i].form.name;
@@ -350,57 +306,52 @@ export default {
 									this.setFormItem(val, card_data[i])
 								}
 							}
-							this.clear_errors()
-
 							velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
-						}
-						
-						break;
-					case "additem":
-						let model = this.get_current_item_prop('model')
-						let prd = this.get_all_products
-						let prd_info = null;
+							
+							break;
+						case "additem":
+							// Save all current form fields into vuex store
+							for (let i=0; i<data.length; i++) {
+								let name = data[i].form.name;
+								if (!this.get_current_item_prop(name)) {
+									let val = document.getElementById(name).value
+									this.setFormItem(val, data[i])
+								}
+							}
+							
+							let model = this.get_current_item_prop('model')
+							let prd = this.get_all_products
+							let prd_info = null;
 
-						if (prd.hasOwnProperty(model)) {
-							prd_info = prd[model]
-						}
-						else {
-							prd_info = {
-								sku: 'none',
-								category: {
-									category_code: 'none',
-									name: 'None',
-									price_multiplier: 1.0,
-									yearly_tax: 0.1,
-								},
-								price_silver: 1.0,
-								price_gold: 1.0,
-								price_black: 1.0,
-								type: 'product',
+							if (prd.hasOwnProperty(model)) {
+								prd_info = prd[model]
 							}
-						}
-						this.add_cart_item(
-							{
-								...prd_info,
-								...this.get_current_item
+							else {
+								prd_info = {
+									sku: 'none',
+									category: {
+										category_code: 'none',
+										name: 'None',
+										price_multiplier: 1.0,
+										yearly_tax: 0.1,
+									},
+									price_silver: 1.0,
+									price_gold: 1.0,
+									price_black: 1.0,
+									type: 'product',
+								}
 							}
-						)
-						this.clearCurrentItem()
-						break;
+							this.add_cart_item(
+								{
+									...prd_info,
+									...this.get_current_item
+								}
+							)
+							this.clearCurrentItem()
+							break;
+					}
 				}
-			}
-				
-		},
-		setFormItemAutoselect (obj, name) {
-			console.log("Name: " + name)
-			console.log("Obj: ", obj)
-			this.set_current_item_prop({ prop: name, data: obj[name] })
-			this.set_current_item_prop({ prop: 'verified', data: true })
-
-			if (name == "model") {
-				this.addProduct({id: obj.model, data: obj})
-				// this.$set(this.product_info, obj['model'], obj)
-			}
+			}	
 		},
 		setFormItem (value, obj) {
 			console.log(obj)
@@ -509,13 +460,15 @@ export default {
 			get_multiplier: 'getMultiplier',
 			get_current_cloud_selection: 'getCurrentCloudSelection',
 		}),
+		currentComponent(){
+			return this.form_components[this.get_current_step]
+		}
 	},
 	// get_api_root: 'getAPIRoot',
 	components: {
-		Autocomplete,
-		CloudForm,
-		PaymentForm,
-		StartForm
+		'cloud-form': CloudForm,
+		'payment-form': PaymentForm,
+		'start-form': StartForm
 	},
 	created () {
 		setTimeout(() => this.show = true, 200)
@@ -529,6 +482,9 @@ export default {
 @import '../assets/vue2-autocomplete';
 @import '../assets/sass/form';
 
+.startButtons{
+	text-align: center;
+}
 
 .btn-outline-success {
 	padding: 10px 20px;

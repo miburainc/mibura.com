@@ -115,6 +115,7 @@ const actions = {
 	clearCart({commit, dispatch}) {
 		dispatch('setCartChanged', true)
 		commit(TYPE.CART_CLEAR)
+		commit(TYPE.SET_CURRENT_FORM_STEP, 0)
 	},
 	removeCartItem({commit, dispatch}, payload) {
 		dispatch('setCartChanged', true)

@@ -8,7 +8,9 @@ import {form_steps} from '../values'
 const state = {
 	steps: form_steps,
 	products: {},
-	current_item: {},
+	current_item: {
+		verified: false
+	},
 	current_form_step: 0,
 	current_cloud_selection: 1,
 	client_info: {},
@@ -33,7 +35,7 @@ const mutations = {
 		state.current_form_step = value
 	},
 	[TYPE.CLEAR_CURRENT_FORM_STEP]: (state) => {
-		state.current_item = {}
+		Vue.set(state, "current_item", { verified: false })
 	},
 	[TYPE.SET_PAYMENT_TOKEN]: (state, value) => {
 		state.payment_token = value

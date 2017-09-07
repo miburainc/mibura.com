@@ -1,7 +1,7 @@
 <template>
 	
 <div>
-	<div class="form-group">
+	<div class="form-group"> 
 
 		<label>Product Name</label>
 		<autocomplete

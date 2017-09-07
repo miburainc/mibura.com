@@ -10,7 +10,7 @@
 				<div class="outcome">
 					<div class="error" role="alert"></div>
 					<!--
-					<div class="success">
+					<div class="success"> 
 					Success! Your Stripe token is <span class="token"></span>
 					</div>
 					-->
@@ -19,7 +19,7 @@
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10 text-center">
 
-				<button id='linkButton' class="btn btn-lg btn-outline-default">Click here to pay by ACH</button>
+				<button type="button" id='linkButton' class="btn btn-lg btn-outline-default">Click here to pay by ACH</button>
 				
 
 			</div>

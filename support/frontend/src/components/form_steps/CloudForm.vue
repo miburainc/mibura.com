@@ -36,7 +36,7 @@ import '../../../library/carousel-swipe.js'
 
 export default {
 	props: [
-		'addCloudFunc'
+		'form'
 	],
 	data() {
 		return {

@@ -11,14 +11,25 @@
 				v-on:leave="animateLeave"
 			>
 			<div v-if="show">
-			
+
 				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
 				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
+
+				<!-- Dynamic component to switch between form steps -->
+				<component 
+					:is="currentComponent" 
+					:form="getFormSteps[get_current_step]"
+					:buttonAction="buttonAction" />
+				
+				<!--
+				<div v-for="(form, index) in get_formsteps" class="form-group">
+					 <label 
+
 
 				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]"></component>
 
 				<div v-for="(form, index) in getFormSteps" class="form-group">
-					<!-- <label 
+					<label 
 						:for="form.data.form.name"
 						:style="{
 							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
@@ -76,16 +87,16 @@
 					<div class="text-red" v-for="error in getErrors[data.form.name]">
 						{{ error }}
 					</div>
-					 -->
+					 
 				</div>
+				-->
 
-			<div v-bind:style="getFormSteps[getCurrentFormStep].buttonStyle"> 	
-				<button type="button" v-for="btn in getFormSteps[getCurrentFormStep].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button><button v-if="getCurrentFormStep==step_names.item && getCart.length>0" class="btn btn-lg btn-outline-info" @click="skipToCloud">Skip to Cloud</button>
-
+			<!-- <div v-bind:style="get_formsteps[get_current_step].buttonStyle"> 	
+				<button type="button" v-for="btn in get_formsteps[get_current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			</div>
 			<h4 v-if="form_error" class="text-red">
-				{{ getFormSteps[getCurrentFormStep].error }}
-			</h4>
+				{{ get_formsteps[get_current_step].error }}
+			</h4> -->
 				
 			
 			<!-- End Fade effects -->
@@ -104,7 +115,7 @@
 import StartForm from './form_steps/StartForm.vue'
 import ProductForm from './form_steps/ProductForm.vue'
 import CloudForm from './form_steps/CloudForm.vue'
-// import CustomerForm from './form_steps/CustomerForm.vue'
+import AddressForm from './form_steps/AddressForm.vue'
 import PaymentForm from './form_steps/PaymentForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
@@ -125,7 +136,7 @@ const form_components = [
 	StartForm,
 	ProductForm,
 	CloudForm,
-	// CustomerForm,
+	AddressForm,
 	PaymentForm
 ]
 

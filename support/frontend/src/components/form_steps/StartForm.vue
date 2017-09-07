@@ -9,12 +9,14 @@
 	<h4 class="text-center">
 		We're here to help! Just tell us what items or cloud services you need support for.
 	</h4>
-	<br><br>
-<!-- 
-	<div class="button-group" style="text-align: center;">
-		<button class="btn btn-lg btn-outline-success">I'm a new customer</button>
-		<button class="btn btn-lg btn-outline-default">I'm ready to pay for an existing quote</button>
-	</div> -->
+	<br>
+	<div v-bind:style="form.buttonStyle"> 	
+		<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+	</div>
+	<h4 v-if="form_error" class="text-red">
+		{{ form.error }}
+	</h4>
+
 </div>
 
 </template>
@@ -24,7 +26,7 @@
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-	props: ['form'],
+	props: ['form', 'buttonAction'],
 	mounted() {
 
 	},

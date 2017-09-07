@@ -1,7 +1,7 @@
 <template>
 	<div id="purchase-form" class="row">
 		
-		<form v-on:submit.prevent>
+		<form v-on:submit.prevent="formHandleEnter">
 			<!-- Fade effects -->
 			<transition 
 				v-bind:css="false"
@@ -189,6 +189,12 @@ export default {
 			this.formTimeoutNext()
 			this.clearErrors()
 		},
+		formHandleEnter(){
+			console.log("ahelo")
+			let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
+			this.buttonAction(null, buttons[buttons.length].script)
+			
+		},
 		addCloudItem(cloud_pk) {
 			let cloud = {};
 			for (let i=0; i<this.getCloudProviders.length; i++) {
@@ -243,22 +249,21 @@ export default {
 			// Grab current step data
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 
+			this.clearErrors()
 			let errors = ValidateFormSteps(this.getCurrentItem, data)
 			// If errors exist
 			if(scr == "back" && this.getCurrentFormStep > 0){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
-				this.clearErrors()
 			}
 			// If errors exist
 			else if(scr == "skip"){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep+1)
 				this.formTimeoutNext()
-				this.clearErrors()
 			}
-			if (errors["valid"] == false)
+			else if (errors["valid"] == false)
 			{
 				forEachValue(errors["errors"], (value, key) => {
 					value.map((val) => {
@@ -267,7 +272,7 @@ export default {
 				})
 			}
 			else {
-				this.clearErrors()
+				
 				for (let i=0; i<scr.length; i++) {
 					switch (scr[i]) {
 						case "start":

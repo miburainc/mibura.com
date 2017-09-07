@@ -140,7 +140,6 @@ export default {
 			'setEstimatePdfFile',
 			'setAcceptedTerms',
 			'addNotification',
-			'numWithCommas',
 		]),
 		setPlan(el) {
 			let val = el.target.value

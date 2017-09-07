@@ -49,23 +49,7 @@
 					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
 				}">
 			
-			<label>{{ step.placeholder }}</label>
-			<input 
-				@keyup.enter.prevent="formHandleEnter(index)"
-				:data-index="index"
-				:type="step.form.type" 
-				:id="step.form.name" 
-				:name="step.form.name" 
-				:placeholder="step.placeholder" 
-				class="form-control" 
-				:value="get_form_input_value(step)" 
-				@change="(el) => {
-					setFormItem(el.target.value, step) 
-				}"
-			>
-			<div class="text-red" v-for="error in getErrors[step.form.name]">
-				{{ error }}
-			</div>
+			<form-text-input :step="step"></form-text-input>
 
 			
 
@@ -94,11 +78,13 @@
 import {mapGetters, mapActions} from 'vuex'
 
 import Autocomplete from 'vue2-autocomplete-js';
+import FormTextInput from '../FormTextInput.vue'
 
 export default {
 	props: ['form', 'buttonAction'],
 	components:{
-		Autocomplete
+		Autocomplete,
+		FormTextInput
 	},
 	mounted() {
 
@@ -108,19 +94,6 @@ export default {
 			'setCurrentItemProp',
 			'setClientProp'
 		]),
-		formHandleEnter(index) {
-			
-			if(index < this.$refs.input.length){
-				console.log(this.$refs)
-				console.log(index)
-				this.$refs.input[index].children[1].focus();	
-			}
-			else{
-				//PUT BUTTON ACTION
-				this.buttonAction(null, "next,additem")
-			}
-			
-		},
 		processAjaxResult(json) {
 			return json['results']
 		},

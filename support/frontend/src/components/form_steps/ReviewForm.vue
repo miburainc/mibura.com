@@ -50,19 +50,6 @@ export default {
 			'setCurrentItemProp',
 			'setClientProp'
 		]),
-		formHandleEnter(index) {
-			
-			if(index < this.$refs.input.length){
-				console.log(this.$refs)
-				console.log(index)
-				this.$refs.input[index].children[1].focus();	
-			}
-			else{
-				//PUT BUTTON ACTION
-				console.log("Button Action Here--")
-			}
-			
-		},
 		processAjaxResult(json) {
 			return json['results']
 		},

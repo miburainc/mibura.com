@@ -34,7 +34,7 @@
 					<div class="row">
 						<div class="col-sm-6">
 
-						<button type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
+						<button v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
 						</div>
 						<div class="col-sm-6">
 							<label>Account Number</label>
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
-			<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			
 		</div>
 	</div>

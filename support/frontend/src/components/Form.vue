@@ -1,7 +1,7 @@
 <template>
 	<div id="purchase-form" class="row">
 		
-		<form v-on:submit.prevent="formHandleEnter">
+		<form v-on:submit.prevent v-on:keyup.enter="formHandleEnter">
 			<!-- Fade effects -->
 			<transition 
 				v-bind:css="false"
@@ -191,8 +191,9 @@ export default {
 		},
 		formHandleEnter(){
 			console.log("ahelo")
+			console.log(this.getFormSteps[this.getCurrentFormStep])
 			let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
-			this.buttonAction(null, buttons[buttons.length].script)
+			this.buttonAction(null, buttons[buttons.length-1].script)
 			
 		},
 		addCloudItem(cloud_pk) {
@@ -243,27 +244,32 @@ export default {
 			}
 		},
 		buttonAction(el, scr) {
-			
+
+			console.log("button action", scr)
 			scr = scr.split(',')
 
 			// Grab current step data
 			let data = this.getFormSteps[this.getCurrentFormStep].data
-
 			this.clearErrors()
-			let errors = ValidateFormSteps(this.getCurrentItem, data)
+			
 			// If errors exist
 			if(scr == "back" && this.getCurrentFormStep > 0){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
+				return(true)
 			}
 			// If errors exist
 			else if(scr == "skip"){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep+1)
 				this.formTimeoutNext()
+				return(true)
 			}
-			else if (errors["valid"] == false)
+			
+			let errors = ValidateFormSteps(this.getCurrentItem, data)
+			
+			if (errors["valid"] == false)
 			{
 				forEachValue(errors["errors"], (value, key) => {
 					value.map((val) => {
@@ -534,7 +540,7 @@ export default {
 		// border: 1px solid #FFFFFF;
 	}
 	&:focus {
-		color: #00ec85;
+		color: #00a25c;
 	}
 }
 
@@ -554,7 +560,7 @@ export default {
 	}
 
 	&:focus {
-		color: #FFFFFF;
+		color: #8493A8;
 	}
 }
 .btn:active, .btn:visited, .btn:focus {

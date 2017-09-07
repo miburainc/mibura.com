@@ -16,7 +16,7 @@
 				<div class="outcome">
 					<div class="error" role="alert"></div>
 					<!--
-					<div class="success">
+					<div class="success"> 
 					Success! Your Stripe token is <span class="token"></span>
 					</div>
 					-->
@@ -33,6 +33,7 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-sm-6">
+
 						<button type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
 						</div>
 						<div class="col-sm-6">

@@ -103,7 +103,7 @@ export const form_steps = [
 	{	//item
 		data: [
 			{
-				placeholder: "Item Name",
+				placeholder: "Product Name",
 				src: "item",
 				dest: "cart.#.brand",
 				required: true,

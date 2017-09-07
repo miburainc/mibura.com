@@ -496,15 +496,18 @@ export default {
 	background: transparent;
 	border: 1px solid #3285C4;
 	transition: 0.2s background, 0.2s color;
-}
 
-.btn-outline-info:hover {
-	padding: 10px 20px;
-	color: #5EA4D9;
-	border-color: #5EA4D9;
-	background: transparent;
-	background: rgba(94, 164, 217,.08);
-	// border: 1px solid #FFFFFF;
+	&:hover {
+		padding: 10px 20px;
+		color: #5EA4D9;
+		border-color: #5EA4D9;
+		background: transparent;
+		background: rgba(94, 164, 217,.08);
+		// border: 1px solid #FFFFFF;
+	}
+	&:focus {
+		color: #3285C4;
+	}
 }
 
 .btn-outline-success {
@@ -513,15 +516,18 @@ export default {
 	background: transparent;
 	border: 1px solid #00a25c;
 	transition: 0.2s background, 0.2s color;
-}
 
-.btn-outline-success:hover{
-	padding: 10px 20px;
-	color: #00ec85;
-	border-color: #00dc7c;
-	background: transparent;
-	background: rgba(0,250,144,.08);
-	// border: 1px solid #FFFFFF;
+	&:hover {
+		padding: 10px 20px;
+		color: #00ec85;
+		border-color: #00dc7c;
+		background: transparent;
+		background: rgba(0,250,144,.08);
+		// border: 1px solid #FFFFFF;
+	}
+	&:focus {
+		color: #00ec85;
+	}
 }
 
 .btn-outline-default {
@@ -530,8 +536,19 @@ export default {
 	background: transparent;
 	border: 1px solid #8493A8;
 	transition: 0.2s background, 0.2s color;
-}
 
+	&:hover {
+		padding: 10px 20px;
+		color: #FFFFFF;
+		background: transparent;
+		background: rgba(255,255,255,.08);
+		border-color: #FFFFFF;
+	}
+
+	&:focus {
+		color: #FFFFFF;
+	}
+}
 .btn:active, .btn:visited, .btn:focus {
 	outline: none !important;
 }

@@ -29,7 +29,7 @@
 				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]"></component>
 
 				<div v-for="(form, index) in getFormSteps" class="form-group">
-					<!-- <label 
+					<label 
 						:for="form.data.form.name"
 						:style="{
 							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
@@ -116,6 +116,7 @@ import StartForm from './form_steps/StartForm.vue'
 import ProductForm from './form_steps/ProductForm.vue'
 import CloudForm from './form_steps/CloudForm.vue'
 import AddressForm from './form_steps/AddressForm.vue'
+import ClientForm from './form_steps/ClientForm.vue'
 import PaymentForm from './form_steps/PaymentForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
@@ -136,6 +137,7 @@ const form_components = [
 	StartForm,
 	ProductForm,
 	CloudForm,
+	ClientForm,
 	AddressForm,
 	PaymentForm
 ]
@@ -184,6 +186,32 @@ export default {
 			this.setCurrentFormStep(this.getCurrentFormStep+1)
 			this.formTimeoutNext()
 			this.clearErrors()
+		},
+		addCloudItem(cloud_pk) {
+			let cloud = {};
+			for (let i=0; i<this.getCloudProviders.length; i++) {
+				if (this.getCloudProviders[i].pk == cloud_pk) {
+					cloud = this.getCloudProviders[i]
+				}
+			}
+			let cloud_obj = {
+				sku: 'cloud',
+				category: this.getMultiplier('cloud'),
+				price_silver: cloud.price_multiplier,
+				price_gold: 0.0,
+				price_black: 0.0,
+				type: 'cloud',
+				brand: cloud.name,
+				model: '',
+				release: moment().format("YYYY-MM-DD"),
+			}
+			this.addCartItem(cloud_obj)
+				.then((value) => {
+					console.log("Added cloud: ", value)
+					if (value == true) {
+						this.goToStep(this.getCurrentFormStep+1)
+					}
+				})
 		},
 		goToStep(step_num) {
 
@@ -262,12 +290,9 @@ export default {
 						case "addcloud":
 
 							let temp = document.forms.item(0).elements[0].value
-							if (!temp) {
-								temp = "none"
-							}
 
 							if (temp=="none") {
-								temp = this.get_current_cloud_selection
+								temp = this.getCurrentCloudSelection
 							}
 							this.addCloudItem(temp)
 
@@ -429,6 +454,8 @@ export default {
 			'getFormSteps',
 			'getCurrentFormStep',
 			'getCurrentItemProp',
+			'getCloudProviders',
+			'getMultiplier',
 			'getCurrentItem',
 			'getAPIRoot',
 			'getErrors',

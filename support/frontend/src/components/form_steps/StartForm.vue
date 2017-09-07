@@ -13,9 +13,6 @@
 	<div v-bind:style="form.buttonStyle"> 	
 		<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 	</div>
-	<h4 v-if="form_error" class="text-red">
-		{{ form.error }}
-	</h4>
 
 </div>
 

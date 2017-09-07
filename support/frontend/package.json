@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "js-cookie": "^2.1.4",
     "moment": "^2.18.1",
     "plaid": "^2.0.5",
     "tippy.js": "^1.2.0",

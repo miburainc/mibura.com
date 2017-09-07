@@ -1,5 +1,5 @@
 import {API_ROOT,URL_ROOT} from '../values'
-import axios from 'axios'
+import axios from './api-config'
 
 const actions = {
 	getOrCreateCart(cart_obj) {

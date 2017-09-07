@@ -11,9 +11,9 @@
 				v-on:leave="animateLeave"
 			>
 			<div v-if="show">
-			
-				<h2 class="text-center">{{ get_formsteps[get_current_step].title }}</h2>
-				<h4 class="text-center">{{ get_formsteps[get_current_step].text }}</h4>
+
+				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
+				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
 
 				<!-- Dynamic component to switch between form steps -->
 				<component 
@@ -24,23 +24,30 @@
 				<!--
 				<div v-for="(form, index) in get_formsteps" class="form-group">
 					 <label 
+=======
+
+				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]" :clouds="cloud"></component>
+
+				<div v-for="(form, index) in getFormSteps" class="form-group">
+					<!-- <label 
 						:for="form.data.form.name"
 						:style="{
-							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
+							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
 						}"
 					>
+
 						{{ form.data.placeholder }}
 					</label> -->
 					<!-- Cloud -->
 
 					<!-- <cloud-form 
-						v-if="form.src && get_current_step==step_names.cloud"
+						v-if="form.src && getCurrentFormStep==step_names.cloud"
 						:clouds="cloud"
 						:addCloudFunc="addCloudItem"
 					></cloud-form> -->
 
 					<!-- <select 
-						v-else-if="data.src && get_current_step==step_names.cloud"
+						v-else-if="data.src && getCurrentFormStep==step_names.cloud"
 						:id="data.form.name"
 						:name="data.form.name"
 					>
@@ -54,11 +61,11 @@
 					</select> -->
 
 					<!-- <div 
-						v-else-if="get_current_step==step_names.payment"
+						v-else-if="getCurrentFormStep==step_names.payment"
 
 					>
 						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
-						<stripe-form></stripe-form>
+						<payment-form></payment-form>
 					</div>
 					<input 
 					v-else
@@ -73,11 +80,11 @@
 							setFormItem(el.target.value, data) 
 						}"
 						:style="{
-							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && get_current_item_prop('verified') ? 'none' : 'block'
+							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
 						}"
 					>
 
-					<div class="text-red" v-for="error in get_errors[data.form.name]">
+					<div class="text-red" v-for="error in getErrors[data.form.name]">
 						{{ error }}
 					</div>
 					 
@@ -149,18 +156,7 @@ export default {
 		}
 	},
 	mounted () {
-		let self = this
-		function get_cloud(){
-			axios.get(self.get_api_root + 'cloud')
-			.then((response) => {
-				self.cloud = response.data.results
-			})
-			.catch((error) => {
-				console.error(error)
-				setTimeout(get_cloud,5000)
-			})
-		}
-		get_cloud()
+		
 	},
 	methods: {
 		...mapActions({
@@ -184,31 +180,12 @@ export default {
 			console.log("logData")
 			console.log(obj)
 		},
-		addCloudItem(cloud_pk) {
-			let cloud = {};
-			for (let i=0; i<this.cloud.length; i++) {
-				if (this.cloud[i].pk == cloud_pk) {
-					cloud = this.cloud[i]
-				}
-			}
-			let cloud_obj = {
-				sku: 'cloud',
-				category: this.get_multiplier('cloud'),
-				price_silver: cloud.price_multiplier,
-				price_gold: 0.0,
-				price_black: 0.0,
-				type: 'cloud',
-				brand: cloud.name,
-				model: '',
-				release: moment().format("YYYY-MM-DD"),
-			}
-			this.add_cart_item(cloud_obj)
-				.then((value) => {
-					console.log("Added cloud: ", value)
-					if (value == true) {
-						this.goToStep(this.get_current_step+1)
-					}
-				})
+		
+		skipToCloud() {
+			this.past_step = this.getCurrentFormStep
+			this.set_current_form_step(this.getCurrentFormStep+1)
+			this.formTimeoutNext()
+			this.clear_errors()
 		},
 		goToStep(step_num) {
 
@@ -227,7 +204,7 @@ export default {
 		},
 		formOnPressEnter() {
 
-			if (this.get_current_step == this.get_formsteps[this.get_current_step].data.length - 1) {
+			if (this.getCurrentFormStep == this.getFormSteps[this.getCurrentFormStep].data.length - 1) {
 
 			}
 		},
@@ -236,13 +213,13 @@ export default {
 			scr = scr.split(',')
 
 			// Grab current step data
-			let data = this.get_formsteps[this.get_current_step].data
+			let data = this.getFormSteps[this.getCurrentFormStep].data
 
-			let errors = ValidateFormSteps(this.get_current_item, data)
+			let errors = ValidateFormSteps(this.getCurrentItem, data)
 			// If errors exist
-			if(scr == "back" && this.get_current_step > 0){
-				this.past_step = this.get_current_step
-				this.set_current_form_step(this.get_current_step-1)
+			if(scr == "back" && this.getCurrentFormStep > 0){
+				this.past_step = this.getCurrentFormStep
+				this.set_current_form_step(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
 				this.clear_errors()
 			}
@@ -259,28 +236,28 @@ export default {
 				for (let i=0; i<scr.length; i++) {
 					switch (scr[i]) {
 						case "start":
-							this.past_step = this.get_current_step
+							this.past_step = this.getCurrentFormStep
 							this.set_current_form_step(1)
 							this.formTimeoutNext()
 							break;
 						case "skip":
-							this.past_step = this.get_current_step
-							this.set_current_form_step(this.get_current_step+1)
+							this.past_step = this.getCurrentFormStep
+							this.set_current_form_step(this.getCurrentFormStep+1)
 							this.formTimeoutNext()
 							break;
 						case "next":
-							this.past_step = this.get_current_step
+							this.past_step = this.getCurrentFormStep
 
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
 								let name = data[i].form.name;
-								if (!this.get_current_item_prop(name)) {
+								if (!this.getCurrentItemProp(name)) {
 									let val = document.getElementById(name).value
 									this.setFormItem(val, data[i])
 								}
 							}
 
-							this.goToStep(this.get_current_step+1)
+							this.goToStep(this.getCurrentFormStep+1)
 
 							break;
 						
@@ -298,12 +275,12 @@ export default {
 
 							break;
 						case "review":
-							this.past_step = this.get_current_step
+							this.past_step = this.getCurrentFormStep
 							
 							// Save all current form fields into vuex store
 							for (let i=0; i<card_data.length; i++) {
 								let name = card_data[i].form.name;
-								if (!this.get_current_item_prop(name)) {
+								if (!this.getCurrentItemProp(name)) {
 									let val = document.getElementById(name).value
 									this.setFormItem(val, card_data[i])
 								}
@@ -315,14 +292,14 @@ export default {
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
 								let name = data[i].form.name;
-								if (!this.get_current_item_prop(name)) {
+								if (!this.getCurrentItemProp(name)) {
 									let val = document.getElementById(name).value
 									this.setFormItem(val, data[i])
 								}
 							}
 							
-							let model = this.get_current_item_prop('model')
-							let prd = this.get_all_products
+							let model = this.getCurrentItemProp('model')
+							let prd = this.getAllProducts
 							let prd_info = null;
 
 							if (prd.hasOwnProperty(model)) {
@@ -346,7 +323,7 @@ export default {
 							this.add_cart_item(
 								{
 									...prd_info,
-									...this.get_current_item
+									...this.getCurrentItem
 								}
 							)
 							this.clearCurrentItem()
@@ -375,7 +352,7 @@ export default {
 			}
 		},
 		setItemProp () {
-			this.set_current_form_step(this.get_current_step + 1)
+			this.set_current_form_step(this.getCurrentFormStep + 1)
 		},
 		formTimeoutNext() {
 			// This method hides and shows the form to ensure smooth animations
@@ -387,7 +364,7 @@ export default {
 				// Set another timer to ensure dom elements are loaded before calling js
 				setTimeout(() => {
 					document.forms[0].elements[0].focus();
-					if (this.get_current_step == this.step_names.cloud) {
+					if (this.getCurrentFormStep == this.step_names.cloud) {
 						this.add_notification({
 							message: "If you upgrade to Gold or Black plans, you get cloud support for free!",
 							type: "info"
@@ -406,7 +383,7 @@ export default {
 			el.style.opacity = 1
 		},
 		animateEnter(el, done) {
-			let transition = this.get_current_step >= this.past_step ? 'transition.slideRightIn' : 'transition.slideLeftIn'
+			let transition = this.getCurrentFormStep >= this.past_step ? 'transition.slideRightIn' : 'transition.slideLeftIn'
 			Velocity(
 				el,
 				transition,
@@ -419,7 +396,7 @@ export default {
 			)
 		},
 		animateLeave(el, done) {
-			let transition = this.get_current_step > this.past_step ? 'transition.slideLeftOut' : 'transition.slideRightOut'
+			let transition = this.getCurrentFormStep > this.past_step ? 'transition.slideLeftOut' : 'transition.slideRightOut'
 			Velocity(
 				el,
 				transition,
@@ -435,38 +412,36 @@ export default {
 			let dest_array = obj.dest.split('.')
 			let val = ""
 			if (dest_array[0] == "cart") {
-				val =  this.get_current_item_prop(dest_array[2])
+				val =  this.getCurrentItemProp(dest_array[2])
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					val = this.get_client_info[dest_array[2]]
+					val = this.getClientInfo[dest_array[2]]
 				}
 				else {
-					val =  this.get_client_info[dest_array[1]]
+					val =  this.getClientInfo[dest_array[1]]
 				}
 			}
 			return val
 		},
 	},
 	computed: {
-		...mapGetters({
-			get_product: 'getProduct',
-			get_all_products: 'getAllProducts',
-			get_formsteps: 'getFormSteps',
-			get_current_step: 'getCurrentFormStep',
-			get_current_item_prop: 'getCurrentItemProp',
-			get_current_item: 'getCurrentItem',
-			get_api_root: 'getAPIRoot',
-			get_errors: 'getErrors',
-			get_client_info: 'getClientInfo',
-			get_multiplier: 'getMultiplier',
-			get_current_cloud_selection: 'getCurrentCloudSelection',
-		}),
+		...mapGetters([
+			'getAllProducts',
+			'getFormSteps',
+			'getCurrentFormStep',
+			'getCurrentItemProp',
+			'getCurrentItem',
+			'getAPIRoot',
+			'getErrors',
+			'getClientInfo',
+			'getCart',
+		]),
 		currentComponent(){
-			return this.form_components[this.get_current_step]
+			return this.form_components[this.getCurrentFormStep]
 		}
 	},
-	// get_api_root: 'getAPIRoot',
+	// getAPIRoot: 'getAPIRoot',
 	components: {
 		'cloud-form': CloudForm,
 		'payment-form': PaymentForm,
@@ -486,6 +461,23 @@ export default {
 
 .startButtons{
 	text-align: center;
+}
+
+.btn-outline-info {
+	padding: 10px 20px;
+	color: #3285C4;
+	background: transparent;
+	border: 1px solid #3285C4;
+	transition: 0.2s background, 0.2s color;
+}
+
+.btn-outline-info:hover {
+	padding: 10px 20px;
+	color: #5EA4D9;
+	border-color: #5EA4D9;
+	background: transparent;
+	background: rgba(94, 164, 217,.08);
+	// border: 1px solid #FFFFFF;
 }
 
 .btn-outline-success {

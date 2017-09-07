@@ -16,6 +16,7 @@ const state = {
 	client_info: {},
 	payment_token: "",
 	notifications: [],
+	cloud_providers: [],
 }
 
 const mutations = {
@@ -49,6 +50,9 @@ const mutations = {
 	[TYPE.SET_CURRENT_CLOUD_SELECTION]: (state, selection) => {
 		state.current_cloud_selection = selection
 	},
+	[TYPE.SET_CLOUD_PROVIDERS]: (state, value) => {
+		state.cloud_providers = value
+	},
 	[TYPE.ADD_NOTIFICATION]: (state, payload) => {
 		state.notifications.splice(0, 0, payload)
 		
@@ -63,6 +67,9 @@ const mutations = {
 }
 
 const actions = {
+	setCloudProviders({commit}, payload) {
+		commit(TYPE.SET_CLOUD_PROVIDERS, payload)
+	},
 	addNotification({commit}, payload) {
 		commit(TYPE.ADD_NOTIFICATION, payload)
 	},
@@ -105,6 +112,7 @@ const actions = {
 }
 
 const getters = {
+	getCloudProviders: state => state.cloud_providers,
 	getCurrentFormStep: state => state.current_form_step,
 	getFormSteps: state => state.steps,
 	getProduct: state => sku => state.products[sku],

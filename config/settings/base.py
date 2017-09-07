@@ -67,6 +67,8 @@ INSTALLED_APPS = [
 
 # CORS
 
+CSRF_HEADER_NAME = "HTTP-X-CSRFToken"
+
 CORS_ORIGIN_WHITELIST = (
     'localhost',
     '127.0.0.1',
@@ -74,7 +76,6 @@ CORS_ORIGIN_WHITELIST = (
     '.mibura.com',
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
 
 CSRF_TRUSTED_ORIGINS = (
     'localhost',
@@ -82,6 +83,20 @@ CSRF_TRUSTED_ORIGINS = (
     'mibura.herokuapp.com',
     '.mibura.com',
 )
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 # REST API
 

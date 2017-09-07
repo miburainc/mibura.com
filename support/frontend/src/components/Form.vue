@@ -18,13 +18,13 @@
 				<!-- Dynamic component to switch between form steps -->
 				<component 
 					:is="currentComponent" 
-					:form="get_formsteps[get_current_step]"
+					:form="getFormSteps[get_current_step]"
 					:buttonAction="buttonAction" />
 				
 				<!--
 				<div v-for="(form, index) in get_formsteps" class="form-group">
 					 <label 
-=======
+
 
 				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]" :clouds="cloud"></component>
 

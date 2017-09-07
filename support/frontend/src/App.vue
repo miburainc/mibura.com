@@ -30,7 +30,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" @click="set_accepted_terms(true)" data-dismiss="modal">Accept</button>
+						<button type="button" class="btn btn-primary" @click="setAcceptedTerms(true)" data-dismiss="modal">Accept</button>
 					</div>
 				</div>
 			</div>
@@ -81,10 +81,10 @@
 						<h4 class="modal-title" id="myModalLabel">Download or Print Estimate</h4>
 					</div>
 					<div class="modal-body">
-						<div v-if="get_estimate_pdf">
+						<div v-if="getEstimatePDF">
 							<h4>Your estimate is ready!</h4>
 							<div id="pdf">
-  								<object width="100%" height="500" type="application/pdf" :data="get_estimate_pdf" id="pdf_content">
+  								<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
     								<p>Insert your error message here, if the PDF cannot be displayed.</p>
   								</object>
 							</div>
@@ -97,8 +97,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<a v-if="get_estimate_pdf" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-success" id="pdf-link" target="_blank" :href="get_estimate_pdf">Download PDF</a>
-						<button v-if="get_estimate_pdf" type="button" class="btn btn-primary" @click="emailQuote">Receive in Email</button>
+						<a v-if="getEstimatePDF" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-success" id="pdf-link" target="_blank" :href="getEstimatePDF">Download PDF</a>
+						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="emailQuote">Receive in Email</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 					</div>
 				</div>
@@ -113,7 +113,7 @@
 						<h4 class="modal-title" id="myModalLabel">Contact Sales</h4>
 					</div>
 					<div class="modal-body text-center">
-						<h3>Cart Reference Code<br>{{get_cart_reference}}</h3>
+						<h3>Cart Reference Code<br>{{getCartReference}}</h3>
 					</div>
 					<div class="modal-footer">
 						<a href="tel:1-800-862-5144" class="btn btn-primary">Call Now <i class="fa fa-phone" aria-hidden="true"></i></a>
@@ -123,7 +123,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-if="get_purchase_success" class="row">
+		<div v-if="getPurchaseSuccess" class="row">
 			<success-screen></success-screen>
 		</div>
 		<div v-else class="row">
@@ -131,7 +131,7 @@
 				<progressbar></progressbar>
 			</div>
 			<div class="col-md-12 col-lg-3" style="padding: 0 5px;">
-				<notification v-for="(notification, index) in get_notifications" :data="notification" :index="index" :key="index"></notification>
+				<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
 			</div>
 			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-6 col-lg-offset-0">
 				<support-form class="pad-10"></support-form>
@@ -159,6 +159,8 @@ import {toJSONLocal} from './scripts/functions'
 
 import {mapActions,mapGetters} from 'vuex'
 
+import axios from './store/api/api-config'
+
 export default {
 	name: 'app',
 	data () {
@@ -175,34 +177,44 @@ export default {
 		Progressbar
 	},
 	computed: {
-		...mapGetters({
-			get_cart_reference: 'getCartReference',
-			get_purchase_success: 'getPurchaseSuccess',
-			get_estimate_pdf: 'getEstimatePDF',
-			get_notifications: 'getNotifications',
-		})
+		...mapGetters([
+			'getCartReference',
+			'getPurchaseSuccess',
+			'getEstimatePDF',
+			'getNotifications',
+			'getAPIRoot',
+		])
 	},
 	methods: {
-		...mapActions({
-			set_category_multipliers: 'setCategoryMultipliers',
-			set_discounts: 'setDiscounts',
-			set_accepted_terms: 'setAcceptedTerms',
-			request_past_quote: 'ServerRequestPastEstimate',
-			send_quote_email: 'sendQuoteEmail',
-		}),
+		...mapActions([
+			'setCategoryMultipliers',
+			'setDiscounts',
+			'setAcceptedTerms',
+			'ServerRequestPastEstimate',
+			'sendQuoteEmail',
+			'setCloudProviders'
+		]),
 		emailQuote() {
-			this.send_quote_email()
+			this.sendQuoteEmail()
 		},
 		requestPastQuote() {
-			this.request_past_quote(this.estimate_id)
+			this.ServerRequestPastEstimate(this.estimate_id)
 		},
 		localDate(date) {
 			return toJSONLocal(date)
 		}
 	},
-	created() {
-		this.set_category_multipliers()
-		this.set_discounts()
+	mounted() {
+		axios.get(this.getAPIRoot + 'cloud')
+			.then((response) => {
+				console.log(response)
+				this.setCloudProviders(response.data.results)
+			})
+			.catch((error) => {
+				console.error(error)
+			})
+		this.setCategoryMultipliers()
+		this.setDiscounts()
 	}
 }
 </script>

@@ -85,13 +85,11 @@ export const form_steps = [
 				label: "I'm a new customer",
 				class: "btn btn-lg btn-outline-success",
 				script: "next"
-
 			},
 			{
 				label: "I'm ready to pay for an existing quote",
 				class: "btn btn-lg btn-outline-default",
 				script: "pay"
-
 			}
 		],
 		title: "",

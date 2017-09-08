@@ -10,8 +10,8 @@
 		We're here to help! Just tell us what items or cloud services you need support for.
 	</h4>
 	<br>
-	<div v-bind:style="form.buttonStyle"> 	
-		<button type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+	<div v-bind:style="form.buttonStyle" class="container-fluid"> 	
+		<button type="button" style="width:85%; display:block; padding: 15px 0px; margin:auto; margin-top: 20px;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 	</div>
 
 </div>

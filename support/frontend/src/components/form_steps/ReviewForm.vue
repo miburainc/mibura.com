@@ -2,10 +2,10 @@
 	
 <div>
 	<div class="container-fluid">
-		<div style="padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+		<div style="padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-12">
 			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
 			<h4>Cart Reference Code: {{ getCartReference }}</h4>
-			<table class="table table-outline">
+			<table class="table table-hover table-outline">
 				<thead>
 					<th>Product</th>
 					<th>Price</th>

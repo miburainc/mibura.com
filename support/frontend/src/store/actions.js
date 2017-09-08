@@ -69,6 +69,9 @@ export default {
   setError({commit}, payload) {
     commit('setError', payload)
   },
+  clearError({commit}, name) {
+    commit('clearError', name)
+  },
   clearErrors({commit}) {
     commit('clearErrors')
   },

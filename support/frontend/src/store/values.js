@@ -15,19 +15,21 @@ export const PLANS = [
 		code: "silver",
 		name: "Silver Pro",
 		cost: 49,
-		color: "#b5b5b5"
+		color: "linear-gradient(90deg,rgba(170,170,170,1) 0%,rgba(213,213,213,1) 100%)"
 	},
 	{
 		code: "gold",
 		name: "Pure Gold",
 		cost: 99,
-		color: "#f4c730"
+		// color: "#f6d579",
+		color: "linear-gradient(90deg,rgba(242,213,134,1) 0%,rgba(227,193,96,1) 100%)"
 	},
 	{
 		code: "black",
 		name: "Carbon Black",
 		cost: 499,
-		color: "#000000"
+		color: '#000000',
+		// color: "repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.12) 2px, transparent 3px, transparent 7px)"
 	},
 ]
 

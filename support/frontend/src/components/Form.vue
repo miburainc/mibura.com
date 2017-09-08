@@ -238,7 +238,6 @@ export default {
 			}
 		},
 		formOnPressEnter() {
-
 			if (this.getCurrentFormStep == this.getFormSteps[this.getCurrentFormStep].data.length - 1) {
 
 			}

@@ -220,14 +220,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_URL = '/media/'
 
-# Cloudinary Image and Video CDN
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-cloudinary.config( 
-    cloud_name = "mibura", 
-    api_key = "615747629617717", 
-    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
-)

@@ -16,7 +16,8 @@
 					:style="{
 						color: p.color == '#000000' ? 'white' : 'black',
 						backgroundColor: p.color,
-						fontSize: '11px'
+						fontSize: '11px',
+
 					}"
 				>
 					{{p.name}}
@@ -30,10 +31,10 @@
 	<div style="color: black;">
 		<h4 class="text-center">Cart</h4>
 		<table id="cart-table-header" class="table table-condensed table-striped">
-			<thead>
-				<th :style="cartHeaderStyle">Product</th>
-				<th class="text-right" :style="cartHeaderStyle">Subtotal</th>
-				<th class="text-right" :style="cartHeaderStyle">Options</th>
+			<thead :style="cartHeaderStyle">
+				<th style="padding-left: 15px">Product</th>
+				<th class="text-right">Subtotal</th>
+				<th class="text-right" style="padding-right: 15px">Options</th>
 			</thead>
 		</table>
 		<div style="max-height:150px;overflow:auto;margin-bottom:0px;">
@@ -360,6 +361,35 @@ export default {
 		
 		cartHeaderStyle() {
 			let plan = this.getPlan(this.getCurrentPlan)
+			if (this.getCurrentPlan == 'black') {
+				return {
+					'background-color': plan.color, 
+					'padding-top': '10px',
+					'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.15) 2px, transparent 3px, transparent 7px)',
+    				'background-size': '6px 8px',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				}
+			}
+			
+			else if (this.getCurrentPlan == 'gold') {
+				return {
+					// 'background-color': plan.color, 
+					'padding-top': '10px',
+					'background-image':
+						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				}
+			}
+			else if (this.getCurrentPlan == 'silver') {
+				return {
+					// 'background-color': plan.color, 
+					'padding-top': '10px',
+					'background': '#aaa',
+					'background-image':
+						'linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6)  39%,rgba(255,255,255,0) 75%)',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				}
+			}
 			return {
 				'padding-top': '10px',
 				'background-color': plan.color, 
@@ -396,6 +426,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+// CSS texture style from codepen.io
+.pattern3 {
+    background-image: repeating-linear-gradient(-26deg, rgba(255,255,255, 0.25), rgba(255,255,255, 0.25) 2px, transparent 3px, transparent 7px);
+    background-size: 6px 8px;
+}
 
 #side_cart {
 	// margin-top: 15%;

@@ -15,7 +15,7 @@ export const PLANS = [
 		code: "silver",
 		name: "Silver Pro",
 		cost: 49,
-		color: "#ebebeb"
+		color: "#b5b5b5"
 	},
 	{
 		code: "gold",

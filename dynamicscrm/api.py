@@ -32,14 +32,17 @@ tokenpost = {
     'grant_type':'password'
 }
 
-tokenres = requests.post(tokenendpoint, data=tokenpost)
 
-accesstoken = ''
- 
-try:  
-    accesstoken = tokenres.json()['access_token']
-except(KeyError):  
-    print('Could not get access token')
+def crm_get_token():
+    tokenres = requests.post(tokenendpoint, data=tokenpost)
+
+    accesstoken = ''
+     
+    try:  
+        accesstoken = tokenres.json()['access_token']
+        return accesstoken
+    except(KeyError):  
+        print('Could not get access token')
 
 
 """
@@ -56,6 +59,7 @@ def createAccount(obj_json):
     OData-Version: 4.0
     Accept: application/json
     """
+    accesstoken = crm_get_token()
 
     obj=dotdict(obj_json)
 
@@ -96,6 +100,8 @@ def createQuote():
     Accept: application/json
     """
 
+    accesstoken = crm_get_token()
+
     if(accesstoken!=''):    
         crmrequestheaders = {
             'Authorization': 'Bearer ' + accesstoken,
@@ -121,6 +127,7 @@ def createQuote():
 """    
 
 def accessAccounts(): 
+    accesstoken = crm_get_token()
     if(accesstoken!=''):  
         crmrequestheaders = {
             'Authorization': 'Bearer ' + accesstoken,
@@ -143,7 +150,8 @@ def accessAccounts():
         except KeyError:
             print('Could not parse CRM results')
 
-def accessQuotes(): 
+def accessQuotes():
+    accesstoken = crm_get_token()
     if(accesstoken!=''):  
         crmrequestheaders = {
             'Authorization': 'Bearer ' + accesstoken,
@@ -172,6 +180,7 @@ def accessQuotes():
 """    
 
 def updateContact(accesstoken, contactid):
+    accesstoken = crm_get_token()
     """
     PATCH [Organization URI]/api/data/v8.2/accounts(00000000-0000-0000-0000-000000000001) HTTP/1.1
     Content-Type: application/json
@@ -208,6 +217,7 @@ def updateContact(accesstoken, contactid):
 """    
 
 def deleteContact():
+    accesstoken = crm_get_token()
     """
     DELETE [Organization URI]/api/data/v8.2/accounts(00000000-0000-0000-0000-000000000001)/description HTTP/1.1
     Content-Type: application/json

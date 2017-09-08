@@ -3,7 +3,7 @@
 <div>
 	<label>{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name]"> {{ getErrors[step.form.name][0] }}</label>
 	<input 
-		:style="{borderColor: (getErrors[step.form.name] ? 'red' : '#8493A8')}"
+		:class="{'error-border': getErrors[step.form.name]}"
 		:type="step.form.type" 
 		:id="step.form.name" 
 		:name="step.form.name" 
@@ -12,6 +12,11 @@
 		:value="get_form_input_value(step)" 
 		@change="(el) => {
 			setFormItem(el.target.value, step) 
+		}"
+		@keyup="(el) => {
+			let s = step.dest.split('.')
+			setCurrentItemProp({prop: s[s.length-1], data: el.target.value})
+			clearErrors()
 		}"
 	>
 </div>
@@ -30,7 +35,8 @@ export default {
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'clearErrors'
 		]),
 		setFormItem (value, obj) {
 			console.log(obj)
@@ -82,5 +88,16 @@ export default {
 </script>
 
 <style lang="scss">
+
+.error-border{
+	border-color: #ff3434!important;
+
+	&:focus {
+		border-color: red!important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    	
+	}
+}
 	
 </style>

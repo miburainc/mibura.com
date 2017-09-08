@@ -3,13 +3,15 @@
 <div>
 	<div class="form-group"> 
 
-		<label>Product Name</label>
+		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[form.data[0].form.name][0] }}</label>
 		<autocomplete
+			:style="{borderColor: (getErrors[form.data[0].form.name] ? 'red' : '#8493A8')}"
 			:url="getAPIRoot + 'productcomplete'"
 			data-root="results"
 			label="brand"
 			anchor="model"
 			param="s"
+			:class="{'autocomplete-border': getErrors[form.data[0].form.name]}"
 			class-name="form-input"
 			:custom-params="{format: 'json'}"
 			:name="form.data[0].form.name"
@@ -21,10 +23,6 @@
 			:min="2"
 			:onInput="resetVerified">
 		</autocomplete>
-		<div class="text-red" v-if="getErrors[form.data[0].form.name]">
-			{{ getErrors[form.data[0].form.name][0] }}
-		</div>
-
 		<!-- <autocomplete
             v-if=“data.src && get_current_step==step_names.brand”
             :url=“getAPIRoot + ‘productcomplete’”
@@ -164,6 +162,17 @@ export default {
 </script>
 
 <style lang="scss">
+
+.autocomplete-border > input {
+	border-color: #ff3434;
+
+	&:focus {
+		border-color: red;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    	outline: none;
+	}
+}
 
 .btn-outline-info {
 	padding: 10px 20px;

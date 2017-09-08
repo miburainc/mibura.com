@@ -21,7 +21,7 @@ export const PLANS = [
 		code: "gold",
 		name: "Pure Gold",
 		cost: 99,
-		color: "#f4c730"
+		color: "rgba(225,190,77,1)"
 	},
 	{
 		code: "black",

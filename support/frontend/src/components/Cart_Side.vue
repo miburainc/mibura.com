@@ -10,18 +10,19 @@
 				<button 
 					type="button" 
 					class="btn-plan text-center" 
-					v-for="(p, index) in getPlans" 
+					v-for="(p, index) in getPlans"
 					:value="p.code"
 					@click="setPlan"
 					:style="{
 						color: p.color == '#000000' ? 'white' : 'black',
-						backgroundColor: p.color,
+						background: p.code == getCurrentPlan ? 'transparent' : p.color,
 						fontSize: '11px',
 
 					}"
 				>
 					{{p.name}}
 				</button>
+					
 			</div>
 			
 		</div>
@@ -358,14 +359,22 @@ export default {
 		textColorPlan() {
 			return {'color': this.getCurrentPlan == 'black' ? 'white' : 'black' }
 		},
+
+		cartPlanBlackBackground() {
+			return {
+				'background-color': '#000000', 
+				'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.15) 2px, transparent 3px, transparent 7px)',
+				'background-size': '6px 8px',
+			}
+		},
 		
 		cartHeaderStyle() {
 			let plan = this.getPlan(this.getCurrentPlan)
 			if (this.getCurrentPlan == 'black') {
 				return {
-					'background-color': plan.color, 
 					'padding-top': '10px',
-					'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.15) 2px, transparent 3px, transparent 7px)',
+					'background-color': '#000000', 
+					'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.12) 2px, transparent 3px, transparent 7px)',
     				'background-size': '6px 8px',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
 				}
@@ -376,7 +385,7 @@ export default {
 					// 'background-color': plan.color, 
 					'padding-top': '10px',
 					'background-image':
-						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
+						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  20%,rgba(225,190,77,1) 75%)',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
 				}
 			}

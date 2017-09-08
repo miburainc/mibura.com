@@ -23,20 +23,24 @@
 				</div>
 			</div>
 			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10">
+			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
 
-				<label>Name</label>
-				<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Name"/>
-				<label>Phone</label>
-				<input class="form-control" style="height: 45px;" type="tel" name="bank-phone"  placeholder="Phone"/>
+				<label>Company Name</label>
+				<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Company Name"/>
+				<label>Phone Number</label>
+				<input class="form-control" style="height: 45px;" type="tel" name="bank-phone"  placeholder="Phone Number"/>
 
-				<div class="container-fluid">
+				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px;">
 					<div class="row">
-						<div class="col-sm-6">
-
-						<button v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-success payment-button">Pay instantly with online bank account</button>
+						<div class="col-sm-5" style=" text-align:center;">
+							<button style="margin: 30px 0px 0px 18%; padding: 30px" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">Login to <br> bank account</button>
 						</div>
-						<div class="col-sm-6">
+						<div class="col-sm-2 text-center">
+							<div class="line"></div>
+							<div class="orText">or</div>
+							<div class="line"></div>
+						</div>
+						<div class="col-sm-5">
 							<label>Account Number</label>
 							<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Account Number"/>
 							<label>Routing Number</label>
@@ -46,7 +50,7 @@
 				</div>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
+		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
 			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 			
 		</div>
@@ -156,6 +160,16 @@ export default {
 
 <style lang="scss" scoped>
 
+div.line{
+	width: 0px;
+	height: 52px;
+	position:relative;
+
+	margin: 10px auto;
+	border-right: 1px solid #8493A8;
+	
+	
+}
 
 .payment-box {
 	border-radius: 2px;

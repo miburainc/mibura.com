@@ -229,12 +229,12 @@ h1, h2, h3, h4 {
 	margin: 0;
 }
 
-.btn-2, .btn-3, .btn-4 {
+.btn-2, .btn-3, .btn-4 .btn-3-round .btn-2-round {
 	width: 100%;
 }
 
 .btn-4 .btn {
-	width: 25%;
+	width: 24.95%;
 } 
 
 .btn-3 button.btn {
@@ -244,10 +244,22 @@ h1, h2, h3, h4 {
 	width: 33.33%;
 } 
 
+.btn-3-round button.btn {
+	margin: 0;
+	margin-left: 0!important;
+	width: 33.33%;
+}
+
 .btn-2 .btn {
 	margin: 0;
 	margin-left: 0!important;
 	border-radius: 0;
+	width: 50%!important;
+}
+
+.btn-2-round .btn {
+	margin: 0;
+	margin-left: 0!important;
 	width: 50%!important;
 }
 

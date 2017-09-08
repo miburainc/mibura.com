@@ -1,0 +1,61 @@
+{% load static %}
+
+<div id="compare-table">
+	<table class="table table-striped table-hover">
+		<thead>
+			<th v-for="th in values.fields">[{ th }]
+		</thead>
+		<tbody>
+			<tr v-for="(tr, index) in values.data">
+				<td v-for="(icon, index) in tr">
+					<span v-if="index==0">[{icon}]</span>
+					<i v-else v-if="icon!=='cloudserver'" :class="['fa', 'fa-'+icon]" aria-hidden="true"></i>
+					<span v-else>
+						<i class="fa fa-cloud" aria-hidden="true"></i> <i class="fa fa-server" aria-hidden="true"></i>
+					</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<script type="text/javascript" src="{% static 'js/vue.min.js' %}"></script>
+
+<script type="text/javascript">
+var values = {
+	"fields": ["Service", "Mibura Smart Support", "Microsoft Premium", "AWS Premier", "Dell Pro Support", "EMC Premium", "Supermicro Platinum", "Vmware Mission Critical"],
+	"data": [
+		["Datacenter Hardware Support","server","times","cloud","server","server","times","server"  ],
+		["Cloud Instance Support","cloud","cloud","cloud","times","times","times","times"  ],
+		["Dedicated Technical Manager 24x7x365","cloudserver","cloud","cloud","server","server","server","server"  ],
+		["Instant Replacement Parts","server","times","times","server","server","server","server"  ],
+		["Keep your Harddrives","server","times","times","times","times","times","times"  ],
+		["Certified Engineers Hardware, Software & Cloud","cloudserver","times","cloud","server","server","times","server"  ],
+		["Backup & Disaster Recovery","cloudserver", "cloud","cloud","server","server","server","server"  ],
+		["Onsite Support & Maintenance","cloudserver","cloud","cloud","server","server","server","server"  ],
+		["Dedicated Engineers/Architects/Support Team","cloudserver","times","cloud","server","times","server","server"  ],
+		["Custom Deployment Services","cloudserver","times","times","times","times","times","times"  ],
+		["Vendor Authorized Software/Firmware Updates","cloudserver","times","cloud","server","server","times","server"  ],
+		["Virtualization Platform","cloudserver","times","cloud","times","times","times","times"  ],
+		["Pro-Active Maintenance, Logs, Reporting","cloudserver","times","cloud","server","server","times","server"  ],
+		["Data and Workload Migration <->","cloudserver","times","cloud","times","times","times","server"  ],
+		["Multiple Environment Management","cloudserver","times","times","times","times","times","times"  ],
+		["Federal Security Clearance Team","cloudserver","times","times","times","times","times","times"  ],
+		["Dedicated Security team","cloudserver","times","times","times","times","times","times"  ],
+		["Dedicated Compliance Team","cloudserver","times","times","times","times","times","times"  ],
+		["Root Cause Analysis","cloudserver","times","cloud","server","times","times","server"  ]
+	]
+}
+
+var vm = new Vue({
+	el: '#compare-table',
+	delimiters: ['[{', '}]'],
+	data: function() {
+		return {
+			values: values,
+		}
+	}
+})
+
+</script>
+

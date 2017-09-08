@@ -1,0 +1,26 @@
+<!--?xml version="1.0" encoding="utf-8"?-->  
+<request method="client.create">  
+  <client>  
+    <first_name></first_name>  
+    <last_name></last_name>  
+    <organization></organization>  
+    <email></email>  
+
+    <!-- (Optional) -->  
+    <work_phone></work_phone>  
+
+    <!-- See language.list for codes. (Optional) -->  
+    <language>en</language>  
+    <!-- (Optional) -->  
+    <currency_code>USD</currency_code>  
+
+    <!-- Primary address (All optional) -->  
+    <p_street1></p_street1>  
+    <p_street2></p_street2>  
+    <p_city></p_city>  
+    <p_state></p_state>  
+    <p_country></p_country>  
+    <p_code></p_code>  
+
+  </client>  
+</request>  

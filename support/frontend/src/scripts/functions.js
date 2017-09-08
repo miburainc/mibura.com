@@ -19,15 +19,85 @@ export function toJSONLocal (date) {
     return local.toJSON().slice(0, 10);
 }
 
+export function ValidateFormStep(fieldStep, fieldValue){
+	
+	console.log("validate step")
+
+	let errors = {
+		valid: true,
+		errors: {}
+	}
+	console.log(fieldValue)
+
+	if (fieldStep.required) {
+		errors.errors[fieldStep.form.name] = []
+
+		if (fieldValue == undefined || fieldValue == "") {
+			errors["valid"] = false
+			errors.errors[fieldStep.form.name].push("This field is required.")
+		}
+		else if (fieldStep.validate) {
+			forEachValue(fieldStep.validate, (value, key) => {
+				switch(key) {
+					case "type":
+						let valid = false;
+						switch (value) {
+							case "text":
+								valid = /^\w+( \w+)*$/.test(fieldValue)
+								break;
+							case "number":
+								valid = /^\d+$/.test(fieldValue);
+								break;
+							case "email":
+								valid = validateEmail(fieldValue)
+								break;
+							case "phone":
+								valid = validatePhone(fieldValue)
+								break;
+						}
+						if (!valid) {
+							errors["valid"] = false
+							errors.errors[fieldStep.form.name].push("The contents of this form field are invalid.")
+						}
+						break;
+					case "min":
+						if (fieldValue.length >= parseInt(value)) {
+							valid = true
+						}
+						else {
+							errors["valid"] = false
+							errors.errors[fieldStep.form.name].push("Minimum length required is " + value + " characters.")
+							valid = false
+						}
+						break;
+					case "max":
+						if (fieldValue.length <= parseInt(value)) {
+							valid = true
+						}
+						else {
+							errors["valid"] = false
+							errors.errors[fieldStep.form.name].push("Maximum length required is " + value + " characters.")
+							valid = false
+						}
+						break;
+				}
+			})
+		}
+	}
+
+	console.log(errors)
+
+	return errors
+}
+
+
 export function ValidateFormSteps(current_form, form_steps) {
 	let errors = {
 		valid: true,
 		errors: {}
 	}
-	console.log(form_steps.length)
 
 	for (let i=0; i<form_steps.length; i++) {
-		console.log(form_steps[i].form.name)
 		let val = document.getElementById(form_steps[i].form.name).value
 		let item_val = current_form[form_steps[i].form.name]
 		let current_form_item = item_val ? item_val : val

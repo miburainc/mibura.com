@@ -385,7 +385,7 @@ export default {
 					// 'background-color': plan.color, 
 					'padding-top': '10px',
 					'background-image':
-						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  20%,rgba(225,190,77,1) 75%)',
+						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
 				}
 			}

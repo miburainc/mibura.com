@@ -14,6 +14,7 @@ const state = {
 	current_form_step: 0,
 	current_cloud_selection: 1,
 	client_info: {},
+	payment_info: {},
 	payment_token: "",
 	notifications: [],
 	cloud_providers: [],
@@ -34,6 +35,9 @@ const mutations = {
 	},
 	[TYPE.SET_CURRENT_FORM_STEP]: (state, value) => {
 		state.current_form_step = value
+	},
+	[TYPE.SET_PAYMENT_PROP]: (state, value) => {
+		Vue.set(state.payment_info, payload.prop, payload.data)
 	},
 	[TYPE.CLEAR_CURRENT_FORM_STEP]: (state) => {
 		Vue.set(state, "current_item", { verified: false })
@@ -97,6 +101,9 @@ const actions = {
 	setClientProp({commit}, payload) {
 		commit(TYPE.SET_CLIENT_PROP, payload)
 	},
+	setPaymentProp({commit}, payload) {
+		commit(TYPE.SET_PAYMENT_PROP, payload)
+	},
 	setPaymentToken({commit}, value) {
 		commit(TYPE.SET_PAYMENT_TOKEN, value)
 	},
@@ -120,7 +127,8 @@ const getters = {
 	getCurrentItem: state => state.current_item,
 	getCurrentItemProp: state => prop => state.current_item[prop],
 	getClientInfo: state => state.client_info,
-	
+	getPaymentInfo: state => state.payment_info,
+	getPaymentInfoProp: state => prop => state.payment_info[prop],	
 	getCurrentCloudSelection: state => state.current_cloud_selection,
 	getNotifications: state => state.notifications,
 }

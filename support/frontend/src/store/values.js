@@ -424,7 +424,7 @@ export const form_steps = [
 			},
 		],
 		title: "Review",
-		text: "review",
+		text: "",
 		error: "",
 		step: 3,
 		buttonStyle: ""
@@ -434,7 +434,7 @@ export const form_steps = [
 			{
 				placeholder: "Name on card",
 				src: "",
-				dest: "payment.name",
+				dest: "payment.cardname",
 				required: true,
 				validate: {
 					type: "text",
@@ -442,14 +442,14 @@ export const form_steps = [
 				},
 				form: {
 					type: "text",
-					name: "cardholder-name",
+					name: "cardname",
 					class: "field",
 				}
 			},
 			{
 				placeholder: "Cardholder Phone",
 				src: "",
-				dest: "payment.phone",
+				dest: "payment.cardphone",
 				required: true,
 				validate: {
 					type: "phone",
@@ -457,7 +457,37 @@ export const form_steps = [
 				},
 				form: {
 					type: "tel",
-					name: "ccphone",
+					name: "cardphone",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Company Name",
+				src: "",
+				dest: "payment.bankname",
+				required: true,
+				validate: {
+					type: "text",
+					min: 3,
+				},
+				form: {
+					type: "text",
+					name: "bankname",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Phone Number",
+				src: "",
+				dest: "payment.bankphone",
+				required: true,
+				validate: {
+					type: "phone",
+					min: 6,
+				},
+				form: {
+					type: "tel",
+					name: "bankphone",
 					class: "field",
 				}
 			}			

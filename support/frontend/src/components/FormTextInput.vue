@@ -14,9 +14,7 @@
 			setFormItem(el.target.value, step) 
 		}"
 		@keyup="(el) => {
-			let s = step.dest.split('.')
-			setCurrentItemProp({prop: s[s.length-1], data: el.target.value})
-			clearErrors()
+			ValidateFormStepFunction(step, el.target.value)
 		}"
 	>
 </div>
@@ -24,6 +22,8 @@
 </template>
 
 <script>
+
+import { ValidateFormStep } from '../scripts/functions'
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -36,8 +36,29 @@ export default {
 		...mapActions([
 			'setCurrentItemProp',
 			'setClientProp',
-			'clearErrors'
+			'clearErrors',
+			'clearError'
 		]),
+		ValidateFormStepFunction(step, value){
+			let s = step.dest.split('.')
+			
+			if(s[0] == 'cart'){
+				this.setCurrentItemProp({prop: s[s.length-1], data: value})
+			}
+			else if(s[0] == 'client'){
+				this.setClientProp({prop: s[s.length-1], data: value})
+			}
+			else if(s[0] == 'payment'){
+				this.setPaymentProp({prop: s[s.length-1], data: value})
+			}
+			
+
+			let errors = ValidateFormStep(step, value)
+
+			if(errors['valid'] == true){
+				this.clearError(step.form.name)
+			}
+		},
 		setFormItem (value, obj) {
 			console.log(obj)
 			let dest_array = obj.dest.split('.')
@@ -79,6 +100,7 @@ export default {
 			'getClientInfo',
 			'getCurrentItemProp',
 			'getErrors',
+			'getCurrentItem'
 
 		])
 		

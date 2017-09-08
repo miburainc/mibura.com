@@ -19,9 +19,13 @@
 			:init-value="getCurrentItemProp(form.data[0].form.name)"
 			:process="processAjaxResult"
 			:placeholder="form.data[0].placeholder"
-			:on-select="(obj) => { setFormItemAutoselect(obj, form.data[0].form.name);}"
+			:on-select="(obj) => {setFormItemAutoselect(obj, form.data[0].form.name);}"
 			:min="2"
-			:onInput="resetVerified">
+			:onInput="(el) => {
+				resetVerified()
+				ValidateFormStepFunction(form.data[0], el)
+
+			}">
 		</autocomplete>
 		<!-- <autocomplete
             v-if=“data.src && get_current_step==step_names.brand”
@@ -73,6 +77,8 @@
 
 import {mapGetters, mapActions} from 'vuex'
 
+import { ValidateFormStep } from '../../scripts/functions'
+
 import Autocomplete from 'vue2-autocomplete-js';
 import FormTextInput from '../FormTextInput.vue'
 
@@ -88,10 +94,23 @@ export default {
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'clearError'
 		]),
 		processAjaxResult(json) {
 			return json['results']
+		},
+		test(el){
+			console.log(el)
+		},
+		ValidateFormStepFunction(step, value){
+			let s = step.dest.split('.')
+			this.setCurrentItemProp({prop: s[s.length-1], data: value})
+			let errors = ValidateFormStep(step, value)
+
+			if(errors['valid'] == true){
+				this.clearError(step.form.name)
+			}
 		},
 		setFormItemAutoselect (obj, name) {
 			console.log("Name: " + name)

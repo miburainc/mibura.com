@@ -10,7 +10,7 @@ export default {
 		Vue.set(state, 'errors', {})
 	},
 	clearError(state, name) {
-		Vue.set(state.errors, name, [])
+		Vue.set(state.errors, name, null)
 	},
 	[TYPE.SET_STRIPE_PROP]: (state, payload) => {
 		Vue.set(state.stripe, payload.prop, payload.value)

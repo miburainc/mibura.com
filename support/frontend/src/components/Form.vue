@@ -449,7 +449,7 @@ export default {
 			let dest_array = obj.dest.split('.')
 			let val = ""
 			if (dest_array[0] == "cart") {
-				val =  this.getCurrentItemProp(dest_array[2])
+				val =  this.Prop(dest_array[2])
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {

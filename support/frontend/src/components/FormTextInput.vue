@@ -58,12 +58,7 @@ export default {
 				val =  this.getCurrentItemProp(dest_array[2])
 			}
 			else if (dest_array[0] == "client") {
-				if (dest_array[1] == "address") {
-					val = this.getClientInfo[dest_array[2]]
-				}
-				else {
-					val =  this.getClientInfo[dest_array[1]]
-				}
+				val = this.getClientInfo[dest_array[dest_array.length-1]]
 			}
 			return val
 		}

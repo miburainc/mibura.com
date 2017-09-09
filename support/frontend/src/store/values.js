@@ -490,7 +490,37 @@ export const form_steps = [
 					name: "bankphone",
 					class: "field",
 				}
-			}			
+			},
+			{
+				placeholder: "Account Number",
+				src: "",
+				dest: "payment.accountnumber",
+				required: true,
+				validate: {
+					type: "number",
+					min: 6,
+				},
+				form: {
+					type: "number",
+					name: "accountnumber",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Routing Number",
+				src: "",
+				dest: "payment.routingnumber",
+				required: true,
+				validate: {
+					type: "number",
+					min: 6,
+				},
+				form: {
+					type: "number",
+					name: "routingnumber",
+					class: "field",
+				}
+			}		
 		],
 		buttons: [
 			{

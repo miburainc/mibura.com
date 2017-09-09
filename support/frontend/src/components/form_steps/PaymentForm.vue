@@ -1,16 +1,16 @@
 <template>
 	<div id="stripe-payment-form">
 		<ul class="nav nav-tabs">
-			<li role="presentation" :class="{active: payment_type=='card'}"><a href="#" @click="payment_type='card'">Credit Card</a></li>
-			<li role="presentation" :class="{active: payment_type=='ach'}"><a href="#" @click="payment_type='ach'">Bank ACH</a></li>
+			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
+			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 		</ul>
 		<div class="payment-box">
 
 			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10">
-				<label>Name on Card</label>
-				<input class="form-control" style="height: 45px;" type="text" name="cardholder-name"  placeholder="Name on card"/>
-				<label>Cardholder Phone</label>
-				<input class="form-control" style="height: 45px;" type="tel" name="ccphone"  placeholder="Cardholder Phone"/>
+
+				<form-text-input :step="form.data[0]" id="cardName"></form-text-input>
+				<form-text-input :step="form.data[1]" id="cardPhone"></form-text-input>
+
 				<label>Card Info</label>
 				<div id="card-element" class="field"></div>
 				<div class="outcome">
@@ -25,11 +25,9 @@
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
 
-				<label>Company Name</label>
-				<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Company Name"/>
-				<label>Phone Number</label>
-				<input class="form-control" style="height: 45px;" type="tel" name="bank-phone"  placeholder="Phone Number"/>
-
+				<form-text-input :step="form.data[2]" id="bankName"></form-text-input>
+				<form-text-input :step="form.data[3]" id="bankPhone"></form-text-input>
+				
 				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px;">
 					<div class="row">
 						<div class="col-sm-5" style=" text-align:center;">
@@ -41,17 +39,17 @@
 							<div class="line"></div>
 						</div>
 						<div class="col-sm-5">
-							<label>Account Number</label>
-							<input class="form-control" style="height: 45px;" type="text" name="bank-name"  placeholder="Account Number"/>
-							<label>Routing Number</label>
-							<input class="form-control" style="height: 45px;" type="tel" name="routing-number"  placeholder="Routing Number"/>
+							<form-text-input  id="accountNumber" style="margin-top:17px":step="form.data[4]"></form-text-input>
+							<form-text-input  id="routingNumber" :step="form.data[5]"></form-text-input>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
-			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle" class="btn-2-round" > 	
+
+			<button v-on:keypress.enter.prevent :class="form.buttons[0].class" type="button"
+			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button><button v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" @click="completePayment">{{form.buttons[1].label}}</button>
 			
 		</div>
 	</div>
@@ -60,8 +58,13 @@
 <script>
 
 import {mapActions} from 'vuex'
+import FormTextInput from '../FormTextInput.vue'
+import {ValidateFormStep} from '../../scripts/functions.js'
 
 export default {
+	components: {
+		'form-text-input': FormTextInput
+	},
 	data() {
 		return {
 			payment_type: 'card',
@@ -72,10 +75,40 @@ export default {
 		...mapActions([
 			'setPaymentToken',
 			'setStripeProp',
-			'plaidSendCredentials'
+			'plaidSendCredentials',
+			'clearErrors'
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
+		},
+		switchTabs(newTab){
+			this.payment_type = newTab
+		},
+		completePayment(){
+
+			if(this.payment_type == 'card'){
+				let cardName = document.getElementById("cardname").value
+				//error = ValidateFormStep(this.form[0], cardName)
+				console.log(cardName)
+				//console.log(error)
+				let cardPhone = document.getElementById("cardphone").value
+				//error = ValidateFormStep(this.form[1], cardPhone)
+				console.log(cardPhone)
+				//console.log(error)
+			}
+			else if(this.payment_type == 'ach'){
+				let bankName = document.getElementById("bankname").value
+				let bankPhone = document.getElementById("bankphone").value
+				let accountNumber = document.getElementById("accountnumber").value
+				let routingNumber = document.getElementById("routingnumber").value
+				console.log(bankName)
+				console.log(bankPhone)
+				console.log(accountNumber)
+				console.log(routingNumber)
+			}
+			
+			
+
 		}
 	},
 	mounted() {

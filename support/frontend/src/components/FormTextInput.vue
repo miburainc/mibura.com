@@ -35,6 +35,7 @@ export default {
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
+			'setPaymentProp',
 			'setClientProp',
 			'clearErrors',
 			'clearError'
@@ -49,6 +50,9 @@ export default {
 				this.setClientProp({prop: s[s.length-1], data: value})
 			}
 			else if(s[0] == 'payment'){
+				console.log("payment error check")
+				console.log({prop: s[s.length-1], data: value})
+				console.log(value)
 				this.setPaymentProp({prop: s[s.length-1], data: value})
 			}
 			
@@ -75,7 +79,7 @@ export default {
 				}
 			}
 			else if (dest_array[0] == "payment") {
-				this.setClientProp({prop: dest_array[1], data: value})
+				this.setPaymentProp({prop: dest_array[dest_array.length-1], data: value})
 			}
 		},
 		get_form_input_value(obj) {
@@ -87,6 +91,9 @@ export default {
 			else if (dest_array[0] == "client") {
 				val = this.getClientInfo[dest_array[dest_array.length-1]]
 			}
+			else if (dest_array[0] == "payment") {
+				val = this.getPaymentInfo[dest_array[dest_array.length-1]]
+			}
 			return val
 		}
 	},
@@ -95,7 +102,8 @@ export default {
 			'getClientInfo',
 			'getCurrentItemProp',
 			'getErrors',
-			'getCurrentItem'
+			'getCurrentItem',
+			'getPaymentInfo'
 
 		])
 		

@@ -36,7 +36,7 @@ const mutations = {
 	[TYPE.SET_CURRENT_FORM_STEP]: (state, value) => {
 		state.current_form_step = value
 	},
-	[TYPE.SET_PAYMENT_PROP]: (state, value) => {
+	[TYPE.SET_PAYMENT_PROP]: (state, payload) => {
 		Vue.set(state.payment_info, payload.prop, payload.data)
 	},
 	[TYPE.CLEAR_CURRENT_FORM_STEP]: (state) => {

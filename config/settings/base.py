@@ -9,12 +9,14 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
 import os
 import environ
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = environ.Path(__file__) - 3  # (mibura/config/settings/base.py - 3 = mibura/)
+
+# Load operating system environment variables and then prepare to use them
+env = environ.Env()
 
 
 # Environment variables
@@ -32,13 +34,6 @@ def get_env_variable(var_name):
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_env_variable("SECRET_KEY")
-
-ALLOWED_HOSTS = ['*']
-
-
-
 
 # Application definition
 
@@ -50,11 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django.contrib.sitemaps',
+
     # Libraries
     'rest_framework',
     'pinax.stripe',
     'cloudinary',
     'corsheaders',
+    'crispy_forms',
+    'storages',
 
     # Apps
     'bootcamp',
@@ -62,23 +61,42 @@ INSTALLED_APPS = [
     'datacenter',
     'staffing',
     'support',
+    'freshbooks',
+    'dynamicscrm',
 ]
 
 # CORS
 
+CSRF_HEADER_NAME = "HTTP-X-CSRFToken"
+
 CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    'localhost:8080'
-    '127.0.0.1:8080',
+    'localhost',
+    '127.0.0.1',
+    'mibura.herokuapp.com',
+    '.mibura.com',
+)
+
+
+CSRF_TRUSTED_ORIGINS = (
+    'localhost',
+    '127.0.0.1',
+    'mibura.herokuapp.com',
+    '.mibura.com',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
-
-CSRF_TRUSTED_ORIGINS = (
-    'localhost:8000',
-    'localhost:8080',
-    '127.0.0.1'
-)
 
 # REST API
 
@@ -123,7 +141,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -144,12 +162,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# FORMS
+
+TASK_UPLOAD_FILE_TYPES = [
+    'application/x-iwork-pages-sffpages',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.oasis.opendocument.text',
+    'application/pdf',
+    'application/rtf'
+]
+TASK_UPLOAD_FILE_MAX_SIZE = 5242880
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -158,17 +188,30 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = "/var/www/mibura.com/static/"
+# STATIC FILE CONFIGURATION
+# ------------------------------------------------------------------------------
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 
+print(STATIC_ROOT)
+
+# See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = '/static/'
 
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    '/var/www/static/',
+    str(ROOT_DIR.path('static')),
+    str(ROOT_DIR.path('support/frontend/dist')),
 ]
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+
 
 # Media Files
 
@@ -177,14 +220,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MEDIA_URL = '/media/'
 
-# Cloudinary Image and Video CDN
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-cloudinary.config( 
-  cloud_name = "mibura", 
-  api_key = "615747629617717", 
-  api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
-)

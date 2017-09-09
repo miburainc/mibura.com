@@ -1,0 +1,8 @@
+User-Agent: *
+Disallow: 
+Allow: /
+Allow: /support
+Disallow: /company
+Allow: /datacenter
+Allow: /cloud
+Allow: /staffing

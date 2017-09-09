@@ -9,6 +9,9 @@ ___
 Pull repository into a local folder
 Create a virtual environment with python 3.5.x
 
+Start by requesting the local.py settings file from Brady Endres or Nick Areias.
+You will need to place the local.py settings file in the directory config/settings/ alongside base.py and production.py.
+
 *Must use a version of python above 3.5*
 
 ```
@@ -39,10 +42,7 @@ Import Database data
 *Run the following commands in order as shown to prevent errors*
 
 ```
-python manage.py loaddata support/data/Cloud.txt
-python manage.py loaddata support/data/ProductCategory.txt
-python manage.py loaddata support/data/Plan.txt
-python manage.py loaddata support/data/Product.txt
+bash scripts/loaddata.sh
 ```
 
 *optional*

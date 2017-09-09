@@ -9,6 +9,11 @@
 	<title>{% block title %}{% endblock %} Mibura</title>
 
 	<link rel="shortcut icon" href="{% static 'images/icons/micon.ico' %}" />
+	<script src="https://js.stripe.com/v3/"></script>
+	<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -20,28 +25,43 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-
-	<style type="text/css">
-		body {
-			font-family: 'Roboto Condensed', sans-serif;
-			font-weight: 100; 
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/tippy.css' %}">
 
 	{% block css %}{% endblock %}
 </head>
 <body>
 
+{% if not DEBUG %}
+<script type="text/javascript">
+	window.SET_URL_ROOT = '/';
+	window.SET_API_ROOT = '/support/api/';
+</script>
+{% else %}
+<!-- DEBUG: URL ROOT LOCALHOST -->
+{% endif %}
+
 {% include 'templatetags/navigation.html' %}
 
 {% block content %}{% endblock %}
 
+<!-- Intercom -->
+{% include 'templatetags/intercom.html' %}
+
 <!-- Javascript -->
 <script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-  crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	crossorigin="anonymous"></script>
+<script 
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<script 
+	src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+
+<script src="{% static 'js/tippy.min.js' %}"></script>
+
+
 {% block javascript %}{% endblock %}
 
 </body>

@@ -1,16 +1,348 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 Datacenter
 {% endblock %}
 
+
+
+{% block css %}
+<style type="text/css">
+	#datacenter-header {
+		color: #FFFFFF;
+		padding-top: 50px;
+		margin-top: -50px;
+		min-height: 500px;
+		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.75) ), url({% static 'images/backgrounds/goldengate.jpg' %});
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	@media (max-width: 767px) {
+		#datacenter-header {
+			padding-bottom: 50px;
+		}
+		.col-xs-12 {
+			margin-bottom: 25px;
+		}
+	}
+	#datacenter-section-image {
+		background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.65) ), url({% static 'images/backgrounds/datacenter.jpg' %});
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+	}
+	.ui.image {
+		filter: brightness(0%);
+	}
+	.infrastructure-content-body {
+		height: 170px;
+	}
+
+	.intel-panel-body {
+		height: 120px;
+	}
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="container">
+<div id="datacenter-header" class="container-fluid">
 	<div class="row">
-		<div class="col-md-3">
-			Datacenter
+		<div style="margin-top: 100px;" class="col-xs-12 text-center">
+			<h1>How Far Are You Into Digital Tranformation?</h1>
+			<h4>The Modern Data Center Provides Cost-Effective Scalability, Flexibility, and Agility</h4>
+			<h4>Have you started?</h4>
 		</div>		
+	</div>
+</div>
+
+<div class="container-fluid pad-top-bottom gray-background text-white">
+	<div class="row">
+		<div style="margin-bottom: 50px;" class="col-md-8 col-md-offset-2 text-center">
+			<h4>The volume of data, services, and connected devices is growing at an exponential rate. In order to service this growth, companies and IT departments must undergo a significant transformation to develop smarter products and to deliver superior experiences for their customers. They must do all of this, while simultaneously lowering costs and improving performance of their older applications.</h4>
+			<a href="https://www-ssl.intel.com/content/www/us/en/cloud-computing/enterprise-cloud.html" target="_blank">The Modern Data Center Marketplace Starts With Intel: Learn More</a>
+		</div>
+		<div class="col-md-4 text-center">
+			<span style="font-size: 4em;color: #ffd220">#1</span>
+			<br>
+			<strong>IN STORAGE</strong>
+		</div>
+		<div class="col-md-4 text-center">
+			<span style="font-size: 4em;color: #ffd220">#1</span>
+			<br>
+			<strong>IN CONVERGED SYSTEMS</strong>
+		</div>
+		<div class="col-md-4 text-center">
+			<span style="font-size: 4em;color: #ffd220">#1</span>
+			<br>
+			<strong>IN CLOUD INFRASTRUCTURE</strong>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-bronze.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">BRONZE</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Bronze processors are performance optimized for small business and basic storage servers.
+			</p>
+			<p>
+				CPU cores: Up to 8<br>
+				Socket configurations: Up to 2<br>
+				Memory: Up to 1.5 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/bronze-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Bronze Processor</a>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-silver.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">SILVER</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Silver processors offer the hardware-enhanced performance and security required for data center compute, network, and storage optimized for midsized and growing IT organizations.
+			</p>
+			<p>
+				CPU cores: Up to 12<br>
+				Socket configurations: Up to 2<br>
+				Memory: Up to 1.5 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/silver-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Silver Processor</a>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-gold.jpg' %}" class="img-responsive">
+			<h4 style="margin-top: 5px;">GOLD</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Gold processors offer high performance, advanced reliability, and hardware-enhanced security optimized for demanding data center, hybrid-cloud compute, network, and storage workloads.
+			</p>
+			<p>
+				CPU cores: Up to 22<br>
+				Socket configurations: Up to 4<br>
+				Memory: Up to 6 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/gold-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Gold Processor</a>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<img src="{% static 'images/icons/processors/intel-platinum.jpg' %}" class="img-responsive">        
+			<h4 style="margin-top: 5px;">PLATINUM</h4>
+			<p class="intel-panel-body" style="text-align: left; font-size: 1em;">
+				Intel&reg; Xeon&reg; Platinum processors offer the industry’s best performance for mission-critical and hybrid cloud workloads, real-time analytics, machine learning, and artificial intelligence, with monumental leaps in I/O, memory, storage, and network technologies.
+			</p>
+			<p>
+				CPU cores: Up to 28<br>
+				Socket configurations: 8+<br>
+				Memory: Up to 12 TB
+			</p>
+			<br>
+			<a href="https://www-ssl.intel.com/content/www/us/en/products/processors/xeon/scalable/platinum-processors.html" target="_blank" style="text-align: left;">Learn more about the Intel&reg; Xeon&reg; Platinum Processor</a>
+		</div>
+	</div>
+</div>
+</div>
+<div class="container-fluid pad-top-bottom ltgray-background">
+<div class="container">
+	<div style="margin-bottom: 50px" class="row text-center">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h3>Optimize to Innovate</h3>
+			<h4>Along with running large enterprise applications, companies need to continuously develop the mobile applications and embedded software that will transform their products and services, while simultanously lowering costs and improving performance of their older applications. The only way to achieve these goals – to innovate and to optimize – is to transform the technology we use to deliver IT services</h4>
+		</div>
+	</div>
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-4">
+			<img class="ui image" style="max-height: 50px;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-modernize.png" alt="Modernize">
+			<br>
+			<h4>Modernize</h4>
+			<p>Your IT Infrastructure</p>
+			<p>The first step to become a Modern Data Center is to MODERNIZE the infrastructure components on which IT is built, leveraging converged infrastructure platforms.</p>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<img style="max-height: 50px;" class="ui centered tiny image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-automate.png" alt="Modernize">
+			<br>
+			<h4>Automate</h4>
+			<p>Service Delivery with Software and APIs</p>
+			<p>The second step to become a Modern Data Center is to AUTOMATE the delivery of IT services, software, and cloud integration</p>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<img style="max-height: 50px;" class="ui centered tiny image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-transform.png" alt="Modernize">
+			<br>
+			<h4>Transform</h4>
+			<p>Your IT People and Process</p>
+			<p>The third step in becoming a Modern Data Center is to TRANSFORM technology and IT operations, adapting people and processes to the new model of businesss.</p>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container-fluid pad-top-bottom gray-background text-white">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-xs-12">
+				<h3>The Modern Data Center begins with changing infrastructure and moving from Building to Buying</h3>
+				<p>Converged infrastructure reduces the time and cost of deploying, configuring, and managing individual hardware and software components while increasing the time to value for IT investments. It’s essential that converged systems be built on technologies that are third-platform ready: like flash, cloud-enabled, scale-out, and software-defined systems.</p>
+			</div>
+		</div>
+		<br><br><br>
+		<div class="row text-center">
+			<div class="col-xs-12 col-md-6">
+				<img style="display: block; margin: auto;" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-converged.png">
+				<br>
+				<h4>Converged Infrastructure</h4>
+				<p>Our converged infrastructure solutions are easier, more cost-effective, and provide a much more successful way to run your IT. You get to deploy fully optimized, ready-to-go platforms that let you run your core business applications, services, and capabilities.</p>
+				<button type="button" class="btn btn-blue openchat">CHAT NOW FOR A QUOTE</button>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<div class="row">
+					<div class="col-xs-6">
+						<h2>4.6x</h2>
+						<p style="height: 32px;">More applications deployed</p>
+					</div>
+					<div class="col-xs-6">
+						<h2>4.4x</h2>
+						<p style="height: 32px;">Faster Time to Market</p>
+					</div>
+					<div class="col-xs-6">
+						<h2>36%</h2>
+						<p style="height: 32px;">Lower costs</p>
+					</div>
+					<div class="col-xs-6">
+						<h2>41%</h2>
+						<p style="height: 32px;">Less Time Keeping the Lights on</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid pad-top-bottom">
+	<div class="container">
+		<div class="row text-center">
+			<div class="col-xs-12">
+				<h3>The Modern Data Center is the future of IT infrastructure, today.</h3>
+				<br><br>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-3">
+				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-flash.png" class="ui image" style="max-height: 45px;">
+				<br>
+				<h3>Flash</h3>
+				<hr>
+				<ul>
+					<li>#1 All-Flash market leader</li>
+					<li>80% lower TCO vs. disk</li>
+					<li>$/GB lowest All-Flash Cost</li>
+				</ul>
+				<hr>
+				<p class="infrastructure-content-body">Flash storage is a pillar of the Modern Data Center, giving you consistent, predictable, low latency performance across your infrastructure, while dramatically reducing cost and complexity.</p>
+				<button type="button" class="btn btn-blue openchat">FLASH SOLUTIONS</button>
+			</div>
+			<div class="col-xs-12 col-md-3">
+				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-cloud.png" class="ui image" style="max-height: 45px;">
+				<br>
+				<h3>Cloud-Enabled</h3>
+				<hr>
+				<ul>
+					<li>3x more approaching goals</li>
+					<li>67% cost savings over 3 years</li>
+					<li>30% better business results</li>
+				</ul>
+				<hr>
+				<p class="infrastructure-content-body">Cloud-enabling your infrastructure provides you the automation and agility you need to broker seamless IT services. Deploying and managing data and applications can begin right away, liberating your IT, and you, to tackle business needs.</p>
+				<button type="button" class="btn btn-blue openchat">HYBRID CLOUD SOLUTIONS</button>
+			</div>
+			<div class="col-xs-12 col-md-3">
+				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-scale-out.png" class="ui image" style="max-height: 45px;">
+				<br>
+				<h3>Scale-Out</h3>
+				<hr>
+				<ul>
+					<li>32% faster application deployment</li>
+					<li>50% revenue growth with data analytics</li>
+					<li>80% storage utilization with a Data Lake</li>
+				</ul>
+				<hr>
+				<p class="infrastructure-content-body">Scale-out technology is designed to give you low cost of entry, and a single scale-out system that is elastic, allowing you to manage massive capacities, and changes, with very few resources.</p>
+				<button type="button" class="btn btn-blue openchat">DATA LAKE SOLUTIONS</button>
+			</div>
+			<div class="col-xs-12 col-md-3">
+				<img src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-software-defined.png" class="ui image" style="max-height: 45px;">
+				<br>
+				<h3>Software Defined</h3>
+				<hr>
+				<ul>
+					<li>65% lower TCO</li>
+					<li>8x better performance than traditional SANs</li>
+				</ul>
+				<hr>
+				<p class="infrastructure-content-body">The software defined model allows you to automate the configuration and deployment of IT services, delivering greater business agility and a more flexible, programmable approach to managing data services.</p>
+				<button type="button" class="btn btn-blue openchat">SOFTWARE DEFINED SOLUTIONS</button>
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+
+<div class="container-fluid pad-top-bottom gray-background text-white">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+				<h3>LEARN AND EXPAND SKILLS FOR THE MODERN DATA CENTER</h3>
+				<h4>EXPLORE THE MODERN DATA CENTER</h4>
+				<p>Interested in learning about the modern data center which takes virtualization to the next level with containers? Need a jumpstart on the software defined data center? Make an appointment for contacting your local sales engineer</p>
+				<button type="button" class="btn btn-blue openchat">Talk now</button>
+				<h4>EXPLORE ADDITIONAL EDUCATION OFFERINGS</h4>
+				<p>Find training to develop the skills you need to modernize your data center, transform IT, and compete in the new digital economy.</p>
+				<a class="btn btn-blue" target="_blank" href="{% static 'files/MiburaBootCamp2017.pdf' %}">Spring 2017 Bootcamp Schedule ></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid pad-top-bottom">
+	<div class="container">
+		<div style="margin-bottom: 50px;" class="row text-center">
+			<div class="col-xs-12">
+				<h3>Business transformation depends on unparalleled protection and trust at every level.</h3>
+				<h4>Build a solid foundation of data protection, security, services and support to accelerate your journey to a Modern Data Center.</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-md-4">
+				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-security.png" width="46" alt=" ">
+				<br>
+				<h3>Data Protection</h3>
+				<p>Trust that your data is always protected wherever it lives with Dell EMC industry’s broadest portfolio of data protection software and storage solutions covering all consumption models, including on premises, virtual, hybrid and public clouds. Meet any SLA requirement with Continuous Availability, Replication, Snapshots, Backup and Archive all while driving down cost and complexity.</p>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-service.png" width="54" alt=" ">
+				<br>
+				<h3>Services</h3>
+				<p>Our globally recognized service experts worldwide leverage proven methodologies, industry best practices, and more than 10 years of service experience to assist customers in modernizing legacy applications and infrastructure, consolidating and migrating data centers, enabling developers to build cloud native apps, accelerate the return on technology investments and leveraging big data analytics to transform their business.</p>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				<img class="ui image" src="https://www.emc.com/content/dam/uwaem/production-design-assets/en/products-solutions/mdc/images/icon-support.png" width="55" alt=" ">
+				<br>
+				<h3>Support</h3>
+				<p>MIBURA knows that a Modern Data Center requires a modern customer service experience. We empower you to take control of your experience by providing a wide-range of customer service offerings and support capabilities that are personalized, predictive and proactive. Whether you want to upgrade your warranty coverage or personalize your support, you have access to technical experts, flexible support options, and multiple support channels – online, mobile or traditional – to meet your needs.</p>
+				<a href="/support" class="btn btn-blue">SMART SUPPORT PORTAL</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="datacenter-section-image" class="container-fluid pad-top-bottom text-white">
+	<div class="row">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h3>AN ORCHESTRATION OF COMPONENTS, OEM PARTNERSHIPS, AND A GLOBAL SERVICE DESK</h3>
+			<h4>Modernizing, automating and transforming your data center are key for your digital transformation.</h4>
+		</div>
 	</div>
 </div>
 

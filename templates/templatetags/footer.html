@@ -2,7 +2,7 @@
 
 <!-- **** FOOTER CONTENT **** -->
 
-<div class="footer container-fluid gray-background text-white">
+<div id="footer" class="footer container-fluid gray-background text-white">
     <div class="container">
         <div class="row">
             <div class="col-sm-6 col-md-3 text-center">
@@ -11,7 +11,6 @@
                     <br>
                     <span style="
                         font-size: 1.5em;
-                        font-weight: bold;
                         color: #ffd220;"
                     >
                         24x7x365
@@ -24,7 +23,11 @@
                         <img style="max-width: 30px" src="{% static 'images/icons/svg/smartphone.svg' %}">
                     </div>
                     <div class="col-xs-10">
-                        <h4 style="font-weight: bold;"><a href="tel:1-800-862-5144"> US: <span style="color: #1B1C1D">+</span>1.800.862.5144</a>  <br> <a href="tel:1-213-286-0733">INT: +1.213.286.0733</a></h4>
+                        <div style="padding-top: 10px;font-size: 18px; line-height: 24px;">
+                            <a class="link-blue" href="tel:1-800-862-5144"> US: +1.800.862.5144</a>  
+                            <br>
+                            <a class="link-blue" href="tel:1-213-286-0733">INT: +1.213.286.0733</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,7 +37,7 @@
                         <img style="max-width: 30px" src="{% static 'images/icons/svg/chat-speech-bubbles.svg' %}">
                     </div>
                     <div class="col-xs-10">
-                        <h3>Live Slack</h3>
+                        <a class="openchat"><h3 style="cursor: pointer;">Live Slack</h3></a>
                     </div>
                 </div>
             </div>
@@ -44,7 +47,7 @@
                         <img style="max-width: 30px" src="{% static 'images/icons/svg/close-envelope.svg' %}">
                     </div>
                     <div class="col-xs-10">
-                        <a href="mailto:support@mibura.com" style="color: #FFF;"><h3>Email Us</h3></a>
+                        <a href="mailto:support@mibura.com"><h3>Email Us</h3></a>
                     </div>
                 </div>
             </div>
@@ -58,7 +61,7 @@
                     About
                 </h4>
                 <a href="{% url 'index' %}">Home</a><br>
-                <a href="/company">Careers</a>
+                <a href="{% url 'company' %}">Careers</a>
             </div>
             <div class="col-xs-7 col-md-2">
                 <h4>
@@ -70,29 +73,27 @@
                 <a href="{% url 'staffing:index' %}">Tech Staffing</a>
             </div>
             
-            <div class="col-xs-12 col-md-4 text-center">
-                <div style="font-size: 3.5em;">
-                    <!-- Facebook -->
-                    <a href="https://www.facebook.com/miburainc/">
-                        <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                    </a>
-                    <!-- Twitter -->
-                    <a href="#">
-                        <i class="fa fa-twitter-square" aria-hidden="true"></i>
-                    </a>
-                    <!-- Slack -->
-                    <a href="#">
-                        <i class="fa fa-slack" aria-hidden="true"></i>
-                    </a>
-                    <!-- LinkedIn -->
-                    <a href="https://www.linkedin.com/company/mibura-inc-">
-                        <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                    </a>
-                    <!-- Skype -->
-                    <a href="skype:mibura1?call">
-                        <i class="fa fa-skype" aria-hidden="true"></i>
-                    </a>
-                </div>  
+            <div class="col-xs-12 col-md-4 text-center link-blue footer-social-links">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/miburainc/">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                </a>
+                <!-- Twitter -->
+                <a href="#">
+                    <i class="fa fa-twitter-square" aria-hidden="true"></i>
+                </a>
+                <!-- Slack -->
+                <a href="#">
+                    <i class="fa fa-slack" aria-hidden="true"></i>
+                </a>
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/company/mibura-inc-">
+                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                </a>
+                <!-- Skype -->
+                <a href="skype:mibura1?call">
+                    <i class="fa fa-skype" aria-hidden="true"></i>
+                </a>
             </div>
             <div class="col-xs-12 col-md-5">
                 <div>

@@ -1,17 +1,336 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
 Cloud
 {% endblock %}
 
+{% block css %}
+<style type="text/css">
+
+#cloud-header {
+	color: #FFFFFF;
+	padding-top: 100px;
+	margin-top: -50px;
+	min-height: 500px;
+	background-image: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5) ), url({% static 'images/backgrounds/clouds.jpg' %});
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.icons i {
+	font-size: 50px;
+	margin-bottom: 10px;
+}
+
+@media (min-width: 768px) {
+	.panel-equal-height {
+		height: 150px;
+	}
+
+	.panel-equal-height-lg {
+		height: 250px;
+	}
+}
+
+
+
+</style>
+{% endblock %}
+
 {% block content %}
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-3">
-			Cloud
-		</div>		
+<div id="cloud-header" class="container-fluid">
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
+			<h2>Meet our Cloud Team!</h2>
+			<h3>Learn how organizations are reimagining thier data &amp; workloads.
+			Saving time, money and accelerating features that are readily available.</h3>
+		</div>
 	</div>
+</div>
+
+<div class="container pad-top-bottom">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h3>You Choose the Cloud. We'll Migrate, Manage, and Support It for You</h3>
+			<h4>We're partnered with the world’s leading cloud platforms, saving you the pain and complexity of doing it yourself.</h4>
+		</div>
+	</div>
+	<div class="row text-center">
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img style="height: 40px;" src="{% static 'images/cloud_providers/vmware.svg' %}">
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<h4>Private Cloud</h4>
+					<p>Nationally recognized VMware services partner since 2008. Private Cloud with vSphere, NSX, vSAN, vRealize</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img style="height: 40px;" src="{% static 'images/cloud_providers/aws_partner.png' %}">
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<h4>Amazon Web Services</h4>
+					<p>AWS On-Premise and Remote Experts 24x7, supporting US, Canada, UK, Europe, and Asia regions.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img style="height: 40px;" src="{% static 'images/cloud_providers/microsoft.png' %}">
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<h4>Azure | Office 365</h4>
+					<p>A Veteran Microsoft Partner 10 years running prepared us for complex Office 365 and Azure with over 550,000 seats deployed for Azure AD, Exchange Online, Skype for Business, Enterprise Mobility, Azure Rights Management.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img style="height: 40px;" src="{% static 'images/cloud_providers/google_cloud.svg' %}">
+				</div>
+				<div class="panel-footer panel-equal-height-lg">
+					<h4>Google Compute</h4>
+					<p>Serverless, Just Code. Google Compute allows innovators to innovate and coders to just code!</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 text-center">
+			<button type="button" class="btn btn-success openchat">Start the Conversation</button>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid ltgray-background pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h2>Mibura's Cloud Partners</h2>
+			<h4>Our strategic relationships with our Cloud Partners carefully deliver professional and managed services for enterprises leveraging the leading cloud platforms. The combination of Smart Support with Cloud Partners’s best-of-breed platforms provide enterprise customers with a solution that they are in full control of for cloud adoption.</h4>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container-fluid gray-background pad-top-bottom text-white">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h2>Enterprise, Small Business, Healthcare, or Federal Agencies We Have Strategies Just For You</h2>
+			<h4>Let our experts educate, enable and empower you pick the best solution for your needs.</h4>
+			<br><br>
+		</div>
+	</div>
+	<div class="row icons text-center">
+		<div class="col-xs-6 col-md-2 col-md-offset-1">
+			<i class="fa fa-lock" aria-hidden="true"></i>
+			<br>
+			<p>Managed Security</p>
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<i class="fa fa-cogs" aria-hidden="true"></i>
+			<br>
+			<p>Managed Infrastructure</p>
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<i class="fa fa-undo" aria-hidden="true"></i>
+			<br>
+			<p>Managed Backup &amp; Disaster Recovery</p>
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<i class="fa fa-hdd-o" aria-hidden="true"></i>
+			<br>
+			<p>Managed Databases</p>
+		</div>
+		<div class="col-xs-6 col-md-2">
+			<i class="fa fa-key" aria-hidden="true"></i>
+			<br>
+			<p>Managed Identity Access &amp; Communication &amp; Collaboration</p>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container pad-top-bottom">
+	<div class="row text-center">
+		<div class="col-xs-12 pad-bottom">
+			<h2>
+				We've stood up hundreds of cloud tenants across our Cloud Partners. With confidence we can say "oh yeah, we've done that!"
+			</h2>
+			<h4>
+				Find the right combination of cloud platform solutions to fit your needs:
+			</h4>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<h3>Expertise</h3>
+			<p>Our Cloud Subject Matter Experts carry certifications and deep industry experience across all cloud providers.</p>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<h3>Innovation</h3>
+			<p>Necessity is the monther of invention. The 4th [digital] revolution requires cloud platforms to innovate at unprecedented rates.</p>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<h3>Service</h3>
+			<p>Our custom yet commoditized approach to data migration or managed services means you get statement of work deliverables at line item pricing.</p>
+		</div>
+		<div class="col-xs-12 col-md-3">
+			<h3>Choice</h3>
+			<p>We can assist in POCs across various cloud platforms. It's all about giving you choices.</p>
+		</div>
+		<div class="col-xs-12">
+			<h3>Get Started in less than 15 Minutes</h3>
+			<button type="button" class="btn btn-success openchat">Slack Us</button>
+		</div>
+	</div>
+</div>
+
+<div class="container-fluid gray-background text-white pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h2>
+				Smart Support Wherever You Are 24x7x365
+			</h2>
+			<h4>
+				As your trusted service partner, we're ready to help solve the toughest problems. Gartner has recognized our cloud partners as leaders in various Magic Quadrant.
+			</h4>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container-fluid pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h2>
+				Let us manage AWS for you
+			</h2>
+			<br><br>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/engineer.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer">
+					<h4>Ongoing Architecture Design</h4>
+					<p>Our certified AWS architects will design and deploy AWS infrastructure.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/shield.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer">
+					<h4>Security</h4>
+					<p>Certified experts, tools, and technologies to secure the access to your AWS environment.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/server.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer">
+					<h4>Migration</h4>
+					<p>With this add-on service, we guide the process of migrating your application portfolio to AWS.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-4 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/customer-service.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer">
+					<h4>24x7x365 Operations</h4>
+					<p>AWS certified engineers to handle the operational needs of your AWS environment.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/maze.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer">
+					<h4>Recurring Optimization</h4>
+					<p>We continually evaluate your changing needs and new AWS features to identify improvements.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+
+<div class="container-fluid ltgray-background pad-top-bottom">
+<div class="container">
+	<div class="row text-center">
+		<div class="col-xs-12">
+			<h4>Mibura Private Cloud Powered by Microsoft® Cloud Platform</h4>
+			<p>Unmatched Performance, Security and Scalability powered by Cloud Expertise and Microsoft Cloud Platform</p>
+			<p>Your business requires a flexible IT infrastructure that can scale on demand while providing you with the performance, security and control you are used to. Mibura Private Cloud combines Microsoft technologies of Hyper-V® and Systems Center with our cloud expertise to deliver ongoing architecture, security, and 24x7x365 operations backed by Microsoft certified engineers and architects.</p>
+			<br>
+		</div>
+		<div class="col-xs-12 col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/shield.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer panel-equal-height">
+					<h4>Security and Performance</h4>
+					<p>Single-tenant environment with physically isolated network, compute and storage layers with no external noise that affect performance</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/bar-chart.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer panel-equal-height">
+					<h4>Scalable and Economical</h4>
+					<p>Deliver capacity on demand scaling 1,000's of Virtual machines with no additional costs</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/data-cloud.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer panel-equal-height">
+					<h4>Hybrid Ready</h4>
+					<p>Combine private cloud and Microsoft Azure so you can easily move workloads based on market demands. Deliver capacity on demand scaling 1,000's of Virtual machines with no additional costs</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<img class="ui image" src="{% static 'images/icons/svg/cloud/trophy.svg' %}" width="60px">
+				</div>
+				<div class="panel-footer panel-equal-height">
+					<h4>Expertise</h4>
+					<p>Microsoft Certified experts architect a customized Microsoft Private Cloud infrastructure based on Mibura and Microsoft best practices</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 {% endblock %}

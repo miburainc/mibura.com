@@ -5,31 +5,58 @@ from .models import *
 # Register your models here.
 
 class ClientAdmin(admin.ModelAdmin):
-	fields = ['name', 'email', 'company']
+	list_display = ['first_name', 'last_name', 'email', 'company']
 
 admin.site.register(Client, ClientAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
-	list_display = ['brand', 'model', 'sku']
+	search_fields = ['brand', 'model', 'sku']
+	list_filter = ['brand', 'category']
+	list_display = ['brand', 'model', 'category', 'sku', 'release']
 
 admin.site.register(Product, ProductAdmin)
 
 class CartAdmin(admin.ModelAdmin):
+	list_filter = ['client', 'replaced']
+	search_fields = ['reference', 'freshbooks_id']
 	list_display = ['client', 'reference', 'date_created', 'date_updated']
 
 admin.site.register(Cart, CartAdmin)
 
 class ClientProductAdmin(admin.ModelAdmin):
-	list_display = ['client', 'product', 'serial_number']
+	search_fields = ['product', 'brand', 'model', 'client']
+	list_filter = ['client', 'product', 'brand']
+	list_display = ['client', 'product', 'brand', 'model', 'serial_number']
 
 admin.site.register(ClientProduct, ClientProductAdmin)
 
 class SubscriptionAdmin(admin.ModelAdmin):
-	list_display = ['client', 'plan', 'price', 'date_created', 'date_updated']
+	list_display = ['client', 'plan', 'price', 'date_begin', 'date_created', 'date_updated']
 
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class CloudAdmin(admin.ModelAdmin):
-	list_display = ['name', 'website', 'price_modifier',]
+	list_display = ['name', 'website', 'price_multiplier',]
 
 admin.site.register(Cloud, CloudAdmin)
+
+class ProductCategoryAdmin(admin.ModelAdmin):
+	list_display = ['name', 'yearly_tax', 'category_code', 'price_multiplier',]
+
+admin.site.register(ProductCategory, ProductCategoryAdmin)
+
+class PlanAdmin(admin.ModelAdmin):
+	list_display = ['name', 'short_name', 'price', 'color',]
+
+admin.site.register(Plan, PlanAdmin)
+
+class DiscountAdmin(admin.ModelAdmin):
+	list_display = ['year_threshold', 'discount_percent']
+
+admin.site.register(Discount, DiscountAdmin)
+
+class EstimateTextAdmin(admin.ModelAdmin):
+	list_filter = ['plan', 'category']
+	list_display = ['item', 'category', 'plan', 'cloud', 'short_description']
+
+admin.site.register(EstimateText, EstimateTextAdmin)

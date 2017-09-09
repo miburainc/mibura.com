@@ -4,6 +4,12 @@ __pycache__/
 *$py.class
 *.pyc
 
+# DB
+db.sqlite3
+.sqlite3
+
+._.DS_Store
+
 # C extensions
 *.so
 
@@ -11,7 +17,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -27,8 +32,13 @@ wheels/
 
 .env
 
+# Security
+
+local.py
+
 # Javascript
 
+staticfiles/
 node_modules
 bower_components
 

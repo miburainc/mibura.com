@@ -40,7 +40,6 @@ Import Database data
 
 ```
 bash scripts/loaddata.sh
-
 ```
 
 *optional*

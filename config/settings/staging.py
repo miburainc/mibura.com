@@ -3,6 +3,22 @@ import raven, logging
 
 SECRET_KEY = get_env_variable("SECRET_KEY")
 
+#  Video CDN
+
+# Cloudinary Image and Video CDN
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+    cloud_name = "mibura", 
+    api_key = "615747629617717", 
+    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
+)
+
+
+
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DEBUG = get_env_variable('DJANGO_DEBUG')
@@ -68,9 +84,7 @@ FRESHBOOKS_AUTH = get_env_variable('FRESHBOOKS_AUTH')
 
 
 
-MIDDLEWARE += [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-]
+# MIDDLEWARE += []
 
 
 # SECURITY CONFIGURATION
@@ -80,26 +94,18 @@ MIDDLEWARE += [
 
 # set this to 60 seconds and then to 518400 when you can prove it works
 if not DEBUG:
-	SECURE_HSTS_SECONDS = 60
-	SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-	    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-	SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
-	    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-	SECURE_BROWSER_XSS_FILTER = True
-	SESSION_COOKIE_SECURE = True
-	SESSION_COOKIE_HTTPONLY = True
-	SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-	CSRF_COOKIE_SECURE = True
-	CSRF_COOKIE_HTTPONLY = True
-	X_FRAME_OPTIONS = 'DENY'
-
-
-
-# Staticfiles
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    SECURE_HSTS_SECONDS = 60
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+        'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+    SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+        'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
+    SECURE_BROWSER_XSS_FILTER = True
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+    CSRF_COOKIE_SECURE = True
+    CSRF_COOKIE_HTTPONLY = True
+    X_FRAME_OPTIONS = 'DENY'
 
 
 # Logging

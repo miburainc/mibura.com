@@ -39,10 +39,7 @@ Import Database data
 *Run the following commands in order as shown to prevent errors*
 
 ```
-python manage.py loaddata support/data/Cloud.txt
-python manage.py loaddata support/data/ProductCategory.txt
-python manage.py loaddata support/data/Plan.txt
-python manage.py loaddata support/data/Product.txt
+bash scripts/loaddata.sh
 ```
 
 *optional*

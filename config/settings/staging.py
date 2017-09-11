@@ -68,7 +68,7 @@ AZURE_SQL_DB = 'postgres://{user}:{password}@{host}:{port}/{dbname}'.format(user
 print(AZURE_SQL_DB)
 
 DATABASES = {
-    'default': AZURE_SQL_DB,
+    'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
 }
 
 

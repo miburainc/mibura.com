@@ -64,20 +64,23 @@ AZURE_SQL_SSL=True
 
 AZURE_SQL_DB = 'postgres://{user}:{password}@{host}:{port}/{dbname}'.format(user=AZURE_SQL_USER, password=AZURE_SQL_PASSWORD, host=AZURE_SQL_HOST, port=AZURE_SQL_PORT, dbname=AZURE_SQL_DBNAME)
 
-DATABASES = {
-    'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
-}
-
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': AZURE_SQL_DBNAME,
-#         'USER': AZURE_SQL_USER,
-#         'PASSWORD': AZURE_SQL_PASSWORD,
-#         'HOST': AZURE_SQL_HOST,
-#         'PORT': AZURE_SQL_PORT,
-#     }
+#     'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': AZURE_SQL_DBNAME,
+        'USER': AZURE_SQL_USER,
+        'PASSWORD': AZURE_SQL_PASSWORD,
+        'HOST': AZURE_SQL_HOST,
+        'PORT': AZURE_SQL_PORT,
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
+}
 
 
 # azure storage

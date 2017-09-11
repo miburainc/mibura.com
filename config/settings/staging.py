@@ -129,6 +129,10 @@ LOGGING = {
                       '%(process)d %(thread)d %(message)s'
         },
     },
+    'logfile': {
+        'class': 'logging.handlers.WatchedFileHandler',
+        'filename': 'D:\home\site\wwwroot\myapp.log'
+    }
     'handlers': {
         'sentry': {
             'level': 'ERROR',

@@ -65,8 +65,10 @@ AZURE_SQL_SSL=True
 
 AZURE_SQL_DB = 'postgres://{user}:{password}@{host}:{port}/{dbname}'.format(user=AZURE_SQL_USER, password=AZURE_SQL_PASSWORD, host=AZURE_SQL_HOST, port=AZURE_SQL_PORT, dbname=AZURE_SQL_DBNAME)
 
+print(AZURE_SQL_DB)
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
+    'default': AZURE_SQL_DB,
 }
 
 

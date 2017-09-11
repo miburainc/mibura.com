@@ -55,7 +55,10 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 
 AZURE_SQL_DBNAME='postgres'
 AZURE_SQL_USER='miburasqluser'# @db-mibura-sql'
-AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
+# PRODUCTION
+# AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
+# Staging
+AZURE_SQL_HOST='db-miburastaging-postgresql.postgres.database.azure.com'
 AZURE_SQL_PASSWORD=get_env_variable('AZURE_SQL_PASSWORD')
 AZURE_SQL_PORT=5432
 AZURE_SQL_SSL=True

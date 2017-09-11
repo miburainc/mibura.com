@@ -54,17 +54,15 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 ####  Azure
 
 AZURE_SQL_DBNAME='postgres'
-AZURE_SQL_USER='dbmiburastagingadmin' # @db-mibura-sql'
-# PRODUCTION
-# AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
-# Staging
+# AZURE_SQL_USER='dbmiburastagingadmin' # @db-mibura-sql'
+# dbmiburastagingadmin@db-miburastaging-postgresql
+AZURE_SQL_USER='dbmiburastagingadmin@db-miburastaging-postgresql'
 AZURE_SQL_HOST='db-miburastaging-postgresql.postgres.database.azure.com'
-AZURE_SQL_PASSWORD=os.getenv('AZURE_SQL_PASSWORD')
+AZURE_SQL_PASSWORD=get_env_variable('AZURE_SQL_PASSWORD')
 AZURE_SQL_PORT=5432
 AZURE_SQL_SSL=True
 
 AZURE_SQL_DB = 'postgres://{user}:{password}@{host}:{port}/{dbname}'.format(user=AZURE_SQL_USER, password=AZURE_SQL_PASSWORD, host=AZURE_SQL_HOST, port=AZURE_SQL_PORT, dbname=AZURE_SQL_DBNAME)
-
 
 DATABASES = {
     'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),

@@ -76,9 +76,9 @@ DATABASES = {
         'PASSWORD': AZURE_SQL_PASSWORD,
         'HOST': AZURE_SQL_HOST,
         'PORT': AZURE_SQL_PORT,
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+        # 'OPTIONS': {
+        #     'sslmode': 'require',
+        # },
     }
 }
 

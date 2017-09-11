@@ -53,7 +53,7 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 
 ####  Azure
 
-AZURE_SQL_DBNAME='db-miburastaging-postgresql'
+AZURE_SQL_DBNAME='postgres'
 AZURE_SQL_USER='dbmiburastagingadmin' # @db-mibura-sql'
 # PRODUCTION
 # AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'

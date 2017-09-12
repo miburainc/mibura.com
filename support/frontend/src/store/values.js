@@ -364,7 +364,7 @@ export const form_steps = [
 				required: true,
 				validate: {
 					type: "text",
-					min: 3,
+					min: 2,
 				},
 				form: {
 					type: "text",
@@ -394,7 +394,7 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Continue to Payment",
+				label: "Review Cart",
 				class: "btn btn-lg btn-outline-success",
 				script: "next"
 
@@ -418,9 +418,14 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Review",
+				label: "Get Quote",
+				class: "btn btn-lg btn-outline-info",
+				script: "getquote"
+			},
+			{
+				label: "Proceed to Checkout",
 				class: "btn btn-lg btn-outline-success payment-button",
-				script: "review"
+				script: "next"
 			},
 		],
 		title: "Review",
@@ -462,7 +467,7 @@ export const form_steps = [
 				}
 			},
 			{
-				placeholder: "Company Name",
+				placeholder: "Bank Account Name",
 				src: "",
 				dest: "payment.bankname",
 				required: true,
@@ -490,7 +495,37 @@ export const form_steps = [
 					name: "bankphone",
 					class: "field",
 				}
-			}			
+			},
+			{
+				placeholder: "Account Number",
+				src: "",
+				dest: "payment.accountnumber",
+				required: true,
+				validate: {
+					type: "number",
+					min: 6,
+				},
+				form: {
+					type: "number",
+					name: "accountnumber",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Routing Number",
+				src: "",
+				dest: "payment.routingnumber",
+				required: true,
+				validate: {
+					type: "number",
+					min: 6,
+				},
+				form: {
+					type: "number",
+					name: "routingnumber",
+					class: "field",
+				}
+			}		
 		],
 		buttons: [
 			{
@@ -499,13 +534,50 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Review",
+				label: "Continue",
 				class: "btn btn-lg btn-outline-success payment-button",
 				script: "review"
 			},
 		],
 		title: "Payment",
 		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
+		error: "",
+		step: 3,
+		buttonStyle: ""
+	},
+	{
+		data: [
+			
+			
+		],
+		buttons: [
+			{
+				label: "Back",
+				class: "btn btn-lg btn-outline-default",
+				script: "back"
+			},
+			{
+				label: "Submit Payment",
+				class: "btn btn-lg btn-outline-success payment-button",
+				script: "purchase"
+			},
+		],
+		title: "Verify",
+		text: "",
+		error: "",
+		step: 3,
+		buttonStyle: ""
+	},
+	{
+		data: [
+			
+			
+		],
+		buttons: [
+			
+		],
+		title: "Success",
+		text: "",
 		error: "",
 		step: 3,
 		buttonStyle: ""

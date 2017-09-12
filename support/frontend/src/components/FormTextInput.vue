@@ -1,13 +1,14 @@
 <template>
 	
 <div>
-	<label>{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name]"> {{ getErrors[step.form.name][0] }}</label>
+	<label :class="{'label-disabled': achToken == 'success'}" >{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name]"> {{ getErrors[step.form.name][0] }}</label>
 	<input 
+		:disabled="achToken == 'success'"
 		:class="{'error-border': getErrors[step.form.name]}"
 		:type="step.form.type" 
 		:id="step.form.name" 
 		:name="step.form.name" 
-		:placeholder="step.placeholder" 
+		:placeholder="achToken == 'success' ? '' : step.placeholder" 
 		class="form-control" 
 		:value="get_form_input_value(step)" 
 		@change="(el) => {
@@ -28,7 +29,7 @@ import { ValidateFormStep } from '../scripts/functions'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-	props: ['step'],
+	props: ['step', 'achToken'],
 	mounted() {
 
 	},
@@ -55,7 +56,6 @@ export default {
 				console.log(value)
 				this.setPaymentProp({prop: s[s.length-1], data: value})
 			}
-			
 
 			let errors = ValidateFormStep(step, value)
 

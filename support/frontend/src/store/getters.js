@@ -43,4 +43,12 @@ export default {
       return ""
     }
   },
+  getAchPaymentToken: state => {
+    if (state.stripe.ach_payment_token) {
+      return state.stripe.ach_payment_token
+    }
+    else {
+      return ""
+    }
+  },
 }

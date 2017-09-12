@@ -3,37 +3,51 @@
 <div>
 	<br>
 	<div class="container-fluid">
-		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,0.23);" class="col-xs-12">
-			<div style="margin:0px 0px 0px 0px; padding:10px 0px 10px 10px; background: rgba(0,0,0,0.16);" class="col-xs-12">
-				<h3>{{ getPlan(getCurrentPlan).name }}</h3>
+		<div style="margin:0px 0px 20px 0px; padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-12">
+			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
+			<h4>Cart Reference Code: {{ getCartReference }}</h4>
+			<table class="table table-hover table-outline">
+				<thead>
+					<th>Product</th>
+					<th>Price</th>
+				</thead>
+				<tbody>
+					<tr v-for="(item, index) in getCart">
+						<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
+						<td style="color:white;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10" style="display:inline-block;">
+				<div class="col-xs-6">
+					{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
+					{{getClientInfo['email']}}<br>
+					{{getClientInfo['company']}}<br>
+					{{getClientInfo['phone']}}
+				</div>
+				<div class="col-xs-6">
+					{{getClientInfo['street']}}, {{getClientInfo['street2']}}<br>
+					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
+					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
+				</div>
 			</div>
-			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; padding-top:0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
-				<button class="btn btn-lg btn-outline-info"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp</i>{{ upsell }}</button>
-			</div>
-			<br>
-			<!-- <h4>Cart Reference Code: {{ getCartReference }}</h4> -->
-			<div style="margin:0px 0px 10px 0px; padding: 10px 0px 0px 0px;" class="col-xs-12">
-				<table class="table table-hover table-outline">
-					<thead>
-						<th style="padding-left:10px">Product</th>
-						<th style="padding-left:10px">Price</th>
-					</thead>
-					<tbody>
-						<tr v-for="(item, index) in getCart">
-							<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
-							<td style="color:white;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div style="padding: 0px 0px 5px 7px">
+			<br><br><br>
+			<div>
 			SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
 				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
+			
+			<div class="col-sm-5">
+				<a style="font-size:30px;" href="#">Terms & Conditions</a><br>
+				<div class="col-sm-9 checkbox text-center">
+			  <label style="font-size: 20px; color: lightblue;"><input style="height:19px; width:19px;" @click="setAcceptedTerms(true)" type="checkbox" value="">&nbsp; Accept</label>
+			</div>
+			</div>
+			
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-3-round"> 	
+		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
 			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
@@ -49,18 +63,18 @@ import Autocomplete from 'vue2-autocomplete-js';
 
 export default {
 	props: ['form', 'buttonAction'],
-	data(){
-		return{
-			upsell: 'If you upgrade to Pure Gold you can get cloud support for free.'
-		}
-	},
 	mounted() {
 
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'setCurrentFormStep',
+			'serverSetClient',
+			'saveCart',
+			'checkout',
+			'setAcceptedTerms',
 		]),
 		processAjaxResult(json) {
 			return json['results']
@@ -128,11 +142,13 @@ export default {
 			'getPlan',
 			'getCurrentPlan',
 			'getCart',
+			'getCurrentFormStep',
 			'getCartReference',
 			'getProductSubtotal',
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
+			'getPaymentToken'
 
 		])
 		

@@ -54,16 +54,32 @@ EMAIL_DEFAULT_FROM = "cs@mibura.com"
 ####  Azure
 
 AZURE_SQL_DBNAME='postgres'
-AZURE_SQL_USER='miburasqluser'# @db-mibura-sql'
-AZURE_SQL_HOST='db-mibura-sql.postgres.database.azure.com'
+# AZURE_SQL_USER='dbmiburastagingadmin' # @db-mibura-sql'
+# dbmiburastagingadmin@db-miburastaging-postgresql
+AZURE_SQL_USER='dbmiburastagingadmin@db-miburastaging-postgresql'
+AZURE_SQL_HOST='db-miburastaging-postgresql.postgres.database.azure.com'
 AZURE_SQL_PASSWORD=get_env_variable('AZURE_SQL_PASSWORD')
 AZURE_SQL_PORT=5432
 AZURE_SQL_SSL=True
 
 AZURE_SQL_DB = 'postgres://{user}:{password}@{host}:{port}/{dbname}'.format(user=AZURE_SQL_USER, password=AZURE_SQL_PASSWORD, host=AZURE_SQL_HOST, port=AZURE_SQL_PORT, dbname=AZURE_SQL_DBNAME)
 
+# DATABASES = {
+#     'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
+# }
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=AZURE_SQL_DB),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': AZURE_SQL_DBNAME,
+        'USER': AZURE_SQL_USER,
+        'PASSWORD': AZURE_SQL_PASSWORD,
+        'HOST': AZURE_SQL_HOST,
+        'PORT': AZURE_SQL_PORT,
+        # 'OPTIONS': {
+        #     'sslmode': 'require',
+        # },
+    }
 }
 
 
@@ -162,6 +178,6 @@ LOGGING = {
 }
 SENTRY_CELERY_LOGLEVEL = env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO)
 RAVEN_CONFIG = {
-    'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
-    'DSN': SENTRY_DSN
+    # 'CELERY_LOGLEVEL': env.int('DJANGO_SENTRY_LOG_LEVEL', logging.INFO),
+    'dsn': SENTRY_DSN
 }

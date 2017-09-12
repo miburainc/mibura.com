@@ -35,6 +35,49 @@
 				</div>
 			</div>
 		</div>
+		<!-- Info for ach payment -->
+		<div class="modal fade" id="achInfoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Payment by ACH</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							In order to pay with a bank account number we must first confirm your account.  To do this we will deposit two small ammounts into your bank account.  Once you recieve the payments you can come back to this site and tell us the ammounts to confirm that you are the owner of the account.  To speed up the process you can get an estimate and use your cart reference code to quickly return to where you left off.  If you have any questions, please contact us at 1-800-862-5144.
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Popup when user submits ach using account number and routing number -->
+		<div class="modal fade" id="achSubmitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Payment by ACH</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Thanks for submitting your information. In order for us to process your payment we will need to confirm that your account is valid. To do this we will deposit two small ammounts into your bank account.  Once you recieve the payments you can come back to this site and enter the ammounts to finish the confirmation.  To speed up the process you can get an estimate and use your cart reference code to quickly return to where you left off.  After this you will be able to review your order and choose to initiate payment.  
+							<br><br>
+							We will send you an email with a quote of your order and a link to return to confirm your payment ammounts.
+							<br><br>
+							If you have any questions, please contact us at 1-800-862-5144.
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+						<button type="button" class="btn btn-primary" @click="confirmAch" data-dismiss="modal">View Quote</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Input Estimate ID -->
 		<div class="modal fade" id="estimateIdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -183,6 +226,11 @@ export default {
 			'getEstimatePDF',
 			'getNotifications',
 			'getAPIRoot',
+			'getClientInfo',
+			'getPaymentInfo',
+			'getCart',
+			'getCartChanged',
+			
 		])
 	},
 	methods: {
@@ -192,7 +240,11 @@ export default {
 			'setAcceptedTerms',
 			'ServerRequestPastEstimate',
 			'sendQuoteEmail',
-			'setCloudProviders'
+			'setCloudProviders',
+			'setCurrentFormStep',
+			'setEstimatePdfFile',
+			'serverGetEstimatePdf',
+			'saveCart',
 		]),
 		emailQuote() {
 			this.sendQuoteEmail()
@@ -202,6 +254,33 @@ export default {
 		},
 		localDate(date) {
 			return toJSONLocal(date)
+		},
+		confirmAch(){
+
+			//finish submission of ach
+			let payload = {
+				'cart_ref': null,
+				'accountnumber': this.getPaymentInfo['accountnumber'],
+				'bankname': this.getPaymentInfo['bankname'],
+				'bankphone': this.getPaymentInfo['bankphone'],
+				'routingnumber': this.getPaymentInfo['routingnumber']
+			}
+
+			if (this.getCartChanged) {
+				// Reset pdf to nothing
+				this.setEstimatePdfFile(null);
+				// Send request for new pdf file
+				this.serverSetClient().then(() => {
+					this.saveCart(this.getClientInfo)
+				}).then(() => {
+					this.serverGetEstimatePdf()
+				}).then(() => {
+					payload['cart_ref'] = this.getCartReference
+					console.log("SEND PAYLOAD TO API ENDPOINT")
+					console.log(payload)
+				})
+			}
+			$('#pdfModal').modal('show')
 		}
 	},
 	mounted() {

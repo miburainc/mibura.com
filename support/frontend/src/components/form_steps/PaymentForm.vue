@@ -19,8 +19,8 @@
 				id="cardPhone"></form-text-input>
 
 				<label>Card Info</label>
-				<div id="card-element" class="field"></div>
-				<div class="outcome">
+				<div id="card-element" class="field" :class="{'error-border': cardError}"></div>
+				<div class="outcome" style="margin:0px 0px 10px 0px;" >
 					<div class="error" role="alert"></div>
 					<!--
 					<div class="success"> 
@@ -31,10 +31,10 @@
 			</div>
 
 			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
-				<br><p>Enter the two payments that were put into your bank account and we will verify your bank account.</p><br>
+				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
 				<label>Bank ACH Ammounts</label>
 				<input type="text" class="form-control" placeholder="Ammount 1"><br>
-				<input type="text" class="form-control" placeholder="Ammount 1">
+				<input type="text" class="form-control" placeholder="Ammount 2">
 			</div>
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
@@ -55,22 +55,23 @@
 							<div class="line"></div>
 						</div>
 						<div class="col-sm-5">
+							
 							<form-text-input 
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="accountNumber" 
-								style="margin-top:17px"
+								style="margin-top:15px"
 								:step="form.data[4]"></form-text-input>
 							<form-text-input  
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="routingNumber" 
 								:step="form.data[5]"></form-text-input>
+							<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle" class="btn-2-round" > 	
-
 			<button v-on:keypress.enter.prevent :class="form.buttons[0].class" type="button"
 			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button><button id="btn_review" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button>
 			
@@ -92,7 +93,8 @@ export default {
 	},
 	data() {
 		return {
-			payment_type: 'card'
+			payment_type: 'card',
+			cardError: false,
 		}
 	},
 	props: ['form', 'buttonAction'],
@@ -112,45 +114,6 @@ export default {
 		},
 		switchTabs(newTab){
 			this.payment_type = newTab
-		},
-		completePayment(){
-
-			var extraDetails = {
-				
-			};
-
-			if(this.payment_type == 'card'){
-				let cardName = document.getElementById("cardname").value
-				extraDetails['cardName'] = cardName
-				//error = ValidateFormStep(this.form[0], cardName)
-				//console.log(error)
-				let cardPhone = document.getElementById("cardphone").value
-				extraDetails['cardPhone'] = cardPhone
-				//error = ValidateFormStep(this.form[1], cardPhone)
-				//console.log(error)
-
-
-			}
-			else if(this.payment_type == 'ach'){
-				let bankName = document.getElementById("bankname").value
-				extraDetails['bankName'] = bankName
-				let bankPhone = document.getElementById("bankphone").value
-				extraDetails['bankPhone'] = bankPhone
-				let accountNumber = document.getElementById("accountnumber").value
-				extraDetails['accountNumber'] = accountNumber
-				let routingNumber = document.getElementById("routingnumber").value
-				extraDetails['routingNumber'] = routingNumber
-				
-
-			}
-
-			console.log(extraDetails)
-
-			
-			stripe.createToken(card, extraDetails).then(setOutcome);
-			
-			
-
 		},
 		checkError(){
 			return(true)
@@ -178,6 +141,7 @@ export default {
 				var extraDetails = {
 				
 				};
+
 				var errors = null
 
 				let bankName = document.getElementById("bankname").value
@@ -205,6 +169,8 @@ export default {
 						})
 					})
 				}
+
+				console.log("plaid")
 			},
 			onExit: function(err, metadata) {
 				// The user exited the Link flow.
@@ -241,29 +207,40 @@ export default {
 		function setOutcome(result) {
 			var errorElement = document.querySelector('.error');
 			errorElement.classList.remove('visible');
+
+			var error = false
+
+			console.log("ASDF")
+
 			if (result.token) {
 				// Use the token to create a charge or a customer
 				// https://stripe.com/docs/charges
 				self.setPaymentToken(result.token.id);
-				console.log(result)
 				self.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
+
 			} else if (result.error) {
 				errorElement.textContent = result.error.message;
 				errorElement.classList.add('visible');
+				error = true
 			}
+			return(error)
 		}
 		card.on('change', function(event) {
-			setOutcome(event);
+			self.cardError = setOutcome(event);
+			console.log(self.cardError)
 		});
 		document.querySelector('#btn_review').addEventListener('click', function(e) {
-			e.preventDefault();
+			//e.preventDefault();
 
 			var extraDetails = {
 				
 			};
 
+			var script = "submitpayment"
+
+			var noFormErrors = true
+
 			let errors = null
-			console.log(self.form.data)
 
 			if(self.payment_type == 'card'){
 				
@@ -278,12 +255,14 @@ export default {
 							self.setError({key: key, value: value})
 						})
 					})
+
+					noFormErrors = false
 				}
 
 				let cardPhone = document.getElementById("cardphone").value
 				extraDetails['cardPhone'] = cardPhone
 
-				errors = ValidateFormStep(self.form.data[1], cardName)
+				errors = ValidateFormStep(self.form.data[1], cardPhone)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -291,6 +270,16 @@ export default {
 							self.setError({key: key, value: value})
 						})
 					})
+
+					noFormErrors = false
+				}
+
+				if(noFormErrors){
+					stripe.createToken(card, extraDetails).then(setOutcome).then(() => {
+						if(!self.cardError){
+							self.buttonAction(null, script)	
+						}
+					});
 				}
 			}
 			else if(self.payment_type == 'ach'){
@@ -306,6 +295,8 @@ export default {
 							self.setError({key: key, value: value})
 						})
 					})
+
+					noFormErrors = false
 				}
 
 				let bankPhone = document.getElementById("bankphone").value
@@ -319,6 +310,8 @@ export default {
 							self.setError({key: key, value: value})
 						})
 					})
+
+					noFormErrors = false
 				}
 
 				if(self.getAchPaymentToken == ""){
@@ -333,6 +326,8 @@ export default {
 								self.setError({key: key, value: value})
 							})
 						})
+
+						noFormErrors = false
 					}
 
 					let routingNumber = document.getElementById("routingnumber").value
@@ -346,14 +341,24 @@ export default {
 								self.setError({key: key, value: value})
 							})
 						})
+
+						noFormErrors = false
+					}
+
+					script = "submitach"
+
+					if(noFormErrors){
+						self.buttonAction(null, "submitach")
+					}
+				}
+				else{
+					if(noFormErrors){
+						self.buttonAction(null, script)	
 					}
 				}
 			}
 
-			console.log(extraDetails)
-			stripe.createToken(card, extraDetails).then(setOutcome);
-
-			self.buttonAction(null, 'submitpayment')
+			
 
 		});
 	},

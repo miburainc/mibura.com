@@ -1,7 +1,7 @@
 <template>
 	
 <div>
-	<label :class="{'label-disabled': achToken == 'success'}" >{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name]"> {{ getErrors[step.form.name][0] }}</label>
+	<label :class="{'label-disabled': achToken == 'success'}" >{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name] && !(achToken=='success')"> {{ getErrors[step.form.name][0] }}</label>
 	<input 
 		:disabled="achToken == 'success'"
 		:class="{'error-border': getErrors[step.form.name]}"

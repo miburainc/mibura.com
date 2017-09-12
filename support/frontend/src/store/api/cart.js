@@ -11,7 +11,7 @@ const actions = {
 			console.error(error)
 		})
 	},
-	checkout(cart_obj) {
+	api_checkout(cart_obj) {
 		return axios.post(URL_ROOT + 'support/checkout/', cart_obj)
 		.then((response) => {
 			return response
@@ -37,6 +37,9 @@ const actions = {
 		.catch((error) => {
 			console.error(error)
 		})
+	},
+	sendAchRequest(payload){
+		
 	}
 }
 

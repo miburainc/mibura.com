@@ -100,10 +100,10 @@
 			</div>
 			<button type="button" class="btn btn-xs btn-link" @click="buttonEditClient">Edit</button>
 		</div>
-		<div v-else class="pad-10 text-center">
+		<!-- <div v-else class="pad-10 text-center">
 			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 		</div>
-		
+		 -->
 		<div>
 			<div class="form-group">
 				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>

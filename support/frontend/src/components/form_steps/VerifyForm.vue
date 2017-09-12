@@ -40,7 +40,7 @@
 			</div>
 			
 			<div class="col-sm-5">
-				<a style="font-size:30px;" href="#">Terms & Conditions</a><br>
+				<a role="button" style="font-size:30px;" href="#" data-toggle="modal" data-target="#termsModal">Terms & Conditions</a><br>
 				<div class="col-sm-9 checkbox text-center">
 			  <label style="font-size: 20px; color: lightblue;"><input style="height:19px; width:19px;" @click="setAcceptedTerms(true)" type="checkbox" value="">&nbsp; Accept</label>
 			</div>

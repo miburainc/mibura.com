@@ -3,20 +3,6 @@ import raven, logging
 
 SECRET_KEY = get_env_variable("SECRET_KEY")
 
-#  Video CDN
-
-# Cloudinary Image and Video CDN
-
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-cloudinary.config( 
-    cloud_name = "mibura", 
-    api_key = "615747629617717", 
-    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
-)
-
 
 
 # SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

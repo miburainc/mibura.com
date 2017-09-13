@@ -35,6 +35,20 @@ def get_env_variable(var_name):
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 
+#  Video CDN
+
+# Cloudinary Image and Video CDN
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+    cloud_name = "mibura", 
+    api_key = "615747629617717", 
+    api_secret = "jXGIfwrd6FjjzaDBHNnUOOGwIYg" 
+)
+
 # Application definition
 
 INSTALLED_APPS = [

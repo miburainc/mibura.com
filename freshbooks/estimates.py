@@ -50,25 +50,15 @@ def create_estimate(client, plan, length, items, discount, terms, notes):
 	else:
 		return False
 
-def list_estimates(client_id):
-	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
-	root = tree.getroot()
-	_id = root.find('estimate_id')
-	_id.text = client_id
-	input_xml = ET.tostring(root)
+def list_estimates():
+	url = "https://api.freshbooks.com/accounting/account/VY6wd/estimates/estimates"
+	headers = {'Authorization': 'Bearer ' + freshbooks_auth.get_auth_token(), 'Api-Version': 'alpha', 'Content-Type': 'application/json'}
+	
+	res = request.get(url, data=None, headers=headers)
+	json_response = res.json()
+	estimates = json_response['response']['result']['estimates']
 
-	data = input_xml
-	headers = {'Content-Type': 'application/xml'}
-	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-	# print(r)
-	print(r.content)
-	print('\n')
-	root = ET.fromstring(r.content)
-	print(root)
-	estimates = root[0]
-	print(estimates)
-	for e in estimates:
-		print('estimate_id', e.find('{http://www.freshbooks.com/api/}estimate_id').text)
+	return estimates
 
 def process_estimates(estimates, estimate_num):
 	response = {}
@@ -125,26 +115,7 @@ def process_estimates(estimates, estimate_num):
 	return response
 
 def get_estimate(estimate_num):
-	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
-	root = tree.getroot()
-
-	# Remove client id filter from list_estimates.xml
-	cid = root.find('client_id')
-	root.remove(cid)
-
-	input_xml = ET.tostring(root)
-
-	data = input_xml
-	headers = {'Content-Type': 'application/xml'}
-	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-
-	response = {}
-
-	response_root = ET.fromstring(r.content)	
-
-	remove_namespace(response_root, u'http://www.freshbooks.com/api/')
-
-	estimates = response_root[0]
+	estimates = list_estimates()
 	estimate_list_current_page = estimates.attrib['page']
 	estimate_list_pages = estimates.attrib['pages']
 	for page_index in range(1,int(estimate_list_pages)+1):

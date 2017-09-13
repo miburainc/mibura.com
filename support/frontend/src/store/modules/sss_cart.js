@@ -221,8 +221,6 @@ const getters = {
 	// //////////////
 	// Products
 
-
-	
 	getProductAge: state => product => {
 		let product_release = moment(product.release)
 		let today = moment()
@@ -230,7 +228,7 @@ const getters = {
 		let age = age_months / 6
 		return Math.round(age)
 	},
-	getProductPrice: (state,store) => cart_index => {
+	getProductPrice: (state, store) => cart_index => {
 		// 
 		// Calculate product price depending on plan selected by customer
 		// 
@@ -256,10 +254,7 @@ const getters = {
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
 		// Plan base product price e.g $49/yr
-		console.log("getProductPrice")
-		console.log(store.getCurrentPlan)
 		let pc = store.getPlan(store.getCurrentPlan).cost
-		console.log('pc',pc)
 		// Calculation and then divided by half since plans are sold in 6 month increments
 		cost = (pp * pm * pc) / 2
 		return cost
@@ -276,7 +271,6 @@ const getters = {
 		let price_iterations = store.getSupportMonths/6
 		// inc - amount to add to base price based on product age
 		let inc = product.category.yearly_tax
-		
 		let price = 0.0
 		// Calculate price base price depending on age
 		for (let e=0; e<product_age; e++) {

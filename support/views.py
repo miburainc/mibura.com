@@ -344,7 +344,7 @@ def get_estimate_pdf(request):
 		active_discount = 0.0
 
 		for index, dis in enumerate(discount_list):
-			if float(length) >= dis.year_threshold:
+			if float(cart.length) >= dis.year_threshold:
 				if dis.discount_percent > active_discount:
 					active_discount = dis.discount_percent
 
@@ -474,19 +474,78 @@ def checkout(request):
 		sub.products.add(*cart.products.all())
 		sub.cloud.add(*cart.cloud.all())
 
-		crm_res = createAccount({
-			"company": client.company,
-			"phone": client.phone,
-			"email": client.email,
-			"client_name": client.get_full_name(),
-			"address1": client.street,
-			"address2": client.street2,
-			"city": client.city,
-			"state": client.state,
-			"zipcode": client.zipcode,
-			"country": client.country,
-			"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
-		})
+		# Dynamics 365 CreateAccount
+		# crm_res = createAccount({
+		# 	"company": client.company,
+		# 	"phone": client.phone,
+		# 	"email": client.email,
+		# 	"client_name": client.get_full_name(),
+		# 	"address1": client.street,
+		# 	"address2": client.street2,
+		# 	"city": client.city,
+		# 	"state": client.state,
+		# 	"zipcode": client.zipcode,
+		# 	"country": client.country,
+		# 	"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
+		# })
+
+		for client_prod in cart.products.all():
+			items.append({
+				**client_prod.__dict__,
+				'type': 'product',
+				'category': client_prod.product.category,
+				'cost': product_price(client_prod, cart.plan, cart.length)
+			})
+
+		for cloud in cart.cloud.all():
+			items.append({
+				'name': cloud.name,
+				'type': 'cloud',
+				'category': 'cloud',
+				'cost': cloud_price(cloud, cart.plan, cart.length)
+			})
+
+		active_discount = 0.0
+
+		for index, dis in enumerate(discount_list):
+			if float(cart.length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+
+
+		line_items = []
+		for index,item in enumerate(items):
+			line_item = {
+
+			}
+			cat = categories.get(category_code=item['category'])
+
+			if item['type'] == 'product':
+				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
+				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
+
+			elif item['type'] == 'cloud':
+				cloud = Cloud.objects.get(name=item['name'])
+				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
+				desc = estimate_text.description
+
+			line_item['name'] = estimate_text.item
+			line_item['description'] = desc
+			line_item['unit_cost'] = {
+				'amount': str(round(item['cost'], 2)),
+				'code': 'USD'
+			}
+			line_item['qty'] = 1
+			line_item['type'] = 0
+
+			line_items.append(line_item)
+			
+		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
+		notes = 'Mibura Smart Support Invoice'
+
+		estimate_id = cart.freshbooks_id
+		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes, estimate_id)
+
 		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase")
 	return HttpResponse({'result': True}, status=200)
 

@@ -27,24 +27,6 @@
 
 			}">
 		</autocomplete>
-		<!-- <autocomplete
-            v-if=“data.src && get_current_step==step_names.brand”
-            :url=“getAPIRoot + ‘productcomplete’”
-            label=“brand”
-            anchor=“model”
-            param=“s”
-            class-name=“form-input”
-            :custom-params=“{format: ‘json’}”
-            :name=“data.form.name”
-            :id=“data.form.name”
-            :init-value=“getCurrentItemProp(data.form.name)”
-            :process=“processAjaxResult”
-            :on-ajax-loaded=“logData”
-            :placeholder=“data.placeholder”
-            :on-select=“(obj) => { setFormItemAutoselect(obj, data.form.name);
-                buttonAction(obj, ‘next’); }”
-            :min=“2”>
-        </autocomplete> -->
 
 		<div ref="input" v-for="(step, index) in form.data" v-if="index > 0" 
 			:style="{
@@ -52,10 +34,6 @@
 				}">
 			
 			<form-text-input :step="step"></form-text-input>
-
-			
-
-
 			
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
@@ -63,12 +41,6 @@
 
 		</div>
 	</div>
-	<!-- div class="button-group">
-		<button class="btn btn-lg btn-success">Add product to cart</button>
-		<button class="btn btn-lg btn-info">Verify ACH</button>
-
-		<button type="button" class="btn btn-lg btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Enter Estimate ID</button>
-	</div> -->
 </div>
 
 </template>
@@ -113,9 +85,8 @@ export default {
 			}
 		},
 		setFormItemAutoselect (obj, name) {
-			console.log("Name: " + name)
-			console.log("Obj: ", obj)
 			this.setCurrentItemProp({ prop: "brand", data: obj["brand"] })
+			this.setCurrentItemProp({ prop: "category", data: obj["category"] })
 			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
 			this.setCurrentItemProp({ prop: 'verified', data: true })
 

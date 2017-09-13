@@ -94,14 +94,14 @@
 			</div>
 		</div>
 
-		<div class="pad-10">
+		<div class="pad-5">
 			<div class="text-right pad-10">
-				SubTotal: ${{ numWithCommas(getTotal) }}<br>
+				<!-- SubTotal: ${{ numWithCommas(getTotal) }}<br> -->
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
+				<!-- <span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span> -->
 			</div>
-			<div class="btn-group btn-2">
+			<!-- <div class="btn-group btn-2">
 				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
 					Terms &amp; Conditions
 				</button>
@@ -109,7 +109,7 @@
 					<i class="fa fa-check" aria-hidden="true"></i>
 					&nbsp;Purchase
 				</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

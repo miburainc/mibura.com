@@ -8,7 +8,7 @@
 				<h3>{{ getPlan(getCurrentPlan).name }}</h3>
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; padding-top:0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
-				<button class="btn btn-lg btn-outline-info"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp</i>{{ upsell }}</button>
+				<!-- <button class="btn btn-lg btn-outline-info"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp</i>{{ upsell }}</button> -->
 			</div>
 			<br>
 			<!-- <h4>Cart Reference Code: {{ getCartReference }}</h4> -->

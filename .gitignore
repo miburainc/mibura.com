@@ -38,7 +38,9 @@ local.py
 
 # Javascript
 
+staticfiles/*
 staticfiles/
+/staticfiles/
 node_modules
 bower_components
 

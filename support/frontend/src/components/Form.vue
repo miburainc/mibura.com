@@ -264,15 +264,17 @@ export default {
 			// Grab current step data
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 			this.clearErrors()
-			
-			// If errors exist
-			if(scr == "back" && this.getCurrentFormStep > 0){
+			if(scr == "submitach"){
+				console.log("ASDFASDASF")
+				$('#achSubmitModal').modal('show')
+				return(true)
+			}
+			else if(scr == "back" && this.getCurrentFormStep > 0){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
 				return(true)
 			}
-			// If errors exist
 			else if(scr == "skip"){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep+1)
@@ -461,6 +463,20 @@ export default {
 														message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
 														type: "info"
 													})
+												}
+												else{
+													//finish submission of ach
+													// let payload = {
+													// 	'cart_ref': null,
+													// 	'accountnumber': this.getPaymentInfo['accountnumber'],
+													// 	'bankname': this.getPaymentInfo['bankname'],
+													// 	'bankphone': this.getPaymentInfo['bankphone'],
+													// 	'routingnumber': this.getPaymentInfo['routingnumber']
+													// }
+
+													console.log(this.getPaymentInfo)
+
+													console.log("done")
 												}
 											})
 									})

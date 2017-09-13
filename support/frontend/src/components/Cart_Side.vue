@@ -80,30 +80,9 @@
 				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 				&nbsp;Get Quote
 			</button>
+
 		</div> -->
 			
-		<!-- <div v-if="getCartReference">
-			<h4>Cart Reference Code: {{getCartReference}}</h4>
-		</div> -->
-		<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10">
-			<div class="col-xs-6">
-				{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
-				{{getClientInfo['email']}}<br>
-				{{getClientInfo['company']}}<br>
-				{{getClientInfo['phone']}}
-			</div>
-			<div class="col-xs-6">
-				{{getClientInfo['street']}},
-				{{getClientInfo['street2']}}<br>
-				{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
-				{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
-			</div>
-			<button type="button" class="btn btn-xs btn-link" @click="buttonEditClient">Edit</button>
-		</div>
-		<div v-else class="pad-10 text-center">
-			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
-		</div>
-		
 		<div>
 			<div class="form-group">
 				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>
@@ -115,14 +94,14 @@
 			</div>
 		</div>
 
-		<div class="pad-10">
+		<div class="pad-5">
 			<div class="text-right pad-10">
-				SubTotal: ${{ numWithCommas(getTotal) }}<br>
+				<!-- SubTotal: ${{ numWithCommas(getTotal) }}<br> -->
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
+				<!-- <span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span> -->
 			</div>
-			<div class="btn-group btn-2">
+			<!-- <div class="btn-group btn-2">
 				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
 					Terms &amp; Conditions
 				</button>
@@ -130,7 +109,7 @@
 					<i class="fa fa-check" aria-hidden="true"></i>
 					&nbsp;Purchase
 				</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

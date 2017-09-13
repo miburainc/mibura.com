@@ -38,6 +38,8 @@ azure-servicebus==0.20.3
 azure-servicefabric==5.6.130
 azure-servicemanagement-legacy==0.20.4
 azure-storage==0.33.0
+cairocffi==0.8.0
+CairoSVG==2.0.3
 certifi==2017.4.17
 cffi==1.10.0
 chardet==3.0.4
@@ -45,6 +47,8 @@ click==6.7
 cloudinary==1.8.0
 contextlib2==0.5.5
 cryptography==1.9
+cssselect==1.0.1
+cssselect2==0.2.0
 Django==1.11.3
 django-appconf==1.0.2
 django-cors-headers==2.1.0
@@ -57,12 +61,14 @@ djangorestframework==3.6.3
 et-xmlfile==1.0.1
 flake8==3.4.1
 gunicorn==19.7.1
+html5lib==0.999999999
 idna==2.5
 isodate==0.5.4
 jdcal==1.3
 Jinja2==2.9.6
 jsonfield==1.0.3
 keyring==10.4.0
+lxml==3.8.0
 MarkupSafe==1.0
 mccabe==0.6.1
 mock==2.0.0
@@ -83,6 +89,7 @@ pycparser==2.18
 pyflakes==1.6.0
 PyJWT==1.5.2
 pyOpenSSL==17.1.0
+Pyphen==0.9.4
 python-dateutil==2.6.1
 pytz==2017.2
 PyYAML==3.12
@@ -92,6 +99,10 @@ requests-oauthlib==0.8.0
 six==1.10.0
 sqlparse==0.2.3
 stripe==1.62.0
+tinycss==0.4
+tinycss2==0.6.0
 urllib3==1.21.1
 waitress==1.0.2
+WeasyPrint==0.40
+webencodings==0.5.1
 whitenoise==3.3.0

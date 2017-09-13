@@ -110,6 +110,9 @@ class Product(models.Model):
 	model = models.CharField(max_length=128)
 	sku = models.CharField(max_length=128)
 
+	partner_price = models.FloatField(default=0.0)
+	retail_price = models.FloatField(default=0.0)
+
 	category = models.ForeignKey(ProductCategory, null=True, blank=True)
 	price_silver = models.FloatField(default=1.0)
 	price_gold = models.FloatField(default=1.0)

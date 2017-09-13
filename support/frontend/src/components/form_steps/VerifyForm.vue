@@ -39,12 +39,13 @@
 				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 			
-			<div class="col-sm-5">
-				<a style="font-size:30px;" href="#">Terms & Conditions</a><br>
-				<div class="col-sm-9 checkbox text-center">
-			  <label style="font-size: 20px; color: lightblue;"><input style="height:19px; width:19px;" @click="setAcceptedTerms(true)" type="checkbox" value="">&nbsp; Accept</label>
-			</div>
-			</div>
+			<br>
+			<a role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>
+			<br>
+			<label style="font-size: 20px; color: lightblue;">
+				<input style="height:19px; width:19px;" @change="(e) => {setAcceptedTerms(e.target.checked)}" type="checkbox" value="">
+				Accept
+			</label>
 			
 		</div>
 		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	

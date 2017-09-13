@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone, encoding
-from django.template import Context
+from django.template import RequestContext, Context, loader
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.db.models import Q
@@ -28,7 +28,11 @@ from scripts.sss_pricing import product_price, cloud_price
 from dynamicscrm.api import createAccount
 from freshbooks import estimates
 
+from weasyprint import HTML
+import tempfile
+
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 #################
 # Email
@@ -263,6 +267,48 @@ def email_estimate_pdf(request):
 
 	return HttpResponse(status=400)
 
+def estimate_pdf(request):
+	"""Generate pdf."""
+	# Model data
+	# people = Person.objects.all().order_by('last_name')
+	if request.method == 'GET':
+		data = json.loads(request.body.decode("utf-8"))
+
+		data = dotdict(data)
+
+	cart = get_object_or_404(Cart, pk=data.cart_id)
+
+	template = loader.get_template('accounting/estimate.html')
+
+	context = {'cart': cart}
+
+	html = template.render(request=request, context=context)
+
+	# Rendered
+	# html_string = render_to_string('accounting/estimate.html', context)
+	# html = HTML(string=html_string)
+	# result = HTML(string=html_string, base_url=request.build_absolute_uri()).write_pdf()
+
+
+	# result = html.write_pdf()
+
+
+	# Creating http response
+	response = HttpResponse(content_type='application/pdf;')
+
+	# Try
+	HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+
+	response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
+	response['Content-Transfer-Encoding'] = 'binary'
+	# with tempfile.NamedTemporaryFile(delete=True) as output:
+	# 	output.write(result)
+	# 	output.flush()
+	# 	# output = open(output.name, 'r', "utf-8")
+	# 	output = open(output.name, mode='rb', encoding=None, buffering=1)
+	# 	response.write(output.read())
+	return response
+
 @csrf_exempt
 def get_estimate_pdf(request):
 	if request.method == 'POST':
@@ -272,6 +318,9 @@ def get_estimate_pdf(request):
 		
 		client = get_object_or_404(Client, pk=int(data.client['pk']))
 		cart = get_object_or_404(Cart, reference=data.cart_reference)
+		discount_list = Discount.objects.all()
+		plan_obj = Plan.objects.get(short_name=cart.plan)
+		categories = ProductCategory.objects.all()
 
 		items = []
 
@@ -290,9 +339,46 @@ def get_estimate_pdf(request):
 				'category': 'cloud',
 				'cost': cloud_price(cloud, cart.plan, cart.length)
 			})
+
+		active_discount = 0.0
+
+		for index, dis in enumerate(discount_list):
+			if float(length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+
+
+		line_items = []
+		for index,item in enumerate(items):
+			line_item = {
+
+			}
+			cat = categories.get(category_code=item['category'])
+
+			if item['type'] == 'product':
+				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
+				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
+
+			elif item['type'] == 'cloud':
+				cloud = Cloud.objects.get(name=item['name'])
+				desc = estimate_text.description
+
+			line_item['name'] = estimate_text.item
+			line_item['description'] = desc
+			line_item['unit_cost'] = {
+				'amount': str(round(item['cost'], 2)),
+				'code': 'USD'
+			}
+			line_item['qty'] = 1
+			line_item['type'] = 0
+
+			line_items.append(line_item)
 		
 		client.get_freshbooks_id()
-		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+
+		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
+		notes = 'Mibura Smart Support Estimate'
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
 		
 		if cart.freshbooks_id:
 			old_cart = deepcopy(cart)
@@ -312,16 +398,33 @@ def get_estimate_pdf(request):
 			cart.freshbooks_id = estimate_id
 			cart.save()
 		
-		pdf_status = estimates.get_estimate_pdf(estimate_id)
-		
-		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = '/tmp/' + file_name
-		pdf = FileWrapper(open(path_to_file, 'rb'))
+		# pdf_status = estimates.get_estimate_pdf(estimate_id)
 
-		response = HttpResponse(pdf, content_type='application/pdf')
-		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
-		response['Content-Length'] = os.path.getsize(path_to_file)
+		template = loader.get_template('accounting/estimate.html')
+		context = {
+			'items': line_items,
+			'client': client,
+			'cart': cart,
+			'terms': terms,
+			'notes': notes
+		}
+		html = template.render(request=request, context=context)
+		response = HttpResponse(content_type='application/pdf;')
+
+		HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+
+		response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
+		response['Content-Transfer-Encoding'] = 'binary'
 		return response
+		
+		# file_name = "Mibura_SmartSupport_Estimate.pdf"
+		# path_to_file = '/tmp/' + file_name
+		# pdf = FileWrapper(open(path_to_file, 'rb'))
+
+		# response = HttpResponse(pdf, content_type='application/pdf')
+		# response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		# response['Content-Length'] = os.path.getsize(path_to_file)
+		# return response
 	return HttpResponse('Not POST', status=400)
 
 @csrf_exempt

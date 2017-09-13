@@ -117,7 +117,7 @@ export function ValidateFormSteps(current_form, form_steps) {
 							let valid = false;
 							switch (value) {
 								case "text":
-									valid = /^\w+( \w+)*$/.test(current_form_item)
+									valid = /([A-Za-z0-9\-\_\(\)]+)/.test(current_form_item)
 									break;
 								case "number":
 									valid = /^\d+$/.test(current_form_item);

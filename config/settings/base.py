@@ -49,7 +49,6 @@ INSTALLED_APPS = [
 
     # Libraries
     'rest_framework',
-    'pinax.stripe',
     'cloudinary',
     'corsheaders',
     'crispy_forms',

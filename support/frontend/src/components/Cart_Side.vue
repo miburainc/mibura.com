@@ -62,7 +62,7 @@
 				</tbody>
 			</table>
 		</div>
-		<button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
+		<!-- <button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button> -->
 		
 		<div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
@@ -71,7 +71,7 @@
 			
 		</div>
 		<br><br>
-		<div class="btn-group btn-2">
+		<!-- <div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-info" @click="buttonPhoneSupport">
 				<i class="fa fa-phone" aria-hidden="true"></i>
 				&nbsp;Call Sales
@@ -80,8 +80,9 @@
 				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
 				&nbsp;Get Quote
 			</button>
-		</div>
-		
+
+		</div> -->
+			
 		<div>
 			<div class="form-group">
 				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>

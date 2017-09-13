@@ -1,13 +1,14 @@
 <template>
 	
 <div>
-	<label>{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name]"> {{ getErrors[step.form.name][0] }}</label>
+	<label :class="{'label-disabled': achToken == 'success'}" >{{ step.placeholder }} </label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[step.form.name] && !(achToken=='success')"> {{ getErrors[step.form.name][0] }}</label>
 	<input 
+		:disabled="achToken == 'success'"
 		:class="{'error-border': getErrors[step.form.name]}"
 		:type="step.form.type" 
 		:id="step.form.name" 
 		:name="step.form.name" 
-		:placeholder="step.placeholder" 
+		:placeholder="achToken == 'success' ? '' : step.placeholder" 
 		class="form-control" 
 		:value="get_form_input_value(step)" 
 		@change="(el) => {
@@ -28,13 +29,14 @@ import { ValidateFormStep } from '../scripts/functions'
 import {mapGetters, mapActions} from 'vuex'
 
 export default {
-	props: ['step'],
+	props: ['step', 'achToken'],
 	mounted() {
 
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
+			'setPaymentProp',
 			'setClientProp',
 			'clearErrors',
 			'clearError'
@@ -49,9 +51,11 @@ export default {
 				this.setClientProp({prop: s[s.length-1], data: value})
 			}
 			else if(s[0] == 'payment'){
+				console.log("payment error check")
+				console.log({prop: s[s.length-1], data: value})
+				console.log(value)
 				this.setPaymentProp({prop: s[s.length-1], data: value})
 			}
-			
 
 			let errors = ValidateFormStep(step, value)
 
@@ -75,7 +79,7 @@ export default {
 				}
 			}
 			else if (dest_array[0] == "payment") {
-				this.setClientProp({prop: dest_array[1], data: value})
+				this.setPaymentProp({prop: dest_array[dest_array.length-1], data: value})
 			}
 		},
 		get_form_input_value(obj) {
@@ -87,6 +91,9 @@ export default {
 			else if (dest_array[0] == "client") {
 				val = this.getClientInfo[dest_array[dest_array.length-1]]
 			}
+			else if (dest_array[0] == "payment") {
+				val = this.getPaymentInfo[dest_array[dest_array.length-1]]
+			}
 			return val
 		}
 	},
@@ -95,7 +102,8 @@ export default {
 			'getClientInfo',
 			'getCurrentItemProp',
 			'getErrors',
-			'getCurrentItem'
+			'getCurrentItem',
+			'getPaymentInfo'
 
 		])
 		

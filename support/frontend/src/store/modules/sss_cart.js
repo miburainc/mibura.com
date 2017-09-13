@@ -12,7 +12,7 @@ import {PLANS, step_names} from '../values'
 const state = {
 	cart: [],
 	cart_id: -1,
-	cart_ref: '',
+	cart_ref: null,
 	plans: PLANS,
 	current_plan: 'silver',
 	support_months: 12,
@@ -193,15 +193,18 @@ const actions = {
 		// Check if unverified items in cart
 		let can_checkout = true
 		for (let i=0; i<state.cart.length; i++) {
-			if (state.cart[i].sku=="none") {
+			if (!state.cart[i].verified && state.cart[i].type != "cloud") {
 				can_checkout = false;
+				console.log("unknown item")
+				console.log(state.cart[i])
 			}
 		}
 		if (can_checkout) {
-			cart.checkout(data)
+			cart.api_checkout(data)
 				.then((response) => {
 					dispatch('setPurchaseSuccess', true)
 				})
+			return true
 		}
 		else {
 			return false // Failed to checkout
@@ -255,6 +258,7 @@ const getters = {
 		let pm = product.category.price_multiplier
 		// Plan base product price e.g $49/yr
 		let pc = store.getPlan(store.getCurrentPlan).cost
+
 		// Calculation and then divided by half since plans are sold in 6 month increments
 		cost = (pp * pm * pc) / 2
 		return cost
@@ -307,12 +311,12 @@ const getters = {
 	getPlans: state => state.plans,
 	getCurrentPlan: state => state.current_plan,
     getPlan: state => plan => {
-		console.log("getPlan", plan)
-		console.log(state.plans.length)
+		// console.log("getPlan", plan)
+		// console.log(state.plans.length)
 		for (let i=0; i<state.plans.length; i++) {
 			if (state.plans[i].code == plan) {
-				console.log("Match found:")
-				console.log(state.plans[i].code, plan)
+				// console.log("Match found:")
+				// console.log(state.plans[i].code, plan)
 				return state.plans[i]
 			}
 		}

@@ -119,6 +119,8 @@ import AddressForm from './form_steps/AddressForm.vue'
 import ClientForm from './form_steps/ClientForm.vue'
 import ReviewForm from './form_steps/ReviewForm.vue'
 import PaymentForm from './form_steps/PaymentForm.vue'
+import VerifyForm from './form_steps/VerifyForm.vue'
+import SuccessForm from './form_steps/SuccessForm.vue'
 
 import {mapGetters, mapActions} from 'vuex'
 
@@ -141,7 +143,9 @@ const form_components = [
 	ClientForm,
 	AddressForm,
 	ReviewForm,
-	PaymentForm
+	PaymentForm,
+	VerifyForm,
+	SuccessForm
 ]
 
 export default {
@@ -166,14 +170,20 @@ export default {
 		...mapActions([
 			'addCartItem',
 			'addProduct',
+			'saveCart',
 			'setCurrentItemProp',
 			'setCurrentFormStep',
+			'serverGetEstimatePdf',
+			'serverSetClient',
 			'setError',
+			'saveCart',
 			'clearErrors',
 			'clearCurrentItem',
 			'setClientProp',
 			'serverSetClient',
 			'addNotification',
+			'setEstimatePdfFile',
+			'checkout',
 		]),
 
 		
@@ -242,6 +252,10 @@ export default {
 
 			}
 		},
+		buttonStartPayment() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+			this.setCurrentFormStep(step_names.payment)
+		},
 		buttonAction(el, scr) {
 
 			console.log("button action", scr)
@@ -250,19 +264,26 @@ export default {
 			// Grab current step data
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 			this.clearErrors()
-			
-			// If errors exist
-			if(scr == "back" && this.getCurrentFormStep > 0){
+			if(scr == "submitach"){
+				console.log("ASDFASDASF")
+				$('#achSubmitModal').modal('show')
+				return(true)
+			}
+			else if(scr == "back" && this.getCurrentFormStep > 0){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep-1)
 				this.formTimeoutNext()
 				return(true)
 			}
-			// If errors exist
 			else if(scr == "skip"){
 				this.past_step = this.getCurrentFormStep
 				this.setCurrentFormStep(this.getCurrentFormStep+1)
 				this.formTimeoutNext()
+				return(true)
+			}
+			else if(scr == "submitpayment"){
+				this.past_step = this.getCurrentFormStep
+				this.goToStep(this.getCurrentFormStep+1)
 				return(true)
 			}
 			
@@ -325,6 +346,34 @@ export default {
 							velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 							
 							break;
+						case "getquote":
+							if (this.getCart.length < 1) {
+								this.addNotification({
+									type: 'warning',
+									message: 'Please add items to your cart!'
+								})
+								this.buttonStartNewItem()
+							}
+							else if (Object.keys(this.getClientInfo).length<10) {
+								this.addNotification({
+									type: 'warning',
+									message: 'Please provide your contact information.'
+								})
+								this.buttonStartClientInfo()
+							}
+							else {
+								if (this.getCartChanged) {
+									// Reset pdf to nothing
+									this.setEstimatePdfFile(null);
+									// Send request for new pdf file
+									this.saveCart(this.getClientInfo)
+										.then(() => {
+											this.serverGetEstimatePdf()
+										})
+								}
+								$('#pdfModal').modal('show')
+							}
+							break;
 						case "additem":
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
@@ -365,6 +414,76 @@ export default {
 							)
 							this.clearCurrentItem()
 							break;
+						case "purchase":
+							if (this.getCart.length < 1) {
+								this.addNotification({
+									type: 'warning',
+									message: 'Please add items to your cart before clicking purchase!'
+								})
+								this.buttonStartNewItem()
+							}
+							else if (Object.keys(this.getClientInfo) < 10) {
+								this.addNotification({
+									type: 'warning',
+									message: 'Please fill out your information!'
+								})
+								this.buttonStartClientInfo()
+							}
+							else if (!this.getPaymentToken) {
+								console.log(this.getPaymentToken)
+								this.addNotification({
+									type: 'warning',
+									message: 'Please fill out your payment information!'
+								})
+								this.buttonStartPayment()
+							}
+							else if (!this.getAcceptedTerms) {
+								this.addNotification({
+									message: "Please accept terms and conditions.",
+									type: "warning"})
+							}
+							else {
+								this.serverSetClient().then(() => {
+									this.saveCart().then(() => {
+										this.checkout()
+											.then((status) => {
+												console.log("after purchase callback")
+												console.log(status)
+												if (status == false) {
+													// Failed
+													this.addNotification({
+														message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
+														type: "danger"
+													})
+													this.addNotification({
+														message: "To speak with Mibura about your support plan, click 'Call Sales' to speak with a Mibura sales representative.",
+														type: "warning"
+													})
+													this.addNotification({
+														message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
+														type: "info"
+													})
+												}
+												else{
+													//finish submission of ach
+													// let payload = {
+													// 	'cart_ref': null,
+													// 	'accountnumber': this.getPaymentInfo['accountnumber'],
+													// 	'bankname': this.getPaymentInfo['bankname'],
+													// 	'bankphone': this.getPaymentInfo['bankphone'],
+													// 	'routingnumber': this.getPaymentInfo['routingnumber']
+													// }
+
+													console.log(this.getPaymentInfo)
+
+													console.log("done")
+												}
+											})
+									})
+								})
+								
+							}
+							break;
 					}
 				}
 			}	
@@ -387,6 +506,14 @@ export default {
 			else if (dest_array[0] == "payment") {
 				this.setClientProp({prop: dest_array[1], data: value})
 			}
+		},
+		buttonStartNewItem() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+			this.setCurrentFormStep(step_names.item)
+		},
+		buttonStartClientInfo() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+			this.setCurrentFormStep(step_names.client_info)
 		},
 		setItemProp () {
 			this.setCurrentFormStep(this.getCurrentFormStep + 1)
@@ -475,6 +602,9 @@ export default {
 			'getErrors',
 			'getClientInfo',
 			'getCart',
+			'getCartChanged',
+			'getAcceptedTerms',
+			'getPaymentToken'
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]
@@ -574,6 +704,10 @@ label {
 	margin-bottom: 0;
 }
 
+.label-disabled{
+	color: #545454!important; 
+}
+
 input[type=text], select, .form-control {
 	background: transparent;
 	color: white;
@@ -584,6 +718,13 @@ input[type=text], select, .form-control {
     border: 1px solid #8493A8;
     border-radius: 4px;
     box-sizing: border-box;
+
+    &:disabled {
+		background: transparent;
+		color: #545454!important;
+		cursor: initial!important;
+		border: 1px solid #545454!important;
+	}
 }
 
 .form-input-list {

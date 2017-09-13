@@ -415,10 +415,10 @@ def get_estimate_pdf(request):
 		html = template.render(request=request, context=context)
 		response = HttpResponse(content_type='application/pdf;')
 
-		HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+		# HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
 
-		response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
-		response['Content-Transfer-Encoding'] = 'binary'
+		# response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
+		# response['Content-Transfer-Encoding'] = 'binary'
 		return response
 		
 		# file_name = "Mibura_SmartSupport_Estimate.pdf"

@@ -10,26 +10,56 @@ except ImportError:
 
 def create_client(client_obj):
 	# print(client_obj)
-	url = "https://api.freshbooks.com/accounting/account/VY6wd/users/clients"
-	headers = {'Authorization': 'Bearer <Bearer Token>', 'Api-Version': 'alpha', 'Content-Type': 'application/json'}
-	payload = {
-		'client': { 
-			'email': client_obj['email'],
-			'fname': client_obj['first_name'],
-			'lname': client_obj['last_name'],
-			'organization': client_obj['company'],
-			'home_phone': client_obj['phone']
-		}
-	}
-	res = requests.post(url, data=json.dumps(payload), headers=headers)
+	tree = ET.ElementTree(file='freshbooks/xml_templates/create_client.xml')
+	root = tree.getroot()
+	client = root[0]
 
-	if res.status_code == 200 or res.status_code == 201:
-		return json_response['response']['result']['client']['id']
+	first_name = client.find('first_name')
+	first_name.text = client_obj['first_name']
+
+	last_name = client.find('last_name')
+	last_name.text = client_obj['last_name']
+
+	email = client.find('email')
+	email.text = client_obj['email']
+
+	organization = client.find('organization')
+	organization.text = client_obj['company']
+
+	phone = client.find('work_phone')
+	phone.text = client_obj['phone']
+
+	street1 = client.find('p_street1')
+	street1.text = client_obj['street']
+
+	street2 = client.find('p_street2')
+	if client_obj['street2'] != '':
+		street2.text = client_obj['street2']
 	else:
-		return False
+		client.remove(street2)
 
+	city = client.find('p_city')
+	city.text = client_obj['city']
+
+	state = client.find('p_state')
+	state.text = client_obj['state']
+
+	country = client.find('p_country')
+	country.text = client_obj['country']
+
+	zipcode = client.find('p_code')
+	zipcode.text = client_obj['zipcode']
+
+	data = ET.tostring(root)
+
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	root = ET.fromstring(r.content)
+	client_id = root[0]
+	return client_id.text
 
 def list_clients(client):
+	tree = ET.ElementTree(file='freshbooks/xml_templates/list_clients.xml')
 	root = tree.getroot()
 	email = root.find('email')
 	email.text = client['email']

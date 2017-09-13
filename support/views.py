@@ -29,7 +29,7 @@ from scripts.sss_pricing import product_price, cloud_price
 from dynamicscrm.api import createAccount
 from freshbooks import estimates
 
-from weasyprint import HTML
+# from weasyprint import HTML
 import tempfile
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -298,10 +298,10 @@ def estimate_pdf(request):
 	response = HttpResponse(content_type='application/pdf;')
 
 	# Try
-	HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
+	# HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
 
-	response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
-	response['Content-Transfer-Encoding'] = 'binary'
+	# response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
+	# response['Content-Transfer-Encoding'] = 'binary'
 	# with tempfile.NamedTemporaryFile(delete=True) as output:
 	# 	output.write(result)
 	# 	output.flush()

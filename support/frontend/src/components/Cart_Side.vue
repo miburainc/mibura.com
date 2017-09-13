@@ -81,28 +81,6 @@
 				&nbsp;Get Quote
 			</button>
 		</div>
-			
-		<div v-if="getCartReference">
-			<h4>Cart Reference Code: {{getCartReference}}</h4>
-		</div>
-		<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10">
-			<div class="col-xs-6">
-				{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
-				{{getClientInfo['email']}}<br>
-				{{getClientInfo['company']}}<br>
-				{{getClientInfo['phone']}}
-			</div>
-			<div class="col-xs-6">
-				{{getClientInfo['street']}},
-				{{getClientInfo['street2']}}<br>
-				{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
-				{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
-			</div>
-			<button type="button" class="btn btn-xs btn-link" @click="buttonEditClient">Edit</button>
-		</div>
-		<div v-else class="pad-10 text-center">
-			<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
-		</div>
 		
 		<div>
 			<div class="form-group">

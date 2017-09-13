@@ -7,7 +7,7 @@
 
     body {
       font-family: Helvetica, sans-serif;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 100;
     }
 
@@ -33,7 +33,7 @@
      }
 
      div {
-      padding: 5px;
+      padding: 0px;
      }
 
      .title {
@@ -63,7 +63,7 @@
       border: 0px solid gray;
      }
 
-     .text-align {
+     .text-right {
       text-align: right;
      }
 
@@ -72,77 +72,81 @@
  <body>
     
    
-   <div style="float: right; text-align: right;">
-    Mibura Inc<br>
-    3530 S Bentley St<br>
-    Los Angeles, CA 90034<br>
-    United States
-   </div>
+	<div style="float: right; text-align: right;">
+		Mibura Inc<br>
+		3530 S Bentley St<br>
+		Los Angeles, CA 90034<br>
+		United States
+	</div>
 
-   <div class="image"></div>
+	<div class="image"></div>
 
-
-   <div class="border" style="width: 50%; padding-left: 15px; float: right;">
-     <span class="title">Estimate Number</span><br>
-     000012
-   </div>
-   <div class="border" style="width: 50%;">
-    <div class="border" style="float: right; margin-right: 50px; padding: 0px;">
-      <span class="title">Estimate Date</span><br>
-      09/12/2017
-    </div>
-     <span class="title">Billed To</span><br>
-     {{ client.get_full_name }}<br>
-     {{ client.company }}<br>
-     {{ client.street1 }}<br>
-     {{ client.city }}, {{ client.state }}<br>
-     {{ client.zipcode }}<br>
-     {{ client.country }}
-   </div>
+	<div>
+		<div class="border" style="width: 50%; float: right;">
+			<span class="title" style="padding-left: 20px">Estimate Number</span><br>
+			<span style="padding-left: 20px">{{ estimate_num }}</span>
+		</div>
+	   
+		<div class="border" style="width: 50%;">
+			<div style="float: left">
+				<span class="title">Billed To</span><br>
+				{{ client.get_full_name }}<br>
+				{{ client.company }}<br>
+				{{ client.street }}<br>
+				{{ client.city }}, {{ client.state }}<br>
+				{{ client.zipcode }}<br>
+				{{ client.country }}
+			</div>
+			<div style="float: right; margin-right: 35px;">
+				<span class="title">Estimate Date</span><br>
+				{{ date }}
+			</div>
+		</div>
+	</div>
    
 
-   <table class="table">
-     <thead>
-       <tr>
-         <th>Description</th>
-         <th>Rate</th>
-         <th>Qty</th>
-         <th class="text-right" style="text-align: right;">Line Total</th>
-       </tr>
-     </thead>
-     <tbody>
-       {% for item in items %}
-         <tr>
-           <td>
-            {{ item.name }}<br>
-            {{ item.description }}
-           </td>
-           <td>{{ item.unit_cost.amount }}</td>
-           <td>1</td>
-           <td class="text-right" style="text-align: right;">{{ item.unit_cost.amount }}</td>
-         </tr>
-       {% endfor %}
-     </tbody>
-   </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Description</th>
+				<th class="text-right">Rate</th>
+				<th class="text-right">Qty</th>
+				<th class="text-right">Line Total</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for item in items %}
+			<tr style="border-bottom: 1px solid #e6e6e6; padding-top: 2px; padding-bottom: 2px;">
+				<td style="width: 55%">
+					{{ item.name }}<br>
+					<span style="font-size: 11px;">{{ item.description|linebreaksbr }}</span>
+				</td>
+				<td class="text-right">{{ item.unit_cost.amount }}</td>
+				<td class="text-right" style="width: 10%;">1</td>
+				<td class="text-right" style="width: 10%;">{{ item.unit_cost.amount }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-   <div style="float: right; width: 50%; border-bottom: 3px double #e6e6e6;">
-     <div style="float: right; width: 25%; text-align: right; line-height: 20px;">
-       $250<br>
-       $0.0
-     </div>
-     <div style="padding-left: 25%;width: 75%; text-align: right; line-height: 20px;">
-       Subtotal<br>
-       Tax
-     </div>
-   </div>
-   <div style="float: right; width: 50%; ">
-     <div style="float: right; font-size: 12px; width: 25%; text-align: right; line-height: 20px;">
-       $500<br>
-     </div>
-     <div style="padding-left: 25%; font-size: 12px; width: 75%; text-align: right; line-height: 20px;">
-       <span class="title">Estimate Total (USD)</span><br>
-     </div>
-   </div>
+	<div style="float: right; width: 50%; border-bottom: 3px double #e6e6e6;">
+		<div style="float: right; width: 25%; text-align: right; line-height: 20px;">
+			$250<br>
+			$0.0
+		</div>
+		<div style="padding-left: 25%;width: 75%; text-align: right; line-height: 20px;">
+			Subtotal<br>
+			Tax
+		</div>
+	</div>
+	<div style="float: right; width: 50%; ">
+		<div style="float: right; font-size: 12px; width: 25%; text-align: right; line-height: 20px;">
+			$500<br>
+		</div>
+		<div style="padding-left: 25%; font-size: 12px; width: 75%; text-align: right; line-height: 20px;">
+			<span class="title">Estimate Total (USD)</span><br>
+		</div>
+	</div>
 
    <div style="clear: both; margin-top: 50px;">
      <span class="title">Notes</span><br>

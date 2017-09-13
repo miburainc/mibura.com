@@ -13,6 +13,7 @@ from django.template import RequestContext, Context, loader
 from django.template.loader import render_to_string, get_template
 from django.core.mail import EmailMessage
 from django.db.models import Q
+from django.utils.dateformat import DateFormat
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
@@ -361,6 +362,7 @@ def get_estimate_pdf(request):
 
 			elif item['type'] == 'cloud':
 				cloud = Cloud.objects.get(name=item['name'])
+				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
 				desc = estimate_text.description
 
 			line_item['name'] = estimate_text.item
@@ -405,6 +407,8 @@ def get_estimate_pdf(request):
 			'items': line_items,
 			'client': client,
 			'cart': cart,
+			'date': DateFormat(datetime.now()).format('Y-m-d'),
+			'estimate_num': estimate_id,
 			'terms': terms,
 			'notes': notes
 		}

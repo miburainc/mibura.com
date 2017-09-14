@@ -43,8 +43,6 @@ SHEETS = [
 	'SUPERMICRO',
 ]
 
-def App2(csv):
-
 # Main App
 def App(wb, name):
 	print("*************")

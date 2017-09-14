@@ -26,6 +26,7 @@
 					</tbody>
 				</table>
 			</div>
+			<p>Cart Reference ID: {{ getCartReference }}</p>
 			<div style="padding: 0px 0px 5px 7px">
 			SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;

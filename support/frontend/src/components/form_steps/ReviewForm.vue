@@ -26,7 +26,20 @@
 					</tbody>
 				</table>
 			</div>
-			<p>Cart Reference ID: {{ getCartReference }}</p>
+			<p class="pad-5">Cart Reference ID: {{ getCartReference }}</p>
+			<div class="pad-5">
+				<h4>Your information:</h4>
+				<div v-if="Object.keys(getClientInfo).length > 0">
+					<div v-for="key in Object.keys(getClientInfo)">
+						{{key}}: {{getClientInfo[key]}}
+					</div>
+					<br>
+					<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
+				</div>
+				<div v-else>
+					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
+				</div>
+			</div>
 			<div style="padding: 0px 0px 5px 7px">
 			SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;

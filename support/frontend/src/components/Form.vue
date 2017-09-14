@@ -652,6 +652,25 @@ export default {
 	}
 }
 
+.btn-outline-danger {
+	padding: 10px 20px;
+	color: #ff1818;
+	background: transparent;
+	border: 1px solid #ff1818;
+	transition: 0.2s background, 0.2s color;
+
+	&:hover {
+		padding: 10px 20px;
+		color: #ff1818;
+		border-color: #ff1818;
+		background: transparent;
+		background: rgba(255, 128, 128,.12);
+	}
+	&:focus {
+		color: #3285C4;
+	}
+}
+
 .btn-outline-success {
 	padding: 10px 20px;
 	color: #00a25c;

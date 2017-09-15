@@ -1,5 +1,6 @@
 import freshbooks from './api/freshbooks'
 import plaid from './api/plaid'
+import stripe from './api/stripe'
 import productApi from './api/products'
 import cart from './api/cart'
 
@@ -8,6 +9,24 @@ import * as TYPE from './types'
 export default {
   plaidSendCredentials({commit, state}) {
     plaid.sendPlaidCredentials(state.stripe.ach_account_id, state.stripe.ach_public_token)
+      .then((response) => {
+        commit(TYPE.SET_STRIPE_PROP, {
+          prop: 'ach_payment_token',
+          value: response.data
+        })
+      })
+  },
+  achSendCredentials({commit, rootState}, achToken) {
+    plaid.postAchCredentials(rootState.Form.client_info.pk, achToken)
+      .then((response) => {
+        commit(TYPE.SET_STRIPE_PROP, {
+          prop: 'ach_payment_token',
+          value: response.data
+        })
+      })
+  },
+  achSendVerify({commit, rootState}) {
+    plaid.postAchVerify(rootState.Form.client_info.pk, state.stripe.ach_public_token)
       .then((response) => {
         commit(TYPE.SET_STRIPE_PROP, {
           prop: 'ach_payment_token',

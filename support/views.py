@@ -151,23 +151,25 @@ def stripe_ach_begin(request):
 		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
 
-		plaid_account_id = data.ach_account_id
-		plaid_link_public_key = data.ach_public_key
-		print("plaid_account_id", plaid_account_id)
-		print("plaid_link_public_key", plaid_link_public_key)
+		# Get the bank token submitted by the form
+		token_id = data.stripeAchToken
+		client_id = data.client_id
+		client = get_object_or_404(Client, pk=client_id)
 
-		client = plaid.Client(settings.PLAID_CLIENT_ID,
-				settings.PLAID_SECRET_KEY,
-				settings.PLAID_PUBLIC_KEY,
-				'sandbox')
-		print("client", client.__dict__)
-		exchange_token_response = client.Item.public_token.exchange(plaid_link_public_key)
-		print("exchange_token_response", exchange_token_response)
-		access_token = exchange_token_response['access_token']
-		stripe_response = client.Processor.stripeBankAccountTokenCreate(access_token, plaid_account_id)
-		bank_account_token = stripe_response['stripe_bank_account_token']
+		# Create a Customer
+		customer = stripe.Customer.create(
+			source=token_id,
+			description=client.get_full_name() + " customer",
+			email=client.email,
+			metadata={"first_name": client.first_name, "last_name": client.last_name, "company": client.company}
+		)
 
-		return HttpResponse(bank_account_token, status=200)
+		print(customer)
+
+		client.stripe_customer_id = customer['id']
+		client.save()
+
+		return HttpResponse(True, status=200)
 
 
 	return HttpResponse("failed", status=400)
@@ -182,23 +184,21 @@ def verify_ach(request):
 		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
 
-		plaid_account_id = data.ach_account_id
-		plaid_link_public_key = data.ach_public_key
-		print("plaid_account_id", plaid_account_id)
-		print("plaid_link_public_key", plaid_link_public_key)
+		ach_verify_amt1 = data.ach_verify_amt1
+		ach_verify_amt2 = data.ach_verify_amt2
 
-		client = plaid.Client(settings.PLAID_CLIENT_ID,
-				settings.PLAID_SECRET_KEY,
-				settings.PLAID_PUBLIC_KEY,
-				'sandbox')
-		print("client", client.__dict__)
-		exchange_token_response = client.Item.public_token.exchange(plaid_link_public_key)
-		print("exchange_token_response", exchange_token_response)
-		access_token = exchange_token_response['access_token']
-		stripe_response = client.Processor.stripeBankAccountTokenCreate(access_token, plaid_account_id)
-		bank_account_token = stripe_response['stripe_bank_account_token']
+		client_id = data.client_id
 
-		return HttpResponse(bank_account_token, status=200)
+		client = get_object_or_404(Client, pk=client_id)
+
+		# get the existing bank account
+		customer = stripe.Customer.retrieve(client.stripe_customer_id)
+		bank_account = customer.sources.retrieve("ba_17SHwa2eZvKYlo2CUx7nphbZ")
+
+		# verify the account
+		bank_account.verify(amounts= [32, 45])
+
+		return HttpResponse(True, status=200)
 
 
 	return HttpResponse("failed", status=400)

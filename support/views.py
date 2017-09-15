@@ -109,6 +109,8 @@ def purchase(request):
 
 
 
+# Stripe
+
 @csrf_exempt
 def plaid_credentials(request):
 	# plaid.Client.config({'url': 'https://tartan.plaid.com'})

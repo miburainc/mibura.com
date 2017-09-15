@@ -55,7 +55,7 @@
 						</td>
 						<td class="text-right">
 							<div class="btn-group">
-								<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+								<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
 								<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 							</div>
 						</td>
@@ -391,7 +391,7 @@ export default {
 		},
 		writeOutSupportLength() {
 			let str = ""
-			let lenArray = String(this.getSupportMonths/12).split('.')
+			let lenArray = String(this.getSupportMonths / 12).split('.')
 			if (lenArray.length > 1) {
 				if(lenArray[0] == 1){
 					str = lenArray[0] + " Year & 6 months"	
@@ -439,6 +439,10 @@ export default {
 
 .cart-table-body tr td {
 	font-size: 1.1em;
+}
+
+.btn-plan {
+	border-radius: 0px;
 }
 
 .btn-plan:focus {

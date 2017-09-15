@@ -4,6 +4,8 @@ import stripe from './api/stripe'
 import productApi from './api/products'
 import cart from './api/cart'
 
+import {step_names} from './values'
+
 import * as TYPE from './types'
 
 export default {
@@ -17,21 +19,26 @@ export default {
       })
   },
   achSendCredentials({commit, rootState}, achToken) {
-    plaid.postAchCredentials(rootState.Form.client_info.pk, achToken)
+    stripe.postAchCredentials(rootState.Form.client_info.pk, achToken)
       .then((response) => {
-        commit(TYPE.SET_STRIPE_PROP, {
-          prop: 'ach_payment_token',
-          value: response.data
-        })
+        console.log(response)
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'achsubmitted'})
+        
+        commit(TYPE.SET_CURRENT_FORM_STEP, step_names.success)
+        // commit(TYPE.SET_STRIPE_PROP, {
+        //   prop: 'ach_payment_token',
+        //   value: response.data
+        // })
       })
   },
   achSendVerify({commit, rootState}) {
-    plaid.postAchVerify(rootState.Form.client_info.pk, state.stripe.ach_public_token)
+    stripe.postAchVerify(rootState.Form.client_info.pk, rootState.Form.payment_info.verify1, rootState.Form.payment_info.verify2)
       .then((response) => {
-        commit(TYPE.SET_STRIPE_PROP, {
-          prop: 'ach_payment_token',
-          value: response.data
-        })
+        console.log(response)
+        // commit(TYPE.SET_STRIPE_PROP, {
+        //   prop: 'ach_payment_token',
+        //   value: response.data
+        // })
       })
   },
   ServerRequestPastEstimate({commit, state, rootState}, estimate_ref) {

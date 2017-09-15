@@ -208,7 +208,8 @@ export default {
 	name: 'app',
 	data () {
 		return {
-			estimate_id: ''
+			estimate_id: '',
+			stripe: null
 		}
 	},
 	components: {
@@ -243,9 +244,11 @@ export default {
 			'setCloudProviders',
 			'setCurrentFormStep',
 			'setEstimatePdfFile',
+			'achSendCredentials',
 			'serverGetEstimatePdf',
 			'serverSetClient',
 			'saveCart',
+			'setPaymentProp',
 		]),
 		emailQuote() {
 			this.sendQuoteEmail()
@@ -262,12 +265,24 @@ export default {
 			let payload = {
 				'cart_ref': null,
 				'accountnumber': this.getPaymentInfo['accountnumber'],
-				'bankname': this.getPaymentInfo['bankname'],
+				'bankname': this.getPaymentInfo['bankcustomername'],
 				'bankphone': this.getPaymentInfo['bankphone'],
 				'routingnumber': this.getPaymentInfo['routingnumber']
 			}
 
-			console.log(payload)
+			this.stripe.createToken('bank_account', {
+				country: 'us',
+				currency: 'usd',
+				routing_number: this.getPaymentInfo['routingnumber'],
+				account_number: this.getPaymentInfo['accountnumber'],
+				account_holder_name: this.getPaymentInfo['bankcustomername'],
+				account_holder_type: this.getPaymentInfo['accounttype'],
+			}).then((results) => {
+				// handle result.error or result.token
+				console.log(results.token)
+				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
+				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
+			});
 
 
 			// Reset pdf to nothing
@@ -275,12 +290,13 @@ export default {
 			// Send request for new pdf file
 			this.serverSetClient().then(() => {
 				this.saveCart(this.getClientInfo)
-			}).then(() => {
-				this.serverGetEstimatePdf()
+			// }).then(() => {
+				// this.serverGetEstimatePdf()
 			}).then(() => {
 				payload['cart_ref'] = this.getCartReference
 				console.log("SEND PAYLOAD TO API ENDPOINT")
 				console.log(payload)
+				this.achSendCredentials(this.getPaymentInfo['banktoken'])
 			})
 			
 			
@@ -288,6 +304,10 @@ export default {
 		}
 	},
 	mounted() {
+		setTimeout(() => {
+			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
+		}, 1000)
+		
 		axios.get(this.getAPIRoot + 'cloud')
 			.then((response) => {
 				console.log(response)

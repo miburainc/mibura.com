@@ -177,7 +177,7 @@ def stripe_ach_begin(request):
 # Unfinished
 @csrf_exempt
 def verify_ach(request):
-	# plaid.Client.config({'url': 'https://tartan.plaid.com'})
+	print('verify_ach')
 
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
@@ -186,17 +186,19 @@ def verify_ach(request):
 
 		ach_verify_amt1 = data.ach_verify_amt1
 		ach_verify_amt2 = data.ach_verify_amt2
-
+		print('ach_verify_amt1', ach_verify_amt1)
+		print('ach_verify_amt2', ach_verify_amt2)
+		
 		client_id = data.client_id
 
 		client = get_object_or_404(Client, pk=client_id)
 
 		# get the existing bank account
 		customer = stripe.Customer.retrieve(client.stripe_customer_id)
-		bank_account = customer.sources.retrieve("ba_17SHwa2eZvKYlo2CUx7nphbZ")
+		bank_account = customer.sources.retrieve("ba_1B2TMPEalNly5MsuR4AfYYhH")
 
 		# verify the account
-		bank_account.verify(amounts= [32, 45])
+		bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
 
 		return HttpResponse(True, status=200)
 

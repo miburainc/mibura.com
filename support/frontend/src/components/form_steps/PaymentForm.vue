@@ -13,10 +13,6 @@
 				:class="{'error-border': getErrors[form.data[0].form.name]}" 
 				:step="form.data[0]" 
 				id="cardName"></form-text-input>
-				<form-text-input 
-				:class="{'error-border': getErrors[form.data[1].form.name]}"
-				:step="form.data[1]" 
-				id="cardPhone"></form-text-input>
 
 				<label>Card Info</label>
 				<div id="card-element" class="field" :class="{'error-border': cardError}"></div>
@@ -33,17 +29,16 @@
 			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
 				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[6].form.name]}" 
-				:step="form.data[6]"></form-text-input>
+				:class="{'error-border': getErrors[form.data[4].form.name]}" 
+				:step="form.data[4]"></form-text-input>
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[7].form.name]}" 
-				:step="form.data[7]"></form-text-input>
+				:class="{'error-border': getErrors[form.data[5].form.name]}" 
+				:step="form.data[5]"></form-text-input>
 			</div>
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
 
-				<form-text-input :step="form.data[2]" id="bankName"></form-text-input>
-				<form-text-input :step="form.data[3]" id="bankPhone"></form-text-input>
+				<form-text-input :step="form.data[1]"></form-text-input>
 				
 				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px;">
 					<div class="row">
@@ -63,11 +58,14 @@
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="accountNumber" 
 								style="margin-top:15px"
-								:step="form.data[4]"></form-text-input>
+								:step="form.data[2]"></form-text-input>
 							<form-text-input  
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="routingNumber" 
-								:step="form.data[5]"></form-text-input>
+								:step="form.data[3]"></form-text-input>
+							<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
+							This is a company account
+							<br>
 							<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
 						</div>
 					</div>
@@ -103,6 +101,7 @@ export default {
 	props: ['form', 'buttonAction'],
 	methods: {
 		...mapActions([
+			'setPaymentProp',
 			'setPaymentToken',
 			'setStripeProp',
 			'plaidSendCredentials',
@@ -172,23 +171,12 @@ export default {
 
 				var errors = null
 
-				let bankName = document.getElementById("bankname").value
-				extraDetails['bankName'] = bankName
+				let bankcustomername = document.getElementById("bankcustomername").value
+				extraDetails['bankcustomername'] = bankcustomername
 
-				errors = ValidateFormStep(self.form.data[2], bankName)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							this.setError({key: key, value: value})
-						})
-					})
-				}
+				console.log("errors: bankcustomername", bankcustomername)
 
-				let bankPhone = document.getElementById("bankphone").value
-				extraDetails['bankPhone'] = bankPhone
-
-				errors = ValidateFormStep(self.form.data[3], bankPhone)
+				errors = ValidateFormStep(self.form.data[1], bankcustomername)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -239,8 +227,6 @@ export default {
 
 			var error = false
 
-			console.log("ASDF")
-
 			if (result.token) {
 				// Use the token to create a charge or a customer
 				// https://stripe.com/docs/charges
@@ -288,21 +274,6 @@ export default {
 					noFormErrors = false
 				}
 
-				let cardPhone = document.getElementById("cardphone").value
-				extraDetails['cardPhone'] = cardPhone
-
-				errors = ValidateFormStep(self.form.data[1], cardPhone)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
 				if(noFormErrors){
 					stripe.createToken(card, extraDetails).then(setOutcome).then(() => {
 						if(!self.cardError){
@@ -313,25 +284,12 @@ export default {
 			}
 			else if(self.payment_type == 'ach'){
 
-				let bankName = document.getElementById("bankname").value
-				extraDetails['bankName'] = bankName
+				let bankcustomername = document.getElementById("bankcustomername").value
+				extraDetails['bankcustomername'] = bankcustomername
 
-				errors = ValidateFormStep(self.form.data[2], bankName)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
+				console.log("error bankcustomername:", bankcustomername)
 
-					noFormErrors = false
-				}
-
-				let bankPhone = document.getElementById("bankphone").value
-				extraDetails['bankPhone'] = bankPhone
-
-				errors = ValidateFormStep(self.form.data[3], bankPhone)
+				errors = ValidateFormStep(self.form.data[1], bankcustomername)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -347,7 +305,7 @@ export default {
 					let accountNumber = document.getElementById("accountnumber").value
 					extraDetails['accountNumber'] = accountNumber
 
-					errors = ValidateFormStep(self.form.data[4], accountNumber)
+					errors = ValidateFormStep(self.form.data[2], accountNumber)
 					if (errors["valid"] == false)
 					{
 						forEachValue(errors["errors"], (value, key) => {
@@ -362,7 +320,7 @@ export default {
 					let routingNumber = document.getElementById("routingnumber").value
 					extraDetails['routingNumber'] = routingNumber
 
-					errors = ValidateFormStep(self.form.data[5], routingNumber)
+					errors = ValidateFormStep(self.form.data[3], routingNumber)
 					if (errors["valid"] == false)
 					{
 						forEachValue(errors["errors"], (value, key) => {
@@ -391,7 +349,7 @@ export default {
 				let verify1 = document.getElementById("verify1").value
 				extraDetails['verify1'] = verify1
 
-				errors = ValidateFormStep(self.form.data[6], verify1)
+				errors = ValidateFormStep(self.form.data[4], verify1)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -406,7 +364,7 @@ export default {
 				let verify2 = document.getElementById("verify2").value
 				extraDetails['verify2'] = verify2
 
-				errors = ValidateFormStep(self.form.data[7], verify2)
+				errors = ValidateFormStep(self.form.data[5], verify2)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {

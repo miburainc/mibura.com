@@ -16,7 +16,7 @@ class ProductSerializer(serializers.ModelSerializer):
 		fields = (
 			'brand', 
 			'model', 
-			'sku', 
+			'sku',
 			'category',
 			'price_silver',
 			'price_gold',

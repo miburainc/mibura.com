@@ -161,7 +161,8 @@ class Cart(models.Model):
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
 	reference = models.CharField(max_length=128) # Reference code for client to use
-	freshbooks_id = models.CharField(max_length=32, blank=True)
+	freshbooks_estimate_id = models.CharField(max_length=32, blank=True)
+	freshbooks_estimate_num = models.CharField(max_length=32, blank=True)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
@@ -194,6 +195,8 @@ class Subscription(models.Model):
 	date_begin = models.DateTimeField(blank=True)
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
+
+	freshbooks_invoice_num = models.CharField(max_length=32, blank=True)
 
 	def get_expiration(self):
 		return self.date_begin + timedelta(days=self.length*365)

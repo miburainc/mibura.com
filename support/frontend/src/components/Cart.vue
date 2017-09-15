@@ -38,47 +38,36 @@
 
 					<td class="text-right">
 						<div class="btn-group">
-							<button v-if="item.type != 'cloud'" type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+							<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
 							<button type="button" class="btn btn-sm btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="btn-group">
-			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-cloud" aria-hidden="true"></i> Add Cloud</button>
-			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetEstimate"><i class="fa fa-upload" aria-hidden="true"></i> Open Quote</button>
-			<button type="button" class="btn btn-sm btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button>
+		<div class="btn-group btn-2">
+			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
+			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
+			
+			
 		</div>
 			
 		<hr><br>
-		<div class="pull-right">
+		<div>
 			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
-			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#termsModal">
-				Terms &amp; Conditions
-			</button>
 		</div>
+
 		<div>
-			<h4>Your information:</h4>
-			<div v-if="Object.keys(getClientInfo).length > 0">
-				<div v-for="key in Object.keys(getClientInfo)">{{key}}: {{getClientInfo[key]}}
-				</div>
-				<br>
-				<button type="button" class="btn btn-link" @click="buttonEditClient">Edit</button>
-			</div>
-			<div v-else>
-				<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
-			</div>
+			<button class="btn btn-sm" style="width: 25%; border: none; background: #f4f4f4;  text-align: right;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:red" aria-hidden="true"></i></button>
+			
+			<div style="color: black; display: inline-block; width: 49%; text-align: center;">{{writeOutSupportLength}}</div>
+
+			<button class="btn btn-sm" style="width: 25%; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:green" aria-hidden="true"></i></button>
+				
+				
 		</div>
-		
+		<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 		<div>
-			<div class="form-group">
-				<!-- <label style="color: black;">Months</label>
-				<input style="color: black;" class="form-control" type="number" min="6" max="108" name="years" step="6" @change="setSupportMonths" :value="getSupportMonths"> -->
-				<label style="color: black;">{{writeOutSupportLength}}</label>
-				<input style="color: black;" class="form-control" type="number" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
-			</div>
 			<div style="color: black;" class="text-right">
 				SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;

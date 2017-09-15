@@ -46,12 +46,12 @@ def create_estimate(client, plan, length, items, discount, terms, notes):
 	json_response = res.json()
 
 	if res.status_code == 200:
-		return json_response['response']['result']['estimate']['estimate_number']
+		return json_response['response']['result']['estimate']
 	else:
 		return False
 
-def list_estimates():
-	url = "https://api.freshbooks.com/accounting/account/VY6wd/estimates/estimates"
+def list_estimates(page):
+	url = "https://api.freshbooks.com/accounting/account/VY6wd/estimates/estimates?page=" + str(page)
 	headers = {'Authorization': 'Bearer ' + freshbooks_auth.get_auth_token(), 'Api-Version': 'alpha', 'Content-Type': 'application/json'}
 	
 	res = request.get(url, data=None, headers=headers)

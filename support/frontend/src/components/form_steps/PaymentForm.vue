@@ -274,7 +274,7 @@ export default {
 			if(self.payment_type == 'card'){
 				
 				let cardName = document.getElementById("cardname").value
-				extraDetails['cardName'] = cardName
+				extraDetails['name'] = cardName
 
 				errors = ValidateFormStep(self.form.data[0], cardName)
 				if (errors["valid"] == false)

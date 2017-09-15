@@ -55,7 +55,7 @@
 						</td>
 						<td class="text-right">
 							<div class="btn-group">
-								<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+								<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
 								<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 							</div>
 						</td>
@@ -83,20 +83,18 @@
 
 		</div> -->
 			
-		<div class="container-fluid" style="background: #DEDEDE;">
-			<div class="row">
-				<div class="col-md-2" style="margin:3px 0px 0px 0px; padding-left:15px;">
-					<button class="btn btn-sm" style="border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
-				</div>
-				<div class="col-md-8" style="margin:0px; padding:0px;">
-					<h4 style="color: black; text-align: center;">{{writeOutSupportLength}}</h4>
-				</div>
-				<div class="col-md-2" style="margin:3px 0px 0px 0px; padding:0px;">
-					<button class="btn btn-sm" style="border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
-				</div>
+		<div style="background: #DEDEDE;">
+
+			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 21%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
+			
+			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:56%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+			
+			
+			<button class="btn btn-sm" style="width: 18%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
+		
 				
-				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
-			</div>
+			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
+			
 		</div>
 
 		<!-- <div class="pad-5">
@@ -394,7 +392,7 @@ export default {
 		},
 		writeOutSupportLength() {
 			let str = ""
-			let lenArray = String(this.getSupportMonths/12).split('.')
+			let lenArray = String(this.getSupportMonths / 12).split('.')
 			if (lenArray.length > 1) {
 				if(lenArray[0] == 1){
 					str = lenArray[0] + " Year & 6 months"	
@@ -442,6 +440,10 @@ export default {
 
 .cart-table-body tr td {
 	font-size: 1.1em;
+}
+
+.btn-plan {
+	border-radius: 0px;
 }
 
 .btn-plan:focus {

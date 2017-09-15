@@ -45,7 +45,8 @@
 			<br>
 			<a role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<label style="font-size: 20px; color: lightblue;">
-				<input style="height:19px; width:19px;" @change="(e) => {setTerms(e.target.checked)}" type="checkbox" id="termsCheckbox">
+
+				<input style="height:19px; width:19px;" @change="(e) => {setAcceptedTerms(e.target.checked)}" type="checkbox" :checked="getAcceptedTerms">
 				Accept
 			</label>
 			
@@ -157,7 +158,8 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
-			'getPaymentToken'
+			'getPaymentToken',
+			'getAcceptedTerms'
 
 		])
 		

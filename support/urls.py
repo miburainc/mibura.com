@@ -25,7 +25,10 @@ urlpatterns = [
 	url(r'^send-quote-email/$', views.email_estimate_pdf, name="send_quote_email"),
 	url(r'^get-previous-estimate/$', views.get_previous_estimate, name="get_previous_estimate"),
 	url(r'^checkout/$', views.checkout, name="checkout"),
+	# Stripe and Payments
 	url(r'^plaid-credentials/$', views.plaid_credentials, name="plaid_credentials"),
+	url(r'^ach-credentials/$', views.stripe_ach_begin, name="ach_credentials"),
+	url(r'^ach-verify/$', views.verify_ach, name="ach_verify"),
 ]
 
 urlpatterns += [

@@ -48,6 +48,7 @@ export const step_names = {
 	client_address: 4,
 	payment: 5,
 	checkout: 6,
+	success: 8
 }
 
 export const product_multiplier = {
@@ -452,24 +453,9 @@ export const form_steps = [
 				}
 			},
 			{
-				placeholder: "Cardholder Phone",
+				placeholder: "Bank Customer Name",
 				src: "",
-				dest: "payment.cardphone",
-				required: true,
-				validate: {
-					type: "phone",
-					min: 6,
-				},
-				form: {
-					type: "tel",
-					name: "cardphone",
-					class: "field",
-				}
-			},
-			{
-				placeholder: "Bank Account Name",
-				src: "",
-				dest: "payment.bankname",
+				dest: "payment.bankcustomername",
 				required: true,
 				validate: {
 					type: "text",
@@ -477,22 +463,7 @@ export const form_steps = [
 				},
 				form: {
 					type: "text",
-					name: "bankname",
-					class: "field",
-				}
-			},
-			{
-				placeholder: "Phone Number",
-				src: "",
-				dest: "payment.bankphone",
-				required: true,
-				validate: {
-					type: "phone",
-					min: 6,
-				},
-				form: {
-					type: "tel",
-					name: "bankphone",
+					name: "bankcustomername",
 					class: "field",
 				}
 			},

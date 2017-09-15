@@ -184,6 +184,7 @@ export default {
 			'addNotification',
 			'setEstimatePdfFile',
 			'checkout',
+			'achSendVerify',
 		]),
 
 		
@@ -262,8 +263,13 @@ export default {
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 			this.clearErrors()
 			if(scr == "submitach"){
-				console.log("ASDFASDASF")
+				console.log("SubmitACH in ButtonAction")
 				$('#achSubmitModal').modal('show')
+				return(true)
+			}
+			else if(scr == "verifyach") {
+				console.log("verifyACH in ButtonAction")
+				this.achSendVerify()
 				return(true)
 			}
 			else if(scr == "back" && this.getCurrentFormStep > 0){

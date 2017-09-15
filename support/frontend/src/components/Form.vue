@@ -629,6 +629,10 @@ export default {
 	text-align: center;
 }
 
+.table-hover>tbody>tr:hover {
+    background-color: #999999;
+}
+
 .btn-outline-info {
 	padding: 10px 20px;
 	color: #3285C4;

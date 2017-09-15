@@ -21,8 +21,8 @@
 					</thead> -->
 					<tbody>
 						<tr v-for="(item, index) in getCart">
-							<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
-							<td style="color:white;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+							<td style="color:white; padding-left:15px;" >{{ item.brand }} {{ item.model }}</td>
+							<td style="color:white; text-align:right; padding-right:15px;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -41,15 +41,16 @@
 					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 				</div>
 			</div> -->
-			<div style="padding: 0px 0px 5px 7px">
-			SubTotal: ${{ numWithCommas(getTotal) }}<br>
-				%{{getCurrentDiscount*100}} Discount: &nbsp;
-				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+			<div class="col-md-9"></div>
+			<div class="col-xs-12 col-md-3" style="padding: 15px 15px 15px 7px; text-align:right;">
+				<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
+				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
+				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
+				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button v-on:keypress.enter.prevent style="white-space: normal;" type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
+			<div v-for="btn in form.buttons" style="padding:0px; margin:0px" class="col-xs-12 col-md-4"><button v-on:keypress.enter.prevent style="width:100%; whitespace: normal;" type="button"  :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
 		</div>
 	</div>
 </div>
@@ -183,8 +184,6 @@ export default {
 
 <style lang="scss">
 
-.table-hover>tbody>tr:hover {
-    background-color: #CCCCCC;
-}
+
 	
 </style>

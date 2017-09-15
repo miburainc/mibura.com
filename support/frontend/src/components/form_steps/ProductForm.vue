@@ -36,8 +36,8 @@
 			<form-text-input :step="step"></form-text-input>
 			
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button style="margin-right:3px; white-space: normal;" v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button><button v-on:keypress.enter.prevent style="white-space: normal;" v-if="getCart.length" class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(null, 'skip')">Skip to Cloud Services</button>
+		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
+			<div v-for="btn in form.buttons" style="padding:0px; margin:0px" class="col-xs-12 col-md-3"><button style="white-space: normal; width:100%" v-on:keypress.enter.prevent type="button" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div><div class="col-xs-12 col-md-3" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(null, 'skip')">Skip to Cloud Services</button></div>
 
 		</div>
 	</div>

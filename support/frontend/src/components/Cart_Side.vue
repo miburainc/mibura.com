@@ -86,13 +86,13 @@
 		<div class="container-fluid" style="background: #DEDEDE;">
 			<div class="row">
 				<div class="col-md-2" style="margin:3px 0px 0px 0px; padding-left:15px;">
-					<button class="btn btn-sm" style="border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:red" aria-hidden="true"></i></button>
+					<button class="btn btn-sm" style="border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
 				</div>
 				<div class="col-md-8" style="margin:0px; padding:0px;">
 					<h4 style="color: black; text-align: center;">{{writeOutSupportLength}}</h4>
 				</div>
 				<div class="col-md-2" style="margin:3px 0px 0px 0px; padding:0px;">
-					<button class="btn btn-sm" style="border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:green" aria-hidden="true"></i></button>
+					<button class="btn btn-sm" style="border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
 				</div>
 				
 				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
@@ -163,19 +163,22 @@ export default {
 				case 'silver':
 					this.addNotification({
 						type: 'success',
-						message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Pro Silver provides 4 hour response for the lowest price!'
+						// message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 				case 'gold':
 					this.addNotification({
 						type: 'success',
-						message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Pure Gold provides 15 min response and free cloud support!'
+						// message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 				case 'black':
 					this.addNotification({
 						type: 'success',
-						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team!'
+						// message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 			}
@@ -414,7 +417,7 @@ export default {
 			return str
 		}
 	}
-}
+}    
 
 </script>
 

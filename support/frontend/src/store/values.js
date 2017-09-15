@@ -525,7 +525,37 @@ export const form_steps = [
 					name: "routingnumber",
 					class: "field",
 				}
-			}		
+			},
+			{
+				placeholder: "Verify Ammount #1",
+				src: "",
+				dest: "payment.verify1",
+				required: true,
+				validate: {
+					type: "number",
+					min: 2,
+				},
+				form: {
+					type: "number",
+					name: "verify1",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Verify Ammount #2",
+				src: "",
+				dest: "payment.verify2",
+				required: true,
+				validate: {
+					type: "number",
+					min: 2,
+				},
+				form: {
+					type: "number",
+					name: "verify2",
+					class: "field",
+				}
+			}			
 		],
 		buttons: [
 			{

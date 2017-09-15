@@ -9,9 +9,9 @@ function validatePhone(phone) {
 	return /^(?:(?:\(?(?:00|\+)([1-4]\d\d|[1-9]\d?)\)?)?[\-\.\ \\\/]?)?((?:\(?\d{1,}\)?[\-\.\ \\\/]?){0,})(?:[\-\.\ \\\/]?(?:#|ext\.?|extension|x)[\-\.\ \\\/]?(\d+))?$/i.test(phone)
 }
 
-function setError(key, value) {
+// function setError(key, value) {
 
-}
+// }
 
 export function toJSONLocal (date) {
     var local = new Date(date);
@@ -76,7 +76,7 @@ export function ValidateFormStep(fieldStep, fieldValue){
 						}
 						else {
 							errors["valid"] = false
-							errors.errors[fieldStep.form.name].push("Maximum length required is " + value + " characters.")
+							errors.errors[fieldStep.form.name].push("Maximum length allowed is " + value + " characters.")
 							valid = false
 						}
 						break;
@@ -84,9 +84,7 @@ export function ValidateFormStep(fieldStep, fieldValue){
 			})
 		}
 	}
-
-	console.log(errors)
-
+	
 	return errors
 }
 

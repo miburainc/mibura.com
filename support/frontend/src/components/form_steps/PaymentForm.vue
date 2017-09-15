@@ -32,9 +32,12 @@
 
 			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
 				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
-				<label>Bank ACH Ammounts</label>
-				<input type="text" class="form-control" placeholder="Ammount 1"><br>
-				<input type="text" class="form-control" placeholder="Ammount 2">
+				<form-text-input 
+				:class="{'error-border': getErrors[form.data[6].form.name]}" 
+				:step="form.data[6]"></form-text-input>
+				<form-text-input 
+				:class="{'error-border': getErrors[form.data[7].form.name]}" 
+				:step="form.data[7]"></form-text-input>
 			</div>
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
@@ -71,9 +74,9 @@
 				</div>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-2-round" > 	
-			<button v-on:keypress.enter.prevent :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button><button id="btn_review" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button v-on:keypress.enter.prevent style="white-space: normal;" :class="form.buttons[0].class" type="button"
+			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button><button id="btn_review" style="white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button>
 			
 		</div>
 	</div>
@@ -114,6 +117,31 @@ export default {
 		},
 		switchTabs(newTab){
 			this.payment_type = newTab
+			this.clearErrors()
+			// if(newTab == 'card'){
+			// 	for (i = 0; i < form.data.length; i++) { 
+			// 		clearErrors()
+			// 	    if(i <= 1){
+			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
+			// 	    }
+			// 	}
+			// }
+			// else if(newTab == 'ach'){
+			// 	for (i = 0; i < form.data.length; i++) { 
+			// 		clearErrors()
+			// 	    if(i >= 2) && (i <= 5){
+			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
+			// 	    }
+			// 	}
+			// }
+			// else if(newTab == 'verify'){
+			// 	for (i = 0; i < form.data.length; i++) { 
+			// 		clearErrors()
+			// 	    if(i >= 6){
+			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
+			// 	    }
+			// 	}
+			// }
 		},
 		checkError(){
 			return(true)
@@ -152,7 +180,7 @@ export default {
 				{
 					forEachValue(errors["errors"], (value, key) => {
 						value.map((val) => {
-							self.setError({key: key, value: value})
+							this.setError({key: key, value: value})
 						})
 					})
 				}
@@ -165,7 +193,7 @@ export default {
 				{
 					forEachValue(errors["errors"], (value, key) => {
 						value.map((val) => {
-							self.setError({key: key, value: value})
+							this.setError({key: key, value: value})
 						})
 					})
 				}
@@ -184,6 +212,7 @@ export default {
 		document.getElementById('linkButton').onclick = function() {
 			linkHandler.open();
 		};
+		
 		var stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
 		var elements = stripe.elements();
 		var card = elements.create('card', {
@@ -355,6 +384,44 @@ export default {
 					if(noFormErrors){
 						self.buttonAction(null, script)	
 					}
+				}
+			}
+			else if(self.payment_type == 'verify'){
+
+				let verify1 = document.getElementById("verify1").value
+				extraDetails['verify1'] = verify1
+
+				errors = ValidateFormStep(self.form.data[6], verify1)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							self.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				let verify2 = document.getElementById("verify2").value
+				extraDetails['verify2'] = verify2
+
+				errors = ValidateFormStep(self.form.data[7], verify2)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							self.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				script = "verifyach"
+
+				if(noFormErrors){
+					self.buttonAction(null, script)
 				}
 			}
 

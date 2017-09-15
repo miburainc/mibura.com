@@ -38,18 +38,21 @@
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
 				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
-			
 			<br>
-			<a role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>
+			<div>
+			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
+			</div>
 			<br>
+			<a role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<label style="font-size: 20px; color: lightblue;">
+
 				<input style="height:19px; width:19px;" @change="(e) => {setAcceptedTerms(e.target.checked)}" type="checkbox" :checked="getAcceptedTerms">
 				Accept
 			</label>
 			
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
-			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
 </div>
@@ -63,6 +66,7 @@ import {mapGetters, mapActions} from 'vuex'
 import Autocomplete from 'vue2-autocomplete-js';
 
 export default {
+
 	props: ['form', 'buttonAction'],
 	mounted() {
 
@@ -77,6 +81,11 @@ export default {
 			'checkout',
 			'setAcceptedTerms',
 		]),
+		setTerms(value){
+			this.setAcceptedTerms(value)
+			console.log(value)
+			document.getElementById('termsCheckbox').checked = value
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

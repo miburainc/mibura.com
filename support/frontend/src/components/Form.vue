@@ -200,11 +200,8 @@ export default {
 			this.clearErrors()
 		},
 		formHandleEnter(){
-			console.log("ahelo")
-			console.log(this.getFormSteps[this.getCurrentFormStep])
 			let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
 			this.buttonAction(null, buttons[buttons.length-1].script)
-			
 		},
 		addCloudItem(cloud_pk) {
 			let cloud = {};

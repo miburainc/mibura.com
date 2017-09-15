@@ -5,19 +5,20 @@
 	<div class="container-fluid">
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,0.23);" class="col-xs-12">
 			<div style="margin:0px 0px 0px 0px; padding:10px 0px 10px 10px; background: rgba(0,0,0,0.16);" class="col-xs-12">
-				<h3>{{ getPlan(getCurrentPlan).name }}</h3>
+				<h3>{{ getPlan(getCurrentPlan).name }}</h3><h4>{{ writeOutSupportLength() }}</h4>
+				
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; padding-top:0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
 				<!-- <button class="btn btn-lg btn-outline-info"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp</i>{{ upsell }}</button> -->
 			</div>
 			<br>
 			<!-- <h4>Cart Reference Code: {{ getCartReference }}</h4> -->
-			<div style="margin:0px 0px 10px 0px; padding: 10px 0px 0px 0px;" class="col-xs-12">
-				<table class="table table-hover table-outline">
-					<thead>
+			<div style="margin:0px 0px 0px 0px; padding: 0px 0px 0px 0px;" class="col-xs-12">
+				<table class="table table-hover table-outline" style="margin-bottom: 15px; border-bottom: 1px solid lightgray;">
+<!-- 					<thead>
 						<th style="padding-left:10px">Product</th>
 						<th style="padding-left:10px">Price</th>
-					</thead>
+					</thead> -->
 					<tbody>
 						<tr v-for="(item, index) in getCart">
 							<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
@@ -26,7 +27,7 @@
 					</tbody>
 				</table>
 			</div>
-			<p class="pad-5">Cart Reference ID: {{ getCartReference }}</p>
+			<!-- <p class="pad-5">Cart Reference ID: {{ getCartReference }}</p>
 			<div class="pad-5">
 				<h4>Your information:</h4>
 				<div v-if="Object.keys(getClientInfo).length > 0">
@@ -39,7 +40,7 @@
 				<div v-else>
 					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 				</div>
-			</div>
+			</div> -->
 			<div style="padding: 0px 0px 5px 7px">
 			SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
@@ -47,8 +48,8 @@
 				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-3-round"> 	
-			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button v-on:keypress.enter.prevent style="white-space: normal;" type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
 </div>
@@ -78,6 +79,30 @@ export default {
 		]),
 		processAjaxResult(json) {
 			return json['results']
+		},
+		writeOutSupportLength() {
+			let str = ""
+			let lenArray = String(this.getSupportMonths/12).split('.')
+			if (lenArray.length > 1) {
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year & 6 months"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years & 6 months"		
+				}
+				else{
+					str = "6 months"
+				}
+			}
+			else {
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years"
+				}
+			}
+			return str
 		},
 		setFormItemAutoselect (obj, name) {
 			console.log("Name: " + name)
@@ -147,6 +172,7 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
+			'getSupportMonths'
 
 		])
 		
@@ -156,5 +182,9 @@ export default {
 </script>
 
 <style lang="scss">
+
+.table-hover>tbody>tr:hover {
+    background-color: #CCCCCC;
+}
 	
 </style>

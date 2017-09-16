@@ -144,7 +144,7 @@ def plaid_credentials(request):
 # Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):
-	# plaid.Client.config({'url': 'https://tartan.plaid.com'})
+	print("stripe_ach_begin")
 
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
@@ -153,6 +153,7 @@ def stripe_ach_begin(request):
 
 		# Get the bank token submitted by the form
 		token_id = data.stripeAchToken
+		print("token_id", token_id)
 		client_id = data.client_id
 		client = get_object_or_404(Client, pk=client_id)
 
@@ -165,8 +166,10 @@ def stripe_ach_begin(request):
 		)
 
 		print(customer)
+		print(customer['default_bank_account'])
 
 		client.stripe_customer_id = customer['id']
+		client.stripe_bank_id = customer['default_bank_account']
 		client.save()
 
 		return HttpResponse(True, status=200)
@@ -188,19 +191,22 @@ def verify_ach(request):
 		ach_verify_amt2 = data.ach_verify_amt2
 		print('ach_verify_amt1', ach_verify_amt1)
 		print('ach_verify_amt2', ach_verify_amt2)
-		
+
 		client_id = data.client_id
 
 		client = get_object_or_404(Client, pk=client_id)
 
 		# get the existing bank account
 		customer = stripe.Customer.retrieve(client.stripe_customer_id)
-		bank_account = customer.sources.retrieve("ba_1B2TMPEalNly5MsuR4AfYYhH")
+		bank_account = customer.sources.retrieve(client.stripe_bank_id)
 
 		# verify the account
-		bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
+		try:
+			result = bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
+		except:
+			return HttpResponse(status=400)
 
-		return HttpResponse(True, status=200)
+		return HttpResponse({"message": "Success"}, status=200)
 
 
 	return HttpResponse("failed", status=400)
@@ -527,12 +533,22 @@ def checkout(request):
 		
 		discount_total = total - total*active_discount
 		stripe_total = math.floor(discount_total*100)
-		stripe.Charge.create(
-			amount=stripe_total,
-			currency="usd",
-			source=data.stripe_token, # obtained with Stripe.js
-			description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
-		)
+		if data.stripe_token:
+			stripe.Charge.create(
+				amount=stripe_total,
+				currency="usd",
+				source=data.stripe_token,
+				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
+			)
+		else:
+			stripe.Charge.create(
+				amount=stripe_total,
+				currency="usd",
+				customer=client.stripe_customer_id,
+				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
+			)
+
+		
 		time = datetime.now()
 		sub = Subscription(
 			client=client, 

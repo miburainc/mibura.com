@@ -46,8 +46,9 @@ export const step_names = {
 	cloud: 2,
 	client_info: 3,
 	client_address: 4,
-	payment: 5,
-	checkout: 6,
+	review: 5,
+	payment: 6,
+	verify: 7,
 	success: 8
 }
 

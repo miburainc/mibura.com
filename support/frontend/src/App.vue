@@ -282,22 +282,25 @@ export default {
 				console.log(results.token)
 				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
 				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
+
+				// Reset pdf to nothing
+				this.setEstimatePdfFile(null);
+				// Send request for new pdf file
+				this.serverSetClient().then(() => {
+					this.saveCart(this.getClientInfo)
+				// }).then(() => {
+					// this.serverGetEstimatePdf()
+				}).then(() => {
+					payload['cart_ref'] = this.getCartReference
+					console.log("SEND PAYLOAD TO API ENDPOINT")
+					console.log(payload)
+					this.achSendCredentials(this.getPaymentInfo['banktoken'])
+				})
+				
 			});
 
 
-			// Reset pdf to nothing
-			this.setEstimatePdfFile(null);
-			// Send request for new pdf file
-			this.serverSetClient().then(() => {
-				this.saveCart(this.getClientInfo)
-			// }).then(() => {
-				// this.serverGetEstimatePdf()
-			}).then(() => {
-				payload['cart_ref'] = this.getCartReference
-				console.log("SEND PAYLOAD TO API ENDPOINT")
-				console.log(payload)
-				this.achSendCredentials(this.getPaymentInfo['banktoken'])
-			})
+			
 			
 			
 			//GO TO SUCCESS PAGE

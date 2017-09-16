@@ -1,7 +1,10 @@
 import freshbooks from './api/freshbooks'
 import plaid from './api/plaid'
+import stripe from './api/stripe'
 import productApi from './api/products'
 import cart from './api/cart'
+
+import {step_names} from './values'
 
 import * as TYPE from './types'
 
@@ -13,6 +16,30 @@ export default {
           prop: 'ach_payment_token',
           value: response.data
         })
+      })
+  },
+  achSendCredentials({commit, rootState}, achToken) {
+    stripe.postAchCredentials(rootState.Form.client_info.pk, achToken)
+      .then((response) => {
+        console.log(response)
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'achsubmitted'})
+        
+        commit(TYPE.SET_CURRENT_FORM_STEP, step_names.success)
+      })
+  },
+  achSendVerify({commit, rootState}) {
+    stripe.postAchVerify(rootState.Form.client_info.pk, rootState.Form.payment_info.verify1, rootState.Form.payment_info.verify2)
+      .then((response) => {
+        console.log(response)
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'ach'})
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'payment_token', data: 'ach'})
+        commit(TYPE.ADD_NOTIFICATION, {type: 'success',message: "Successfully verified bank account.  Please proceed to checkout"})
+        
+        commit(TYPE.SET_CURRENT_FORM_STEP, step_names.verify)
+        // commit(TYPE.SET_STRIPE_PROP, {
+        //   prop: 'ach_payment_token',
+        //   value: response.data
+        // })
       })
   },
   ServerRequestPastEstimate({commit, state, rootState}, estimate_ref) {

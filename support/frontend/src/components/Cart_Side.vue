@@ -30,21 +30,22 @@
 	</div>
 
 	<div style="color: black;">
-		<h4 class="text-center">Cart</h4>
+		<!-- <h4 class="text-center">Cart</h4>
 		<table id="cart-table-header" class="table table-condensed table-striped">
 			<thead :style="cartHeaderStyle">
 				<th style="padding-left: 15px">Product</th>
 				<th class="text-right">Subtotal</th>
 				<th class="text-right" style="padding-right: 15px">Options</th>
 			</thead>
-		</table>
-		<div style="max-height:150px;overflow:auto;margin-bottom:0px;">
-			<table class="table table-striped table-condensed table-hover">
+		</table> -->
+		<div v-show="this.getCart.length > 0" style="max-height:150px;overflow:auto;margin: 0px; padding:0px;">
+			<table class="table table-striped table-condensed table-hover" style="padding:0px; margin:0px; border-bottom: 1px solid lightgray">
 				<tbody class="cart-table-body">
-					<tr v-if="this.getCart.length < 1" class="text-center">
+					<!-- <tr v-if="this.getCart.length < 1" class="text-center">
 						<td colspan="4">None</td>
-					</tr>
-					<tr v-else v-for="(item, index) in getCart">
+					</tr> -->
+					<!-- <tr v-else v-for="(item, index) in getCart"> -->
+					<tr v-for="(item, index) in getCart">
 						<td>
 							<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
 							{{item.brand}} {{item.model}}
@@ -54,7 +55,7 @@
 						</td>
 						<td class="text-right">
 							<div class="btn-group">
-								<button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp;
+								<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
 								<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
 							</div>
 						</td>
@@ -65,12 +66,11 @@
 		<!-- <button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button> -->
 		
 		<div class="btn-group btn-2">
-			<button type="button" class="btn btn-sm btn-success" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-info" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
 			
 			
 		</div>
-		<br><br>
 		<!-- <div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-info" @click="buttonPhoneSupport">
 				<i class="fa fa-phone" aria-hidden="true"></i>
@@ -83,25 +83,28 @@
 
 		</div> -->
 			
-		<div>
-			<div class="form-group">
-				<h4 style="color: black; text-align: center; padding: 10px;">{{writeOutSupportLength}}</h4>
-				<div class="btn-group btn-2">
-					<button class="btn btn-sm btn-danger" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus" aria-hidden="true"></i></button>
-					<button class="btn btn-sm btn-success" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus" aria-hidden="true"></i></button>
-				</div>
-				<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
-			</div>
+		<div style="background: #DEDEDE;">
+
+			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 21%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
+			
+			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:56%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+			
+			
+			<button class="btn btn-sm" style="width: 18%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
+		
+				
+			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
+			
 		</div>
 
-		<div class="pad-5">
+		<!-- <div class="pad-5">
 			<div class="text-right pad-10">
-				<!-- SubTotal: ${{ numWithCommas(getTotal) }}<br> -->
+				SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<!-- <span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span> -->
+				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
-			<!-- <div class="btn-group btn-2">
+			<div class="btn-group btn-2">
 				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
 					Terms &amp; Conditions
 				</button>
@@ -109,8 +112,8 @@
 					<i class="fa fa-check" aria-hidden="true"></i>
 					&nbsp;Purchase
 				</button>
-			</div> -->
-		</div>
+			</div>
+		</div> -->
 	</div>
 </div>
 
@@ -158,19 +161,22 @@ export default {
 				case 'silver':
 					this.addNotification({
 						type: 'success',
-						message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Pro Silver provides 4 hour response for the lowest price!'
+						// message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 				case 'gold':
 					this.addNotification({
 						type: 'success',
-						message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Pure Gold provides 15 min response and free cloud support!'
+						// message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 				case 'black':
 					this.addNotification({
 						type: 'success',
-						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team!'
+						// message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;
 			}
@@ -386,7 +392,7 @@ export default {
 		},
 		writeOutSupportLength() {
 			let str = ""
-			let lenArray = String(this.getSupportMonths/12).split('.')
+			let lenArray = String(this.getSupportMonths / 12).split('.')
 			if (lenArray.length > 1) {
 				if(lenArray[0] == 1){
 					str = lenArray[0] + " Year & 6 months"	
@@ -409,7 +415,7 @@ export default {
 			return str
 		}
 	}
-}
+}    
 
 </script>
 
@@ -434,6 +440,10 @@ export default {
 
 .cart-table-body tr td {
 	font-size: 1.1em;
+}
+
+.btn-plan {
+	border-radius: 0px;
 }
 
 .btn-plan:focus {

@@ -21,8 +21,8 @@
 			</a>
 	    </div>
 
-		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
-			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 		<input type="hidden" name="cloudprovider" id="cloudprovider" :value="getCurrentCloudSelection" >
 	</div>

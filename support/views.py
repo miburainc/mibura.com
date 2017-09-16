@@ -27,7 +27,7 @@ from .serializers import *
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
 from dynamicscrm.api import createAccount
-from freshbooks import estimates
+from freshbooks import estimates, invoices
 
 # from weasyprint import HTML
 import tempfile
@@ -109,6 +109,8 @@ def purchase(request):
 
 
 
+# Stripe
+
 @csrf_exempt
 def plaid_credentials(request):
 	# plaid.Client.config({'url': 'https://tartan.plaid.com'})
@@ -135,6 +137,76 @@ def plaid_credentials(request):
 		bank_account_token = stripe_response['stripe_bank_account_token']
 
 		return HttpResponse(bank_account_token, status=200)
+
+
+	return HttpResponse("failed", status=400)
+
+# Unfinished
+@csrf_exempt
+def stripe_ach_begin(request):
+	print("stripe_ach_begin")
+
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
+		data = dotdict(data) # access properties with . instead of []
+
+		# Get the bank token submitted by the form
+		token_id = data.stripeAchToken
+		print("token_id", token_id)
+		client_id = data.client_id
+		client = get_object_or_404(Client, pk=client_id)
+
+		# Create a Customer
+		customer = stripe.Customer.create(
+			source=token_id,
+			description=client.get_full_name() + " customer",
+			email=client.email,
+			metadata={"first_name": client.first_name, "last_name": client.last_name, "company": client.company}
+		)
+
+		print(customer)
+		print(customer['default_bank_account'])
+
+		client.stripe_customer_id = customer['id']
+		client.stripe_bank_id = customer['default_bank_account']
+		client.save()
+
+		return HttpResponse(True, status=200)
+
+
+	return HttpResponse("failed", status=400)
+
+# Unfinished
+@csrf_exempt
+def verify_ach(request):
+	print('verify_ach')
+
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
+		data = dotdict(data) # access properties with . instead of []
+
+		ach_verify_amt1 = data.ach_verify_amt1
+		ach_verify_amt2 = data.ach_verify_amt2
+		print('ach_verify_amt1', ach_verify_amt1)
+		print('ach_verify_amt2', ach_verify_amt2)
+
+		client_id = data.client_id
+
+		client = get_object_or_404(Client, pk=client_id)
+
+		# get the existing bank account
+		customer = stripe.Customer.retrieve(client.stripe_customer_id)
+		bank_account = customer.sources.retrieve(client.stripe_bank_id)
+
+		# verify the account
+		try:
+			result = bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
+		except:
+			return HttpResponse(status=400)
+
+		return HttpResponse({"message": "Success"}, status=200)
 
 
 	return HttpResponse("failed", status=400)
@@ -248,10 +320,10 @@ def email_estimate_pdf(request):
 
 		cart = get_object_or_404(Cart, reference=cart_ref)
 
-		if not cart.freshbooks_id:
+		if not cart.freshbooks_estimate_id:
 			return HttpResponse('No Freshbooks id', status=400)
 
-		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_id)
+		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
 		path_to_file = '/tmp/' + file_name
@@ -380,9 +452,9 @@ def get_estimate_pdf(request):
 
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Estimate'
-		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
+		estimate = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
 		
-		if cart.freshbooks_id:
+		if cart.freshbooks_estimate_id:
 			old_cart = deepcopy(cart)
 			cart.reference = "replaced"
 			cart.replaced = True
@@ -393,11 +465,13 @@ def get_estimate_pdf(request):
 			cart.replaced = False
 			cart.products.add(*old_cart.products.all())
 			cart.cloud.add(*old_cart.cloud.all())
-			cart.freshbooks_id = estimate_id
+			cart.freshbooks_estimate_id = estimate['estimateid']
+			cart.freshbooks_estimate_num = estimate['estimate_number']
 			cart.reference = old_cart.reference
 			cart.save()
 		else:
-			cart.freshbooks_id = estimate_id
+			cart.freshbooks_estimate_id = estimate['estimateid']
+			cart.freshbooks_estimate_num = estimate['estimate_number']
 			cart.save()
 		
 		# pdf_status = estimates.get_estimate_pdf(estimate_id)
@@ -408,7 +482,7 @@ def get_estimate_pdf(request):
 			'client': client,
 			'cart': cart,
 			'date': DateFormat(datetime.now()).format('Y-m-d'),
-			'estimate_num': estimate_id,
+			'estimate_num': estimate['estimate_number'],
 			'terms': terms,
 			'notes': notes
 		}
@@ -437,6 +511,9 @@ def checkout(request):
 		print("Checkout View")
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
+
+		categories = ProductCategory.objects.all()
+
 		print(data)
 		client = get_object_or_404(Client, pk=data.client)
 		cart = get_object_or_404(Cart, reference=data.cart)
@@ -444,6 +521,8 @@ def checkout(request):
 		print(total)
 
 		discount_list = Discount.objects.all()
+
+		plan_obj = Plan.objects.get(short_name=cart.plan)
 
 		active_discount = 0.0
 
@@ -454,12 +533,22 @@ def checkout(request):
 		
 		discount_total = total - total*active_discount
 		stripe_total = math.floor(discount_total*100)
-		stripe.Charge.create(
-			amount=stripe_total,
-			currency="usd",
-			source=data.stripe_token, # obtained with Stripe.js
-			description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
-		)
+		if data.stripe_token:
+			stripe.Charge.create(
+				amount=stripe_total,
+				currency="usd",
+				source=data.stripe_token,
+				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
+			)
+		else:
+			stripe.Charge.create(
+				amount=stripe_total,
+				currency="usd",
+				customer=client.stripe_customer_id,
+				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
+			)
+
+		
 		time = datetime.now()
 		sub = Subscription(
 			client=client, 
@@ -488,6 +577,8 @@ def checkout(request):
 		# 	"country": client.country,
 		# 	"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
 		# })
+
+		items = []
 
 		for client_prod in cart.products.all():
 			items.append({
@@ -543,8 +634,11 @@ def checkout(request):
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Invoice'
 
-		estimate_id = cart.freshbooks_id
+		estimate_id = cart.freshbooks_estimate_id
 		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes, estimate_id)
+		
+		sub.freshbooks_invoice_num = invoice_id
+		sub.save()
 
 		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase")
 	return HttpResponse({'result': True}, status=200)

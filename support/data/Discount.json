@@ -1,1 +1,1 @@
-[]
+[{"model": "support.discount", "pk": 1, "fields": {"year_threshold": 2.0, "discount_percent": 0.1}}, {"model": "support.discount", "pk": 2, "fields": {"year_threshold": 3.0, "discount_percent": 0.12}}, {"model": "support.discount", "pk": 3, "fields": {"year_threshold": 5.0, "discount_percent": 0.2}}]

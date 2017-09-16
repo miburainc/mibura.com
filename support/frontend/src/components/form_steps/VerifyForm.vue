@@ -3,53 +3,81 @@
 <div>
 	<br>
 	<div class="container-fluid">
-		<div style="margin:0px 0px 20px 0px; padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-12">
+		<div style="margin:0px 0px 10px 0px; padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-12">
 			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
 			<h4>Cart Reference Code: {{ getCartReference }}</h4>
-			<table class="table table-hover table-outline">
-				<thead>
-					<th>Product</th>
-					<th>Price</th>
-				</thead>
+			<table class="table table-hover table-outline" style="border-bottom: 3px solid white;border-top: 3px solid white">
+
 				<tbody>
 					<tr v-for="(item, index) in getCart">
 						<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
-						<td style="color:white;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+						<td style="color:white; text-align:right;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 					</tr>
 				</tbody>
 			</table>
-			<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10" style="display:inline-block;">
-				<div class="col-xs-6">
+			<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10 row" style="padding:0px 0px 15px 0px; margin: 0px 10px 0px 10px; border-bottom: 1px solid lightgray">
+				
+				<div class="col-lg-4"><h4>Personal Information</h4><br></div>
+				
+				<div class="col-lg-3">
 					{{getClientInfo['first_name']}} {{getClientInfo['last_name'] }}<br>
 					{{getClientInfo['email']}}<br>
 					{{getClientInfo['company']}}<br>
 					{{getClientInfo['phone']}}
 				</div>
-				<div class="col-xs-6">
+				<br>
+				<div class="col-lg-3">
 					{{getClientInfo['street']}}, {{getClientInfo['street2']}}<br>
 					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
 					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
 				</div>
+				<br>
+				<div class="col-lg-2"><a href="#" style="color:lightblue;">Change</a></div>
 			</div>
-			<br><br><br>
-			<div>
-			SubTotal: ${{ numWithCommas(getTotal) }}<br>
-				%{{getCurrentDiscount*100}} Discount: &nbsp;
-				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<span style="font-size: 1.2em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+
+			<!-- <div v-if="Object.keys(getPaymentInfo).length > 0" class="pad-10 row" style="padding:10px 0px 10px 0px; margin: 0px 10px 0px 10px; border-bottom: 1px solid lightgray">
+				
+				<div class="col-xs-4"><h4>Payment Method</h4></div>
+				
+				<div class="col-xs-3">
+					<p v-if="getPaymentInfo['bankName']">{{ getPaymentInfo['bankName'] }}<br></p>
+					<p v-else=""
+				</div>
+				<div class="col-xs-3">
+
+				</div>
+				<div class="col-xs-2">
+					<a href="#" style="color:lightblue;">Change</a>
+				</div>
+			</div> -->
+
+			<div class="col-md-7"></div>
+			<div class="col-xs-12 col-md-5" style="padding: 15px 15px 15px 7px; text-align:right;">
+				<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
+				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
+				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
+				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
-			
 			<br>
-			<a role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>
+			<div style="text-align:center;">
+			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
+			</div>
 			<br>
-			<label style="font-size: 20px; color: lightblue;">
-				<input style="height:19px; width:19px;" @change="(e) => {setAcceptedTerms(e.target.checked)}" type="checkbox" value="">
-				Accept
-			</label>
-			
+			<div style="text-align:center">
+				
+				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
+				<a v-else role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				
+				<!-- <label style="font-size: 20px; color: lightblue;">
+
+					<input style="height:19px; width:19px;" @change="(e) => {setAcceptedTerms(e.target.checked)}" type="checkbox" :checked="getAcceptedTerms">
+					Accept
+				</label> -->
+			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle" class="btn-2-round"> 	
-			<button v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="form.buttonStyle"> 	
+			<button v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
 </div>
@@ -63,6 +91,7 @@ import {mapGetters, mapActions} from 'vuex'
 import Autocomplete from 'vue2-autocomplete-js';
 
 export default {
+
 	props: ['form', 'buttonAction'],
 	mounted() {
 
@@ -77,6 +106,11 @@ export default {
 			'checkout',
 			'setAcceptedTerms',
 		]),
+		setTerms(value){
+			this.setAcceptedTerms(value)
+			console.log(value)
+			document.getElementById('termsCheckbox').checked = value
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},
@@ -149,7 +183,9 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
-			'getPaymentToken'
+			'getPaymentToken',
+			'getPaymentInfo',
+			'getAcceptedTerms'
 
 		])
 		
@@ -159,5 +195,5 @@ export default {
 </script>
 
 <style lang="scss">
-	
+
 </style>

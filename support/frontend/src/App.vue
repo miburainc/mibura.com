@@ -64,7 +64,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Thanks for submitting your information. In order for us to process your payment we will need to confirm that your account is valid. To do this we will deposit two small ammounts into your bank account.  Once you recieve the payments you can come back to this site and enter the ammounts to finish the confirmation.  To speed up the process you can get an estimate and use your cart reference code to quickly return to where you left off.  After this you will be able to review your order and choose to initiate payment.  
+							In order for us to process your payment we will need to confirm that your account is valid. To do this we will deposit two small ammounts into your bank account.  Once you recieve the payments you can come back to this site and enter the ammounts to finish the confirmation.  To speed up the process you can get an estimate and use your cart reference code to quickly return to where you left off.  After this you will be able to review your order and choose to initiate payment.  
 							<br><br>
 							We will send you an email with a quote of your order and a link to return to confirm your payment ammounts.
 							<br><br>
@@ -73,7 +73,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
-						<button type="button" class="btn btn-primary" @click="confirmAch" data-dismiss="modal">View Quote</button>
+						<button type="button" class="btn btn-primary" @click="confirmAch" data-dismiss="modal">Continue</button>
 					</div>
 				</div>
 			</div>
@@ -208,7 +208,8 @@ export default {
 	name: 'app',
 	data () {
 		return {
-			estimate_id: ''
+			estimate_id: '',
+			stripe: null
 		}
 	},
 	components: {
@@ -243,8 +244,11 @@ export default {
 			'setCloudProviders',
 			'setCurrentFormStep',
 			'setEstimatePdfFile',
+			'achSendCredentials',
 			'serverGetEstimatePdf',
+			'serverSetClient',
 			'saveCart',
+			'setPaymentProp',
 		]),
 		emailQuote() {
 			this.sendQuoteEmail()
@@ -261,29 +265,52 @@ export default {
 			let payload = {
 				'cart_ref': null,
 				'accountnumber': this.getPaymentInfo['accountnumber'],
-				'bankname': this.getPaymentInfo['bankname'],
+				'bankname': this.getPaymentInfo['bankcustomername'],
 				'bankphone': this.getPaymentInfo['bankphone'],
 				'routingnumber': this.getPaymentInfo['routingnumber']
 			}
 
-			if (this.getCartChanged) {
+			this.stripe.createToken('bank_account', {
+				country: 'us',
+				currency: 'usd',
+				routing_number: this.getPaymentInfo['routingnumber'],
+				account_number: this.getPaymentInfo['accountnumber'],
+				account_holder_name: this.getPaymentInfo['bankcustomername'],
+				account_holder_type: this.getPaymentInfo['accounttype'],
+			}).then((results) => {
+				// handle result.error or result.token
+				console.log(results.token)
+				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
+				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
+
 				// Reset pdf to nothing
 				this.setEstimatePdfFile(null);
 				// Send request for new pdf file
 				this.serverSetClient().then(() => {
 					this.saveCart(this.getClientInfo)
-				}).then(() => {
-					this.serverGetEstimatePdf()
+				// }).then(() => {
+					// this.serverGetEstimatePdf()
 				}).then(() => {
 					payload['cart_ref'] = this.getCartReference
 					console.log("SEND PAYLOAD TO API ENDPOINT")
 					console.log(payload)
+					this.achSendCredentials(this.getPaymentInfo['banktoken'])
 				})
-			}
-			$('#pdfModal').modal('show')
+				
+			});
+
+
+			
+			
+			
+			//GO TO SUCCESS PAGE
 		}
 	},
 	mounted() {
+		setTimeout(() => {
+			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
+		}, 1000)
+		
 		axios.get(this.getAPIRoot + 'cloud')
 			.then((response) => {
 				console.log(response)

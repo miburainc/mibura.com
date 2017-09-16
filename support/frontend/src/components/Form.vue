@@ -184,6 +184,7 @@ export default {
 			'addNotification',
 			'setEstimatePdfFile',
 			'checkout',
+			'achSendVerify',
 		]),
 
 		
@@ -200,11 +201,8 @@ export default {
 			this.clearErrors()
 		},
 		formHandleEnter(){
-			console.log("ahelo")
-			console.log(this.getFormSteps[this.getCurrentFormStep])
 			let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
 			this.buttonAction(null, buttons[buttons.length-1].script)
-			
 		},
 		addCloudItem(cloud_pk) {
 			let cloud = {};
@@ -265,8 +263,13 @@ export default {
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 			this.clearErrors()
 			if(scr == "submitach"){
-				console.log("ASDFASDASF")
+				console.log("SubmitACH in ButtonAction")
 				$('#achSubmitModal').modal('show')
+				return(true)
+			}
+			else if(scr == "verifyach") {
+				console.log("verifyACH in ButtonAction")
+				this.achSendVerify()
 				return(true)
 			}
 			else if(scr == "back" && this.getCurrentFormStep > 0){
@@ -429,7 +432,7 @@ export default {
 								})
 								this.buttonStartClientInfo()
 							}
-							else if (!this.getPaymentToken) {
+							else if (!this.getPaymentToken && this.getPaymentInfoProp('checkouttype') != 'ach') {
 								console.log(this.getPaymentToken)
 								this.addNotification({
 									type: 'warning',
@@ -604,7 +607,8 @@ export default {
 			'getCart',
 			'getCartChanged',
 			'getAcceptedTerms',
-			'getPaymentToken'
+			'getPaymentToken',
+			'getPaymentInfoProp'
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]
@@ -632,6 +636,10 @@ export default {
 	text-align: center;
 }
 
+.table-hover>tbody>tr:hover {
+    background-color: #999999;
+}
+
 .btn-outline-info {
 	padding: 10px 20px;
 	color: #3285C4;
@@ -646,6 +654,25 @@ export default {
 		background: transparent;
 		background: rgba(94, 164, 217,.08);
 		// border: 1px solid #FFFFFF;
+	}
+	&:focus {
+		color: #3285C4;
+	}
+}
+
+.btn-outline-danger {
+	padding: 10px 20px;
+	color: #ff1818;
+	background: transparent;
+	border: 1px solid #ff1818;
+	transition: 0.2s background, 0.2s color;
+
+	&:hover {
+		padding: 10px 20px;
+		color: #ff1818;
+		border-color: #ff1818;
+		background: transparent;
+		background: rgba(255, 128, 128,.12);
 	}
 	&:focus {
 		color: #3285C4;

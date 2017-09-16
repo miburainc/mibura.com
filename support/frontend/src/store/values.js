@@ -46,8 +46,10 @@ export const step_names = {
 	cloud: 2,
 	client_info: 3,
 	client_address: 4,
-	payment: 5,
-	checkout: 6,
+	review: 5,
+	payment: 6,
+	verify: 7,
+	success: 8
 }
 
 export const product_multiplier = {
@@ -452,24 +454,9 @@ export const form_steps = [
 				}
 			},
 			{
-				placeholder: "Cardholder Phone",
+				placeholder: "Bank Customer Name",
 				src: "",
-				dest: "payment.cardphone",
-				required: true,
-				validate: {
-					type: "phone",
-					min: 6,
-				},
-				form: {
-					type: "tel",
-					name: "cardphone",
-					class: "field",
-				}
-			},
-			{
-				placeholder: "Bank Account Name",
-				src: "",
-				dest: "payment.bankname",
+				dest: "payment.bankcustomername",
 				required: true,
 				validate: {
 					type: "text",
@@ -477,22 +464,7 @@ export const form_steps = [
 				},
 				form: {
 					type: "text",
-					name: "bankname",
-					class: "field",
-				}
-			},
-			{
-				placeholder: "Phone Number",
-				src: "",
-				dest: "payment.bankphone",
-				required: true,
-				validate: {
-					type: "phone",
-					min: 6,
-				},
-				form: {
-					type: "tel",
-					name: "bankphone",
+					name: "bankcustomername",
 					class: "field",
 				}
 			},
@@ -525,7 +497,37 @@ export const form_steps = [
 					name: "routingnumber",
 					class: "field",
 				}
-			}		
+			},
+			{
+				placeholder: "Verify Ammount #1",
+				src: "",
+				dest: "payment.verify1",
+				required: true,
+				validate: {
+					type: "number",
+					min: 2,
+				},
+				form: {
+					type: "number",
+					name: "verify1",
+					class: "field",
+				}
+			},
+			{
+				placeholder: "Verify Ammount #2",
+				src: "",
+				dest: "payment.verify2",
+				required: true,
+				validate: {
+					type: "number",
+					min: 2,
+				},
+				form: {
+					type: "number",
+					name: "verify2",
+					class: "field",
+				}
+			}			
 		],
 		buttons: [
 			{

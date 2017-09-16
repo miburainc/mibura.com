@@ -47,4 +47,6 @@ def cloud_price(cloud, plan, length):
 	result = 0.0
 	for l in range(0,int(length*2)):
 		result += base_price
+	if plan == 'gold' or plan == 'black':
+		return 0.0
 	return result

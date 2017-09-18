@@ -201,8 +201,12 @@ export default {
 			this.clearErrors()
 		},
 		formHandleEnter(){
-			let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
-			this.buttonAction(null, buttons[buttons.length-1].script)
+			if(this.getAllowFormSubmit){
+				let buttons = this.getFormSteps[this.getCurrentFormStep].buttons
+				this.buttonAction(null, buttons[buttons.length-1].script)
+			}
+
+			
 		},
 		addCloudItem(cloud_pk) {
 			let cloud = {};
@@ -608,7 +612,8 @@ export default {
 			'getCartChanged',
 			'getAcceptedTerms',
 			'getPaymentToken',
-			'getPaymentInfoProp'
+			'getPaymentInfoProp',
+			'getAllowFormSubmit'
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]

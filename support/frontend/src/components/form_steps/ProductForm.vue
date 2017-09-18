@@ -24,7 +24,6 @@
 			:onInput="(el) => {
 				resetVerified()
 				ValidateFormStepFunction(form.data[0], el)
-
 			}"
 			style="position:relative; z-index:1;">
 		</autocomplete>
@@ -68,7 +67,9 @@ export default {
 		...mapActions([
 			'setCurrentItemProp',
 			'setClientProp',
-			'clearError'
+			'clearError',
+			'clearErrors',
+			'setAllowFormSubmit'
 		]),
 		processAjaxResult(json) {
 			return json['results']
@@ -91,10 +92,8 @@ export default {
 			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
 			this.setCurrentItemProp({ prop: 'verified', data: true })
 
-			// if (name == "model") {
-			// 	this.addProduct({id: obj.model, data: obj})
-			// 	// this.$set(this.product_info, obj['model'], obj)
-			// }
+			this.setAllowFormSubmit(false)
+			setTimeout(() => {this.setAllowFormSubmit(true)}, 200)
 		},
 		setFormItem (value, obj) {
 			console.log(obj)

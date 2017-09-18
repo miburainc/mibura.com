@@ -4,8 +4,7 @@
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 			<li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li>
-			<img style="float: right; margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
-			<img style="float: right; margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+			
 
 		</ul>
 		<div class="payment-box">
@@ -39,23 +38,23 @@
 				:step="form.data[5]"></form-text-input>
 			</div>
 			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
+			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
 
 				<form-text-input :step="form.data[1]"></form-text-input>
 				
-				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; min-width:590px;">
+				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
 					<div class="row">
-						<div class="col-xs-5" style=" text-align:center;">
+						<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
 							<button 
 							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
-							style="margin: 30px 0px 0px 18%; padding: 30px;" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
+							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
 						</div>
-						<div class="col-xs-2 text-center">
+						<div class="col-xs-12 col-md-2 text-center payment-or">
 							<div class="line"></div>
 							<div class="orText">or</div>
 							<div class="line"></div>
 						</div>
-						<div class="col-xs-5">
+						<div class="col-xs-12 col-md-5">
 							
 							<form-text-input 
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
@@ -81,6 +80,12 @@
 			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div>
 			
 		</div>
+
+		<div class="text-center">
+			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+		</div>
+			
 
 	</div>
 </template>
@@ -422,6 +427,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.plaid-button-container > button {
+	margin: 30px 0px 0px 18%;
+	padding: 30px; 
+}
+
+
+@media (max-width: 991px) {
+	.payment-or {
+		display: none;
+	}
+	.plaid-button-container > button {
+		margin: 0px;
+		padding: 30px; 
+	}
+}
 
 .btn-plaid-success {
 	padding: 10px 20px;

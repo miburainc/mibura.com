@@ -180,11 +180,8 @@
 				<support-form class="pad-10"></support-form>
 			</div>
 			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-3" >
-				<side-cart></side-cart>
-			</div>
-			<!-- <div id="cart" class="mobile-cart col-xs-12">
 				<support-cart></support-cart>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </template>
@@ -193,7 +190,6 @@
 
 import SupportForm from './components/Form.vue'
 import SupportCart from './components/Cart.vue'
-import SideCart from './components/Cart_Side.vue'
 import SuccessScreen from './components/SuccessScreen.vue'
 import Notification from './components/Notification.vue'
 import Progressbar from './components/ProgressBar.vue'
@@ -216,7 +212,6 @@ export default {
 		SupportForm,
 		SupportCart,
 		SuccessScreen,
-		SideCart,
 		Notification,
 		Progressbar
 	},

@@ -179,15 +179,19 @@ const actions = {
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
 		}
-		let payment_token = rootState.stripe.ach_payment_token ? rootState.stripe.ach_payment_token : rootState.stripe.cc_payment_token
-		if (!payment_token) {
-			return false
+		let payment_token = null
+
+		if (rootState.stripe.ach_payment_token != null || rootState.stripe.cc_payment_token != null) {
+			payment_token = rootState.stripe.ach_payment_token ? rootState.stripe.ach_payment_token : rootState.stripe.cc_payment_token
 		}
+
 		let data = {
 			client: client.pk,
 			cart: state.cart_ref,
 			length: state.support_months/12,
-			stripe_token: payment_token
+		}
+		if (payment_token) {
+			data.stripe_token = payment_token
 		}
 
 		// Check if unverified items in cart

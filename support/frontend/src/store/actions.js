@@ -25,16 +25,17 @@ export default {
         commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'achsubmitted'})
         
         commit(TYPE.SET_CURRENT_FORM_STEP, step_names.success)
-        // commit(TYPE.SET_STRIPE_PROP, {
-        //   prop: 'ach_payment_token',
-        //   value: response.data
-        // })
       })
   },
   achSendVerify({commit, rootState}) {
     stripe.postAchVerify(rootState.Form.client_info.pk, rootState.Form.payment_info.verify1, rootState.Form.payment_info.verify2)
       .then((response) => {
         console.log(response)
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'ach'})
+        commit(TYPE.SET_PAYMENT_PROP, {prop: 'payment_token', data: 'ach'})
+        commit(TYPE.ADD_NOTIFICATION, {type: 'success',message: "Successfully verified bank account.  Please proceed to checkout"})
+        
+        commit(TYPE.SET_CURRENT_FORM_STEP, step_names.verify)
         // commit(TYPE.SET_STRIPE_PROP, {
         //   prop: 'ach_payment_token',
         //   value: response.data

@@ -432,7 +432,7 @@ export default {
 								})
 								this.buttonStartClientInfo()
 							}
-							else if (!this.getPaymentToken) {
+							else if (!this.getPaymentToken && this.getPaymentInfoProp('checkouttype') != 'ach') {
 								console.log(this.getPaymentToken)
 								this.addNotification({
 									type: 'warning',
@@ -607,7 +607,8 @@ export default {
 			'getCart',
 			'getCartChanged',
 			'getAcceptedTerms',
-			'getPaymentToken'
+			'getPaymentToken',
+			'getPaymentInfoProp'
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]

@@ -79,7 +79,8 @@ class Client(models.Model):
 	
 	freshbooks_id = models.CharField(max_length=32,blank=True)
 	dynamicscrm_id = models.CharField(max_length=32,blank=True)
-	stripe_customer_id = models.CharField(max_length=32,blank=True)
+	stripe_customer_id = models.CharField(max_length=32, blank=True)
+	stripe_bank_id = models.CharField(max_length=32, blank=True)
 
 	def get_full_name(self):
 		return self.first_name + " " + self.last_name

@@ -94,6 +94,7 @@ export default {
 
 			this.setAllowFormSubmit(false)
 			setTimeout(() => {this.setAllowFormSubmit(true)}, 200)
+			document.getElementById('serialnumber').focus()
 		},
 		setFormItem (value, obj) {
 			console.log(obj)

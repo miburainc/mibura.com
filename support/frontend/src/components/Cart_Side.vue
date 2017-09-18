@@ -1,6 +1,6 @@
 <template>
 
-<div id="side_cart">
+<div id="side_cart" style="min-width:270px;">
 	<div :style="cartHeaderStyle">
 		<div class="text-center" style="padding: 10px;">
 			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
@@ -85,12 +85,12 @@
 			
 		<div style="background: #DEDEDE;">
 
-			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 21%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
+			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 15%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
 			
-			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:56%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:68%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
 			
 			
-			<button class="btn btn-sm" style="width: 18%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
+			<button class="btn btn-sm" style="width: 11%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
 		
 				
 			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">

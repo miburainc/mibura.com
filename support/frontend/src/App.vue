@@ -179,12 +179,12 @@
 			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-6 col-lg-offset-0">
 				<support-form class="pad-10"></support-form>
 			</div>
-			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-3">
+			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-3" >
 				<side-cart></side-cart>
 			</div>
-			<div id="cart" class="mobile-cart col-xs-12">
+			<!-- <div id="cart" class="mobile-cart col-xs-12">
 				<support-cart></support-cart>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -376,15 +376,6 @@ h1, h2, h3, h4 {
 	display: none;
 }
 
-@media (max-width: 992px) {
-	.side-cart {
-		display: none;
-	}
-	.mobile-cart {
-		display: block;
-	}
-}
-
 #side_cart {
 	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
 	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
@@ -403,11 +394,5 @@ h1, h2, h3, h4 {
 	min-height: 100vh;
 }
 
-#cart {
-	width: 100%;
-	padding: 0;
-	left: 0px;
-	background: white;
-}
 
 </style>

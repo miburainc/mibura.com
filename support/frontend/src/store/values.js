@@ -160,7 +160,7 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Add another",
+				label: "Add",
 				class: "btn btn-lg btn-outline-success",
 				script: "start,additem"
 
@@ -424,7 +424,7 @@ export const form_steps = [
 				script: "getquote"
 			},
 			{
-				label: "Proceed to Checkout",
+				label: "Go to Checkout",
 				class: "btn btn-lg btn-outline-success payment-button",
 				script: "next"
 			},

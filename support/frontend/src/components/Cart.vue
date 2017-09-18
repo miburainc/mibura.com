@@ -1,29 +1,56 @@
 <template>
 
-<div id="sss-cart" :style="cartStyle">
+<div id="sss-cart" style="background: transparent;">
 	<div id="cart-header" class="row no-pad" :style="cartHeaderStyle">
-		<div class="col-xs-12">
-			<div class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}
-			<a :style="[textColorPlan, {'cursor': 'pointer', 'float': 'right'}]" @click="scrollDown">View Cart</a></div>
+		<div class="col-xs-12" style="padding-bottom:5px;">
+			<div class="cart-tray" :style="textColorPlan" style="padding-left:15px;">Total: ${{ numWithCommas(getGrandTotal) }}
+			<a class="btn btn-lg btn-info" :style="[textColorPlan, {'cursor': 'pointer', 'float': 'right'}]" style="margin-right:15px; padding: 3px 5px 3px 5px;" @click="scrollDown">View Cart</a></div>
 		</div>
 		<div class="col-xs-12 no-pad">
-			<div class="no-pad" :style="textColorPlan">
-					<button class="btn-plan" v-for="(p, index) in get_plans" @click="setPlan" :style="{'color': p.color == '#000000' ? 'white' : 'black', backgroundColor: p.color}" :value="p.code">
+			<div class="no-pad">
+					<button 
+					class="btn-plan" 
+					v-for="(p, index) in get_plans" 
+					@click="setPlan" 
+					:style="{
+						color: p.color == '#000000' ? 'white' : 'black',
+						background: p.code == current_plan ? 'transparent' : p.color,
+						fontSize: '14px',
+
+					}"
+					:value="p.code">
 						{{p.name}}
 					</button>
 			</div>
-			
+			<!-- <div class="no-pad">
+				<button 
+					type="button" 
+					class="btn-plan text-center" 
+					v-for="(p, index) in getPlans"
+					:value="p.code"
+					@click="setPlan"
+					:style="{
+						color: p.color == '#000000' ? 'white' : 'black',
+						background: p.code == getCurrentPlan ? 'transparent' : p.color,
+						fontSize: '11px',
+
+					}"
+				>
+					{{p.name}}
+				</button>
+					
+			</div> -->
 		</div>
 	</div>
-	<div id="cart-body" class="col-xs-12" style="color: black;">
+	<div id="cart-body"style="width:75%; margin:auto; color: black; background: #E6E6E6; min-width: 375px;">
 		<h1 class="text-center">Cart</h1>
-		<table class="table table-condensed table-striped">
-			<thead>
-				<th :style="cartHeaderStyle">Product</th>
-				<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
-				<th class="text-right" :style="cartHeaderStyle">Options</th>
+		<table class="table table-condensed">
+			<thead style="background: black;">
+				<th>Product</th>
+				<th class="text-center">Subtotal</th>
+				<th class="text-right">Options</th>
 			</thead>
-			<tbody>
+			<tbody  style="background: white;">
 				<tr v-if="this.get_cart.length < 1" class="text-center">
 					<td colspan="4">None</td>
 				</tr>
@@ -48,48 +75,21 @@
 		<div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
 			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
-			
-			
-		</div>
-			
-		<hr><br>
-		<div>
-			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
+					
 		</div>
 
-		<div>
-			<button class="btn btn-sm" style="width: 25%; border: none; background: #f4f4f4;  text-align: right;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:red" aria-hidden="true"></i></button>
-			
-			<div style="color: black; display: inline-block; width: 49%; text-align: center;">{{writeOutSupportLength}}</div>
 
-			<button class="btn btn-sm" style="width: 25%; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:green" aria-hidden="true"></i></button>
-				
-				
+		<div style="margin: 10px 0px 0px 0px">
+			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 21%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
+			
+			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:56%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+			
+			
+			<button class="btn btn-sm" style="width: 18%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
+		
+			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 		</div>
-		<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
-		<div>
-			<div style="color: black;" class="text-right">
-				SubTotal: ${{ numWithCommas(getTotal) }}<br>
-				%{{getCurrentDiscount*100}} Discount: &nbsp;
-				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<strong>Estimate Total: ${{ numWithCommas(getGrandTotal) }}</strong>
-				<br>
-				<div class="btn-group">
-					<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
-						<i class="fa fa-phone" aria-hidden="true"></i>
-						&nbsp;Call Sales
-					</button>
-					<button type="button" class="btn btn-primary" @click="buttonGetPDF">
-						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-						&nbsp;Get Quote
-					</button>
-					<button type="button" class="btn btn-success" @click="formPurchase">
-						<i class="fa fa-check" aria-hidden="true"></i>
-						&nbsp;Purchase
-					</button>
-				</div>
-			</div>
-		</div>
+		
 	</div>
 </div>
 
@@ -190,7 +190,7 @@ export default {
 		},
 		buttonStartNewItem() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
-			this.setCurrentFormStep(step_names.brand)
+			this.setCurrentFormStep(step_names.item)
 		},
 		buttonStartClientInfo() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
@@ -288,7 +288,37 @@ export default {
 		},
 		cartHeaderStyle() {
 			let plan = this.get_plan(this.current_plan)
+			if (this.current_plan == 'black') {
+				return {
+					'padding-top': '5px',
+					'background-color': '#000000', 
+    				'background-size': '6px 8px',
+    				'color': this.current_plan == 'black' ? 'white' : 'black'
+				}
+			}
+			
+			else if (this.current_plan == 'gold') {
+				return {
+					// 'background-color': plan.color, 
+					'padding-top': '5px',
+					'background-color': '#FFFFFF',
+					'background-image':
+						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
+    				'color': this.current_plan == 'black' ? 'white' : 'black'
+				}
+			}
+			else if (this.current_plan == 'silver') {
+				return {
+					// 'background-color': plan.color, 
+					'padding-top': '5px',
+					'background': '#aaa',
+					'background-image':
+						'linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6)  39%,rgba(255,255,255,0) 75%)',
+    				'color': this.current_plan == 'black' ? 'white' : 'black'
+				}
+			}
 			return {
+				'padding-top': '10px',
 				'background-color': plan.color, 
 				'color': this.current_plan == 'black' ? 'white' : 'black'
 			}
@@ -328,12 +358,12 @@ export default {
 }
 
 #cart-body {
-	padding: 20px;
+	padding: 0px;
 	padding-bottom: 100px;
 }
 
 #sss-cart {
-	background: white;
+	background: transparent;
 }
 
 .cart-tray {

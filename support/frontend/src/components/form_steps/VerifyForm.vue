@@ -51,7 +51,7 @@
 				</div>
 			</div> -->
 
-			<div class="col-md-7"></div>
+			<div class="col-md-7" style=""></div>
 			<div class="col-xs-12 col-md-5" style="padding: 15px 15px 15px 7px; text-align:right;">
 				<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
 				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
@@ -59,7 +59,7 @@
 				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
 			<br>
-			<div style="text-align:center;">
+			<div style="text-align:center; margin-top:60px;">
 			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
 			</div>
 			<br>
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
-			<button v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button v-if="!processing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script); processing=true;}">{{btn.label}}</button><button v-if="processing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
 	</div>
 </div>
@@ -93,6 +93,11 @@ import Autocomplete from 'vue2-autocomplete-js';
 export default {
 
 	props: ['form', 'buttonAction'],
+	data(){
+		return{
+			processing: false
+		}
+	},
 	mounted() {
 
 	},

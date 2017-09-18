@@ -1,6 +1,6 @@
 <template>
 	<div id="stripe-payment-form">
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 			<li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li>
@@ -40,19 +40,19 @@
 
 				<form-text-input :step="form.data[1]"></form-text-input>
 				
-				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px;">
+				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; min-width:590px;">
 					<div class="row">
-						<div class="col-sm-5" style=" text-align:center;">
+						<div class="col-xs-5" style=" text-align:center;">
 							<button 
 							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
 							style="margin: 30px 0px 0px 18%; padding: 30px;" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
 						</div>
-						<div class="col-sm-2 text-center">
+						<div class="col-xs-2 text-center">
 							<div class="line"></div>
 							<div class="orText">or</div>
 							<div class="line"></div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-5">
 							
 							<form-text-input 
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"

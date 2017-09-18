@@ -38,6 +38,10 @@
 				<th class="text-right" style="padding-right: 15px">Options</th>
 			</thead>
 		</table> -->
+		<div class="btn-group btn-2">
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
+		</div>
 		<div v-show="this.getCart.length > 0" style="max-height:150px;overflow:auto;margin: 0px; padding:0px;">
 			<table class="table table-striped table-condensed table-hover" style="padding:0px; margin:0px; border-bottom: 1px solid lightgray">
 				<tbody class="cart-table-body">
@@ -65,12 +69,7 @@
 		</div>
 		<!-- <button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button> -->
 		
-		<div class="btn-group btn-2">
-			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
-			
-			
-		</div>
+		
 		<!-- <div class="btn-group btn-2">
 			<button type="button" class="btn btn-sm btn-info" @click="buttonPhoneSupport">
 				<i class="fa fa-phone" aria-hidden="true"></i>
@@ -83,7 +82,7 @@
 
 		</div> -->
 			
-		<div style="background: #DEDEDE;">
+		<div style="background: #DEDEDE; margin-bottom: 110px;">
 
 			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 15%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
 			
@@ -134,8 +133,23 @@ import velocity from 'velocity-animate'
 export default {
 	data () {
 		return {
-			
+			windowWidth: 0,
+			windowHeight: 0,
 		}
+	},
+	mounted() {
+		this.$nextTick(function() {
+			window.addEventListener('resize', this.getWindowWidth);
+			window.addEventListener('resize', this.getWindowHeight);
+
+			//Init
+			this.getWindowWidth()
+			this.getWindowHeight()
+		})
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.getWindowWidth);
+		window.removeEventListener('resize', this.getWindowHeight);
 	},
 	methods: {
 		...mapActions([
@@ -154,6 +168,14 @@ export default {
 			'setAcceptedTerms',
 			'addNotification',
 		]),
+
+		getWindowWidth(event) {
+			this.windowWidth = $(window).width()
+		},
+
+		getWindowHeight(event) {
+			this.windowHeight = $(window).height()
+		},
 
 		setPlan(el) {
 			let val = el.target.value
@@ -355,40 +377,47 @@ export default {
 		
 		cartHeaderStyle() {
 			let plan = this.getPlan(this.getCurrentPlan)
+			let result = {
+				'z-index': 100,
+				'position': this.windowWidth < 977 ? 'fixed' : 'static',
+				'bottom': this.windowWidth < 977 ? '0px' : 'auto',
+				'left': this.windowWidth < 977 ? '0px' : 'auto',
+				'right': this.windowWidth < 977 ? '0px' : 'auto',
+			}
 			if (this.getCurrentPlan == 'black') {
-				return {
+				return Object.assign(result, {
 					'padding-top': '10px',
 					'background-color': '#000000', 
 					'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.12) 2px, transparent 3px, transparent 7px)',
     				'background-size': '6px 8px',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
-				}
+				})
 			}
 			
 			else if (this.getCurrentPlan == 'gold') {
-				return {
+				return Object.assign(result, {
 					// 'background-color': plan.color, 
 					'padding-top': '10px',
 					'background-image':
 						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
-				}
+				})
 			}
 			else if (this.getCurrentPlan == 'silver') {
-				return {
+				return Object.assign(result, {
 					// 'background-color': plan.color, 
 					'padding-top': '10px',
 					'background': '#aaa',
 					'background-image':
 						'linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6)  39%,rgba(255,255,255,0) 75%)',
     				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
-				}
+				})
 			}
-			return {
+			return Object.assign(result, {
 				'padding-top': '10px',
 				'background-color': plan.color, 
 				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
-			}
+			})
 		},
 		writeOutSupportLength() {
 			let str = ""
@@ -414,7 +443,8 @@ export default {
 			}
 			return str
 		}
-	}
+	},
+
 }    
 
 </script>

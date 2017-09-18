@@ -71,12 +71,13 @@ export default {
 		}
 	},
 	mounted() {
-
+		this.saveCart(this.getClientInfo)
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'saveCart'
 		]),
 		processAjaxResult(json) {
 			return json['results']

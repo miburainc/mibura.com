@@ -674,6 +674,14 @@ class DiscountViewSet(viewsets.ReadOnlyModelViewSet):
 	serializer_class = DiscountSerializer
 	lookup_field = 'pk'
 
+class PlanViewSet(viewsets.ReadOnlyModelViewSet):
+	"""
+	API endpoint that allows products to be viewed or edited.
+	"""
+	queryset = Plan.objects.all()
+	serializer_class = PlanSerializer
+
+
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
 	"""
 	API endpoint that allows products to be viewed or edited.

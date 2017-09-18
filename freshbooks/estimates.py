@@ -63,7 +63,7 @@ def list_estimates(page):
 def process_estimates(estimates, estimate_num):
 	response = {}
 	for estimate in estimates:
-		estimate_id = str(int(estimate.find('estimate_id').text))
+		estimate_id = str(estimate['estimateid'])
 		num = estimate.find('number')
 		if num.text == estimate_num:
 			client_id = estimate.find('client_id').text
@@ -115,34 +115,18 @@ def process_estimates(estimates, estimate_num):
 	return response
 
 def get_estimate(estimate_num):
-	estimates = list_estimates()
+	estimates = list_estimates(1)
 	estimate_list_current_page = estimates.attrib['page']
 	estimate_list_pages = estimates.attrib['pages']
 	for page_index in range(1,int(estimate_list_pages)+1):
 		if int(estimate_list_current_page) == page_index:
-			response = process_estimates(estimates.findall('estimate'), estimate_num)
+			response = process_estimates(estimates, estimate_num)
 			if response != {}:
 				break
 		else:
-			# Get next page
-			xml_page_num = root.find('page')
-			xml_page_num.text = str(page_index)
+			estimates = list_estimates(page_index)
 
-			input_xml = ET.tostring(root)
-
-			data = input_xml
-			headers = {'Content-Type': 'application/xml'}
-			r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-
-			response = {}
-
-			response_root = ET.fromstring(r.content)	
-
-			remove_namespace(response_root, u'http://www.freshbooks.com/api/')
-
-			estimates = response_root[0]
-
-			response = process_estimates(estimates.findall('estimate'), estimate_num)
+			response = process_estimates(estimates, estimate_num)
 			if response != {}:
 				break
 

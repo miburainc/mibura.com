@@ -4,6 +4,9 @@
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 			<li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li>
+			<img style="float: right; margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
+			<img style="float: right; margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+
 		</ul>
 		<div class="payment-box">
 
@@ -72,11 +75,13 @@
 				</div>
 			</div>
 		</div>
+
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
 			<div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
 			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div>
 			
 		</div>
+
 	</div>
 </template>
 

@@ -316,15 +316,18 @@ def get_cart(request):
 
 			line_items.append(line_item)
 		
-		print("ASDF")
-		print(client.__dict__)
-		print(cart.__dict__)
+		client_dict = client.__dict__
+		cart_dict = cart.__dict__
+
+		del(client_dict['_state'])
+		del(cart_dict['_state'])
+		del(cart_dict['_client_cache'])
 
 
 		context = {
 			'items': line_items,
-			'client': client.__dict__,
-			#'cart': cart.__dict__,
+			'client': client_dict,
+			'cart': cart_dict,
 			'date': DateFormat(datetime.now()).format('Y-m-d')
 		}
 

@@ -79,6 +79,9 @@ const mutations = {
 }
 
 const actions = {
+	setClient({commit}, payload){
+		commit(TYPE.SET_CLIENT, payload)
+	},
 	setAllowFormSubmit({commit}, value){
 		commit(TYPE.SET_ALLOW_FORM_SUBMIT, value)
 	},

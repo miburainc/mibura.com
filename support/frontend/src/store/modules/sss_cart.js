@@ -23,6 +23,9 @@ const state = {
 }
 
 const mutations = {
+	[TYPE.SET_CART]: (state, array) =>{
+		state.cart = array
+	},
 	[TYPE.SET_CURRENT_PLAN]: (state, value) => {
 		state.current_plan = value
 	},
@@ -75,6 +78,12 @@ const mutations = {
 }
 
 const actions = {
+	setCart({commit}, payload){
+		commit(TYPE.SET_CART, payload.items)
+		commit(TYPE.CART_SET_ID, payload.id)
+		commit(TYPE.CART_SET_REF, payload.reference)
+		commit(TYPE.SET_CURRENT_PLAN, payload.plan)
+	},
 	setCartChanged({commit}, value) {
 		commit(TYPE.CART_CHANGED, value)
 	},

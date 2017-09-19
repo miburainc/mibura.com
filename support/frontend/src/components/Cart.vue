@@ -2,10 +2,13 @@
 
 <div id="side_cart" style="min-width:270px;">
 	<div :style="cartHeaderStyle">
-		<div class="text-center" style="padding: 10px;">
+		<div class="text-center cart-header-title" style="padding: 10px;">
+			<button type="button" class="btn-circle-outline cart-button" @click="buttonCartScroll"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
 			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
+			
+			
 		</div>
-		<div>
+		<div style="clear: both;">
 			<div class="btn-3">
 				<button 
 					type="button" 
@@ -168,6 +171,11 @@ export default {
 			'setAcceptedTerms',
 			'addNotification',
 		]),
+
+		buttonCartScroll() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+			console.log("cart button clicked")
+		},
 
 		getWindowWidth(event) {
 			this.windowWidth = $(window).width()
@@ -450,6 +458,34 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.cart-header-title {
+	position: relative;
+}
+
+.btn-circle-outline {
+	position: absolute;
+	top: -1px;
+	right: 0px;
+	border-radius: 50%;
+	margin-right: 35px;
+	padding: 15px;
+	font-size: 20px;
+	text-align: center;
+	border: none;
+	background: transparent;
+	transition: 0.2s background;
+
+	&:hover {
+		background: rgba(255,255,255,.2)
+	}
+}
+
+@media (min-width: 992px) {
+	.cart-button {
+		display: none;
+	}
+}
 
 // CSS texture style from codepen.io
 .pattern3 {

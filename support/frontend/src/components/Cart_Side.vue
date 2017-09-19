@@ -262,8 +262,17 @@ export default {
 			this.setCurrentFormStep(step_names.payment)
 		},
 		buttonStartCloud() {
-			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
-			this.setCurrentFormStep(step_names.cloud)
+			if(this.getCart.length > 1){
+				velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
+				this.setCurrentFormStep(step_names.cloud)
+			}
+			else{
+				this.addNotification({
+					type: 'warning',
+					message: 'You must have support for a physical item before purchasing cloud support.'
+				})
+			}
+			
 		},
 		buttonEditClient() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });

@@ -252,6 +252,31 @@ def save_client_json(request):
 	return HttpResponse("OK")
 
 @csrf_exempt
+def get_cart(request):
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
+
+		cart = Cart.objects.filter(reference=data.reference)
+		
+		cart = cart[0]
+
+		print(cart.products)
+		
+		serializer_context = {
+			'request': Request(request),
+		}
+		serialized = CartSerializer2(cart, context=serializer_context)
+
+		for s in serialized.data:
+			print(s, serialized[s].value)
+
+		response_json = JSONRenderer().render(serialized.data)
+
+		return HttpResponse(response_json, status=200)
+
+
+@csrf_exempt
 def get_create_cart(request):
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))

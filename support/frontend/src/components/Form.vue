@@ -21,84 +21,7 @@
 					:form="getFormSteps[getCurrentFormStep]"
 					:buttonAction="buttonAction" />
 				
-				<!--
-				<div v-for="(form, index) in get_formsteps" class="form-group">
-					 <label 
-
-
-				<component :is="currentComponent" :form="getFormSteps[getCurrentFormStep]"></component>
-
-				<div v-for="(form, index) in getFormSteps" class="form-group">
-					<label 
-						:for="form.data.form.name"
-						:style="{
-							display: (form.data.form.name == 'deviceage' || form.data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
-						}"
-					>
-
-						{{ form.data.placeholder }}
-					</label> -->
-					<!-- Cloud -->
-
-					<!-- <cloud-form 
-						v-if="form.src && getCurrentFormStep==step_names.cloud"
-						:clouds="cloud"
-						:addCloudFunc="addCloudItem"
-					></cloud-form> -->
-
-					<!-- <select 
-						v-else-if="data.src && getCurrentFormStep==step_names.cloud"
-						:id="data.form.name"
-						:name="data.form.name"
-					>
-						<option value="none">None</option>
-						<option
-							v-for="cloud in cloud"
-							:value="cloud.pk"
-						>
-								{{cloud.name}}
-						</option>
-					</select> -->
-
-					<!-- <div 
-						v-else-if="getCurrentFormStep==step_names.payment"
-
-					>
-						<input type="hidden" :id="data.form.name" :name="data.form.name" hidden>
-						<payment-form></payment-form>
-					</div>
-					<input 
-					v-else
-						:data-index="index"
-						:type="data.form.type" 
-						:id="data.form.name" 
-						:name="data.form.name" 
-						:placeholder="data.placeholder" 
-						class="form-control" 
-						:value="get_form_input_value(data)" 
-						@change="(el) => {
-							setFormItem(el.target.value, data) 
-						}"
-						:style="{
-							display: (data.form.name == 'deviceage' || data.form.name == 'additionalinfo') && getCurrentItemProp('verified') ? 'none' : 'block'
-						}"
-					>
-
-					<div class="text-red" v-for="error in getErrors[data.form.name]">
-						{{ error }}
-					</div>
-					 
-				</div>
-				-->
-
-			<!-- <div v-bind:style="get_formsteps[get_current_step].buttonStyle"> 	
-				<button type="button" v-for="btn in get_formsteps[get_current_step].buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
-			</div>
-			<h4 v-if="form_error" class="text-red">
-				{{ get_formsteps[get_current_step].error }}
-			</h4> -->
 				
-			
 			<!-- End Fade effects -->
 			</div>
 			</transition>	
@@ -185,6 +108,7 @@ export default {
 			'setEstimatePdfFile',
 			'checkout',
 			'achSendVerify',
+			'setPaymentProcessing'
 		]),
 
 		
@@ -332,7 +256,41 @@ export default {
 							this.goToStep(this.getCurrentFormStep+1)
 
 							break;
-						
+
+						case "gotocheckout":
+							
+							var noItems = true;
+							for (var item of this.getCart){
+								if(item.type=="product"){
+									noItems = false
+								}
+							}
+							if (noItems) {
+								this.addNotification({
+									type: 'warning',
+									message: 'You must add a physical item to your cart before checking out!'
+								})
+								this.buttonStartNewItem()
+							}
+							else{
+								this.past_step = this.getCurrentFormStep
+
+								// Save all current form fields into vuex store
+								for (let i=0; i<data.length; i++) {
+									let name = data[i].form.name;
+									if (!this.getCurrentItemProp(name)) {
+										let val = document.getElementById(name).value
+										this.setFormItem(val, data[i])
+									}
+								}
+
+								this.goToStep(this.getCurrentFormStep+1)
+							}
+
+							
+
+							break;
+
 						case "addcloud":
 
 							let temp = document.getElementById('cloudprovider').value
@@ -341,7 +299,7 @@ export default {
 								temp = this.getCurrentCloudSelection
 							}
 							this.addCloudItem(temp)
-
+						
 							break;
 						case "review":
 							this.past_step = this.getCurrentFormStep
@@ -426,10 +384,16 @@ export default {
 							this.clearCurrentItem()
 							break;
 						case "purchase":
-							if (this.getCart.length < 1) {
+							var noItems = true;
+							for (var item of this.getCart){
+								if(item.type=="product"){
+									noItems = false
+								}
+							}
+							if (noItems) {
 								this.addNotification({
 									type: 'warning',
-									message: 'Please add items to your cart before clicking purchase!'
+									message: 'You must add a physical item to your cart before checking out!'
 								})
 								this.buttonStartNewItem()
 							}
@@ -454,6 +418,7 @@ export default {
 									type: "warning"})
 							}
 							else {
+								this.setPaymentProcessing(true);
 								this.serverSetClient().then(() => {
 									this.saveCart().then(() => {
 										this.checkout()

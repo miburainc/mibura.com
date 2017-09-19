@@ -427,7 +427,7 @@ export const form_steps = [
 			{
 				label: "Go to Checkout",
 				class: "btn btn-lg btn-outline-success payment-button",
-				script: "next"
+				script: "gotocheckout"
 			},
 		],
 		title: "Review",
@@ -542,7 +542,7 @@ export const form_steps = [
 			},
 		],
 		title: "Payment",
-		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
+		text: "",
 		error: "",
 		step: 3,
 		buttonStyle: ""

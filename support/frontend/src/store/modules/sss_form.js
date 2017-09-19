@@ -19,11 +19,15 @@ const state = {
 	notifications: [],
 	cloud_providers: [],
 	allow_form_submit: true,
+	payment_processing: false,
 }
 
 const mutations = {
 	[TYPE.SET_ALLOW_FORM_SUBMIT]: (state, value) => {
 		state.allow_form_submit = value
+	},
+	[TYPE.SET_PAYMENT_PROCESSING]: (state, value) => {
+		state.payment_processing = value
 	},
 	[TYPE.ADD_PRODUCT]: (state, payload) => {
 		state.products[payload.id] = payload.data
@@ -64,7 +68,7 @@ const mutations = {
 	[TYPE.ADD_NOTIFICATION]: (state, payload) => {
 		state.notifications.splice(0, 0, payload)
 		
-		if(state.notifications.length > 3){
+		if(state.notifications.length > 1){
 			state.notifications.pop()
 		}
 		
@@ -77,6 +81,9 @@ const mutations = {
 const actions = {
 	setAllowFormSubmit({commit}, value){
 		commit(TYPE.SET_ALLOW_FORM_SUBMIT, value)
+	},
+	setPaymentProcessing({commit}, value){
+		commit(TYPE.SET_PAYMENT_PROCESSING, value)
 	},
 	setCloudProviders({commit}, payload) {
 		commit(TYPE.SET_CLOUD_PROVIDERS, payload)
@@ -126,6 +133,7 @@ const actions = {
 }
 
 const getters = {
+	getPaymentProcessing: state => state.payment_processing,
 	getAllowFormSubmit: state => state.allow_form_submit,
 	getCloudProviders: state => state.cloud_providers,
 	getCurrentFormStep: state => state.current_form_step,

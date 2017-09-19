@@ -7,7 +7,7 @@
 	</h2>
 	<br>
 	<h4 class="text-center">
-		We're here to help! Just tell us what items or cloud services you need support for.
+		We're here to help! Just tell us what technologies you need support for.
 	</h4>
 	<br>
 	<div v-bind:style="form.buttonStyle" class="container-fluid"> 	

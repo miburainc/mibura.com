@@ -78,6 +78,108 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Returning Customer</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Thank you for returning to Mibura Smart Support.  Please enter your quote ID.  
+						</p>
+						<input class="form-control" placeholder="Quote ID" id="quoteIdInput" style="color:black;" v-on:keyup.enter="submitQuoteId">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+						<button type="button" class="btn btn-primary" @click="submitQuoteId">Continue</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">ACH Verification</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Please enter the ACH verification payment ammounts that were deposited into your bank account.  
+						</p>
+						<input class="form-control" :class="{'error-border': verifyError1}" placeholder="Ammount #1" id="verify1" style="color:black;" v-on:keyup.enter="submitVerification" @keyup="(el) => {
+								ValidateFormStepFunction({
+												placeholder: 'Ammount #1',
+												src: 'verify1',
+												dest: 'verify.1',
+												required: true,
+												form: {
+													type: 'number',
+													name: '1',
+												},
+												validate: {
+													type: 'number',
+													min: 2,
+												}
+											}, el.target.value)}">
+						<input class="form-control" :class="{'error-border': verifyError2}" placeholder="Ammount #2" id="verify2" style="color:black;" v-on:keyup.enter="submitVerification"@keyup="(el) => {
+								ValidateFormStepFunction({
+												placeholder: 'Ammount #2',
+												src: 'verify2',
+												dest: 'verify.2',
+												required: true,
+												form: {
+													type: 'number',
+													name: '2',
+												},
+												validate: {
+													type: 'number',
+													min: 2,
+												}
+											}, el.target.value)}">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Back</button>
+						<button type="button" class="btn btn-primary" @click="submitVerification">Submit</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="returnSuccessModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">Returning Customer</h4>
+					</div>
+					<div class="modal-body">
+						<div v-if="getEstimatePDF">
+							<h4>Your quote has been loaded successfully!</h4>
+							<div id="pdf">
+  								<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
+    								<p>Error, quote cannot be displayed.</p>
+  								</object>
+							</div>
+						</div>
+						<div v-else>
+							<h4>Processing</h4>
+							<button class="btn btn-lg btn-success" type="button" disabled="true">
+								<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+							</button>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<!-- <button v-if="getEstimatePDF" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
+						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>-->
+						<button class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
+						<button  type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Input Estimate ID -->
 		<div class="modal fade" id="estimateIdModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			<div class="modal-dialog" role="document">
@@ -198,6 +300,10 @@ import {toJSONLocal} from './scripts/functions'
 
 import {mapActions,mapGetters} from 'vuex'
 
+import {ValidateFormStep} from './scripts/functions.js'
+
+import { forEachValue } from './scripts/util'
+
 import axios from './store/api/api-config'
 
 export default {
@@ -205,7 +311,9 @@ export default {
 	data () {
 		return {
 			estimate_id: '',
-			stripe: null
+			stripe: null,
+			verifyError1: false,
+			verifyError2: false
 		}
 	},
 	components: {
@@ -244,7 +352,89 @@ export default {
 			'serverSetClient',
 			'saveCart',
 			'setPaymentProp',
+			'achSendVerify'
 		]),
+		submitQuoteId(){
+			$('#returnModal').modal('toggle')
+			$('#returnSuccessModal').modal('show')
+		},
+		goToVerify(){
+			$('#returnSuccessModal').modal('toggle')
+			$('#verifyModal').modal('show')
+		},
+		goToPayment(){
+			console.log("LOAD CUSTOMER'S ESTIMATE DATA INTO STATE AND GO TO PAYMENT PAGE")
+			$('#returnSuccessModal').modal('toggle')
+			this.setCurrentFormStep(6)
+		},
+		submitVerification(){
+			let v1 = document.getElementById('verify1').value
+			let v2 = document.getElementById('verify2').value
+
+			let format1 = {
+				placeholder: "Ammount #1",
+				src: "verify1",
+				dest: "verify.1",
+				required: true,
+				form: {
+					type: "number",
+					name: "verify1",
+				},
+				validate: {
+					type: "number",
+					min: 2,
+				}
+			}
+			let format2 = {
+				placeholder: "Ammount #2",
+				src: "verify2",
+				dest: "verify.2",
+				required: true,
+				form: {
+					type: "number",
+					name: "verify2",
+				},
+				validate: {
+					type: "number",
+					min: 2,
+				}
+			}
+			var errors = null
+
+			var allGood = true
+
+			errors = ValidateFormStep(format1, v1)
+			if(errors.valid == false){
+				console.log("error1")
+				allGood = false
+				this.verifyError1 = true
+			}
+
+			errors = ValidateFormStep(format2, v2)
+			if(errors.valid == false){
+				console.log("error2")
+				allGood = false
+				this.verifyError2 = true
+			}
+
+			if(allGood){
+				this.setPaymentProp({prop: 'verify1', data: v1})
+				this.setPaymentProp({prop: 'verify2', data: v2})
+				this.achSendVerify()
+			}
+		},
+		ValidateFormStepFunction(step, value){
+			let errors = ValidateFormStep(step, value)
+
+			if(errors['valid'] == true){
+				if(step.form.name == '1'){
+					this.verifyError1 = false
+				}
+				else if(step.form.name == '2'){
+					this.verifyError2 = false
+				}
+			}
+		},
 		emailQuote() {
 			this.sendQuoteEmail()
 		},
@@ -390,6 +580,17 @@ h1, h2, h3, h4 {
 	z-index: 0;
 	min-height: 100%;
 	min-height: 100vh;
+}
+
+.error-border{
+	border-color: #ff3434!important;
+
+	&:focus {
+		border-color: red!important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 52, 52, 0.6);
+    	
+	}
 }
 
 

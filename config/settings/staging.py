@@ -81,10 +81,11 @@ DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 
 
 # Freshbooks
-FRESHBOOKS_URL = 'https://mibura.freshbooks.com/api/2.1/xml-in'
+FRESHBOOKS_URL = 'https://miburatest.freshbooks.com/api/2.1/xml-in'
 FRESHBOOKS_AUTH = get_env_variable('FRESHBOOKS_AUTH')
 
-
+FRESHBOOKS_URL = 'https://miburatest.freshbooks.com/api/2.1/xml-in'
+FRESHBOOKS_AUTH = '615144c52b95cc94e62ddc65ec86b273'
 
 # MIDDLEWARE += []
 

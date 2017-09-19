@@ -268,6 +268,10 @@
 				</div>
 			</div>
 		</div>
+		<div v-if="!getPurchaseSuccess" class="notifications-container" style="padding: 0 5px;z-index: 5;">
+			<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
+		</div>
+
 		<div v-if="getPurchaseSuccess" class="row">
 			<success-screen></success-screen>
 		</div>
@@ -275,13 +279,11 @@
 			<div class="col-xs-12">
 				<progressbar></progressbar>
 			</div>
-			<div class="col-xs-12 col-lg-12" style="padding: 0 5px;">
-				<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
-			</div>
-			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-1">
+			
+			<div id="support-form" class="app-move-down col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-1">
 				<support-form class="pad-10"></support-form>
 			</div>
-			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-4" >
+			<div id="side_cart_container" class=" app-move-down side-cart col-xs-12 col-md-4 col-lg-4" >
 				<support-cart></support-cart>
 			</div>
 		</div>
@@ -523,6 +525,14 @@ export default {
 
 <style lang="scss">
 
+
+.notifications-container {
+	position: absolute;
+	top: 75px;
+	left: 0px;
+	right: 0px;
+}
+
 #app {
 	padding-top: 40px;
 }
@@ -576,6 +586,7 @@ h1, h2, h3, h4 {
 }
 
 #side_cart {
+	margin-top: 55px;
 	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
 	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
 	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
@@ -587,10 +598,11 @@ h1, h2, h3, h4 {
 }
 
 #support-form {
+	margin-top: 45px;
 	display: block;
 	z-index: 0;
-	min-height: 100%;
-	min-height: 100vh;
+	min-height: 80%;
+	min-height: 80vh;
 }
 
 .error-border{

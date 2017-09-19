@@ -3,7 +3,7 @@
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
-			<li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li>
+			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
 			
 
 		</ul>

@@ -71,13 +71,18 @@ export default {
 		}
 	},
 	mounted() {
-		this.saveCart(this.getClientInfo)
+		this.serverSetClient()
+			.then(() => {
+				this.saveCart()
+			})
+		
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
 			'setClientProp',
-			'saveCart'
+			'saveCart',
+			'serverSetClient'
 		]),
 		processAjaxResult(json) {
 			return json['results']

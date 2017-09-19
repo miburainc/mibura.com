@@ -91,9 +91,9 @@ export const form_steps = [
 				script: "next"
 			},
 			{
-				label: "I'm ready to pay for an existing quote",
+				label: "I'm returning with a previous quote",
 				class: "btn btn-lg btn-outline-default",
-				script: "pay"
+				script: "returning"
 			}
 		],
 		title: "",

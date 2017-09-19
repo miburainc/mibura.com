@@ -257,6 +257,10 @@ export default {
 			// Grab current step data
 			let data = this.getFormSteps[this.getCurrentFormStep].data
 			this.clearErrors()
+			if(scr == "returning"){
+				$('#returnModal').modal('show')
+				return(true)
+			}
 			if(scr == "submitach"){
 				console.log("SubmitACH in ButtonAction")
 				$('#achSubmitModal').modal('show')

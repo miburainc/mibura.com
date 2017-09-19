@@ -103,7 +103,6 @@ export default {
 			'clearErrors',
 			'clearCurrentItem',
 			'setClientProp',
-			'serverSetClient',
 			'addNotification',
 			'setEstimatePdfFile',
 			'checkout',
@@ -159,19 +158,11 @@ export default {
 				})
 		},
 		goToStep(step_num) {
-
 			// Proceed to next page of form
 			this.setCurrentFormStep(step_num)
 
 			// Call timeout function
 			this.formTimeoutNext()
-
-			// If step is end of client entry
-			// Check server for client info
-			// If not on server, create in server
-			if (step_num == this.step_names.payment) {
-				this.serverSetClient()
-			}
 		},
 		formOnPressEnter() {
 			if (this.getCurrentFormStep == this.getFormSteps[this.getCurrentFormStep].data.length - 1) {

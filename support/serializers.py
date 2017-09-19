@@ -96,5 +96,6 @@ class CartSerializer2(serializers.ModelSerializer):
 			'length',
 			'reference',
 			'products',
+			'cloud',
 			'plan'
 		)		

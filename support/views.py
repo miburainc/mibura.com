@@ -257,23 +257,90 @@ def get_cart(request):
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		cart = Cart.objects.filter(reference=data.reference)
-		
-		cart = cart[0]
+		cart = get_object_or_404(Cart, reference=data.reference)
+		client = get_object_or_404(Client, pk=int(cart.client.pk))
+		discount_list = Discount.objects.all()
+		plan_obj = Plan.objects.get(short_name=cart.plan)
+		categories = ProductCategory.objects.all()
 
-		print(cart.products)
+		items = []
+
+		for client_prod in cart.products.all():
+			items.append({
+				**client_prod.__dict__,
+				'type': 'product',
+				'category': client_prod.product.category,
+				'cost': product_price(client_prod, cart.plan, cart.length)
+			})
+
+		for cloud in cart.cloud.all():
+			items.append({
+				'name': cloud.name,
+				'type': 'cloud',
+				'category': 'cloud',
+				'cost': cloud_price(cloud, cart.plan, cart.length)
+			})
+
+		active_discount = 0.0
+
+		for index, dis in enumerate(discount_list):
+			if float(cart.length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+
+
+		line_items = []
+		for index,item in enumerate(items):
+			line_item = {
+
+			}
+			cat = categories.get(category_code=item['category'])
+
+			if item['type'] == 'product':
+				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
+				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
+
+			elif item['type'] == 'cloud':
+				cloud = Cloud.objects.get(name=item['name'])
+				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
+				desc = estimate_text.description
+
+			line_item['name'] = estimate_text.item
+			line_item['description'] = desc
+			line_item['unit_cost'] = {
+				'amount': str(round(item['cost'], 2)),
+				'code': 'USD'
+			}
+			line_item['qty'] = 1
+			line_item['type'] = 0
+
+			line_items.append(line_item)
 		
-		serializer_context = {
-			'request': Request(request),
+		print("ASDF")
+		print(client.__dict__)
+		print(cart.__dict__)
+
+
+		context = {
+			'items': line_items,
+			'client': client.__dict__,
+			#'cart': cart.__dict__,
+			'date': DateFormat(datetime.now()).format('Y-m-d')
 		}
-		serialized = CartSerializer2(cart, context=serializer_context)
 
-		for s in serialized.data:
-			print(s, serialized[s].value)
-
-		response_json = JSONRenderer().render(serialized.data)
+		response_json = JSONRenderer().render(context)
 
 		return HttpResponse(response_json, status=200)
+		
+		# file_name = "Mibura_SmartSupport_Estimate.pdf"
+		# path_to_file = '/tmp/' + file_name
+		# pdf = FileWrapper(open(path_to_file, 'rb'))
+
+		# response = HttpResponse(pdf, content_type='application/pdf')
+		# response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		# response['Content-Length'] = os.path.getsize(path_to_file)
+		# return response
+	return HttpResponse('Not POST', status=400)
 
 
 @csrf_exempt
@@ -410,6 +477,7 @@ def estimate_pdf(request):
 @csrf_exempt
 def get_estimate_pdf(request):
 	if request.method == 'POST':
+		
 		data = json.loads(request.body.decode("utf-8"))
 
 		data = dotdict(data)

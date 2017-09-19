@@ -399,9 +399,15 @@ def get_previous_estimate(request):
 
 		estimate_ref = data.estimate_ref
 
-		estimate_data = estimates.get_estimate(estimate_ref)
+		try:
+			obj = Cart.objects.get(reference=estimate_ref)
+		except:
 
-		response_json = json.dumps(estimate_data)
+			estimate_data = estimates.get_estimate(estimate_ref)
+
+			response_json = json.dumps(estimate_data)
+
+		
 
 		return HttpResponse(response_json, content_type="application/json", status=200)
 
@@ -548,8 +554,29 @@ def get_estimate_pdf(request):
 
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Estimate'
-		estimate = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
-		
+		# estimate = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+
+		# if cart.freshbooks_estimate_id:
+		# 	old_cart = deepcopy(cart)
+		# 	cart.reference = "replaced"
+		# 	cart.replaced = True
+		# 	cart.save()
+
+		# 	cart.pk = None
+		# 	cart.save()
+		# 	cart.replaced = False
+		# 	cart.products.add(*old_cart.products.all())
+		# 	cart.cloud.add(*old_cart.cloud.all())
+		# 	cart.freshbooks_estimate_id = estimate['estimateid']
+		# 	cart.freshbooks_estimate_num = estimate['estimate_number']
+		# 	cart.reference = old_cart.reference
+		# 	cart.save()
+		# else:
+		# 	cart.freshbooks_estimate_id = estimate['estimateid']
+		# 	cart.freshbooks_estimate_num = estimate['estimate_number']
+		# 	cart.save()
+
 		if cart.freshbooks_estimate_id:
 			old_cart = deepcopy(cart)
 			cart.reference = "replaced"
@@ -561,44 +588,24 @@ def get_estimate_pdf(request):
 			cart.replaced = False
 			cart.products.add(*old_cart.products.all())
 			cart.cloud.add(*old_cart.cloud.all())
-			cart.freshbooks_estimate_id = estimate['estimateid']
-			cart.freshbooks_estimate_num = estimate['estimate_number']
+			cart.freshbooks_estimate_id = estimate_id
 			cart.reference = old_cart.reference
 			cart.save()
 		else:
-			cart.freshbooks_estimate_id = estimate['estimateid']
-			cart.freshbooks_estimate_num = estimate['estimate_number']
+			cart.freshbooks_estimate_id = estimate_id
 			cart.save()
 		
-		# pdf_status = estimates.get_estimate_pdf(estimate_id)
-
-		template = loader.get_template('accounting/estimate.html')
-		context = {
-			'items': line_items,
-			'client': client,
-			'cart': cart,
-			'date': DateFormat(datetime.now()).format('Y-m-d'),
-			'estimate_num': estimate['estimate_number'],
-			'terms': terms,
-			'notes': notes
-		}
-		html = template.render(request=request, context=context)
-		response = HttpResponse(content_type='application/pdf;')
-
-		# HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response)
-
-		# response['Content-Disposition'] = 'inline; filename=MiburaEstimate.pdf'
-		# response['Content-Transfer-Encoding'] = 'binary'
-		return response
+		pdf_status = estimates.get_estimate_pdf(estimate_id)
 		
-		# file_name = "Mibura_SmartSupport_Estimate.pdf"
-		# path_to_file = '/tmp/' + file_name
-		# pdf = FileWrapper(open(path_to_file, 'rb'))
+		file_name = "Mibura_SmartSupport_Estimate.pdf"
+		path_to_file = '/tmp/' + file_name
+		pdf = FileWrapper(open(path_to_file, 'rb'))
 
-		# response = HttpResponse(pdf, content_type='application/pdf')
-		# response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
-		# response['Content-Length'] = os.path.getsize(path_to_file)
-		# return response
+		response = HttpResponse(pdf, content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		response['Content-Length'] = os.path.getsize(path_to_file)
+		return response
+
 	return HttpResponse('Not POST', status=400)
 
 @csrf_exempt

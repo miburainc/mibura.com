@@ -15,7 +15,16 @@
 					</tr>
 				</tbody>
 			</table>
-			<div v-if="Object.keys(getClientInfo).length > 0" class="pad-10 row" style="padding:0px 0px 15px 0px; margin: 0px 10px 0px 10px; border-bottom: 1px solid lightgray">
+			<div class="row">
+				<div class="col-md-7" style=""></div>
+				<div class="col-xs-12 col-md-5" style="padding: 0px 22px 15px 7px; text-align:right; ">
+					<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
+					<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
+					 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
+					<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+				</div>
+			</div>
+			<div v-if="Object.keys(getClientInfo).length > 0" class="row" style="padding:15px 0px 15px 0px; margin: 12px 10px 0px 10px; border-bottom: 1px solid lightgray;border-top: 1px solid lightgray">
 				
 				<div class="col-lg-4"><h4>Personal Information</h4><br></div>
 				
@@ -25,13 +34,11 @@
 					{{getClientInfo['company']}}<br>
 					{{getClientInfo['phone']}}
 				</div>
-				<br>
 				<div class="col-lg-3">
 					{{getClientInfo['street']}}, {{getClientInfo['street2']}}<br>
 					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
 					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
 				</div>
-				<br>
 				<div class="col-lg-2"><a href="#" style="color:lightblue;">Change</a></div>
 			</div>
 
@@ -51,22 +58,15 @@
 				</div>
 			</div> -->
 
-			<div class="col-md-7"></div>
-			<div class="col-xs-12 col-md-5" style="padding: 15px 15px 15px 7px; text-align:right;">
-				<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
-				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
-				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
-				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
-			</div>
-			<br>
-			<div style="text-align:center;">
+			
+			<div style="text-align:center; margin-top:10px;">
 			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
 			</div>
 			<br>
 			<div style="text-align:center">
 				
 				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
-				<a v-else role="button" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a v-else role="button" style="color:lightblue;" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
 
 				
 				<!-- <label style="font-size: 20px; color: lightblue;">
@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
-			<button v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
 	</div>
 </div>
@@ -93,6 +93,11 @@ import Autocomplete from 'vue2-autocomplete-js';
 export default {
 
 	props: ['form', 'buttonAction'],
+	data(){
+		return{
+			processing: false
+		}
+	},
 	mounted() {
 
 	},
@@ -185,7 +190,8 @@ export default {
 			'getCurrentDiscount',
 			'getPaymentToken',
 			'getPaymentInfo',
-			'getAcceptedTerms'
+			'getAcceptedTerms',
+			'getPaymentProcessing'
 
 		])
 		

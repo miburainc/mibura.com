@@ -11,6 +11,9 @@ router.register(r'productcomplete', views.ProductAutocompleteViewSet)
 router.register(r'cloud', views.CloudViewSet)
 router.register(r'categories', views.CategoriesViewSet)
 router.register(r'discounts', views.DiscountViewSet)
+router.register(r'plan', views.PlanViewSet)
+
+
 
 urlpatterns = [
 	url(r'^$', views.index, name="index"),
@@ -19,6 +22,7 @@ urlpatterns = [
 	# API
 	url(r'^save-client/$', views.save_client_json, name="save_client"),
 	url(r'^get-or-create-cart/$', views.get_create_cart, name="get_create_cart"),
+	url(r'^get-cart/$', views.get_cart, name="get_cart"),
 	url(r'^get-or-create-client/$', views.get_create_client, name="get_create_client"),
 	url(r'^get-estimate-pdf/$', views.get_estimate_pdf, name="get_estimate_pdf"),
 	url(r'^generate/pdf/$', views.estimate_pdf, name='generate_pdf'),
@@ -30,6 +34,8 @@ urlpatterns = [
 	url(r'^ach-credentials/$', views.stripe_ach_begin, name="ach_credentials"),
 	url(r'^ach-verify/$', views.verify_ach, name="ach_verify"),
 ]
+
+
 
 urlpatterns += [
 	url(r'^api/', include(router.urls)),

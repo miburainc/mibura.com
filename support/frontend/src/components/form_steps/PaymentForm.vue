@@ -1,9 +1,11 @@
 <template>
 	<div id="stripe-payment-form">
-		<ul class="nav nav-tabs">
+		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
-			<li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li>
+			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
+			
+
 		</ul>
 		<div class="payment-box">
 
@@ -36,23 +38,23 @@
 				:step="form.data[5]"></form-text-input>
 			</div>
 			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-10" style="margin-bottom:5px;">
+			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
 
 				<form-text-input :step="form.data[1]"></form-text-input>
 				
-				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px;">
+				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
 					<div class="row">
-						<div class="col-sm-5" style=" text-align:center;">
+						<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
 							<button 
 							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
-							style="margin: 30px 0px 0px 18%; padding: 30px;" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
+							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
 						</div>
-						<div class="col-sm-2 text-center">
+						<div class="col-xs-12 col-md-2 text-center payment-or">
 							<div class="line"></div>
 							<div class="orText">or</div>
 							<div class="line"></div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-12 col-md-5">
 							
 							<form-text-input 
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
@@ -72,11 +74,19 @@
 				</div>
 			</div>
 		</div>
+
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
-			<div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div>
+			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
+			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 			
 		</div>
+
+		<div class="text-center">
+			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+		</div>
+			
+
 	</div>
 </template>
 
@@ -96,6 +106,7 @@ export default {
 		return {
 			payment_type: 'card',
 			cardError: false,
+			formErrors: false,
 		}
 	},
 	props: ['form', 'buttonAction'],
@@ -109,7 +120,8 @@ export default {
 			'clearErrors',
 			'setError',
 			'setCurrentFormStep',
-			'serverSetClient'
+			'serverSetClient',
+			'setPaymentProcessing'
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
@@ -117,30 +129,6 @@ export default {
 		switchTabs(newTab){
 			this.payment_type = newTab
 			this.clearErrors()
-			// if(newTab == 'card'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i <= 1){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
-			// else if(newTab == 'ach'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i >= 2) && (i <= 5){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
-			// else if(newTab == 'verify'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i >= 6){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
 		},
 		checkError(){
 			return(true)
@@ -222,30 +210,40 @@ export default {
 		card.mount('#card-element');
 		var self = this;
 		function setOutcome(result) {
+
 			var errorElement = document.querySelector('.error');
 			errorElement.classList.remove('visible');
 
 			var error = false
-
 			if (result.token) {
+
 				// Use the token to create a charge or a customer
 				// https://stripe.com/docs/charges
 				self.setPaymentToken(result.token.id);
 				self.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
+				setTimeout(function(){self.setPaymentProcessing(false)}, 400)
 
 			} else if (result.error) {
 				errorElement.textContent = result.error.message;
 				errorElement.classList.add('visible');
 				error = true
+
+
 			}
+
+			self.cardError = error
+			
 			return(error)
 		}
 		card.on('change', function(event) {
+			
 			self.cardError = setOutcome(event);
 			console.log(self.cardError)
 		});
 		document.querySelector('#btn_review').addEventListener('click', function(e) {
 			//e.preventDefault();
+
+			
 
 			var extraDetails = {
 				
@@ -383,6 +381,9 @@ export default {
 				}
 			}
 
+			if(noFormErrors){
+				setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
+			}
 			
 
 		});
@@ -392,6 +393,7 @@ export default {
 			'getErrors',
 			'getAchPaymentToken',
 			'getCurrentFormStep',
+			'getPaymentProcessing'
 		]),
 
 		plaid_btn_text1(){
@@ -417,6 +419,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.plaid-button-container > button {
+	margin: 30px 0px 0px 18%;
+	padding: 30px; 
+}
+
+
+@media (max-width: 991px) {
+	.payment-or {
+		display: none;
+	}
+	.plaid-button-container > button {
+		margin: 0px;
+		padding: 30px; 
+	}
+}
 
 .btn-plaid-success {
 	padding: 10px 20px;

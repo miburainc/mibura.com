@@ -1,95 +1,121 @@
 <template>
 
-<div id="sss-cart" :style="cartStyle">
-	<div id="cart-header" class="row no-pad" :style="cartHeaderStyle">
-		<div class="col-xs-12">
-			<div class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}
-			<a :style="[textColorPlan, {'cursor': 'pointer', 'float': 'right'}]" @click="scrollDown">View Cart</a></div>
+<div id="side_cart" style="min-width:270px;">
+	<div :style="cartHeaderStyle">
+		<div class="text-center cart-header-title" style="padding: 10px;">
+			<button type="button" class="btn-circle-outline cart-button" @click="buttonCartScroll"><i class="fa fa-shopping-cart" aria-hidden="true" :style="textColorPlan"></i></button>
+			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
+			
+			
 		</div>
-		<div class="col-xs-12 no-pad">
-			<div class="no-pad" :style="textColorPlan">
-					<button class="btn-plan" v-for="(p, index) in get_plans" @click="setPlan" :style="{'color': p.color == '#000000' ? 'white' : 'black', backgroundColor: p.color}" :value="p.code">
-						{{p.name}}
-					</button>
+		<div style="clear: both;">
+			<div class="btn-3">
+				<button 
+					type="button" 
+					class="btn-plan text-center" 
+					v-for="(p, index) in getPlans"
+					:value="p.code"
+					@click="setPlan"
+					:style="{
+						color: p.color == '#000000' ? 'white' : 'black',
+						background: p.code == getCurrentPlan ? 'transparent' : p.color,
+						fontSize: '11px',
+
+					}"
+				>
+					{{p.name}}
+				</button>
+					
 			</div>
 			
 		</div>
+
 	</div>
-	<div id="cart-body" class="col-xs-12" style="color: black;">
-		<h1 class="text-center">Cart</h1>
-		<table class="table table-condensed table-striped">
-			<thead>
-				<th :style="cartHeaderStyle">Product</th>
-				<th class="text-center" :style="cartHeaderStyle">Subtotal</th>
-				<th class="text-right" :style="cartHeaderStyle">Options</th>
+
+	<div style="color: black;">
+		<!-- <h4 class="text-center">Cart</h4>
+		<table id="cart-table-header" class="table table-condensed table-striped">
+			<thead :style="cartHeaderStyle">
+				<th style="padding-left: 15px">Product</th>
+				<th class="text-right">Subtotal</th>
+				<th class="text-right" style="padding-right: 15px">Options</th>
 			</thead>
-			<tbody>
-				<tr v-if="this.get_cart.length < 1" class="text-center">
-					<td colspan="4">None</td>
-				</tr>
-				<tr v-else v-for="(item, index) in get_cart">
-					<td>
-						<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
-						{{item.brand}} {{item.model}}
-					</td>
-					<td class="text-center">
-						${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
-					</td>
-
-					<td class="text-right">
-						<div class="btn-group">
-							<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-sm btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
-							<button type="button" class="btn btn-sm btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		</table> -->
 		<div class="btn-group btn-2">
-			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
-			<button type="button" class="btn btn-sm btn-outline-info" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
-			
-			
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
+			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
 		</div>
+		<div v-show="this.getCart.length > 0" style="max-height:150px;overflow:auto;margin: 0px; padding:0px;">
+			<table class="table table-striped table-condensed table-hover" style="padding:0px; margin:0px; border-bottom: 1px solid lightgray">
+				<tbody class="cart-table-body">
+					<!-- <tr v-if="this.getCart.length < 1" class="text-center">
+						<td colspan="4">None</td>
+					</tr> -->
+					<!-- <tr v-else v-for="(item, index) in getCart"> -->
+					<tr v-for="(item, index) in getCart">
+						<td>
+							<i v-if="item.type=='cloud'" class="fa fa-cloud" aria-hidden="true"></i>
+							{{item.brand}} {{item.model}}
+						</td>
+						<td class="text-center">
+							${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}
+						</td>
+						<td class="text-right">
+							<div class="btn-group">
+								<!-- <button v-if="item.type != 'cloud'" type="button" class="btn btn-xs btn-warning" @click="editItem(item.sku, index)"><i class="fa fa-pencil" aria-hidden="true"></i></button>&nbsp; -->
+								<button type="button" class="btn btn-xs btn-danger" @click="removeItem(item.id, index)"><i class="fa fa-times" aria-hidden="true"></i></button>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- <button type="button" style="width:100%;" class="btn btn-xs btn-danger" @click="clear_cart"><i class="fa fa-times" aria-hidden="true"></i> Clear Cart</button> -->
+		
+		
+		<!-- <div class="btn-group btn-2">
+			<button type="button" class="btn btn-sm btn-info" @click="buttonPhoneSupport">
+				<i class="fa fa-phone" aria-hidden="true"></i>
+				&nbsp;Call Sales
+			</button>
+			<button type="button" class="btn btn-sm btn-primary" @click="buttonGetPDF">
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+				&nbsp;Get Quote
+			</button>
+
+		</div> -->
 			
-		<hr><br>
-		<div>
-			<h4>Cart Reference Code: {{get_cart_reference}}</h4>
+		<div style="background: #DEDEDE; margin-bottom: 110px;">
+
+			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 15%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
+			
+			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:68%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+			
+			
+			<button class="btn btn-sm" style="width: 11%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
+		
+				
+			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
+			
 		</div>
 
-		<div>
-			<button class="btn btn-sm" style="width: 25%; border: none; background: #f4f4f4;  text-align: right;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:red" aria-hidden="true"></i></button>
-			
-			<div style="color: black; display: inline-block; width: 49%; text-align: center;">{{writeOutSupportLength}}</div>
-
-			<button class="btn btn-sm" style="width: 25%; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:green" aria-hidden="true"></i></button>
-				
-				
-		</div>
-		<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
-		<div>
-			<div style="color: black;" class="text-right">
+		<!-- <div class="pad-5">
+			<div class="text-right pad-10">
 				SubTotal: ${{ numWithCommas(getTotal) }}<br>
 				%{{getCurrentDiscount*100}} Discount: &nbsp;
 				- ${{numWithCommas(getTotal*getCurrentDiscount)}}<br>
-				<strong>Estimate Total: ${{ numWithCommas(getGrandTotal) }}</strong>
-				<br>
-				<div class="btn-group">
-					<button type="button" class="btn btn-info" @click="buttonPhoneSupport">
-						<i class="fa fa-phone" aria-hidden="true"></i>
-						&nbsp;Call Sales
-					</button>
-					<button type="button" class="btn btn-primary" @click="buttonGetPDF">
-						<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
-						&nbsp;Get Quote
-					</button>
-					<button type="button" class="btn btn-success" @click="formPurchase">
-						<i class="fa fa-check" aria-hidden="true"></i>
-						&nbsp;Purchase
-					</button>
-				</div>
+				<span style="font-size: 1.2em;font-weight:700;">Estimate Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
-		</div>
+			<div class="btn-group btn-2">
+				<button type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#termsModal">
+					Terms &amp; Conditions
+				</button>
+				<button type="button" class="btn btn-sm btn-success" @click="formPurchase">
+					<i class="fa fa-check" aria-hidden="true"></i>
+					&nbsp;Purchase
+				</button>
+			</div>
+		</div> -->
 	</div>
 </div>
 
@@ -103,16 +129,31 @@ import { mapGetters, mapActions } from 'vuex'
 
 import {URL_ROOT,API_ROOT,step_names} from '../store/values'
 
+
 import moment from 'moment'
 import velocity from 'velocity-animate'
 
 export default {
 	data () {
 		return {
-
+			windowWidth: 0,
+			windowHeight: 0,
 		}
 	},
+	mounted() {
+		this.$nextTick(function() {
+			window.addEventListener('resize', this.getWindowWidth);
+			window.addEventListener('resize', this.getWindowHeight);
 
+			//Init
+			this.getWindowWidth()
+			this.getWindowHeight()
+		})
+	},
+	beforeDestroy() {
+		window.removeEventListener('resize', this.getWindowWidth);
+		window.removeEventListener('resize', this.getWindowHeight);
+	},
 	methods: {
 		...mapActions([
 			'editCartItem',
@@ -130,25 +171,73 @@ export default {
 			'setAcceptedTerms',
 			'addNotification',
 		]),
+
+		buttonCartScroll() {
+			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+			console.log("cart button clicked")
+		},
+
+		getWindowWidth(event) {
+			this.windowWidth = $(window).width()
+		},
+
+		getWindowHeight(event) {
+			this.windowHeight = $(window).height()
+		},
+
 		setPlan(el) {
 			let val = el.target.value
+			switch(val) {
+				case 'silver':
+					this.addNotification({
+						type: 'success',
+						message: 'Pro Silver provides 4 hour response for the lowest price!'
+						// message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+				case 'gold':
+					this.addNotification({
+						type: 'success',
+						message: 'Pure Gold provides 15 min response and free cloud support!'
+						// message: 'Pure Gold provides 15 min response and free cloud support! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+				case 'black':
+					this.addNotification({
+						type: 'success',
+						message: 'Carbon Black provides 15 min response and a dedicated security & compliance team!'
+						// message: 'Carbon Black provides 15 min response and a dedicated security & compliance team! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
+					})
+					break;
+			}
 			this.setCurrentPlan(val)
 		},
 		formPurchase() {
-			if (this.get_cart.length < 1) {
+			if (this.getCart.length < 1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please add items to your cart before clicking purchase!'
+				})
 				this.buttonStartNewItem()
 			}
 			else if (Object.keys(this.getClientInfo) < 10) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please fill out your information!'
+				})
 				this.buttonStartClientInfo()
 			}
-			else if (!this.get_payment_token) {
+			else if (!this.getPaymentToken) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please fill out your payment information!'
+				})
 				this.buttonStartPayment()
 			}
-			else if (!this.get_accepted_terms) {
+			else if (!this.getAcceptedTerms) {
 				$('#termsModal').modal('show')
 			}
 			else {
-				console.log("Purchase -- ")
 				this.serverSetClient().then(() => {
 					this.saveCart().then(() => {
 						this.checkout()
@@ -190,18 +279,18 @@ export default {
 		},
 		buttonStartNewItem() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
-			this.setCurrentFormStep(step_names.brand)
+			this.setCurrentFormStep(step_names.item)
 		},
 		buttonStartClientInfo() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: 0 });
 			this.setCurrentFormStep(step_names.client_info)
 		},
 		buttonPhoneSupport() {
-			console.log("buttonPhoneSupport")
-			if (this.get_cart.length < 1) {
-				this.buttonStartNewItem()
-			}
-			else if (Object.keys(this.getClientInfo).length<1) {
+			if (Object.keys(this.getClientInfo).length<1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please provide your contact information.'
+				})
 				this.buttonStartClientInfo()
 			}
 			else {
@@ -212,25 +301,31 @@ export default {
 				
 			}
 		},
-		buttonGetEstimate() {
-			$('#estimateIdModal').modal('show')
-		},
 		buttonGetPDF() {
-			console.log("buttonGetPDF")
-			if (this.get_cart.length < 1) {
+			if (this.getCart.length < 1) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please add items to your cart!'
+				})
 				this.buttonStartNewItem()
 			}
-			else if (Object.keys(this.getClientInfo).length<1) {
+			else if (Object.keys(this.getClientInfo).length<10) {
+				this.addNotification({
+					type: 'warning',
+					message: 'Please provide your contact information.'
+				})
 				this.buttonStartClientInfo()
 			}
 			else {
-				// Reset pdf to nothing
-				this.setEstimatePdfFile(null);
-				// Send request for new pdf file
-				this.saveCart(this.getClientInfo)
-					.then(() => {
-						this.serverGetEstimatePdf()
-					})
+				if (this.getCartChanged) {
+					// Reset pdf to nothing
+					this.setEstimatePdfFile(null);
+					// Send request for new pdf file
+					this.saveCart(this.getClientInfo)
+						.then(() => {
+							this.serverGetEstimatePdf()
+						})
+				}
 				$('#pdfModal').modal('show')
 			}
 		},
@@ -239,11 +334,8 @@ export default {
 				this.clearCart()
 			}
 		},
-		scrollDown() {
-			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
-			// window.scrollTo(0,);
-		},
 
+		
 		
 		editItem(id, index) {
 			this.editCartItem({
@@ -258,86 +350,174 @@ export default {
 				index: index
 			})
 		},
-
-		
 	},
 	computed: {
-		...mapGetters({
-			numWithCommas: 'numWithCommas',
-			get_cart: 'getCart',
-			get_plans: 'getPlans',
-			get_plan: 'getPlan',
-			getSupportMonths: 'getSupportMonths',
-			getMultiplier: 'getMultiplier',
-			getClientInfo: 'getClientInfo',
-			get_payment_token: 'getPaymentToken',
-			get_cart_reference: 'getCartReference',
-			get_accepted_terms: 'getAcceptedTerms',
-			current_plan: 'getCurrentPlan',
-			getCurrentDiscount: 'getCurrentDiscount',
-			getProductSubtotal: 'getProductSubtotal',
-			getTotal: 'getTotal',
-			getGrandTotal: 'getGrandTotal',
-			get_cart_changed: 'getCartChanged',
-		}),
-		textColorPlan() {
-			return {'color': this.current_plan == 'black' ? 'white' : 'black' }
-		},
-		cartStyle() {
+		...mapGetters([
+			'numWithCommas',
+			'getCart',
+			'getPlans',
+			'getPlan',
+			'getSupportMonths',
+			'getMultiplier',
+			'getClientInfo',
+			'getPaymentToken',
+			'getCartReference',
+			'getAcceptedTerms',
+			'getCurrentPlan',
+			'getTotal',
+			'getProductSubtotal',
+			'getGrandTotal',
+			'getCurrentDiscount',
+			'getCartChanged',
+		]),
 
+		textColorPlan() {
+			return {'color': this.getCurrentPlan == 'black' ? 'white' : 'black' }
 		},
-		cartHeaderStyle() {
-			let plan = this.get_plan(this.current_plan)
+
+		cartPlanBlackBackground() {
 			return {
-				'background-color': plan.color, 
-				'color': this.current_plan == 'black' ? 'white' : 'black'
+				'background-color': '#000000', 
+				'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.15) 2px, transparent 3px, transparent 7px)',
+				'background-size': '6px 8px',
 			}
+		},
+		
+		cartHeaderStyle() {
+			let plan = this.getPlan(this.getCurrentPlan)
+			let result = {
+				'z-index': 100,
+				'position': this.windowWidth < 977 ? 'fixed' : 'static',
+				'bottom': this.windowWidth < 977 ? '0px' : 'auto',
+				'left': this.windowWidth < 977 ? '0px' : 'auto',
+				'right': this.windowWidth < 977 ? '0px' : 'auto',
+			}
+			if (this.getCurrentPlan == 'black') {
+				return Object.assign(result, {
+					'padding-top': '10px',
+					'background-color': '#000000', 
+					'background-image': 'repeating-linear-gradient(-26deg, rgba(255,255,255, 0.02), rgba(255,255,255, 0.12) 2px, transparent 3px, transparent 7px)',
+    				'background-size': '6px 8px',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				})
+			}
+			
+			else if (this.getCurrentPlan == 'gold') {
+				return Object.assign(result, {
+					// 'background-color': plan.color, 
+					'padding-top': '10px',
+					'background-image':
+						'linear-gradient(90deg,rgba(225,190,77,1) 0%,rgba(243, 198, 66,0.6)  39%,rgba(225,190,77,1) 75%)',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				})
+			}
+			else if (this.getCurrentPlan == 'silver') {
+				return Object.assign(result, {
+					// 'background-color': plan.color, 
+					'padding-top': '10px',
+					'background': '#aaa',
+					'background-image':
+						'linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.6)  39%,rgba(255,255,255,0) 75%)',
+    				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+				})
+			}
+			return Object.assign(result, {
+				'padding-top': '10px',
+				'background-color': plan.color, 
+				'color': this.getCurrentPlan == 'black' ? 'white' : 'black'
+			})
 		},
 		writeOutSupportLength() {
 			let str = ""
-			let lenArray = String(this.getSupportMonths/12).split('.')
+			let lenArray = String(this.getSupportMonths / 12).split('.')
 			if (lenArray.length > 1) {
-				str = lenArray[0] + " Years & 6 months"
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year & 6 months"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years & 6 months"		
+				}
+				else{
+					str = "6 months"
+				}
 			}
 			else {
-				str = lenArray[0] + " Years"
+				if(lenArray[0] == 1){
+					str = lenArray[0] + " Year"	
+				}
+				else if(lenArray[0] != 0){
+					str = lenArray[0] + " Years"
+				}
 			}
 			return str
 		}
-	}
-}
+	},
+
+}    
 
 </script>
 
 <style lang="scss" scoped>
 
-#cart-header {
-	position: fixed;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	z-index: 1;
+.cart-header-title {
+	position: relative;
 }
 
-.no-pad {
-	padding: 0;
+.btn-circle-outline {
+	position: absolute;
+	top: -1px;
+	right: 0px;
+	border-radius: 50%;
+	margin-right: 35px;
+	padding: 15px;
+	font-size: 20px;
+	text-align: center;
+	border: none;
+	background: transparent;
+	transition: 0.2s background;
+
+	&:hover {
+		background: rgba(255,255,255,.2)
+	}
+}
+
+@media (min-width: 992px) {
+	.cart-button {
+		display: none;
+	}
+}
+
+// CSS texture style from codepen.io
+.pattern3 {
+    background-image: repeating-linear-gradient(-26deg, rgba(255,255,255, 0.25), rgba(255,255,255, 0.25) 2px, transparent 3px, transparent 7px);
+    background-size: 6px 8px;
+}
+
+#side_cart {
+	// margin-top: 15%;
+	border-radius: 5px;
+	border: 0px solid #444444;
+	background-color: white;
+}
+
+#cart-table-header {
+	margin-bottom: 0;
+}
+
+.cart-table-body tr td {
+	font-size: 1.1em;
+}
+
+.btn-plan {
+	border-radius: 0px;
 }
 
 .btn-plan:focus {
     outline: 0;
 }
 
-#cart-body {
-	padding: 20px;
-	padding-bottom: 100px;
-}
-
-#sss-cart {
-	background: white;
-}
-
 .cart-tray {
-	font-size: 1.4em;
+	color: #000000;
 }
 
 h1, h2, h3, h4, table, thead, tbody, span, div, p, form {
@@ -349,7 +529,9 @@ h2 {
 	font-size: 2.5em
 }
 
-
+h1, h2, h3, h4 {
+	margin: 0;
+}
 
 
 </style>

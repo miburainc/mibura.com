@@ -43,6 +43,19 @@ class DiscountSerializer(serializers.HyperlinkedModelSerializer):
 			'pk',
 		)
 
+
+class PlanSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Plan
+		fields = (
+			'name',
+			'color',
+			'short_name', 
+			'price', 
+			'pk',
+		)
+
+
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Client
@@ -66,10 +79,21 @@ class CartSerializer(serializers.ModelSerializer):
 		model = Cart
 		fields = (
 			'pk',
-			'email', 
 			'client',
 			'length',
 			'reference',
 			'products',
 			'plan'
 		)
+
+class CartSerializer2(serializers.ModelSerializer):
+	class Meta:
+		model = Cart
+		fields = (
+			'pk',
+			'client',
+			'length',
+			'reference',
+			'products',
+			'plan'
+		)		

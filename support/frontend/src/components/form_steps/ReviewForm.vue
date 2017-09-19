@@ -41,8 +41,8 @@
 					<button type="button" class="btn btn-default" @click="buttonStartClientInfo">Enter your information</button>
 				</div>
 			</div> -->
-			<div class="col-md-9"></div>
-			<div class="col-xs-12 col-md-3" style="padding: 15px 15px 15px 7px; text-align:right;">
+			<div class="col-md-7"></div>
+			<div class="col-xs-12 col-md-5" style="padding: 15px 15px 15px 7px; text-align:right;">
 				<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
 				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
 				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
@@ -71,12 +71,18 @@ export default {
 		}
 	},
 	mounted() {
-
+		this.serverSetClient()
+			.then(() => {
+				this.saveCart()
+			})
+		
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'saveCart',
+			'serverSetClient'
 		]),
 		processAjaxResult(json) {
 			return json['results']

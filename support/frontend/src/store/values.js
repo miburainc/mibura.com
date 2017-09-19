@@ -91,9 +91,9 @@ export const form_steps = [
 				script: "next"
 			},
 			{
-				label: "I'm ready to pay for an existing quote",
+				label: "I'm returning with a previous quote",
 				class: "btn btn-lg btn-outline-default",
-				script: "pay"
+				script: "returning"
 			}
 		],
 		title: "",
@@ -161,7 +161,7 @@ export const form_steps = [
 				script: "back"
 			},
 			{
-				label: "Add another",
+				label: "Add",
 				class: "btn btn-lg btn-outline-success",
 				script: "start,additem"
 
@@ -425,9 +425,9 @@ export const form_steps = [
 				script: "getquote"
 			},
 			{
-				label: "Proceed to Checkout",
+				label: "Go to Checkout",
 				class: "btn btn-lg btn-outline-success payment-button",
-				script: "next"
+				script: "gotocheckout"
 			},
 		],
 		title: "Review",
@@ -542,7 +542,7 @@ export const form_steps = [
 			},
 		],
 		title: "Payment",
-		text: "Please select your preferred payment option and fill out the fields to finalize your purchase.",
+		text: "",
 		error: "",
 		step: 3,
 		buttonStyle: ""

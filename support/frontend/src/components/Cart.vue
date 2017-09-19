@@ -3,7 +3,7 @@
 <div id="side_cart" style="min-width:270px;">
 	<div :style="cartHeaderStyle">
 		<div class="text-center cart-header-title" style="padding: 10px;">
-			<button type="button" class="btn-circle-outline cart-button" @click="buttonCartScroll"><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+			<button type="button" class="btn-circle-outline cart-button" @click="buttonCartScroll"><i class="fa fa-shopping-cart" aria-hidden="true" :style="textColorPlan"></i></button>
 			<h2 class="cart-tray" :style="textColorPlan">${{ numWithCommas(getGrandTotal) }}</h2>
 			
 			

@@ -76,8 +76,8 @@
 		</div>
 
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
-			<div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div>
+			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
+			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 			
 		</div>
 
@@ -106,6 +106,7 @@ export default {
 		return {
 			payment_type: 'card',
 			cardError: false,
+			formErrors: false,
 		}
 	},
 	props: ['form', 'buttonAction'],
@@ -119,7 +120,8 @@ export default {
 			'clearErrors',
 			'setError',
 			'setCurrentFormStep',
-			'serverSetClient'
+			'serverSetClient',
+			'setPaymentProcessing'
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
@@ -127,30 +129,6 @@ export default {
 		switchTabs(newTab){
 			this.payment_type = newTab
 			this.clearErrors()
-			// if(newTab == 'card'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i <= 1){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
-			// else if(newTab == 'ach'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i >= 2) && (i <= 5){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
-			// else if(newTab == 'verify'){
-			// 	for (i = 0; i < form.data.length; i++) { 
-			// 		clearErrors()
-			// 	    if(i >= 6){
-			// 	    	ValidateFormStep(form.data[i], document.getElementById(form.data[i]).value)
-			// 	    }
-			// 	}
-			// }
 		},
 		checkError(){
 			return(true)
@@ -232,30 +210,40 @@ export default {
 		card.mount('#card-element');
 		var self = this;
 		function setOutcome(result) {
+
 			var errorElement = document.querySelector('.error');
 			errorElement.classList.remove('visible');
 
 			var error = false
-
 			if (result.token) {
+
 				// Use the token to create a charge or a customer
 				// https://stripe.com/docs/charges
 				self.setPaymentToken(result.token.id);
 				self.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
+				setTimeout(function(){self.setPaymentProcessing(false)}, 400)
 
 			} else if (result.error) {
 				errorElement.textContent = result.error.message;
 				errorElement.classList.add('visible');
 				error = true
+
+
 			}
+
+			self.cardError = error
+			
 			return(error)
 		}
 		card.on('change', function(event) {
+			
 			self.cardError = setOutcome(event);
 			console.log(self.cardError)
 		});
 		document.querySelector('#btn_review').addEventListener('click', function(e) {
 			//e.preventDefault();
+
+			
 
 			var extraDetails = {
 				
@@ -393,6 +381,9 @@ export default {
 				}
 			}
 
+			if(noFormErrors){
+				setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
+			}
 			
 
 		});
@@ -402,6 +393,7 @@ export default {
 			'getErrors',
 			'getAchPaymentToken',
 			'getCurrentFormStep',
+			'getPaymentProcessing'
 		]),
 
 		plaid_btn_text1(){

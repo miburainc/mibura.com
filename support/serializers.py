@@ -86,3 +86,15 @@ class CartSerializer(serializers.ModelSerializer):
 			'products',
 			'plan'
 		)
+
+class CartSerializer2(serializers.ModelSerializer):
+	class Meta:
+		model = Cart
+		fields = (
+			'pk',
+			'client',
+			'length',
+			'reference',
+			'products',
+			'plan'
+		)		

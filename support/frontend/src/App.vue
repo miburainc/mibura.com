@@ -275,13 +275,13 @@
 			<div class="col-xs-12">
 				<progressbar></progressbar>
 			</div>
-			<div class="col-xs-12 col-lg-3" style="padding: 0 5px;">
+			<div class="col-xs-12 col-lg-12" style="padding: 0 5px;">
 				<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
 			</div>
-			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-6 col-lg-offset-0">
+			<div id="support-form" class="col-xs-10 col-xs-offset-1 col-md-8 col-md-offset-0 col-lg-7 col-lg-offset-1">
 				<support-form class="pad-10"></support-form>
 			</div>
-			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-3" >
+			<div id="side_cart_container" class="side-cart col-xs-12 col-md-4 col-lg-4" >
 				<support-cart></support-cart>
 			</div>
 		</div>
@@ -303,6 +303,8 @@ import {mapActions,mapGetters} from 'vuex'
 import {ValidateFormStep} from './scripts/functions.js'
 
 import { forEachValue } from './scripts/util'
+
+import cart from './store/api/cart'
 
 import axios from './store/api/api-config'
 
@@ -355,6 +357,14 @@ export default {
 			'achSendVerify'
 		]),
 		submitQuoteId(){
+			var data = {
+				reference: document.getElementById('quoteIdInput').value,
+			}
+
+			var newCart = cart.getCart(data)
+			console.log(newCart)
+			setTimeout(function(){console.log(newCart)}, 4000)
+
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
 		},
@@ -418,6 +428,7 @@ export default {
 			}
 
 			if(allGood){
+				$('#verifyModal').modal('toggle')
 				this.setPaymentProp({prop: 'verify1', data: v1})
 				this.setPaymentProp({prop: 'verify2', data: v2})
 				this.achSendVerify()

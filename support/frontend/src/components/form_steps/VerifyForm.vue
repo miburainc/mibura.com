@@ -77,7 +77,7 @@
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle"> 	
-			<button v-if="!processing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script); processing=true;}">{{btn.label}}</button><button v-if="processing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
 	</div>
 </div>
@@ -190,7 +190,8 @@ export default {
 			'getCurrentDiscount',
 			'getPaymentToken',
 			'getPaymentInfo',
-			'getAcceptedTerms'
+			'getAcceptedTerms',
+			'getPaymentProcessing'
 
 		])
 		

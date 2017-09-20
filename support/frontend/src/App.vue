@@ -87,7 +87,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Thank you for returning to Mibura Smart Support.  Please enter your quote ID.  
+							Thank you for returning to Mibura Smart Support.  Please enter the quote ID located at the bottom of your estimate PDF.  
 						</p>
 						<input class="form-control" placeholder="Quote ID" id="quoteIdInput" style="color:black;" v-on:keyup.enter="submitQuoteId">
 					</div>
@@ -157,11 +157,6 @@
 					<div class="modal-body">
 						<div v-if="cartLoaded">
 							<h4>Your quote has been loaded successfully!</h4>
-							<div id="pdf">
-  								<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
-    								<p>Error, quote cannot be displayed.</p>
-  								</object>
-							</div>
 						</div>
 						<div v-else-if="cartLoadError">
 							<h4>Invalid Cart Reference Code, try again.</h4>
@@ -399,6 +394,7 @@ export default {
 			
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
+			
 		},
 		submitQuoteId2(){
 

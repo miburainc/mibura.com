@@ -412,6 +412,8 @@ export default {
 								this.setPaymentProcessing(true);
 								this.serverSetClient().then(() => {
 									this.saveCart().then(() => {
+											this.serverGetEstimatePdf()
+										}).then(() => {
 										this.checkout()
 											.then((status) => {
 												console.log("after purchase callback")
@@ -421,14 +423,6 @@ export default {
 													this.addNotification({
 														message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
 														type: "danger"
-													})
-													this.addNotification({
-														message: "To speak with Mibura about your support plan, click 'Call Sales' to speak with a Mibura sales representative.",
-														type: "warning"
-													})
-													this.addNotification({
-														message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
-														type: "info"
 													})
 												}
 												else{

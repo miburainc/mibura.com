@@ -224,12 +224,10 @@ def get_estimate(estimate_num):
 
 	return response
 
-def find_estimate(client_id, estimate_reference_number):
+def find_estimate(estimate_reference_number):
 	"""  """
 	tree = ET.ElementTree(file='freshbooks/xml_templates/list_estimates.xml')
 	root = tree.getroot()
-	_id = root.find('client_id')
-	_id.text = client_id
 	input_xml = ET.tostring(root)
 
 	data = input_xml
@@ -239,11 +237,12 @@ def find_estimate(client_id, estimate_reference_number):
 	root = ET.fromstring(r.content)
 	estimates = root[0]
 	for e in estimates:
-		print(e)
 		e_num = e.find('{http://www.freshbooks.com/api/}number').text
 		estimate_id = e.find('{http://www.freshbooks.com/api/}estimate_id').text
 		if e_num == estimate_reference_number:
 			# response = {
 			# 	'client_id': client_id,
 			# }
+			print('ID', e_num)
+			print(estimate_id)
 			return estimate_id

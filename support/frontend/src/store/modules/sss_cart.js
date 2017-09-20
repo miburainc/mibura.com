@@ -19,7 +19,7 @@ const state = {
 	current_item_id: null,
 	estimate_id: 0,
 	estimate_pdf: null,
-	cart_changed: false,
+	cart_changed: true,
 }
 
 const mutations = {
@@ -158,7 +158,6 @@ const actions = {
 				plan: state.current_plan,
 				length: state.support_months/12,
 			}).then(response => {
-				dispatch('setCartChanged', false)
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});

@@ -10,7 +10,7 @@
 		</ul>
 		<div class="payment-box">
 
-			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10">
+			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
 				<form-text-input 
 				:class="{'error-border': getErrors[form.data[0].form.name]}" 
@@ -27,6 +27,13 @@
 					</div>
 					-->
 				</div>
+				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%;">
+					<i class="fa fa-cc-visa" aria-hidden="true"></i>
+					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
+					<i class="fa fa-cc-discover" aria-hidden="true"></i>
+					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+				</div>
+				<br><br>
 			</div>
 
 			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
@@ -419,9 +426,9 @@ export default {
 				}
 			}
 
-			if(noFormErrors){
-				setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
-			}
+			// if(noFormErrors){
+			// 	setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
+			// }
 			
 
 		});

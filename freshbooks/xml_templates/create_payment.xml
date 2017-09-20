@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<request method="payment.create">  
+	<payment>  
+		<client_id>13</client_id>           <!-- Optional -->  
+		<invoice_id>207</invoice_id>        <!-- Associate this payment with an invoice (Optional) -->  
+		<amount>129.88</amount>             <!-- Default is zero (Optional) -->  
+		<currency_code>USD</currency_code>  <!-- Default is system's base currency (Optional) -->  
+		<type>Check</type>                  <!-- Default is Check (Optional) -->  
+		<notes>Prompt payment!</notes>      <!-- (Optional) -->  
+	</payment>  
+</request>
+
+
+<!-- ‘Cash’, ‘Check’, ‘Credit’, ‘Credit Card’, ‘Bank Transfer’, ‘Debit’, ‘PayPal’, ’2Checkout’, ‘VISA’, ‘MASTERCARD’, ‘DISCOVER’, ‘NOVA’, ‘AMEX’, ‘DINERS’, ‘EUROCARD’, ‘JCB’ or ‘ACH’. -->

@@ -74,8 +74,7 @@ INSTALLED_APPS = [
     'datacenter',
     'staffing',
     'support',
-    'freshbooks',
-    'dynamicscrm',
+    'freshbooks'
 ]
 
 # CORS

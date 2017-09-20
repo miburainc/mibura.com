@@ -2,8 +2,8 @@ import {API_ROOT,URL_ROOT} from '../values'
 import axios from './api-config'
 
 const actions = {
-	getCart(reference){
-		return axios.post(URL_ROOT + 'support/get-cart/', reference).then((response) => {
+	getCart(payload){
+		return axios.post(URL_ROOT + 'support/get-cart/', payload).then((response) => {
 			return {
 				'response': response,
 				'error': null

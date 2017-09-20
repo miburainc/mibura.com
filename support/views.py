@@ -262,7 +262,9 @@ def get_cart(request):
 		try:
 			cart = Cart.objects.get(reference=data.reference)
 		except ObjectDoesNotExist:
-			cart = get_object_or_404(Cart, freshbooks_estimate_id=data.reference)
+			freshbooks_estimate_id = estimates.find_estimate(data.reference)
+			eid = int(freshbooks_estimate_id)
+			cart = get_object_or_404(Cart, freshbooks_estimate_id=eid)
 
 		client = get_object_or_404(Client, pk=int(cart.client.pk))
 		plan_obj = Plan.objects.get(short_name=cart.plan)
@@ -274,37 +276,16 @@ def get_cart(request):
 
 			product = {}
 			product.update(client_prod.product.__dict__)
+			product.update(client_prod.__dict__)
+			product['type'] = 'product'
 
 			del(product['_state'])
+			del(product['_product_cache'])
 
 			product.update({'category':client_prod.product.category.__dict__})
 			del(product['category']['_state'])
 
 			items.append(product)
-
-
-
-			# # temp_dict = {}
-			# # for k,v in Product.objects.filter(model=client_prod.model)[0].__dict__.items():
-			# # 	if(k == 'category_id'):
-			# # 		temp = ProductCategory.objects.filter(pk=v)[0].__dict__
-			# # 		print("temp_dict::", temp)
-			# # 	else:
-			# # 		temp_dict[k] = v
-
-
-			# del(temp_dict['_state'])
-
-			# # items.append({
-			# # 	**Product.objects.filter(model=client_prod.model)[0].__dict__,
-			# # 	'brand': client_prod.brand,
-			# # 	'model': client_prod.model,
-			# # 	'type': 'product',
-			# # 	'category': client_prod.product.category,
-			# # 	'cost': product_price(client_prod, cart.plan, cart.length)
-			# # })
-			# items.append(temp_dict)
-			# print(items)
 
 		
 		for cloud in cart.cloud.all():
@@ -319,8 +300,6 @@ def get_cart(request):
 			cloud_item['type'] = 'cloud'
 
 			items.append(cloud_item)
-
-		print(items)
 	
 		client_dict = client.__dict__
 		cart_dict = cart.__dict__
@@ -370,7 +349,12 @@ def get_create_cart(request):
 			prod = dotdict(prod)
 			
 			if prod.type == "cloud":
-				cloud = Cloud.objects.get(name=prod.brand)
+				print(prod)
+				if not prod.brand:
+					name = prod.name
+				else:
+					name = prod.brand
+				cloud = Cloud.objects.get(name=name)
 				cart.cloud.add(cloud)
 			else:
 				try:

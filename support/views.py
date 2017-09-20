@@ -278,6 +278,7 @@ def get_cart(request):
 			product.update(client_prod.product.__dict__)
 			product.update(client_prod.__dict__)
 			product['type'] = 'product'
+			product['verified'] = True
 
 			del(product['_state'])
 			del(product['_product_cache'])

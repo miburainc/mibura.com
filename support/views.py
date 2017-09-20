@@ -141,6 +141,24 @@ def plaid_credentials(request):
 
 	return HttpResponse("failed", status=400)
 
+@csrf_exempt
+def create_purchaseorder(request):
+	print("create_purchaseorder")
+	
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
+		data = dotdict(data) # access properties with . instead of []
+
+		client = get_object_or_404(Client, pk=data.client_id)
+		obj,created = PurchaseOrder(client=client, po_number=data.po_number)
+		
+
+		return HttpResponse(True, status=200)
+
+
+	return HttpResponse("failed", status=400)
+
 # Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):

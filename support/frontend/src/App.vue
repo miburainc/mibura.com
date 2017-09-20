@@ -580,7 +580,7 @@ export default {
 
 .notifications-container {
 	position: absolute;
-	top: 75px;
+	top: 80px;
 	left: 0px;
 	right: 0px;
 }

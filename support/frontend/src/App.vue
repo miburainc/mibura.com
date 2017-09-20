@@ -87,7 +87,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Thank you for returning to Mibura Smart Support.  Please enter your quote ID.  
+							Thank you for returning to Mibura Smart Support.  Please enter the quote ID located at the bottom of your estimate PDF.  
 						</p>
 						<input class="form-control" placeholder="Quote ID" id="quoteIdInput" style="color:black;" v-on:keyup.enter="submitQuoteId">
 					</div>
@@ -393,6 +393,7 @@ export default {
 			
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
+			
 		},
 		submitQuoteId2(){
 

@@ -676,8 +676,10 @@ def checkout(request):
 		notes = 'Mibura Smart Support Invoice'
 
 		estimate_id = cart.freshbooks_estimate_id
+		
 		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes, estimate_id)
 		
+
 		sub.freshbooks_invoice_num = invoice_id
 		sub.save()
 

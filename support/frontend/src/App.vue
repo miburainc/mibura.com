@@ -363,7 +363,8 @@ export default {
 			'setPaymentProp',
 			'achSendVerify',
 			'setCart',
-			'setClient'
+			'setClient',
+			'setClientProp'
 		]),
 		submitQuoteId(){
 
@@ -385,7 +386,16 @@ export default {
 					}
 
 					this.setCart(payload)
-					this.setClient(data.client)
+					let client = JSON.parse(data.client)
+					console.log(client)
+					Object.keys(client).map((prop) => {
+						console.log(prop)
+						this.setClientProp({
+							'prop': prop,
+							'data': client[prop]
+						})
+					})
+					
 				}
 				else{
 					this.cartLoadError = true

@@ -2,6 +2,7 @@ import * as TYPE from '../types'
 import Vue from 'vue'
 
 import client from '../api/client'
+import payment_api from '../api/payment'
 
 import {form_steps} from '../values'
 
@@ -79,6 +80,17 @@ const mutations = {
 }
 
 const actions = {
+	sendPaymentPoNumber({commit, getters, state, rootState}, payload) {
+		console.log("sendPaymentPoNumber begin")
+		console.log(payload)
+		
+		payment_api.sendPaymentPoNumber(payload)
+			.then((response) => {
+				commit(TYPE.SET_PURCHASE_SUCCESS, true)
+				console.log("sendPaymentPoNumber response")
+				console.log(response)
+			})
+	},
 	setClient({commit}, payload){
 		commit(TYPE.SET_CLIENT, payload)
 	},

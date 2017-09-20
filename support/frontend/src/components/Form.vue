@@ -107,7 +107,8 @@ export default {
 			'setEstimatePdfFile',
 			'checkout',
 			'achSendVerify',
-			'setPaymentProcessing'
+			'setPaymentProcessing',
+			'sendPaymentPoNumber'
 		]),
 
 		
@@ -190,6 +191,21 @@ export default {
 				$('#achSubmitModal').modal('show')
 				return(true)
 			}
+			else if(scr == "sendponumber") {
+				
+				let payload = {
+					client_id: this.getClientInfo['pk'],
+					cart_ref: this.getCartReference,
+					ponumber: this.getPaymentInfoProp('ponumber')
+				}
+				this.sendPaymentPoNumber(payload)
+					.then((response) => {
+						console.log("PO created")
+						this.setPaymentProcessing(false)
+					})
+				return(true)
+			}
+				
 			else if(scr == "verifyach") {
 				console.log("verifyACH in ButtonAction")
 				this.achSendVerify()
@@ -567,7 +583,8 @@ export default {
 			'getAcceptedTerms',
 			'getPaymentToken',
 			'getPaymentInfoProp',
-			'getAllowFormSubmit'
+			'getAllowFormSubmit',
+			'getCartReference',
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]

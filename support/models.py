@@ -116,12 +116,7 @@ class Client(models.Model):
 	def __str__(self):
 		return self.get_full_name()
 
-class PurchaseOrder(models.Model):
-	client = models.ForeignKey(Client)
-	po_number = models.CharField(max_length=64)
 
-	date_created = models.DateTimeField(auto_now_add=True)
-	date_updated = models.DateTimeField(auto_now=True)
 
 class Product(models.Model):
 	brand = models.CharField(max_length=128)
@@ -224,6 +219,14 @@ class Subscription(models.Model):
 
 	def __str__(self):
 		return self.client.get_full_name() + ": " + self.plan
+
+class PurchaseOrder(models.Model):
+	client = models.ForeignKey(Client)
+	cart = models.ForeignKey(Cart, blank=True, null=True)
+	po_number = models.CharField(max_length=64)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
 
 class EstimateText(models.Model):
 	item = models.CharField(max_length=256)

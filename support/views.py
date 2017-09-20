@@ -149,12 +149,12 @@ def create_purchaseorder(request):
 		data = json.loads(request.body.decode("utf-8"))
 		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
-
+		cart = get_object_or_404(Cart, reference=data.cart_ref)
 		client = get_object_or_404(Client, pk=data.client_id)
-		obj,created = PurchaseOrder(client=client, po_number=data.po_number)
+		obj = PurchaseOrder.objects.create(client=client, cart=cart, po_number=data.ponumber)
 		
 
-		return HttpResponse(True, status=200)
+		return HttpResponse("True", status=200)
 
 
 	return HttpResponse("failed", status=400)
@@ -318,7 +318,14 @@ def get_cart(request):
 			cloud_item['type'] = 'cloud'
 
 			items.append(cloud_item)
-	
+
+		serializer_context = {
+			'request': Request(request),
+		}
+		
+		client_serialized = ClientSerializer(client, context=serializer_context)
+		client_json = JSONRenderer().render(client_serialized.data)
+
 		client_dict = client.__dict__
 		cart_dict = cart.__dict__
 
@@ -328,7 +335,7 @@ def get_cart(request):
 
 		context = {
 			'items': items,
-			'client': client_dict,
+			'client': client_json,
 			'cart': cart_dict,
 			'date': DateFormat(datetime.now()).format('Y-m-d')
 		}

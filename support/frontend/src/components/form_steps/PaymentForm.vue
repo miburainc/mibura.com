@@ -132,7 +132,8 @@ export default {
 			'setError',
 			'setCurrentFormStep',
 			'serverSetClient',
-			'setPaymentProcessing'
+			'setPaymentProcessing',
+			
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
@@ -356,6 +357,7 @@ export default {
 			else if(self.payment_type == 'po'){
 
 				console.log("payment_type: po")
+				let ponumber = document.getElementById("ponumber").value
 
 				errors = ValidateFormStep(self.form.data[6], ponumber)
 				if (errors["valid"] == false)
@@ -369,8 +371,10 @@ export default {
 					noFormErrors = false
 				}
 
-				if (noFormErrors) {
-					this.sendPaymentPoNumber(this.getPaymentInfoProp('po'))
+				script = "sendponumber"
+
+				if(noFormErrors){
+					self.buttonAction(null, script)
 				}
 			}
 			else if(self.payment_type == 'verify'){
@@ -425,7 +429,9 @@ export default {
 			'getAchPaymentToken',
 			'getCurrentFormStep',
 			'getPaymentProcessing',
-			'getPaymentInfoProp'
+			'getPaymentInfoProp',
+			'getClientInfo',
+			'getCartReference',
 		]),
 
 		plaid_btn_text1(){

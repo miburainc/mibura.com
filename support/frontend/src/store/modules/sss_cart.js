@@ -314,6 +314,7 @@ const getters = {
 		return final
 	},
 	getCart: state => state.cart,
+	getCartId: state => state.cart_id,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
 	getEstimatePDF: state => state.estimate_pdf,

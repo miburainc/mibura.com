@@ -93,8 +93,8 @@
 		</div>
 
 		<div class="text-center">
-			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
-			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe.png'" alt="Comodo Secure">
 		</div>
 			
 
@@ -107,6 +107,8 @@ import {mapGetters, mapActions} from 'vuex'
 import FormTextInput from '../FormTextInput.vue'
 import {ValidateFormStep} from '../../scripts/functions.js'
 
+import {URL_ROOT} from '../../store/values'
+
 import { forEachValue } from '../../scripts/util'
 
 export default {
@@ -115,6 +117,7 @@ export default {
 	},
 	data() {
 		return {
+			URL_ROOT: URL_ROOT,
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,

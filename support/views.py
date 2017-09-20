@@ -296,6 +296,7 @@ def get_cart(request):
 			product.update(client_prod.product.__dict__)
 			product.update(client_prod.__dict__)
 			product['type'] = 'product'
+			product['verified'] = True
 
 			del(product['_state'])
 			del(product['_product_cache'])
@@ -661,32 +662,43 @@ def checkout(request):
 			}
 			cat = categories.get(category_code=item['category'])
 
+			print(item)
+
 			if item['type'] == 'product':
 				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
 				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
+				line_item['brand'] = item['brand']
+				line_item['model'] = item['model']
+
 
 			elif item['type'] == 'cloud':
 				cloud = Cloud.objects.get(name=item['name'])
 				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
 				desc = estimate_text.description
+				line_item['brand'] = 'cloud'
+				line_item['model'] = 'cloud'
+				line_item['name'] = item['name']
 
-			line_item['name'] = estimate_text.item
+			
+			
 			line_item['description'] = desc
 			line_item['unit_cost'] = {
 				'amount': str(round(item['cost'], 2)),
 				'code': 'USD'
 			}
 			line_item['qty'] = 1
-			line_item['type'] = 0
-
+			line_item['type'] = item['type']
+			line_item['category'] = cat
+			line_item['cost'] = item['cost']
+			
 			line_items.append(line_item)
 			
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Invoice'
 
 		estimate_id = cart.freshbooks_estimate_id
-		
-		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes, estimate_id)
+		print(cart)
+		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items)
 		
 
 		sub.freshbooks_invoice_num = invoice_id

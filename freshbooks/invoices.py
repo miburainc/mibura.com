@@ -12,6 +12,11 @@ from .models import *
 from support.models import *
 from support.serializers import ClientSerializer, CartSerializer, CloudSerializer, ProductSerializer
 
+try:
+	import xml.etree.cElementTree as ET
+except ImportError:
+	import xml.etree.ElementTree as ET
+
 def create_invoice(client, plan, length, items):
 	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
@@ -23,7 +28,6 @@ def create_invoice(client, plan, length, items):
 		if float(length) >= dis.year_threshold:
 			if dis.discount_percent > active_discount:
 				active_discount = dis.discount_percent
-
 
 	tree = ET.ElementTree(file='freshbooks/xml_templates/create_invoice.xml')
 	root = tree.getroot()
@@ -82,6 +86,7 @@ def create_invoice(client, plan, length, items):
 			name.text = text.item
 			desc = text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(length) + ' years.')
 		elif item['type'] == 'cloud':
+			print("NAME", item['name'])
 			cloud = Cloud.objects.get(name=item['name'])
 			print("cloud: ",cloud)
 			text = EstimateText.objects.get(category=cat, cloud=cloud)

@@ -227,8 +227,6 @@ const actions = {
 		dispatch('setCartChanged', true)
 		commit(TYPE.SET_CURRENT_PLAN, value)
     },
-
-	
 }
 
 const getters = {

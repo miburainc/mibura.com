@@ -428,7 +428,7 @@ export default {
 								this.setPaymentProcessing(true);
 								this.serverSetClient().then(() => {
 									this.saveCart().then(() => {
-											this.serverGetEstimatePdf()
+											
 										}).then(() => {
 										this.checkout()
 											.then((status) => {

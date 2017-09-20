@@ -157,11 +157,6 @@
 					<div class="modal-body">
 						<div v-if="cartLoaded">
 							<h4>Your quote has been loaded successfully!</h4>
-							<div id="pdf">
-  								<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
-    								<p>Error, quote cannot be displayed.</p>
-  								</object>
-							</div>
 						</div>
 						<div v-else-if="cartLoadError">
 							<h4>Invalid Cart Reference Code, try again.</h4>

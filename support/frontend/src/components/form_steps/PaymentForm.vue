@@ -3,7 +3,7 @@
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
-			<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('ach')">P.O.</a></li>
+			<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('po')">P.O.</a></li>
 			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
 			
 
@@ -37,6 +37,16 @@
 				<form-text-input 
 				:class="{'error-border': getErrors[form.data[5].form.name]}" 
 				:step="form.data[5]"></form-text-input>
+			</div>
+
+			<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
+
+				<form-text-input 
+				:class="{'error-border': getErrors[form.data[6].form.name]}" 
+				:step="form.data[6]" 
+				id="cardName"></form-text-input>
+
+				
 			</div>
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
@@ -78,7 +88,7 @@
 
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
 			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 			
 		</div>
 
@@ -343,6 +353,26 @@ export default {
 					}
 				}
 			}
+			else if(self.payment_type == 'po'){
+
+				console.log("payment_type: po")
+
+				errors = ValidateFormStep(self.form.data[6], ponumber)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							self.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				if (noFormErrors) {
+					this.sendPaymentPoNumber(this.getPaymentInfoProp('po'))
+				}
+			}
 			else if(self.payment_type == 'verify'){
 
 				let verify1 = document.getElementById("verify1").value
@@ -394,7 +424,8 @@ export default {
 			'getErrors',
 			'getAchPaymentToken',
 			'getCurrentFormStep',
-			'getPaymentProcessing'
+			'getPaymentProcessing',
+			'getPaymentInfoProp'
 		]),
 
 		plaid_btn_text1(){

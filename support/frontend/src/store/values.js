@@ -527,6 +527,21 @@ export const form_steps = [
 					name: "verify2",
 					class: "field",
 				}
+			},
+			{
+				placeholder: "P.O. Number",
+				src: "",
+				dest: "payment.ponumber",
+				required: true,
+				validate: {
+					type: "text",
+					min: 4,
+				},
+				form: {
+					type: "text",
+					name: "ponumber",
+					class: "field",
+				}
 			}			
 		],
 		buttons: [

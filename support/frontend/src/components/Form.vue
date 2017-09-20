@@ -303,7 +303,7 @@ export default {
 									this.setFormItem(val, card_data[i])
 								}
 							}
-							velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+							// velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 							
 							break;
 						case "getquote":

@@ -257,65 +257,69 @@ def get_cart(request):
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		cart = get_object_or_404(Cart, reference=data.reference)
+		try:
+			cart = Cart.objects.get(reference=data.reference)
+		except ObjectDoesNotExist:
+			cart = get_object_or_404(Cart, freshbooks_estimate_id=data.reference)
+
 		client = get_object_or_404(Client, pk=int(cart.client.pk))
-		discount_list = Discount.objects.all()
 		plan_obj = Plan.objects.get(short_name=cart.plan)
 		categories = ProductCategory.objects.all()
 
 		items = []
 
 		for client_prod in cart.products.all():
-			items.append({
-				**client_prod.__dict__,
-				'type': 'product',
-				'category': client_prod.product.category,
-				'cost': product_price(client_prod, cart.plan, cart.length)
-			})
 
-		for cloud in cart.cloud.all():
-			items.append({
-				'name': cloud.name,
-				'type': 'cloud',
-				'category': 'cloud',
-				'cost': cloud_price(cloud, cart.plan, cart.length)
-			})
+			product = {}
+			product.update(client_prod.product.__dict__)
 
-		active_discount = 0.0
+			del(product['_state'])
 
-		for index, dis in enumerate(discount_list):
-			if float(cart.length) >= dis.year_threshold:
-				if dis.discount_percent > active_discount:
-					active_discount = dis.discount_percent
+			product.update({'category':client_prod.product.category.__dict__})
+			del(product['category']['_state'])
+
+			items.append(product)
 
 
-		line_items = []
-		for index,item in enumerate(items):
-			line_item = {
 
-			}
-			cat = categories.get(category_code=item['category'])
+			# # temp_dict = {}
+			# # for k,v in Product.objects.filter(model=client_prod.model)[0].__dict__.items():
+			# # 	if(k == 'category_id'):
+			# # 		temp = ProductCategory.objects.filter(pk=v)[0].__dict__
+			# # 		print("temp_dict::", temp)
+			# # 	else:
+			# # 		temp_dict[k] = v
 
-			if item['type'] == 'product':
-				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
-				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
 
-			elif item['type'] == 'cloud':
-				cloud = Cloud.objects.get(name=item['name'])
-				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
-				desc = estimate_text.description
+			# del(temp_dict['_state'])
 
-			line_item['name'] = estimate_text.item
-			line_item['description'] = desc
-			line_item['unit_cost'] = {
-				'amount': str(round(item['cost'], 2)),
-				'code': 'USD'
-			}
-			line_item['qty'] = 1
-			line_item['type'] = 0
+			# # items.append({
+			# # 	**Product.objects.filter(model=client_prod.model)[0].__dict__,
+			# # 	'brand': client_prod.brand,
+			# # 	'model': client_prod.model,
+			# # 	'type': 'product',
+			# # 	'category': client_prod.product.category,
+			# # 	'cost': product_price(client_prod, cart.plan, cart.length)
+			# # })
+			# items.append(temp_dict)
+			# print(items)
 
-			line_items.append(line_item)
 		
+		for cloud in cart.cloud.all():
+			cloud_item = cloud.__dict__
+			cloud_item['category'] = categories.get(category_code='none').__dict__
+			del(cloud_item['_state'])
+			del(cloud_item['category']['_state'])
+			cloud_item['price_silver'] = 1.0
+			cloud_item['price_gold'] = 0.0
+			cloud_item['price_black'] = 0.0
+			cloud_item['model'] = cloud_item['name']
+			cloud_item['type'] = 'cloud'
+
+			items.append(cloud_item)
+
+		print(items)
+	
 		client_dict = client.__dict__
 		cart_dict = cart.__dict__
 
@@ -325,7 +329,7 @@ def get_cart(request):
 
 
 		context = {
-			'items': line_items,
+			'items': items,
 			'client': client_dict,
 			'cart': cart_dict,
 			'date': DateFormat(datetime.now()).format('Y-m-d')

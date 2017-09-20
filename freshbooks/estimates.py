@@ -161,7 +161,7 @@ def get_estimate_pdf(estimate_id):
 
 
 	file_name = "Mibura_SmartSupport_Estimate.pdf"
-	path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
+	path_to_file = settings.MEDIA_ROOT + file_name
 	with open(path_to_file, 'wb') as f:
 		f.write(r.content)
 	# with open(path_to_file, 'wb') as f:

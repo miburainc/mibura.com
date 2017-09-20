@@ -26,7 +26,6 @@ from .serializers import *
 
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
-from dynamicscrm.api import createAccount
 from freshbooks import estimates, invoices
 
 # from weasyprint import HTML

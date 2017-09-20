@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.dateformat import DateFormat
 
-import sys, requests, json
+import sys, requests, json, re
 from datetime import datetime
 
 from rest_framework.renderers import JSONRenderer
@@ -43,7 +43,7 @@ def create_estimate(client, plan, length, items):
 	estimate = root[0]
 
 	clientid = estimate.find('client_id')
-	clientid.text = client['freshbooks_id']
+	clientid.text = str(client['freshbooks_id'])
 
 	discount = estimate.find('discount')
 	discount.text = str(int(active_discount*100))
@@ -143,53 +143,8 @@ def process_estimates(estimates, estimate_num):
 		estimate_id = str(int(estimate.find('estimate_id').text))
 		num = estimate.find('number')
 		if num.text == estimate_num:
-			client_id = estimate.find('client_id').text
-			client = Client.objects.get(freshbooks_id=client_id)
-
-			serialized = ClientSerializer(client)
-			response_json = JSONRenderer().render(serialized.data)
-
-			response['client'] = serialized.data
-
-			lines = estimate.find('lines')
-			response['cart_items'] = []
-			cart = Cart.objects.get(freshbooks_id=estimate_id)
-			
-			serialized = CartSerializer(cart)
-			response_json = JSONRenderer().render(serialized.data)
-			response['cart'] = serialized.data
-
-			for item in cart.products.all():
-				serialized = ProductSerializer(item.product)
-				response_json = JSONRenderer().render(serialized.data)
-				if not item.additional_info:
-					item.additional_info = ""
-				
-				prod_info = serialized.data#json.load(response_json)
-
-				clientprod_info = {
-					"serial_number": item.serial_number,
-					"device_age": item.device_age,
-					"additional_info": item.additional_info
-				}
-				# final_json = {key: value for (key, value) in (prod_info.items() + clientprod_info.items())}
-				# final_json = prod_info.update(clientprod_info)
-				final_json = {
-					**clientprod_info,
-					**prod_info
-				}
-				response['cart_items'].append(final_json)
-			for cloud in cart.cloud.all():
-				serialized = CloudSerializer(cloud)
-				final_obj = {
-					**serialized.data,
-					"category": {
-						"category_code": "cloud",
-						"name": "Cloud"
-					}
-				}
-				response['cart_items'].append(final_obj)
-	return response
+			return estimate_id
+	return False
 
 def get_estimate_pdf(estimate_id):
 	tree = ET.ElementTree(file='freshbooks/xml_templates/get_estimate_pdf.xml')
@@ -200,14 +155,20 @@ def get_estimate_pdf(estimate_id):
 	input_xml = ET.tostring(root)
 	data = input_xml
 	headers = {'Content-Type': 'application/xml'}
-	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
-	# print(r)
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data, stream=True)
+	
+	r.raise_for_status()
+
+
 	file_name = "Mibura_SmartSupport_Estimate.pdf"
-	path_to_file = '/tmp/' + file_name
+	path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
 	with open(path_to_file, 'wb') as f:
 		f.write(r.content)
-
-	return r.content
+	# with open(path_to_file, 'wb') as f:
+		# for chunk in r.iter_content(1024):
+			# f.write(chunk)
+	pdf = open(path_to_file, 'rb')
+	return pdf #open(path_to_file, 'r')
 
 
 def get_estimate(estimate_num):

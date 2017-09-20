@@ -1,0 +1,27 @@
+<!--?xml version="1.0" encoding="utf-8"?-->  
+<request method="invoice.create">  
+<invoice>  
+<client_id></client_id>
+
+<!-- Purchase order number (Optional) -->  
+<po_number>2314</po_number>
+
+<status>draft</status>
+<discount>0</discount>
+<currency_code>USD</currency_code>
+<notes>Mibura Smart Support Invoice</notes>
+<terms>Payment due in 30 days.</terms>
+<first_name></first_name> <!-- (Optional) -->  
+<last_name></last_name> <!-- (Optional) -->  
+<organization></organization>  <!-- (Optional) -->  
+<p_street1></p_street1> <!-- (Optional) -->  
+<p_street2></p_street2> <!-- (Optional) -->  
+<p_city></p_city> <!-- (Optional) -->  
+<p_state></p_state> <!-- (Optional) -->  
+<p_country>USA</p_country> <!-- (Optional) -->  
+<p_code></p_code> <!-- (Optional) -->  
+
+<lines>
+</lines>  
+</invoice>  
+</request>  

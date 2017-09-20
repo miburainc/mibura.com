@@ -9,6 +9,11 @@ class ClientAdmin(admin.ModelAdmin):
 
 admin.site.register(Client, ClientAdmin)
 
+class PurchaseOrderAdmin(admin.ModelAdmin):
+	list_display = ['client', 'cart', 'po_number']
+
+admin.site.register(PurchaseOrder, PurchaseOrderAdmin)
+
 class ProductAdmin(admin.ModelAdmin):
 	search_fields = ['brand', 'model', 'sku']
 	list_filter = ['brand', 'category']

@@ -87,7 +87,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Thank you for returning to Mibura Smart Support.  Please enter your quote ID.  
+							Thank you for returning to Mibura Smart Support.  Please enter the quote ID located at the bottom of your estimate PDF.  
 						</p>
 						<input class="form-control" placeholder="Quote ID" id="quoteIdInput" style="color:black;" v-on:keyup.enter="submitQuoteId">
 					</div>
@@ -155,13 +155,12 @@
 						<h4 class="modal-title" id="myModalLabel">Returning Customer</h4>
 					</div>
 					<div class="modal-body">
-						<div v-if="getEstimatePDF">
+						<div v-if="cartLoaded">
 							<h4>Your quote has been loaded successfully!</h4>
-							<div id="pdf">
-  								<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
-    								<p>Error, quote cannot be displayed.</p>
-  								</object>
-							</div>
+						</div>
+						<div v-else-if="cartLoadError">
+							<h4>Invalid Cart Reference Code, try again.</h4>
+							<input class="form-control" placeholder="Quote ID" id="quoteIdInput2" style="color:black;" v-on:keyup.enter="submitQuoteId2">
 						</div>
 						<div v-else>
 							<h4>Processing</h4>
@@ -173,9 +172,10 @@
 					<div class="modal-footer">
 						<!-- <button v-if="getEstimatePDF" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
 						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>-->
-						<button class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
-						<button  type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>
+						<button v-if="cartLoaded" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
+						<button v-if="cartLoaded" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+						<button v-if="cartLoadError" type="button" class="btn btn-info" @click="submitQuoteId2">Retry</button>
 					</div>
 				</div>
 			</div>
@@ -317,7 +317,9 @@ export default {
 			estimate_id: '',
 			stripe: null,
 			verifyError1: false,
-			verifyError2: false
+			verifyError2: false,
+			cartLoaded: false,
+			cartLoadError: false
 		}
 	},
 	components: {
@@ -339,7 +341,10 @@ export default {
 			'getCart',
 			'getCartChanged',
 			
-		])
+		]),
+		isCartLoaded(){
+			return this.cartLoaded
+		}
 	},
 	methods: {
 		...mapActions([
@@ -356,19 +361,66 @@ export default {
 			'serverSetClient',
 			'saveCart',
 			'setPaymentProp',
-			'achSendVerify'
+			'achSendVerify',
+			'setCart',
+			'setClient',
+			'setClientProp'
 		]),
 		submitQuoteId(){
+
 			var data = {
+				// client_id: this.getClientInfo['pk'],
 				reference: document.getElementById('quoteIdInput').value,
 			}
 
-			var newCart = cart.getCart(data)
-			console.log(newCart)
-			setTimeout(function(){console.log(newCart)}, 4000)
+			var newCart = cart.getCart(data).then((response) => {
+				if(response['response'] != null){
+					console.log(response)
+					this.cartLoaded = true
+					data = response.response.data
+					let payload = {
+						'items': data.items,
+						'id': data.cart.id,
+						'reference': data.cart.reference,
+						'plan': data.cart.plan
+					}
 
+					this.setCart(payload)
+					let client = JSON.parse(data.client)
+					console.log(client)
+					Object.keys(client).map((prop) => {
+						console.log(prop)
+						this.setClientProp({
+							'prop': prop,
+							'data': client[prop]
+						})
+					})
+					
+				}
+				else{
+					this.cartLoadError = true
+				}
+			})
+			
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
+			
+		},
+		submitQuoteId2(){
+
+			var data = {
+				reference: document.getElementById('quoteIdInput2').value,
+			}
+
+			var newCart = cart.getCart(data).then((response) => {
+				if(response['response'] != null){
+					this.cartLoaded = true
+				}
+				else{
+					this.cartLoadError = true
+					document.getElementById('quoteIdInput2').value = ""
+				}
+			})
 		},
 		goToVerify(){
 			$('#returnSuccessModal').modal('toggle')

@@ -19,10 +19,13 @@ const state = {
 	current_item_id: null,
 	estimate_id: 0,
 	estimate_pdf: null,
-	cart_changed: false,
+	cart_changed: true,
 }
 
 const mutations = {
+	[TYPE.SET_CART]: (state, array) =>{
+		state.cart = array
+	},
 	[TYPE.SET_CURRENT_PLAN]: (state, value) => {
 		state.current_plan = value
 	},
@@ -75,6 +78,12 @@ const mutations = {
 }
 
 const actions = {
+	setCart({commit}, payload){
+		commit(TYPE.SET_CART, payload.items)
+		commit(TYPE.CART_SET_ID, payload.id)
+		commit(TYPE.CART_SET_REF, payload.reference)
+		commit(TYPE.SET_CURRENT_PLAN, payload.plan)
+	},
 	setCartChanged({commit}, value) {
 		commit(TYPE.CART_CHANGED, value)
 	},
@@ -149,7 +158,6 @@ const actions = {
 				plan: state.current_plan,
 				length: state.support_months/12,
 			}).then(response => {
-				dispatch('setCartChanged', false)
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
 			});
@@ -219,8 +227,6 @@ const actions = {
 		dispatch('setCartChanged', true)
 		commit(TYPE.SET_CURRENT_PLAN, value)
     },
-
-	
 }
 
 const getters = {
@@ -306,6 +312,7 @@ const getters = {
 		return final
 	},
 	getCart: state => state.cart,
+	getCartId: state => state.cart_id,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
 	getEstimatePDF: state => state.estimate_pdf,

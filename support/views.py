@@ -141,6 +141,24 @@ def plaid_credentials(request):
 
 	return HttpResponse("failed", status=400)
 
+@csrf_exempt
+def create_purchaseorder(request):
+	print("create_purchaseorder")
+	
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		# data = json.loads(request.body)
+		data = dotdict(data) # access properties with . instead of []
+		cart = get_object_or_404(Cart, reference=data.cart_ref)
+		client = get_object_or_404(Client, pk=data.client_id)
+		obj = PurchaseOrder.objects.create(client=client, cart=cart, po_number=data.ponumber)
+		
+
+		return HttpResponse("True", status=200)
+
+
+	return HttpResponse("failed", status=400)
+
 # Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):
@@ -246,6 +264,7 @@ def get_create_client(request):
 
 @csrf_exempt
 def save_client_json(request):
+	print("save_client_json")
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
 		print('Raw Data: "%s"' % data)
@@ -253,27 +272,88 @@ def save_client_json(request):
 
 @csrf_exempt
 def get_cart(request):
+	print("get_cart")
 	if request.method == 'POST':
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		cart = Cart.objects.filter(reference=data.reference)
-		
-		cart = cart[0]
+		try:
+			cart = Cart.objects.get(reference=data.reference)
+		except ObjectDoesNotExist:
+			freshbooks_estimate_id = estimates.find_estimate(data.reference)
+			eid = int(freshbooks_estimate_id)
+			cart = get_object_or_404(Cart, freshbooks_estimate_id=eid)
 
-		print(cart.products)
+		client = get_object_or_404(Client, pk=int(cart.client.pk))
+		plan_obj = Plan.objects.get(short_name=cart.plan)
+		categories = ProductCategory.objects.all()
+
+		items = []
+
+		for client_prod in cart.products.all():
+
+			product = {}
+			product.update(client_prod.product.__dict__)
+			product.update(client_prod.__dict__)
+			product['type'] = 'product'
+			product['verified'] = True
+
+			del(product['_state'])
+			del(product['_product_cache'])
+
+			product.update({'category':client_prod.product.category.__dict__})
+			del(product['category']['_state'])
+
+			items.append(product)
+
 		
+		for cloud in cart.cloud.all():
+			cloud_item = cloud.__dict__
+			cloud_item['category'] = categories.get(category_code='none').__dict__
+			del(cloud_item['_state'])
+			del(cloud_item['category']['_state'])
+			cloud_item['price_silver'] = 1.0
+			cloud_item['price_gold'] = 0.0
+			cloud_item['price_black'] = 0.0
+			cloud_item['model'] = cloud_item['name']
+			cloud_item['type'] = 'cloud'
+
+			items.append(cloud_item)
+
 		serializer_context = {
 			'request': Request(request),
 		}
-		serialized = CartSerializer2(cart, context=serializer_context)
+		
+		client_serialized = ClientSerializer(client, context=serializer_context)
+		client_json = JSONRenderer().render(client_serialized.data)
 
-		for s in serialized.data:
-			print(s, serialized[s].value)
+		client_dict = client.__dict__
+		cart_dict = cart.__dict__
 
-		response_json = JSONRenderer().render(serialized.data)
+		del(client_dict['_state'])
+		del(cart_dict['_state'])
+		del(cart_dict['_client_cache'])
+
+		context = {
+			'items': items,
+			'client': client_json,
+			'cart': cart_dict,
+			'date': DateFormat(datetime.now()).format('Y-m-d')
+		}
+
+		response_json = JSONRenderer().render(context)
 
 		return HttpResponse(response_json, status=200)
+		
+		# file_name = "Mibura_SmartSupport_Estimate.pdf"
+		# path_to_file = '/tmp/' + file_name
+		# pdf = FileWrapper(open(path_to_file, 'rb'))
+
+		# response = HttpResponse(pdf, content_type='application/pdf')
+		# response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		# response['Content-Length'] = os.path.getsize(path_to_file)
+		# return response
+	return HttpResponse('Not POST', status=400)
 
 
 @csrf_exempt
@@ -295,7 +375,12 @@ def get_create_cart(request):
 			prod = dotdict(prod)
 			
 			if prod.type == "cloud":
-				cloud = Cloud.objects.get(name=prod.brand)
+				print(prod)
+				if not prod.brand:
+					name = prod.name
+				else:
+					name = prod.brand
+				cloud = Cloud.objects.get(name=name)
 				cart.cloud.add(cloud)
 			else:
 				try:
@@ -337,8 +422,6 @@ def get_previous_estimate(request):
 
 			response_json = json.dumps(estimate_data)
 
-		
-
 		return HttpResponse(response_json, content_type="application/json", status=200)
 
 @csrf_exempt
@@ -357,12 +440,9 @@ def email_estimate_pdf(request):
 		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = '/tmp/' + file_name
+		path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
 
 		f = open(path_to_file)
-		print(f)
-
-		print("cart email", cart.email)
 
 		email_sent = send_quote_email(cart.client.get_full_name(), cart.email, "Mibura Smart Support Quote", path_to_file)
 		print('email_sent', email_sent)
@@ -416,15 +496,14 @@ def estimate_pdf(request):
 @csrf_exempt
 def get_estimate_pdf(request):
 	if request.method == 'POST':
+		
 		data = json.loads(request.body.decode("utf-8"))
 
 		data = dotdict(data)
 		
 		client = get_object_or_404(Client, pk=int(data.client['pk']))
 		cart = get_object_or_404(Cart, reference=data.cart_reference)
-		discount_list = Discount.objects.all()
 		plan_obj = Plan.objects.get(short_name=cart.plan)
-		categories = ProductCategory.objects.all()
 
 		items = []
 
@@ -444,67 +523,9 @@ def get_estimate_pdf(request):
 				'cost': cloud_price(cloud, cart.plan, cart.length)
 			})
 
-		active_discount = 0.0
-
-		for index, dis in enumerate(discount_list):
-			if float(cart.length) >= dis.year_threshold:
-				if dis.discount_percent > active_discount:
-					active_discount = dis.discount_percent
-
-
-		line_items = []
-		for index,item in enumerate(items):
-			line_item = {
-
-			}
-			cat = categories.get(category_code=item['category'])
-
-			if item['type'] == 'product':
-				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
-				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
-
-			elif item['type'] == 'cloud':
-				cloud = Cloud.objects.get(name=item['name'])
-				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
-				desc = estimate_text.description
-
-			line_item['name'] = estimate_text.item
-			line_item['description'] = desc
-			line_item['unit_cost'] = {
-				'amount': str(round(item['cost'], 2)),
-				'code': 'USD'
-			}
-			line_item['qty'] = 1
-			line_item['type'] = 0
-
-			line_items.append(line_item)
-		
 		client.get_freshbooks_id()
 
-		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
-		notes = 'Mibura Smart Support Estimate'
-		# estimate = estimates.create_estimate(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes)
 		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
-
-		# if cart.freshbooks_estimate_id:
-		# 	old_cart = deepcopy(cart)
-		# 	cart.reference = "replaced"
-		# 	cart.replaced = True
-		# 	cart.save()
-
-		# 	cart.pk = None
-		# 	cart.save()
-		# 	cart.replaced = False
-		# 	cart.products.add(*old_cart.products.all())
-		# 	cart.cloud.add(*old_cart.cloud.all())
-		# 	cart.freshbooks_estimate_id = estimate['estimateid']
-		# 	cart.freshbooks_estimate_num = estimate['estimate_number']
-		# 	cart.reference = old_cart.reference
-		# 	cart.save()
-		# else:
-		# 	cart.freshbooks_estimate_id = estimate['estimateid']
-		# 	cart.freshbooks_estimate_num = estimate['estimate_number']
-		# 	cart.save()
 
 		if cart.freshbooks_estimate_id:
 			old_cart = deepcopy(cart)
@@ -524,11 +545,11 @@ def get_estimate_pdf(request):
 			cart.freshbooks_estimate_id = estimate_id
 			cart.save()
 		
-		pdf_status = estimates.get_estimate_pdf(estimate_id)
+		pdf = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = '/tmp/' + file_name
-		pdf = FileWrapper(open(path_to_file, 'rb'))
+		path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
+		pdf = FileWrapper(pdf)
 
 		response = HttpResponse(pdf, content_type='application/pdf')
 		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
@@ -546,11 +567,9 @@ def checkout(request):
 
 		categories = ProductCategory.objects.all()
 
-		print(data)
 		client = get_object_or_404(Client, pk=data.client)
 		cart = get_object_or_404(Cart, reference=data.cart)
 		total = cart.get_total_price()
-		print(total)
 
 		discount_list = Discount.objects.all()
 
@@ -643,32 +662,45 @@ def checkout(request):
 			}
 			cat = categories.get(category_code=item['category'])
 
+			print(item)
+
 			if item['type'] == 'product':
 				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
 				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
+				line_item['brand'] = item['brand']
+				line_item['model'] = item['model']
+
 
 			elif item['type'] == 'cloud':
 				cloud = Cloud.objects.get(name=item['name'])
 				estimate_text = EstimateText.objects.get(cloud=cloud, category=cat)
 				desc = estimate_text.description
+				line_item['brand'] = 'cloud'
+				line_item['model'] = 'cloud'
+				line_item['name'] = item['name']
 
-			line_item['name'] = estimate_text.item
+			
+			
 			line_item['description'] = desc
 			line_item['unit_cost'] = {
 				'amount': str(round(item['cost'], 2)),
 				'code': 'USD'
 			}
 			line_item['qty'] = 1
-			line_item['type'] = 0
-
+			line_item['type'] = item['type']
+			line_item['category'] = cat
+			line_item['cost'] = item['cost']
+			
 			line_items.append(line_item)
 			
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Invoice'
 
 		estimate_id = cart.freshbooks_estimate_id
-		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items, active_discount, terms, notes, estimate_id)
+		print(cart)
+		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items)
 		
+
 		sub.freshbooks_invoice_num = invoice_id
 		sub.save()
 

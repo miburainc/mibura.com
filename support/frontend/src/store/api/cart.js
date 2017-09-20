@@ -2,12 +2,18 @@ import {API_ROOT,URL_ROOT} from '../values'
 import axios from './api-config'
 
 const actions = {
-	getCart(reference){
-		return axios.post(URL_ROOT + 'support/get-cart/', reference).then((response) => {
-			return response
+	getCart(payload){
+		return axios.post(URL_ROOT + 'support/get-cart/', payload).then((response) => {
+			return {
+				'response': response,
+				'error': null
+			}
 		}).catch((error) => {
 			console.error(error)
-			return error
+			return {
+				'error': error,
+				'response': null
+			}
 		})
 	},
 	getOrCreateCart(cart_obj) {

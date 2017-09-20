@@ -33,6 +33,7 @@ urlpatterns = [
 	url(r'^plaid-credentials/$', views.plaid_credentials, name="plaid_credentials"),
 	url(r'^ach-credentials/$', views.stripe_ach_begin, name="ach_credentials"),
 	url(r'^ach-verify/$', views.verify_ach, name="ach_verify"),
+	url(r'^create-purchase-order/$', views.create_purchaseorder, name="create_purchaseorder"),
 ]
 
 

@@ -29,6 +29,9 @@ class Plan(models.Model):
 	color = models.CharField(max_length=12)
 	price = models.FloatField(default=0.0)
 
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
+
 	def __str__(self):
 		return self.name
 
@@ -47,6 +50,9 @@ class Cloud(models.Model):
 
 	color = models.CharField(max_length=64, blank=True)
 	image = models.ImageField(upload_to='images/cloud/', blank=True)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
 		return self.name
@@ -82,6 +88,9 @@ class Client(models.Model):
 	stripe_customer_id = models.CharField(max_length=32, blank=True)
 	stripe_bank_id = models.CharField(max_length=32, blank=True)
 
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
+
 	def get_full_name(self):
 		return self.first_name + " " + self.last_name
 
@@ -106,6 +115,8 @@ class Client(models.Model):
 
 	def __str__(self):
 		return self.get_full_name()
+
+
 
 class Product(models.Model):
 	brand = models.CharField(max_length=128)
@@ -134,6 +145,9 @@ class UnknownProduct(models.Model):
 	device_age = models.IntegerField(default=0)
 	additional_info = models.TextField(blank=True)
 	client = models.ForeignKey(Client)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
@@ -205,6 +219,14 @@ class Subscription(models.Model):
 
 	def __str__(self):
 		return self.client.get_full_name() + ": " + self.plan
+
+class PurchaseOrder(models.Model):
+	client = models.ForeignKey(Client)
+	cart = models.ForeignKey(Cart, blank=True, null=True)
+	po_number = models.CharField(max_length=64)
+
+	date_created = models.DateTimeField(auto_now_add=True)
+	date_updated = models.DateTimeField(auto_now=True)
 
 class EstimateText(models.Model):
 	item = models.CharField(max_length=256)

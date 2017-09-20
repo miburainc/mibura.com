@@ -107,7 +107,8 @@ export default {
 			'setEstimatePdfFile',
 			'checkout',
 			'achSendVerify',
-			'setPaymentProcessing'
+			'setPaymentProcessing',
+			'sendPaymentPoNumber'
 		]),
 
 		
@@ -190,6 +191,21 @@ export default {
 				$('#achSubmitModal').modal('show')
 				return(true)
 			}
+			else if(scr == "sendponumber") {
+				
+				let payload = {
+					client_id: this.getClientInfo['pk'],
+					cart_ref: this.getCartReference,
+					ponumber: this.getPaymentInfoProp('ponumber')
+				}
+				this.sendPaymentPoNumber(payload)
+					.then((response) => {
+						console.log("PO created")
+						this.setPaymentProcessing(false)
+					})
+				return(true)
+			}
+				
 			else if(scr == "verifyach") {
 				console.log("verifyACH in ButtonAction")
 				this.achSendVerify()
@@ -303,7 +319,7 @@ export default {
 									this.setFormItem(val, card_data[i])
 								}
 							}
-							velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+							// velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 							
 							break;
 						case "getquote":
@@ -412,6 +428,8 @@ export default {
 								this.setPaymentProcessing(true);
 								this.serverSetClient().then(() => {
 									this.saveCart().then(() => {
+											
+										}).then(() => {
 										this.checkout()
 											.then((status) => {
 												console.log("after purchase callback")
@@ -421,14 +439,6 @@ export default {
 													this.addNotification({
 														message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
 														type: "danger"
-													})
-													this.addNotification({
-														message: "To speak with Mibura about your support plan, click 'Call Sales' to speak with a Mibura sales representative.",
-														type: "warning"
-													})
-													this.addNotification({
-														message: "To revisit later, click the 'Get Quote' button in your cart to print, download, or be emailed your PDF Estimate.",
-														type: "info"
 													})
 												}
 												else{
@@ -573,7 +583,8 @@ export default {
 			'getAcceptedTerms',
 			'getPaymentToken',
 			'getPaymentInfoProp',
-			'getAllowFormSubmit'
+			'getAllowFormSubmit',
+			'getCartReference',
 		]),
 		currentComponent(){
 			return this.form_components[this.getCurrentFormStep]

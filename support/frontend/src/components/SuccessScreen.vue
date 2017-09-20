@@ -60,9 +60,14 @@ export default {
 			'getEstimatePDF'
 		])
 	},
+	mounted() {
+		if (!this.getEstimatePDF) {
+			this.serverGetEstimatePdf()
+		}
+	},
 	methods: {
 		...mapActions([
-			
+			'serverGetEstimatePdf'
 		]),
 		writeOutSupportLength() {
 			let str = ""

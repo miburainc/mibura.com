@@ -10,7 +10,7 @@
 		</ul>
 		<div class="payment-box">
 
-			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10">
+			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
 				<form-text-input 
 				:class="{'error-border': getErrors[form.data[0].form.name]}" 
@@ -27,6 +27,13 @@
 					</div>
 					-->
 				</div>
+				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%;">
+					<i class="fa fa-cc-visa" aria-hidden="true"></i>
+					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
+					<i class="fa fa-cc-discover" aria-hidden="true"></i>
+					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+				</div>
+				<br><br>
 			</div>
 
 			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
@@ -93,8 +100,8 @@
 		</div>
 
 		<div class="text-center">
-			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/comodo_secure_seal_76x26_transp.png" alt="Comodo Secure">
-			<img style="margin-top: 10px; margin-right: 5px;" src="../../assets/images/powered_by_stripe.png" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe.png'" alt="Comodo Secure">
 		</div>
 			
 
@@ -107,6 +114,8 @@ import {mapGetters, mapActions} from 'vuex'
 import FormTextInput from '../FormTextInput.vue'
 import {ValidateFormStep} from '../../scripts/functions.js'
 
+import {URL_ROOT} from '../../store/values'
+
 import { forEachValue } from '../../scripts/util'
 
 export default {
@@ -115,6 +124,7 @@ export default {
 	},
 	data() {
 		return {
+			URL_ROOT: URL_ROOT,
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,

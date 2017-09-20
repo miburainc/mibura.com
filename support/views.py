@@ -325,13 +325,9 @@ def get_cart(request):
 		client_dict = client.__dict__
 		cart_dict = cart.__dict__
 
-<<<<<<< HEAD
-=======
 		del(client_dict['_state'])
 		del(cart_dict['_state'])
 		del(cart_dict['_client_cache'])
->>>>>>> 6405f0a034c1fba7ec116f79d674a0df146bc0b0
-
 
 		context = {
 			'items': items,

@@ -110,6 +110,7 @@ export default {
 			'saveCart',
 			'checkout',
 			'setAcceptedTerms',
+			'setPaymentProcessing'
 		]),
 		setTerms(value){
 			this.setAcceptedTerms(value)
@@ -192,9 +193,10 @@ export default {
 			'getPaymentInfo',
 			'getAcceptedTerms',
 			'getPaymentProcessing'
-
 		])
-		
+	},
+	mounted(){
+		setPaymentProcessing(true)
 	}
 }
 

@@ -4,10 +4,16 @@ import axios from './api-config'
 const actions = {
 	getCart(reference){
 		return axios.post(URL_ROOT + 'support/get-cart/', reference).then((response) => {
-			return response
+			return {
+				'response': response,
+				'error': null
+			}
 		}).catch((error) => {
 			console.error(error)
-			return error
+			return {
+				'error': error,
+				'response': null
+			}
 		})
 	},
 	getOrCreateCart(cart_obj) {

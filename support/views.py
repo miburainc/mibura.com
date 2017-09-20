@@ -259,21 +259,100 @@ def get_cart(request):
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		cart = Cart.objects.filter(reference=data.reference)
-		
-		cart = cart[0]
+		try:
+			cart = Cart.objects.get(reference=data.reference)
+		except ObjectDoesNotExist:
+			cart = get_object_or_404(Cart, freshbooks_estimate_id=data.reference)
 
-		print(cart.products)
+		client = get_object_or_404(Client, pk=int(cart.client.pk))
+		plan_obj = Plan.objects.get(short_name=cart.plan)
+		categories = ProductCategory.objects.all()
+
+		items = []
+
+		for client_prod in cart.products.all():
+
+			product = {}
+			product.update(client_prod.product.__dict__)
+
+			del(product['_state'])
+
+			product.update({'category':client_prod.product.category.__dict__})
+			del(product['category']['_state'])
+
+			items.append(product)
+
+
+
+			# # temp_dict = {}
+			# # for k,v in Product.objects.filter(model=client_prod.model)[0].__dict__.items():
+			# # 	if(k == 'category_id'):
+			# # 		temp = ProductCategory.objects.filter(pk=v)[0].__dict__
+			# # 		print("temp_dict::", temp)
+			# # 	else:
+			# # 		temp_dict[k] = v
+
+
+			# del(temp_dict['_state'])
+
+			# # items.append({
+			# # 	**Product.objects.filter(model=client_prod.model)[0].__dict__,
+			# # 	'brand': client_prod.brand,
+			# # 	'model': client_prod.model,
+			# # 	'type': 'product',
+			# # 	'category': client_prod.product.category,
+			# # 	'cost': product_price(client_prod, cart.plan, cart.length)
+			# # })
+			# items.append(temp_dict)
+			# print(items)
+
 		
-		serializer_context = {
-			'request': Request(request),
+		for cloud in cart.cloud.all():
+			cloud_item = cloud.__dict__
+			cloud_item['category'] = categories.get(category_code='none').__dict__
+			del(cloud_item['_state'])
+			del(cloud_item['category']['_state'])
+			cloud_item['price_silver'] = 1.0
+			cloud_item['price_gold'] = 0.0
+			cloud_item['price_black'] = 0.0
+			cloud_item['model'] = cloud_item['name']
+			cloud_item['type'] = 'cloud'
+
+			items.append(cloud_item)
+
+		print(items)
+	
+		client_dict = client.__dict__
+		cart_dict = cart.__dict__
+
+<<<<<<< HEAD
+=======
+		del(client_dict['_state'])
+		del(cart_dict['_state'])
+		del(cart_dict['_client_cache'])
+>>>>>>> 6405f0a034c1fba7ec116f79d674a0df146bc0b0
+
+
+		context = {
+			'items': items,
+			'client': client_dict,
+			'cart': cart_dict,
+			'date': DateFormat(datetime.now()).format('Y-m-d')
 		}
-		serialized = CartSerializer2(cart, context=serializer_context)
 
-
-		response_json = JSONRenderer().render(serialized.data)
+		response_json = JSONRenderer().render(context)
 
 		return HttpResponse(response_json, status=200)
+		
+		# file_name = "Mibura_SmartSupport_Estimate.pdf"
+		# path_to_file = '/tmp/' + file_name
+		# pdf = FileWrapper(open(path_to_file, 'rb'))
+
+		# response = HttpResponse(pdf, content_type='application/pdf')
+		# response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		# response['Content-Length'] = os.path.getsize(path_to_file)
+		# return response
+	return HttpResponse('Not POST', status=400)
 
 
 @csrf_exempt
@@ -411,6 +490,7 @@ def estimate_pdf(request):
 @csrf_exempt
 def get_estimate_pdf(request):
 	if request.method == 'POST':
+		
 		data = json.loads(request.body.decode("utf-8"))
 
 		data = dotdict(data)

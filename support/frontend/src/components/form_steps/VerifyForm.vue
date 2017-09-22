@@ -78,8 +78,8 @@
 				</label> -->
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+		<div v-bind:style="buttonStyle"> 	
+			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
 	</div>
 </div>
@@ -97,7 +97,28 @@ export default {
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
-			processing: false
+			processing: false,
+			data: [
+				
+				
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Submit Payment",
+					class: "btn btn-lg btn-success payment-button",
+					script: "purchase"
+				},
+			],
+			title: "Verify",
+			text: "",
+			error: "",
+			step: 3,
+			buttonStyle: ""
 		}
 	},
 	mounted() {

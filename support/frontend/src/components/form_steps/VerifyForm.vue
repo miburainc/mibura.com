@@ -3,19 +3,21 @@
 <div>
 	<br>
 	<div class="container-fluid">
-		<div style="margin:0px 0px 10px 0px; padding: 20px; background: rgba(255,255,255,0.23);" class="col-xs-12">
-			<h3>{{ getPlan(getCurrentPlan).name }}</h3>
-			<h4>Cart Reference Code: {{ getCartReference }}</h4>
+		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
+			<div :style="{padding: '10px 0px 10px 10px', background: getPlan(getCurrentPlan).color, color: getPlan(getCurrentPlan).code == 'black' ? 'white' : 'black'}" class="col-xs-12">
+				<h3>{{ getPlan(getCurrentPlan).name }}</h3>
+				<h4>Cart Reference Code: {{ getCartReference }}</h4>
+			</div>
 			<table class="table table-hover table-outline" style="border-bottom: 3px solid white;border-top: 3px solid white">
 
 				<tbody>
 					<tr v-for="(item, index) in getCart">
-						<td style="color:white;" >{{ item.brand }} {{ item.model }}</td>
-						<td style="color:white; text-align:right;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+						<td>{{ item.brand }} {{ item.model }}</td>
+						<td style="text-align:right;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 					</tr>
 				</tbody>
 			</table>
-			<div class="row">
+			<div class="row" style="padding: 10px">
 				<div class="col-md-7" style=""></div>
 				<div class="col-xs-12 col-md-5" style="padding: 0px 22px 15px 7px; text-align:right; ">
 					<p style="margin:0px">SubTotal:  ${{ numWithCommas(getTotal) }}</p>
@@ -66,7 +68,7 @@
 			<div style="text-align:center">
 				
 				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
-				<a v-else role="button" style="color:lightblue;" class="btn btn-lg btn-outline-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<a v-else role="button" class="btn btn-lg btn-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
 
 				
 				<!-- <label style="font-size: 20px; color: lightblue;">
@@ -196,7 +198,7 @@ export default {
 		])
 	},
 	mounted(){
-		setPaymentProcessing(true)
+		setPaymentProcessing(false)
 	}
 }
 

@@ -112,7 +112,11 @@ export default {
 
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+label {
+	color: #333;
+}
 
 .error-border{
 	border-color: #ff3434!important;

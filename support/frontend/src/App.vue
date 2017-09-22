@@ -9,24 +9,11 @@
 						<h4 class="modal-title" id="myModalLabel">Terms and conditions</h4>
 					</div>
 					<div class="modal-body">
-						Terms and conditions body.
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit arcu, lacinia vel erat vel, feugiat finibus eros. Vivamus porttitor libero vel dui vestibulum pharetra. Cras ornare massa non purus porttitor, quis vestibulum lorem feugiat. Donec eget posuere eros. Vivamus eget tellus vitae enim placerat elementum. Nulla a justo et risus molestie vehicula. Morbi nec libero ut neque facilisis scelerisque ac quis tellus. Etiam efficitur efficitur ultricies. Sed hendrerit porttitor erat vel dictum. Nam ultrices magna ultrices maximus ultrices. Nunc venenatis vehicula odio, vitae vestibulum enim. Suspendisse tempus lorem lacus, ac rhoncus dui dictum non. Integer sed sagittis urna. Nulla lacinia cursus velit vel egestas. Pellentesque sollicitudin bibendum erat, ac tristique odio lacinia id.
-						</p><p>
-							Ut vehicula lobortis velit, vel iaculis mauris imperdiet non. Aliquam sed velit vitae nulla pellentesque consequat. Aliquam ac consectetur mi, non tristique diam. Suspendisse potenti. Nunc lectus libero, facilisis eu odio quis, euismod mollis mi. Suspendisse tincidunt sit amet purus eu laoreet. Fusce egestas, metus et viverra ultrices, ante dolor egestas est, at pharetra purus velit quis dui. Fusce pretium purus vel magna ullamcorper molestie. Donec venenatis tempor sem sed feugiat. Nunc eu sollicitudin felis. Etiam tempus mollis condimentum. Morbi turpis metus, tristique eu augue porttitor, venenatis sagittis justo.
-						</p><p>
-							Maecenas et magna sed tortor interdum facilisis id vitae diam. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut id odio ultrices erat congue blandit non imperdiet augue. Fusce porta rhoncus enim, sit amet faucibus ante sagittis sit amet. Vestibulum commodo, sem ac sollicitudin auctor, felis ante commodo erat, eget iaculis ipsum eros a odio. Etiam suscipit, purus at tempus bibendum, velit dui varius ligula, ut blandit nisl dui non quam. Vestibulum magna dolor, tristique vel enim eget, cursus vulputate massa. Nulla non mattis diam, ut blandit orci. Nullam aliquam cursus pellentesque. Sed euismod fermentum ligula.
-						</p><p>
-							Proin at congue nisi. Etiam dui massa, scelerisque quis malesuada non, pulvinar convallis libero. Maecenas dictum eu velit quis faucibus. Etiam eget lectus id arcu rhoncus tempus. Nam non erat diam. Nunc ligula magna, pellentesque vitae sem ac, luctus mollis nisi. Suspendisse cursus iaculis neque, nec commodo lectus posuere quis. Ut quis laoreet ex. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae nisi vel nunc dictum dignissim et ut risus. Ut odio ipsum, pulvinar vitae suscipit eu, aliquet quis lorem. Nam sit amet gravida urna. Donec porta blandit justo, quis luctus erat semper in. Phasellus eget scelerisque metus.
-						</p><p>
-							Morbi ac nunc viverra, dictum leo non, pulvinar nunc. Nunc bibendum, odio nec fermentum fermentum, lacus nisl volutpat nisi, sed consectetur nulla risus consectetur velit. Aenean luctus accumsan posuere. Donec in eros sollicitudin, vehicula felis eu, consectetur ipsum. Nam aliquet posuere erat id accumsan. Praesent porta mollis faucibus. Praesent ac lobortis risus, vitae pharetra risus.
-						</p><p>
-							Aenean et elit vel risus finibus rutrum faucibus vel est. Pellentesque auctor elit at accumsan finibus. Nullam quam leo, imperdiet vestibulum volutpat id, facilisis nec mauris. Donec velit augue, tempus et ante non, suscipit malesuada eros. Integer eu ex in enim interdum vehicula. Aliquam ut congue arcu. Quisque molestie mauris in ipsum laoreet, aliquet laoreet orci congue. Donec molestie imperdiet neque nec sollicitudin. Ut a lacus pretium metus volutpat tempus. Quisque pulvinar diam eget nulla consequat, sit amet tincidunt eros aliquet. Duis dapibus massa nisi, non venenatis ipsum tempus maximus. Nulla luctus feugiat tempus. Curabitur sed facilisis justo. Sed dictum ex sed blandit tempus. Duis non ante porttitor, mollis felis tempus, ultricies quam. Nunc mattis dictum lacinia.
-						</p><p>
-							Donec ac ex nec orci suscipit iaculis ut vitae magna. Aenean non elit metus. In rhoncus elementum orci, in tincidunt leo porttitor vel. Phasellus at pretium turpis, sit amet interdum ex. Duis vitae erat in dolor porttitor varius ut et sapien. Vivamus turpis augue, tempus ac turpis a, rutrum rhoncus magna. Donec scelerisque faucibus bibendum. Vestibulum auctor, leo nec viverra rutrum, neque turpis ultricies turpis, at mattis arcu lorem in leo. Quisque ante enim, elementum nec luctus id, posuere vitae sapien.
-						</p><p>
-							Quisque luctus lectus a consequat pharetra. Donec quis lorem in sem porta ultricies non at ex. Mauris sodales leo vitae ante elementum, condimentum molestie purus rutrum. Nunc vulputate posuere enim, ut blandit purus rutrum eu. Vivamus accumsan vulputate risus. In sit amet purus ante. Phasellus et vulputate purus, eu finibus est. Nulla eleifend varius leo ac ullamcorper. Sed eget elit in magna scelerisque rutrum. Aenean porttitor augue in enim efficitur, hendrerit commodo leo tincidunt. Phasellus elementum sodales tempus.
-						</p>
+						<div id="pdf">
+							<object width="100%" height="500" type="application/pdf" :data="getTermsPDF" id="pdf_content">
+							
+							</object>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -83,11 +70,11 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="myModalLabel">Returning Customer</h4>
+						<h4 class="modal-title" id="myModalLabel">Already have a quote?</h4>
 					</div>
 					<div class="modal-body">
 						<p>
-							Thank you for returning to Mibura Smart Support.  Please enter the quote ID located at the bottom of your estimate PDF.  
+							Thank you for returning to Mibura Smart Support.  Please enter the Smart Support Cart ID located at the bottom of your estimate PDF.  
 						</p>
 						<input class="form-control" placeholder="Quote ID" id="quoteIdInput" style="color:black;" v-on:keyup.enter="submitQuoteId">
 					</div>
@@ -639,9 +626,9 @@ h1, h2, h3, h4 {
 
 #side_cart {
 	margin-top: 55px;
-	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
-	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
-	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
+	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
+	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
 }
 
 .modal .modal-body {

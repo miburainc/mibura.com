@@ -86,13 +86,13 @@ export const form_steps = [
 		],
 		buttons: [
 			{
-				label: "I'm a new customer",
-				class: "btn btn-lg btn-outline-success",
+				label: "New Customer",
+				class: "btn btn-lg btn-success",
 				script: "next"
 			},
 			{
-				label: "I'm returning with a previous quote",
-				class: "btn btn-lg btn-outline-default",
+				label: "Already have a quote? Click here to checkout",
+				class: "btn btn-lg btn-default",
 				script: "returning"
 			}
 		],
@@ -157,24 +157,24 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Add",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "start,additem"
 
 			},
 			{
 				label: "Add and Continue",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next,additem"
 
 			},
 		],
-		title: "Item",
-		text: "Please type the brand or model of your item",
+		title: "On-Premise Hardware - Software",
+		text: "Search for your hardware device or software below",
 		error: "We aren't sure if we support this brand or model.  Please check the spelling, or contact us to find out if we can support it!",
 		step: 0,
 		buttonStyle: "margin-top: 14px;"
@@ -196,20 +196,28 @@ export const form_steps = [
 		],
 		buttons: [
 			{
-				label: "I Don't Need Cloud Support",
-				class: "btn btn-lg btn-outline-default",
+
+				label: "Skip",
+				class: "btn btn-lg btn-default",
 				script: "skip"
+
+			},
+			{
+				label: "Add",
+				class: "btn btn-lg btn-success",
+
+				script: "addcloud"
 
 			},
 			{
 				label: "Add and Continue",
 				class: "btn btn-lg btn-outline-success",
-				script: "addcloud"
+				script: "addcloud,next"
 
 			},
 		],
-		title: "Cloud Provider",
-		text: "Add a cloud provider",
+		title: "Add Cloud Support",
+		text: "If you have multiple cloud providers, please add and below tell us a little about your tenant(s)",
 		error: "",
 		step: 1,
 		buttonStyle: "text-align: center; margin-top: 50px;"
@@ -288,17 +296,17 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Continue",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next"
 
 			},
 		],
-		title: "Personal Information",
+		title: "About your company",
 		text: "",
 		error: "",
 		step: 2,
@@ -392,17 +400,17 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Review Cart",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next"
 
 			},
 		],
-		title: "Address",
+		title: "Billing Address",
 		text: "",
 		error: "",
 		step: 2,
@@ -416,21 +424,21 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Get Quote",
-				class: "btn btn-lg btn-outline-info",
+				class: "btn btn-lg btn-info",
 				script: "getquote"
 			},
 			{
-				label: "Go to Checkout",
-				class: "btn btn-lg btn-outline-success payment-button",
+				label: "Checkout Now",
+				class: "btn btn-lg btn-success payment-button",
 				script: "gotocheckout"
 			},
 		],
-		title: "Review",
+		title: "Looks good?",
 		text: "",
 		error: "",
 		step: 3,
@@ -547,17 +555,17 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Continue",
-				class: "btn btn-lg btn-outline-success payment-button",
+				class: "btn btn-lg btn-success payment-button",
 				script: "review"
 			},
 		],
 		title: "Payment",
-		text: "",
+		text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
 		error: "",
 		step: 3,
 		buttonStyle: ""
@@ -570,12 +578,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Submit Payment",
-				class: "btn btn-lg btn-outline-success payment-button",
+				class: "btn btn-lg btn-success payment-button",
 				script: "purchase"
 			},
 		],

@@ -3,9 +3,9 @@
 <div>
 	<div class="form-group"> 
 
-		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[form.data[0].form.name][0] }}</label>
+		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[fields[0].form.name][0] }}</label>
 		<autocomplete
-			:style="{borderColor: (getErrors[form.data[0].form.name] ? 'red' : '#8493A8')}"
+			:style="{borderColor: (getErrors[fields[0].form.name] ? 'red' : '#8493A8')}"
 			:url="getAPIRoot + 'productcomplete'"
 			data-root="results"
 			label="brand"
@@ -14,21 +14,21 @@
 			:class="{'autocomplete-border': getErrors[form.data[0].form.name]}"
 			class-name="form-input"
 			:custom-params="{format: 'json'}"
-			:name="form.data[0].form.name"
-			:id="form.data[0].form.name"
-			:init-value="getCurrentItemProp(form.data[0].form.name)"
+			:name="fields[0].form.name"
+			:id="fields[0].form.name"
+			:init-value="getCurrentItemProp(fields[0].form.name)"
 			:process="processAjaxResult"
-			:placeholder="form.data[0].placeholder"
-			:on-select="(obj) => {setFormItemAutoselect(obj, form.data[0].form.name);}"
+			:placeholder="fields[0].placeholder"
+			:on-select="(obj) => {setFormItemAutoselect(obj, fields[0].form.name);}"
 			:min="2"
 			:onInput="(el) => {
 				resetVerified()
-				ValidateFormStepFunction(form.data[0], el)
+				ValidateFormStepFunction(fields[0], el)
 			}"
 			style="position:relative; z-index:1;">
 		</autocomplete>
 
-		<div ref="input" v-for="(step, index) in form.data" v-if="index > 0" 
+		<div ref="input" v-for="(step, index) in fields" v-if="index > 0" 
 			:style="{
 					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
 				}">
@@ -37,7 +37,22 @@
 			
 		</div>
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px;"> 	
-			<div style="padding:0px; margin:0px" class="col-xs-12 col-md-2"><button style="text-align: center; width:100%" v-on:keypress.enter.prevent type="button" :class="form.buttons[0].class" :id="'btn_' + form.buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div style="padding:0px; margin:0px" class="col-xs-12 col-md-2"><button style="white-space: normal; width:100%" v-on:keypress.enter.prevent type="button" :class="form.buttons[1].class" :id="'btn_' + form.buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[1].script)}">{{form.buttons[1].label}}</button></div><div style="padding:0px; margin:0px" class="col-xs-12 col-md-4"><button style="white-space: normal; width:100%" v-on:keypress.enter.prevent type="button" :class="form.buttons[2].class" :id="'btn_' + form.buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[2].script)}">{{form.buttons[2].label}}</button></div><div v-if="getCart.length > 0"class="col-xs-12 col-md-4" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" class="btn btn-lg btn-outline-info" type="button" @click="buttonAction(null, 'skip')">Skip to Cloud</button></div>
+			<div class="col-xs-12 col-md-2 btn-container">
+				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[0].class" :id="'btn_' + form.buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button>
+			</div>
+			<div class="col-xs-12 col-md-2 btn-container">
+				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[1].class" :id="'btn_' + form.buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[1].script)}">{{form.buttons[1].label}}</button>
+			</div>
+			<div class="col-xs-12 col-md-4 btn-container">
+				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[2].class" :id="'btn_' + form.buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[2].script)}">
+						{{form.buttons[2].label}}
+				</button>
+			</div>
+			<div v-if="getCart.length > 0" class="col-xs-12 col-md-4 btn-container">
+				<button type="button" v-on:keypress.enter.prevent class="btn btn-lg btn-info" @click="buttonAction(null, 'skip')">
+					Skip to Cloud
+				</button>
+			</div>
 
 		</div>
 	</div>
@@ -59,6 +74,57 @@ export default {
 	components:{
 		Autocomplete,
 		FormTextInput
+	},
+	data() {
+		return {
+			fields: [
+				{
+					placeholder: "Product Name",
+					dest: "cart.#.brand",
+					required: true,
+					form: {
+						type: "text",
+						name: "model",
+					},
+					validate: {
+						type: "text",
+						min: 2,
+					}
+				},
+				{
+					placeholder: "Serial Number",
+					dest: "cart.#.sn",
+					required: true,
+					form: {
+						type: "text",
+						name: "serialnumber"
+					},
+					validate: {
+						min: 3
+					},
+				},
+				{
+					placeholder: "Device Age (Years)",
+					dest: "cart.#.age",
+					required: false,
+					form: {
+						type: "number",
+						name: "deviceage",
+					},
+					validate: {}
+				},
+				{
+					placeholder: "Additional Info",
+					dest: "cart.#.info",
+					required: false,
+					validate: {},
+					form: {
+						name: "additionalinfo",
+						type: "textarea"
+					}
+				}
+			],
+		}
 	},
 	mounted() {
 
@@ -146,13 +212,25 @@ export default {
 			'getErrors',
 			'getCart'
 		])
-		
 	}
 }
 
 </script>
 
 <style lang="scss">
+
+label {
+	color: #333;
+}
+
+.btn-container {
+	padding: 0px;
+	margin: 0px;
+	button {
+		white-space: normal;
+		width: 100%;
+	}
+}
 
 .autocomplete-border > input {
 	border-color: #ff3434;

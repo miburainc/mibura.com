@@ -3,9 +3,10 @@
 <div>
 	<br>
 	<div class="container-fluid">
-		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,0.23);" class="col-xs-12">
-			<div style="margin:0px 0px 0px 0px; padding:10px 0px 10px 10px; background: rgba(0,0,0,0.16);" class="col-xs-12">
-				<h3>{{ getPlan(getCurrentPlan).name }}</h3><h4>{{ writeOutSupportLength() }}</h4>
+		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
+			<div :style="{padding: '10px 0px 10px 10px', background: getPlan(getCurrentPlan).color, color: getPlan(getCurrentPlan).code == 'black' ? 'white' : 'black'}" class="col-xs-12">
+				<h3 class="text-center">{{ getPlan(getCurrentPlan).name }}</h3>
+				<h4 class="text-center">{{ writeOutSupportLength() }}</h4>
 				
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; padding-top:0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
@@ -14,15 +15,15 @@
 			<br>
 			<!-- <h4>Cart Reference Code: {{ getCartReference }}</h4> -->
 			<div style="margin:0px 0px 0px 0px; padding: 0px 0px 0px 0px;" class="col-xs-12">
-				<table class="table table-hover table-outline" style="margin-bottom: 15px; border-bottom: 1px solid lightgray;">
+				<table class="table table-striped table-hover table-outline" style="margin-bottom: 15px; border-bottom: 1px solid lightgray;">
 <!-- 					<thead>
 						<th style="padding-left:10px">Product</th>
 						<th style="padding-left:10px">Price</th>
 					</thead> -->
 					<tbody>
 						<tr v-for="(item, index) in getCart">
-							<td style="color:white; padding-left:15px;" >{{ item.brand }} {{ item.model }}</td>
-							<td style="color:white; text-align:right; padding-right:15px;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
+							<td style="padding-left:15px;" >{{ item.brand }} {{ item.model }}</td>
+							<td style="text-align:right; padding-right:15px;" >${{ numWithCommas(getProductSubtotal(index)-getProductSubtotal(index)*getCurrentDiscount) }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -47,6 +48,9 @@
 				<p style="margin:0px">%{{getCurrentDiscount*100}} Discount:
 				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
 				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
+			</div>
+			<div style="text-align:center; margin-top:10px;">
+				<h4>Still need help? Speak to our Smart Support Technical Specialist Now 1.800.862.5144</h4>
 			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	

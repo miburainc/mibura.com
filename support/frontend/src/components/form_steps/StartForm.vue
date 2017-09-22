@@ -7,11 +7,11 @@
 	</h2>
 	<br>
 	<h4 class="text-center">
-		We're here to help! Just tell us what technologies you need support for.
+		We're here to offer 3rd party hardware, software, and cloud support. Please answer a few quick questions and we will tailor a support plan that will fit your needs.
 	</h4>
 	<br>
-	<div v-bind:style="form.buttonStyle" class="container-fluid"> 	
-		<button type="button" style="width:85%; display:block; padding: 15px 15px 15px 15px; margin:auto; margin-top: 20px; white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+	<div class="btn-container container-fluid"> 	
+		<button type="button" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 	</div>
 
 </div>
@@ -24,6 +24,23 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
 	props: ['form', 'buttonAction'],
+	data() {
+		return {
+			buttons: [
+				{
+					label: "New Customer",
+					class: "btn btn-lg btn-success",
+					script: "next"
+				},
+				{
+					label: "Already have a quote? Click here to checkout",
+					class: "btn btn-lg btn-default",
+					script: "returning"
+				}
+			],
+			buttonStyle: ""
+		}
+	},
 	mounted() {
 
 	},
@@ -65,26 +82,24 @@ export default {
 			let dest_array = obj.dest.split('.')
 			let val = ""
 			if (dest_array[0] == "cart") {
-				val =  this.get_current_item_prop(dest_array[2])
+				val =  this.getCurrentItemProp(dest_array[2])
 			}
 			else if (dest_array[0] == "client") {
 				if (dest_array[1] == "address") {
-					val = this.get_client_info[dest_array[2]]
+					val = this.getClientInfo[dest_array[2]]
 				}
 				else {
-					val =  this.get_client_info[dest_array[1]]
+					val =  this.getClientInfo[dest_array[1]]
 				}
 			}
 			return val
 		},
 	},
 	computed: {
-		...mapGetters({
-			get_client_info: 'getClientInfo',
-			get_current_item_prop: 'getCurrentItemProp',
-
-		})
-		
+		...mapGetters([
+			'getClientInfo',
+			'getCurrentItemProp',
+		]),
 	}
 }
 
@@ -92,4 +107,19 @@ export default {
 
 <style lang="scss">
 	
+
+.btn-container {
+	text-align: center;
+	margin-top: 12px;
+
+	button {
+		width: 85%;
+		display: block;
+		padding: 15px 15px 15px 15px;
+		margin: auto;
+		margin-top: 20px;
+		white-space: normal;
+	}
+}
+
 </style>

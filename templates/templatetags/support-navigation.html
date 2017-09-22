@@ -1,0 +1,191 @@
+{% load static %}
+
+<nav id="navbar-fixed" class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<div class="secondary-btns">
+				<a href="tel:1-800-862-5144"><i class="fa fa-phone" aria-hidden="true"></i></a>
+				<a href="" class="openSideNav"><i class="fa fa-bars navopen" aria-hidden="true"></i></a>
+			</div>
+			<a class="navbar-brand" href="{% url 'index' %}">
+				<img src="{% static 'images/company/logo.png' %}">
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<p class="navbar-text navbar-lg-text">1.800.862.5144</p>
+				</li>
+				<li class="navbar-lg-text">
+					<a href="#" class="openSideNav dropdown-toggle" data-toggle="offcanvas">
+						<i class="fa fa-bars navopen" aria-hidden="true"></i>
+					</a>
+				</li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+<div id="mySidenav" class="sidenav">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+	<h4>Learn more about</h4>
+	<a href="{% url 'datacenter:index' %}">Modern Data Center</a>
+	<a href="{% url 'cloud:index' %}">Cloud Implementation</a>
+	<a href="{% url 'support:index' %}">Smart Support</a>
+	<a href="{% url 'staffing:index' %}">Tech Staffing</a>
+	<br>
+	<a href="{% url 'company' %}">Company</a>
+
+	<h4>Contact Us</h4>
+	<a style="font-size: 1em;" href="tel:1-800-862-5144">United States: +1.800.862.5144</a>
+	<a style="font-size: 1em;" href="tel:1-213-286-0733">International: +1.213.286.0733</a>
+	<a style="font-size: 1em;" href="mailto:support@mibura.com">support@mibura.com</a>
+	<a style="font-size: 1em;" href="mailto:sales@mibura.com">sales@mibura.com</a>
+	<div class="nav-social-links link-blue" style="font-size: 3.5em;">
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/miburainc/">
+            <i class="fa fa-facebook-official" aria-hidden="true"></i>
+        </a>
+        <!-- Twitter -->
+        <a href="#">
+            <i class="fa fa-twitter-square" aria-hidden="true"></i>
+        </a>
+        <!-- Slack -->
+        <a href="#">
+            <i class="fa fa-slack openchat" aria-hidden="true"></i>
+        </a>
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/company/mibura-inc-">
+            <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+        </a>
+        <!-- Skype -->
+        <a href="skype:mibura1?call">
+            <i class="fa fa-skype" aria-hidden="true"></i>
+        </a>
+    </div>  
+</div>
+
+
+<style type="text/css">
+
+/* The side navigation menu */
+.sidenav {
+	-webkit-box-shadow: -8px 3px 10px 0px rgba(0,0,0,0.2);
+	-moz-box-shadow: -8px 3px 10px 0px rgba(0,0,0,0.2);
+	box-shadow: -8px 3px 10px 0px rgba(0,0,0,0.2);
+    height: 100%; /* 100% Full-height */
+    display: block;
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 99999999; /* Stay on top */
+    top: 0;
+    right: 0;
+    background-color: #FFF; /* White */
+    overflow: hidden !important;
+	white-space: nowrap !important;
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.3s ease-out all; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav h4 {
+	color: #1678c2;
+	padding: 4px 4px 4px 25px;
+}
+.sidenav a, .sidenav p {
+    padding: 4px 4px 4px 25px;
+    text-decoration: none;
+    font-size: 20px;
+    display: block;
+    transition: 0.3s
+}
+
+.sidenav > a, .sidenav p {
+    color: #515151;
+}
+
+.nav-social-links {
+	padding-left: 25px;
+}
+
+.nav-social-links > a {
+	display: inline-block;
+	padding-left: 0;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav > a:hover, .offcanvas a:focus{
+    color: #DDD;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+
+/* always show hamburger */
+/*@media (min-width: 768px) {
+    .navbar-toggle {
+        display: block;
+    }
+}*/
+
+</style>
+
+<script type="text/javascript">
+
+	// Sidebar Nav
+
+	/* Set the width of the side navigation to 250px */
+$('.openSideNav').click(function(event) {
+	event.preventDefault();
+    document.getElementById("mySidenav").style.width = "250px";
+})
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+
+$(document).on('click touchstart', function(e) {
+    var container = $("#mySidenav");
+    var button = $(".openSideNav");
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && !$(e.target).hasClass("openSideNav") && !$(e.target).hasClass("navopen") && container.has(e.target).length === 0) 
+    {
+        container.width("0");
+    }
+});
+
+// 	// Top Navbar
+
+// 	$('#navbar-fixed').hide();
+
+// 	(function($) {					
+// 		$(document).ready(function(){										
+// 				$(window).scroll(function(){													
+// 						if ($(this).scrollTop() > 200) {
+// 								$('#navbar-fixed').fadeIn(500);
+// 						} else {
+// 								$('#navbar-fixed').fadeOut(500);
+// 						}
+// 				});
+// 		});
+// })(jQuery);
+
+</script>

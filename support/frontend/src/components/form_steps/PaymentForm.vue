@@ -1,5 +1,6 @@
 <template>
-	<div id="stripe-payment-form">
+
+	<div id="stripe-payment-form" style="margin-top:15px;">
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
@@ -27,7 +28,7 @@
 					</div>
 					-->
 				</div>
-				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%;">
+				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
 					<i class="fa fa-cc-visa" aria-hidden="true"></i>
 					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
 					<i class="fa fa-cc-discover" aria-hidden="true"></i>
@@ -65,7 +66,7 @@
 						<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
 							<button 
 							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
-							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-outline-info payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
+							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-primary payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
 						</div>
 						<div class="col-xs-12 col-md-2 text-center payment-or">
 							<div class="line"></div>
@@ -101,7 +102,7 @@
 
 		<div class="text-center">
 			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
-			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe.png'" alt="Comodo Secure">
+			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe@2x.png'" height="26" alt="Powered by Stripe">
 		</div>
 			
 
@@ -216,15 +217,15 @@ export default {
 		var card = elements.create('card', {
 			style: {
 				base: {
-					iconColor: '#eca661',
-					color: '#ffffff',
+					iconColor: '#548ebf',
+					color: '#333333',
 					lineHeight: '40px',
 					fontWeight: 300,
 					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
 					fontSize: '15px',
 
 					'::placeholder': {
-						color: '#CFD7E0',
+						color: '#888888',
 					},
 				},
 			}
@@ -486,7 +487,7 @@ export default {
 
 .btn-plaid-success {
 	padding: 10px 20px;
-	color: white!important;
+	color: black!important;
 	cursor: initial!important;
 	background: #5cb85c!important;
 	border: 1px solid #00a25c;
@@ -494,16 +495,20 @@ export default {
 
 	&:hover {
 		padding: 10px 20px;
-		color: white!important;
+		color: black!important;
 		cursor: initial!important;
 		border-color: #00a25c!important;
 		background: #5cb85c!important;
 		// border: 1px solid #FFFFFF;
 	}
 	&:focus {
-		color: white!important;
+		color: black!important;
 		cursor: initial!important;
 	}
+}
+
+label {
+	color: #333;
 }
 
 div.line{
@@ -527,7 +532,7 @@ div.line{
 }
 
 .nav-tabs li a {
-	color: white;
+	color: black;
 }
 
 .nav-tabs li.active a {
@@ -540,11 +545,11 @@ div.line{
 	border: 1px solid #8493A8;
 	border-bottom: 1px solid #8493A8;
 	background: rgba(255,255,255,0.2);
-	color: white;
+	color: black;
 }
 
 .nav-tabs li a:active, .nav-tabs li a:visited {
-	color: white;
+	color: black;
 }
 
 </style>

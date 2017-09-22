@@ -612,10 +612,6 @@ export default {
 	text-align: center;
 }
 
-.table-hover>tbody>tr:hover {
-    background-color: #999999;
-}
-
 .btn-outline-info {
 	padding: 10px 20px;
 	color: #3285C4;
@@ -665,9 +661,9 @@ export default {
 	&:hover {
 		padding: 10px 20px;
 		color: #00ec85;
-		border-color: #00dc7c;
+		border-color: #00ec85;
 		background: transparent;
-		background: rgba(0,250,144,.08);
+		background: rgba(0,236,133,.06);
 		// border: 1px solid #FFFFFF;
 	}
 	&:focus {
@@ -684,10 +680,10 @@ export default {
 
 	&:hover {
 		padding: 10px 20px;
-		color: #FFFFFF;
+		color: #565f6a;
 		background: transparent;
-		background: rgba(255,255,255,.08);
-		border-color: #FFFFFF;
+		background: rgba(0,0,0,.03);
+		border-color: #565f6a;
 	}
 
 	&:focus {
@@ -713,7 +709,7 @@ label {
 
 input[type=text], select, .form-control {
 	background: transparent;
-	color: white;
+	color: black;
     width: 100%;
     padding: 12px 20px;
     margin: 2px 0 8px 0;
@@ -774,7 +770,7 @@ input[type=text], select, .form-control {
 	font-weight: 400;
 	border: 1px solid #8493A8;
 	border-radius: 4px;
-	color: #ffffff;
+	color: #000000;
 	outline: none;
 	height: 48px;
 	line-height: 48px;

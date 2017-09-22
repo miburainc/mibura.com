@@ -639,9 +639,9 @@ h1, h2, h3, h4 {
 
 #side_cart {
 	margin-top: 55px;
-	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
-	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
-	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.7);
+	-webkit-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
+	-moz-box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
+	box-shadow: 2px 10px 20px 1px rgba(0,0,0,0.3);
 }
 
 .modal .modal-body {

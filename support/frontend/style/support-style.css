@@ -8,7 +8,7 @@
 
 
 #purchase-form {
-    color: white;
+    color: black;
 }
 
 /* Purchase Page Cart Table */
@@ -45,7 +45,7 @@ table td {
 #compare-table > .table thead th {
     padding-left: 10px;
     background-color: #0773ba; 
-    color: #FFF;
+    color: #000000;
     font-weight: 100;
 }
 

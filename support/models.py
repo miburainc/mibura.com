@@ -149,8 +149,14 @@ class UnknownProduct(models.Model):
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
 
+class CloudAddOn(models.Model):
+	cloud = models.ForeignKey(Cloud)
+	name = models.CharField(max_length=128)
+
+
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
+	cloud = models.ForeignKey(Cloud, blank=True, null=True)
 	product = models.ForeignKey(Product, blank=True, null=True)
 
 	brand = models.CharField(max_length=64, blank=True) # Take off

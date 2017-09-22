@@ -27,24 +27,31 @@ def App(df):
 
 		try:
 			cloud = Cloud.objects.get(name=name)
+			try:
+				addon = CloudAddOn.objects.get(category=category, sub_category=sub_category, cloud=cloud)
+			except ObjectDoesNotExist:
+				created = True
+				addon = CloudAddOn(category=category, sub_category=sub_category, cloud=cloud)
 		except ObjectDoesNotExist:
-			print("Error, cloud name is not in database:",name)
-			print("Exiting...")
-			return(0)
+			try:
+				addon = CloudAddOn.objects.get(category=category, sub_category=sub_category, cloud_backup_name=name)
+			except ObjectDoesNotExist:
+				created = True
+				addon = CloudAddOn(category=category, sub_category=sub_category, cloud_backup_name=name)
 
-		try:
-			addon = CloudAddOn.objects.get(category=category, sub_category=sub_category, cloud=cloud)
-		except ObjectDoesNotExist:
-			created = True
-			addon = CloudAddOn(category=category, sub_category=sub_category, cloud=cloud)
+		
 
 		addon.save()
-		
+
 		if created:
 			print("-- Created --")
 		else:
 			print("** Loaded")
-		print(category, " ", sub_category, " | ", cloud.name)
+		try:
+			print(category, " ", sub_category, " | ", name, addon.pk)
+		except UnicodeEncodeError:
+			print("UnicodeEncodeError")
+
 
 # Django setup
 if __name__ == '__main__':
@@ -53,5 +60,6 @@ if __name__ == '__main__':
 	django.setup()
 	from support.models import Cloud, CloudAddOn
 
-	df = pd.read_csv("scripts/files/products/azure_addons.csv")
+	#df = pd.read_csv("scripts/files/products/azure_addons.csv")
+	df = pd.read_csv("scripts/files/products/microsoft_addons.csv", encoding = 'ISO-8859-1')
 	App(df)

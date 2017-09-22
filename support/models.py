@@ -150,8 +150,12 @@ class UnknownProduct(models.Model):
 	date_updated = models.DateTimeField(auto_now=True)
 
 class CloudAddOn(models.Model):
-	cloud = models.ForeignKey(Cloud)
-	name = models.CharField(max_length=128)
+	cloud = models.ForeignKey(Cloud, null=True)
+	cloud_backup_name = models.CharField(max_length=128, default="")
+	category = models.CharField(max_length=128)
+	sub_category = models.CharField(max_length=128)
+	price = models.FloatField(default=0.0)
+	is_price_final = models.BooleanField(default=False)
 
 
 class ClientProduct(models.Model):

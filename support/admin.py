@@ -45,6 +45,11 @@ class CloudAdmin(admin.ModelAdmin):
 
 admin.site.register(Cloud, CloudAdmin)
 
+class CloudAddOnAdmin(admin.ModelAdmin):
+	list_display = ['cloud', 'category', 'price',]
+
+admin.site.register(CloudAddOn, CloudAddOnAdmin)
+
 class ProductCategoryAdmin(admin.ModelAdmin):
 	list_display = ['name', 'yearly_tax', 'category_code', 'price_multiplier',]
 

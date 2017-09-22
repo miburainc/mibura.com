@@ -26,7 +26,6 @@ from .serializers import *
 
 from scripts.dotdict import dotdict
 from scripts.sss_pricing import product_price, cloud_price
-from dynamicscrm.api import createAccount
 from freshbooks import estimates, invoices
 
 # from weasyprint import HTML
@@ -440,7 +439,7 @@ def email_estimate_pdf(request):
 		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
+		path_to_file = settings.MEDIA_ROOT + file_name
 
 		f = open(path_to_file)
 
@@ -548,7 +547,7 @@ def get_estimate_pdf(request):
 		pdf = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = settings.MEDIA_ROOT + '/pdf/' + file_name
+		path_to_file = settings.MEDIA_ROOT + file_name
 		pdf = FileWrapper(pdf)
 
 		response = HttpResponse(pdf, content_type='application/pdf')

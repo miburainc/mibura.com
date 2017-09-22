@@ -2,6 +2,14 @@
 	
 <div>
 	<h1>Success!</h1>
+	<h4>Please return and verify ach amounts deposited in your bank account.</h4>
+	<div v-if="getEstimatePDF">
+		<div id="pdf">
+				<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
+				<p>Error, reciept cannot be displayed at this time.</p>
+				</object>
+		</div>
+	</div>
 </div>
 
 </template>
@@ -15,12 +23,15 @@ import Autocomplete from 'vue2-autocomplete-js';
 export default {
 	props: ['form', 'buttonAction'],
 	mounted() {
-
+		if (!this.getEstimatePDF) {
+			this.serverGetEstimatePdf()
+		}
 	},
 	methods: {
 		...mapActions([
 			'setCurrentItemProp',
-			'setClientProp'
+			'setClientProp',
+			'serverGetEstimatePdf'
 		]),
 		processAjaxResult(json) {
 			return json['results']
@@ -93,6 +104,7 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
+			'getEstimatePDF'
 
 		])
 		

@@ -87,12 +87,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "New Customer",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next"
 			},
 			{
 				label: "Already have a quote? Click here to checkout",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "returning"
 			}
 		],
@@ -157,18 +157,18 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Add",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "start,additem"
 
 			},
 			{
 				label: "Add and Continue",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next,additem"
 
 			},
@@ -196,14 +196,16 @@ export const form_steps = [
 		],
 		buttons: [
 			{
+
 				label: "Skip",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "skip"
 
 			},
 			{
 				label: "Add",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
+
 				script: "addcloud"
 
 			},
@@ -294,12 +296,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Continue",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next"
 
 			},
@@ -398,12 +400,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Review Cart",
-				class: "btn btn-lg btn-outline-success",
+				class: "btn btn-lg btn-success",
 				script: "next"
 
 			},
@@ -422,17 +424,17 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Get Quote",
-				class: "btn btn-lg btn-outline-info",
+				class: "btn btn-lg btn-info",
 				script: "getquote"
 			},
 			{
 				label: "Checkout Now",
-				class: "btn btn-lg btn-outline-success payment-button",
+				class: "btn btn-lg btn-success payment-button",
 				script: "gotocheckout"
 			},
 		],
@@ -553,12 +555,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Continue",
-				class: "btn btn-lg btn-outline-success payment-button",
+				class: "btn btn-lg btn-success payment-button",
 				script: "review"
 			},
 		],
@@ -576,12 +578,12 @@ export const form_steps = [
 		buttons: [
 			{
 				label: "Back",
-				class: "btn btn-lg btn-outline-default",
+				class: "btn btn-lg btn-default",
 				script: "back"
 			},
 			{
 				label: "Submit Payment",
-				class: "btn btn-lg btn-outline-success payment-button",
+				class: "btn btn-lg btn-success payment-button",
 				script: "purchase"
 			},
 		],

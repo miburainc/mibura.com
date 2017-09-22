@@ -196,7 +196,7 @@ export default {
 		])
 	},
 	mounted(){
-		setPaymentProcessing(true)
+		setPaymentProcessing(false)
 	}
 }
 

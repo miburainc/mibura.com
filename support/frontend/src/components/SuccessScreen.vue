@@ -40,7 +40,7 @@ import {toJSONLocal} from '../scripts/functions'
 export default {
 	data(){
 		return{
-			upsell: 'If you would like to upgrade your plan or add support at any time, please call us.',
+			upsell: 'Need to make any changes to your support plan? Please call 800.862.5144 or email support@mibura.com and we will get in touch with you in less than 15 minutes!',
 			successMessage1: "An email confirmation has been sent to you.",
 			successMessage2: "Please call us at 1.800.862.5144 if you have any questions about your order.",
 		}

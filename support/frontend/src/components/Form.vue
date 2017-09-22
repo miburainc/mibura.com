@@ -153,9 +153,6 @@ export default {
 			this.addCartItem(cloud_obj)
 				.then((value) => {
 					console.log("Added cloud: ", value)
-					if (value == true) {
-						this.goToStep(this.getCurrentFormStep+1)
-					}
 				})
 		},
 		goToStep(step_num) {

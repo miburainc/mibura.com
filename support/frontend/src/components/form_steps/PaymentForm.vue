@@ -1,5 +1,6 @@
 <template>
-	<div id="stripe-payment-form">
+
+	<div id="stripe-payment-form" style="margin-top:15px;">
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>

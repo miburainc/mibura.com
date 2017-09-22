@@ -7,7 +7,7 @@
 	</h2>
 	<br>
 	<h4 class="text-center">
-		We're here to help! Just tell us what technologies you need support for.
+		We're here to offer 3rd party hardware, software, and cloud support. Please answer a few quick questions and we will tailor a support plan that will fit your needs.
 	</h4>
 	<br>
 	<div v-bind:style="form.buttonStyle" class="container-fluid"> 	

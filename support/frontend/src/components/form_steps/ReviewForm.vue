@@ -48,6 +48,9 @@
 				 ${{numWithCommas(getTotal*getCurrentDiscount)}}</p>
 				<span style="font-size: 1.5em;font-weight:700;">Payment Total: ${{ numWithCommas(getGrandTotal) }}</span>
 			</div>
+			<div style="text-align:center; margin-top:10px;">
+				<h4>Still need help? Speak to our Smart Support Technical Specialist Now 1.800.862.5144</h4>
+			</div>
 		</div>
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
 			<div v-for="btn in form.buttons" style="padding:0px; margin:0px" class="col-xs-12 col-md-4"><button v-on:keypress.enter.prevent style="width:100%; whitespace: normal;" type="button"  :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>

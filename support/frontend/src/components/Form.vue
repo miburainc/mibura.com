@@ -500,7 +500,9 @@ export default {
 			setTimeout(() => {
 				this.show = true;
 				// Set another timer to ensure dom elements are loaded before calling js
+				velocity(document.body, "scroll", { duration: 0, mobileHA: false, offset: 0 });
 				setTimeout(() => {
+
 					document.forms[0].elements[0].focus();
 					if (this.getCurrentFormStep == this.step_names.cloud) {
 						this.addNotification({

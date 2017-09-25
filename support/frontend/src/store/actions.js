@@ -1,4 +1,4 @@
-import freshbooks from './api/freshbooks'
+ import freshbooks from './api/freshbooks'
 import plaid from './api/plaid'
 import stripe from './api/stripe'
 import productApi from './api/products'

@@ -290,14 +290,12 @@ export default {
 
 								this.goToStep(this.getCurrentFormStep+1)
 							}
-
-							
-
 							break;
 
 						case "addcloud":
 
 							let temp = document.getElementById('cloudprovider').value
+							console.log(temp)
 
 							if (temp=="none") {
 								temp = this.getCurrentCloudSelection
@@ -387,6 +385,7 @@ export default {
 							)
 							this.clearCurrentItem()
 							break;
+
 						case "purchase":
 							var noItems = true;
 							for (var item of this.getCart){
@@ -739,7 +738,7 @@ input[type=text], select, .form-control {
 }
 
 .text-red {
-	color: red;
+	color: red!important;
 }
 
 /* Enter and leave animations can use different */

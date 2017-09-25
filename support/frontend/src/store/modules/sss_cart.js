@@ -20,9 +20,13 @@ const state = {
 	estimate_id: 0,
 	estimate_pdf: null,
 	cart_changed: true,
+	cloud_in_cart_already: false,
 }
 
 const mutations = {
+	[TYPE.SET_CLOUD_IN_CART_ALREADY]: (state, value) =>{
+		state.cloud_in_cart_already = value
+	},
 	[TYPE.SET_CART]: (state, array) =>{
 		state.cart = array
 	},
@@ -86,6 +90,20 @@ const actions = {
 	},
 	setCartChanged({commit}, value) {
 		commit(TYPE.CART_CHANGED, value)
+	},
+	checkDuplicateCloud({commit, state, dispatch, rootState}, value){
+		console.log("asdffdsasadf")
+		for (let i=0; i<state.cart.length; i++) {
+			if (state.cart[i].brand == value) {
+				dispatch('addNotification', {
+					type: "danger",
+					message: "You already have " + value + " in your cart!<br>Select another provider or click the Skip button."
+				})
+				commit(TYPE.SET_CLOUD_IN_CART_ALREADY, true)
+				return
+			}
+		}
+		commit(TYPE.SET_CLOUD_IN_CART_ALREADY, false)
 	},
 	addCartItem({commit, dispatch, state, rootState}, payload) {
 		let cloud_in_cart_already = false
@@ -311,6 +329,7 @@ const getters = {
 		let final = total - (total * store.getCurrentDiscount)
 		return final
 	},
+	getCloudInCartAlready: state => state.cloud_in_cart_already,
 	getCart: state => state.cart,
 	getCartId: state => state.cart_id,
 	getSupportMonths: state => state.support_months,

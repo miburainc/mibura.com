@@ -1,5 +1,9 @@
 <template>
-	<div id="cloud-selector-formstep" class="carousel slide" data-ride="carousel" data-interval="false" style="margin-top: 25px;">
+<div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
+
+	<div v-show="current_step==0" id="cloud-selector-formstep" class="carousel slide" data-ride="carousel" data-interval="false" style="margin-top: 25px;">
 		<!-- Indicators -->
 		<!-- <ol class="carousel-indicators">
 			<li v-for="(cloud, index) in getCloudProviders" data-target="#cloud-selector-formstep" :data-slide-to="index" :class="{'active': index==0}"></li>
@@ -8,7 +12,8 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div v-for="(cloud, index) in getCloudProviders" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
-				<img class="clickable" @click="(el) => {buttonAction(el, 'addcloud')}" :src="cloud.image" style="width: auto; height: 85px;" :alt="cloud.name">
+				<img class="clickable" @click="selectProvider(index)" :src="cloud.image" style="width: auto; height: 85px;" :alt="cloud.name">
+				<center><button class="btn btn-lg btn-success" @click="selectProvider(index)" style="margin-top: 20px">Select</button></center>
 			</div>
 			<!-- Controls -->
 			<a class="left carousel-control" href="#cloud-selector-formstep" role="button" data-slide="prev">
@@ -21,13 +26,30 @@
 			</a>
 	    </div>
 
-
-		<div v-bind:style="buttonStyle" class="container-fluid"> 	
-			<div class="col-xs-12 col-md-4"  v-for="btn in buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
-		</div>
 		<input type="hidden" name="cloudprovider" id="cloudprovider" :value="getCurrentCloudSelection" >
+
+		
 	</div>
-	
+		
+
+	<div v-if="current_step==1" v-on:keyup.enter="chooseCloud">
+		<center><img :src="getCloudProviders[selected_provider].image" style="margin-top:25px; width: auto; height: 85px;" :alt="getCloudProviders[selected_provider].name"></center>
+		<br>
+		<h4 class="text-center">How many instances do you have with this cloud provider?</h4>
+		<div class="container-fluid">
+			<div class="col-xs-11 col-md-11"><form-text-input :step="fields[1]">
+				</form-text-input></div>
+			<div class="col-xs-1 col-md-1" style="text-align: center;">
+				<button class="btn btn-sm btn-success" style="margin: 22px 0px 0px 0px">Enter</button>
+			</div>
+		</div>
+		{{ getCloudProviders[selected_provider] }}	
+	</div>
+
+	<div v-bind:style="buttonStyle" class="container-fluid"> 	
+			<div class="col-xs-12 col-md-6" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;" class="btn btn-lg btn-default" @click="goToLastStep">Back</button></div><div class="col-xs-12 col-md-6"  v-for="btn in buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
+	</div>
+</div>
 </template>
 
 <script>
@@ -36,16 +58,26 @@ import {mapGetters, mapActions} from 'vuex'
 import moment from 'moment'
 import axios from 'axios'
 
+import {ValidateFormStep} from '../../scripts/functions.js'
+import {forEachValue} from '../../scripts/util'
+
 import '../../../library/carousel-swipe.js'
+import FormTextInput from '../FormTextInput.vue'
 
 export default {
 	props: [
 		'form',
 		'buttonAction'
 	],
+	components: {
+		FormTextInput
+	},
 	data() {
 		return {
-			selected_cloud: -1,
+			instances: 0,
+			users: 0,
+			current_step: 0,
+			selected_provider: null,
 			fields: [
 				{
 					placeholder: "Cloud Provider",
@@ -58,31 +90,59 @@ export default {
 						name: "cloudprovider",
 					}
 				},
+				{
+					placeholder: "Instances",
+					src: "cloudinstanes",
+					dest: "cart.#.cloudinstances",
+					required: true,
+					validate: {
+						type: "number",
+						min: 1,
+					},
+					form: {
+						type: "number",
+						name: "cloudinstances",
+					}
+				},
+				{
+					placeholder: "Users",
+					src: "cloudusers",
+					dest: "cart.#.cloudusers",
+					required: true,
+					validate: {
+						type: "number",
+						min: 1,
+					},
+					form: {
+						type: "number",
+						name: "cloudusers",
+					}
+				},
 			],
 			buttons: [
 				{
 
 					label: "Skip",
-					class: "btn btn-lg btn-default",
+					class: "btn btn-lg btn-info",
 					script: "skip"
 
 				},
-				{
-					label: "Add",
-					class: "btn btn-lg btn-success",
+				// {
+				// 	label: "Add",
+				// 	class: "btn btn-lg btn-success",
 
-					script: "addcloud"
+				// 	script: "addcloud"
 
-				},
-				{
-					label: "Add and Continue",
-					class: "btn btn-lg btn-outline-success",
-					script: "addcloud,next"
+				// },
+				// {
+				// 	label: "Add and Continue",
+				// 	class: "btn btn-lg btn-outline-success",
+				// 	script: "addcloud,next"
 
-				},
+				// },
 			],
 			title: "Add Cloud Support",
-			text: "If you have multiple cloud providers, please add and below tell us a little about your tenant(s)",
+			text: "Please select which cloud provider you need support for",
 			error: "",
 			step: 1,
 			buttonStyle: "text-align: center; margin-top: 50px;"
@@ -93,8 +153,42 @@ export default {
 		...mapActions([
 			'setCurrentFormStep',
 			'setCurrentCloudSelection',
-			
+			'setAllowFormSubmit',
+			'setError',
+			'checkDuplicateCloud'
 		]),
+		chooseCloud(){
+
+			let cloudinstances = document.getElementById('cloudinstances').value
+			let errors = ValidateFormStep(this.fields[1], cloudinstances)
+			if(cloudinstances <= 0){
+				this.setError({key: 'cloudinstances', value: ['Must be greater than 0']})
+			}else{
+				this.instances = cloudinstances
+				this.current_step = 0
+				this.text = "If you need cloud support for a different provider please select below"
+				this.buttonAction(null, "addcloud")
+			}
+
+		},
+		goToLastStep(){
+			if(this.current_step > 0){
+				this.current_step -= 1;
+			}
+			else{
+				this.buttonAction(null, "back")
+			}
+		},
+		selectProvider(index){
+			this.checkDuplicateCloud(this.getCloudProviders[index].name).then(() =>{
+				if(this.getCloudInCartAlready == false){
+					this.setAllowFormSubmit(false)
+					this.selected_provider = index
+					this.current_step = 1
+					this.text = ""
+				}
+			})
+		},
 		goToStep(step_num) {
 
 			// Proceed to next page of form
@@ -116,6 +210,8 @@ export default {
 		...mapGetters([
 			'getCurrentCloudSelection',
 			'getCloudProviders',
+			'getErrors',
+			'getCloudInCartAlready'
 		])
 	},
 	mounted() {
@@ -136,9 +232,11 @@ export default {
 		});
 
 		$("#cloud-selector-formstep").bind('slid.bs.carousel', (e) => {
+			console.log(e)
 			let cloud_pk = e.relatedTarget.dataset.cloudPk
-			// console.log(cloud_pk)
+			console.log(cloud_pk)
 			this.setCurrentCloudSelection(cloud_pk)
+
 		});
 	}
 }

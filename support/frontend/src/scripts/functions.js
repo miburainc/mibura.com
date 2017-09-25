@@ -46,7 +46,7 @@ export function ValidateFormStep(fieldStep, fieldValue){
 								valid = /^\w+( \w+)*$/.test(fieldValue)
 								break;
 							case "number":
-								valid = /^\d+$/.test(fieldValue);
+								valid = /^\d+$/.test(	);
 								break;
 							case "email":
 								valid = validateEmail(fieldValue)

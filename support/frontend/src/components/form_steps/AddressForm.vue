@@ -3,7 +3,7 @@
 <div>
 	<div class="form-group" >
 
-		<div ref="input" v-for="(step, index) in form.data" 
+		<div ref="input" v-for="(step, index) in fields" 
 			:style="{
 					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
 				}">
@@ -11,8 +11,8 @@
 			<form-text-input :step="step"></form-text-input>
 
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button style="margin-right:3px; white-space: normal;" v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="buttonStyle"> 	
+			<button style="margin-right:3px; white-space: normal;" v-on:keypress.enter.prevent type="button" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
 </div>
@@ -30,6 +30,112 @@ export default {
 		'form-text-input': FormTextInput
 	},
 	props: ['form', 'buttonAction'],
+	data() {
+		return {
+			fields: [
+				{
+					placeholder: "Street",
+					src: "",
+					dest: "client.address.street",
+					required: true,
+					validate: {
+						type: "text", 
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "street1",
+					}
+				},
+				{
+					placeholder: "Street 2",
+					src: "",
+					dest: "client.address.street2",
+					required: false,
+					validate: {},
+					form: {
+						type: "text",
+						name: "street2",
+					}
+				},
+				{
+					placeholder: "City",
+					src: "",
+					dest: "client.address.city",
+					required: true,
+					validate: {
+						type: "text", 
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "city",
+					}
+
+				},
+				{
+					placeholder: "State",
+					src: "",
+					dest: "client.address.state",
+					required: true,
+					validate: {
+						min: 2,
+					},
+					form: {
+						type: "text",
+						name: "state",
+					}
+				},
+				{
+					placeholder: "Country",
+					src: "",
+					dest: "client.address.country",
+					required: true,
+					validate: {
+						type: "text",
+						min: 2,
+					},
+					form: {
+						type: "text",
+						name: "country",
+					}
+				},
+				{
+					placeholder: "Zipcode",
+					src: "",
+					dest: "client.address.zipcode",
+					required: true,
+					validate: {
+						type: "number",
+						min: 5,
+						max: 6,
+					},
+					form: {
+						type: "number",
+						name: "zipcode",
+					}
+				},
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Review Cart",
+					class: "btn btn-lg btn-success",
+					script: "next"
+
+				},
+			],
+			title: "Billing Address",
+			text: "",
+			error: "",
+			step: 2,
+			buttonStyle: "margin-top: 14px;"
+		}
+	},
 	mounted() {
 
 	},

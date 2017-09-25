@@ -14,8 +14,8 @@
 			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[0].form.name]}" 
-				:step="form.data[0]" 
+				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+				:step="cc_fields.cardname" 
 				id="cardName"></form-text-input>
 
 				<label>Card Info</label>
@@ -37,21 +37,21 @@
 				<br><br>
 			</div>
 
-			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
+			<!-- <div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
 				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[4].form.name]}" 
-				:step="form.data[4]"></form-text-input>
+				:class="{'error-border': getErrors[ach_fields[3].form.name]}" 
+				:step="ach_fields[3]"></form-text-input>
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[5].form.name]}" 
-				:step="form.data[5]"></form-text-input>
-			</div>
+				:class="{'error-border': getErrors[ach_fields[4].form.name]}" 
+				:step="ach_fields[4]"></form-text-input>
+			</div> -->
 
 			<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
 
 				<form-text-input 
-				:class="{'error-border': getErrors[form.data[6].form.name]}" 
-				:step="form.data[6]" 
+				:class="{'error-border': getErrors[po_fields[0].form.name]}" 
+				:step="po_fields[0]" 
 				id="cardName"></form-text-input>
 
 				
@@ -59,7 +59,7 @@
 			
 			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
 
-				<form-text-input :step="form.data[1]"></form-text-input>
+				<form-text-input :step="ach_fields[0]"></form-text-input>
 				
 				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
 					<div class="row">
@@ -79,11 +79,11 @@
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="accountNumber" 
 								style="margin-top:15px"
-								:step="form.data[2]"></form-text-input>
+								:step="ach_fields[1]"></form-text-input>
 							<form-text-input  
 								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
 								id="routingNumber" 
-								:step="form.data[3]"></form-text-input>
+								:step="ach_fields[2]"></form-text-input>
 							<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
 							This is a company account
 							<br>
@@ -94,9 +94,9 @@
 			</div>
 		</div>
 
-		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
-			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+		<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
+			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="buttons[0].class" type="button"
+			@click="(el) => {buttonAction(el, buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="buttons[1].class" type="button" >{{buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 			
 		</div>
 
@@ -129,6 +129,137 @@ export default {
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,
+
+			cc_fields: {
+				cardname: {
+					placeholder: "Name on card",
+					src: "",
+					dest: "payment.cardname",
+					required: true,
+					validate: {
+						type: "text",
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "cardname",
+						class: "field",
+					}
+				}
+			},
+			ach_fields: [
+				{
+					placeholder: "Bank Customer Name",
+					src: "",
+					dest: "payment.bankcustomername",
+					required: true,
+					validate: {
+						type: "text",
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "bankcustomername",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Account Number",
+					src: "",
+					dest: "payment.accountnumber",
+					required: true,
+					validate: {
+						type: "number",
+						min: 6,
+					},
+					form: {
+						type: "number",
+						name: "accountnumber",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Routing Number",
+					src: "",
+					dest: "payment.routingnumber",
+					required: true,
+					validate: {
+						type: "number",
+						min: 6,
+					},
+					form: {
+						type: "number",
+						name: "routingnumber",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Verify Ammount #1",
+					src: "",
+					dest: "payment.verify1",
+					required: true,
+					validate: {
+						type: "number",
+						min: 2,
+					},
+					form: {
+						type: "number",
+						name: "verify1",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Verify Ammount #2",
+					src: "",
+					dest: "payment.verify2",
+					required: true,
+					validate: {
+						type: "number",
+						min: 2,
+					},
+					form: {
+						type: "number",
+						name: "verify2",
+						class: "field",
+					}
+				},
+			],
+			po_fields: [
+				{
+					placeholder: "P.O. Number",
+					src: "",
+					dest: "payment.ponumber",
+					required: true,
+					validate: {
+						type: "text",
+						min: 4,
+					},
+					form: {
+						type: "text",
+						name: "ponumber",
+						class: "field",
+					}
+				}			
+			],
+			paypal_fields: [
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Continue",
+					class: "btn btn-lg btn-success payment-button",
+					script: "review"
+				},
+			],
+			title: "Payment",
+			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
+			error: "",
+			step: 3,
+			buttonStyle: ""
 		}
 	},
 	props: ['form', 'buttonAction'],
@@ -187,7 +318,7 @@ export default {
 
 				console.log("errors: bankcustomername", bankcustomername)
 
-				errors = ValidateFormStep(self.form.data[1], bankcustomername)
+				errors = ValidateFormStep(self.ach_fields[0], bankcustomername)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -283,7 +414,7 @@ export default {
 				let cardName = document.getElementById("cardname").value
 				extraDetails['name'] = cardName
 
-				errors = ValidateFormStep(self.form.data[0], cardName)
+				errors = ValidateFormStep(self.cc_fields.cardname, cardName)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -310,7 +441,7 @@ export default {
 
 				console.log("error bankcustomername:", bankcustomername)
 
-				errors = ValidateFormStep(self.form.data[1], bankcustomername)
+				errors = ValidateFormStep(self.ach_fields[0], bankcustomername)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -326,7 +457,7 @@ export default {
 					let accountNumber = document.getElementById("accountnumber").value
 					extraDetails['accountNumber'] = accountNumber
 
-					errors = ValidateFormStep(self.form.data[2], accountNumber)
+					errors = ValidateFormStep(self.ach_fields[1], accountNumber)
 					if (errors["valid"] == false)
 					{
 						forEachValue(errors["errors"], (value, key) => {
@@ -341,7 +472,7 @@ export default {
 					let routingNumber = document.getElementById("routingnumber").value
 					extraDetails['routingNumber'] = routingNumber
 
-					errors = ValidateFormStep(self.form.data[3], routingNumber)
+					errors = ValidateFormStep(self.ach_fields[2], routingNumber)
 					if (errors["valid"] == false)
 					{
 						forEachValue(errors["errors"], (value, key) => {
@@ -370,7 +501,7 @@ export default {
 				console.log("payment_type: po")
 				let ponumber = document.getElementById("ponumber").value
 
-				errors = ValidateFormStep(self.form.data[6], ponumber)
+				errors = ValidateFormStep(self.po_fields[0], ponumber)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -393,7 +524,7 @@ export default {
 				let verify1 = document.getElementById("verify1").value
 				extraDetails['verify1'] = verify1
 
-				errors = ValidateFormStep(self.form.data[4], verify1)
+				errors = ValidateFormStep(self.ach_fields[3], verify1)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -408,7 +539,7 @@ export default {
 				let verify2 = document.getElementById("verify2").value
 				extraDetails['verify2'] = verify2
 
-				errors = ValidateFormStep(self.form.data[5], verify2)
+				errors = ValidateFormStep(self.ach_fields[4], verify2)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {

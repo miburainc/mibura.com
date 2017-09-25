@@ -21,8 +21,9 @@
 			</a>
 	    </div>
 
-		<div v-bind:style="form.buttonStyle" class="container-fluid"> 	
-			<div class="col-xs-12 col-md-6"  v-for="btn in form.buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
+
+		<div v-bind:style="buttonStyle" class="container-fluid"> 	
+			<div class="col-xs-12 col-md-4"  v-for="btn in buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
 		</div>
 		<input type="hidden" name="cloudprovider" id="cloudprovider" :value="getCurrentCloudSelection" >
 	</div>
@@ -45,6 +46,46 @@ export default {
 	data() {
 		return {
 			selected_cloud: -1,
+			fields: [
+				{
+					placeholder: "Cloud Provider",
+					src: "cloud",
+					dest: "cart.#.cloud",
+					required: false,
+					validate: {},
+					form: {
+						type: "select",
+						name: "cloudprovider",
+					}
+				},
+			],
+			buttons: [
+				{
+
+					label: "Skip",
+					class: "btn btn-lg btn-default",
+					script: "skip"
+
+				},
+				{
+					label: "Add",
+					class: "btn btn-lg btn-success",
+
+					script: "addcloud"
+
+				},
+				{
+					label: "Add and Continue",
+					class: "btn btn-lg btn-outline-success",
+					script: "addcloud,next"
+
+				},
+			],
+			title: "Add Cloud Support",
+			text: "If you have multiple cloud providers, please add and below tell us a little about your tenant(s)",
+			error: "",
+			step: 1,
+			buttonStyle: "text-align: center; margin-top: 50px;"
 		}
 	},
 

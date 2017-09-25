@@ -1,11 +1,11 @@
 <template>
-	<div class="container-fluid" style="color:white;">
+	<div class="container-fluid">
 		<div class="col-xs-3"></div>
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,0.23);" class="col-xs-6">
 			<div style="padding:20px 10px 10px 15px">
-				<p style="color:lightgreen; font-size: 25px; font-weight: bold;">Thank you, we have recieved your order.&nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></p>
-				<p style="color:white;">{{ successMessage1 }}</p>
-				<p style="color:white;">{{ successMessage2 }}</p>
+				<p style="color: green; font-size: 25px; font-weight: bold;">Thank you, we have recieved your order.&nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></p>
+				<p>{{ successMessage1 }}</p>
+				<p>{{ successMessage2 }}</p>
 			</div>
 			<div style="width:100%; text-align:center; margin:0px 0px 20px 0px;">
 				<div v-if="getEstimatePDF">
@@ -23,11 +23,11 @@
 				</div>
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
-				<p style="padding-top:10px;"><i style="color: lightblue" class="fa fa-info-circle" aria-hidden="false"> &nbsp</i>{{ upsell }}</p>
+				<p style="padding-top:10px;"><i style="color: blue" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>{{ upsell }}</p>
 			</div>
 		</div>
 		<div class="col-xs-12" style="width: 100%; text-align: center;">
-			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-outline-success" id="pdf-link" target="_blank" :href="getEstimatePDF">Download Receipt</a>
+			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-success" id="pdf-link" target="_blank" :href="getEstimatePDF">Download Receipt</a>
 		</div>
 	</div>
 </template>

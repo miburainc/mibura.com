@@ -8,7 +8,7 @@
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
 			<div v-for="(cloud, index) in getCloudProviders" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
-				<img class="clickable" @click="(el) => {buttonAction(el, 'addcloud,next')}" :src="cloud.image" style="width: auto; height: 85px;" :alt="cloud.name">
+				<img class="clickable" @click="(el) => {buttonAction(el, 'addcloud')}" :src="cloud.image" style="width: auto; height: 85px;" :alt="cloud.name">
 			</div>
 			<!-- Controls -->
 			<a class="left carousel-control" href="#cloud-selector-formstep" role="button" data-slide="prev">
@@ -22,7 +22,7 @@
 	    </div>
 
 		<div v-bind:style="form.buttonStyle" class="container-fluid"> 	
-			<div class="col-xs-12 col-md-4"  v-for="btn in form.buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
+			<div class="col-xs-12 col-md-6"  v-for="btn in form.buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
 		</div>
 		<input type="hidden" name="cloudprovider" id="cloudprovider" :value="getCurrentCloudSelection" >
 	</div>

@@ -162,6 +162,7 @@ class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
 	cloud = models.ForeignKey(Cloud, blank=True, null=True)
 	product = models.ForeignKey(Product, blank=True, null=True)
+	quantity = models.IntegerField(default=1, blank=True, null=True)
 
 	brand = models.CharField(max_length=64, blank=True) # Take off
 	model = models.CharField(max_length=64, blank=True) # take off

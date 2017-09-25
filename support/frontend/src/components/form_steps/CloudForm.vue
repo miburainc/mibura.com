@@ -31,19 +31,17 @@
 		
 	</div>
 		
-
 	<div v-if="current_step==1" v-on:keyup.enter="chooseCloud">
 		<center><img :src="getCloudProviders[selected_provider].image" style="margin-top:25px; width: auto; height: 85px;" :alt="getCloudProviders[selected_provider].name"></center>
 		<br>
-		<h4 class="text-center">How many instances do you have with this cloud provider?</h4>
+		<h4 class="text-center">{{ quantity_text }}</h4>
 		<div class="container-fluid">
 			<div class="col-xs-11 col-md-11"><form-text-input :step="fields[1]">
 				</form-text-input></div>
 			<div class="col-xs-1 col-md-1" style="text-align: center;">
-				<button class="btn btn-sm btn-success" style="margin: 22px 0px 0px 0px">Enter</button>
+				<button class="btn btn-sm btn-success" style="margin: 22px 0px 0px 0px" @click="chooseCloud">Enter</button>
 			</div>
 		</div>
-		{{ getCloudProviders[selected_provider] }}	
 	</div>
 
 	<div v-bind:style="buttonStyle" class="container-fluid"> 	
@@ -74,8 +72,8 @@ export default {
 	},
 	data() {
 		return {
-			instances: 0,
-			users: 0,
+			quantity_text: "",
+			cloudquantity: 0,
 			current_step: 0,
 			selected_provider: null,
 			fields: [
@@ -91,9 +89,9 @@ export default {
 					}
 				},
 				{
-					placeholder: "Instances",
-					src: "cloudinstanes",
-					dest: "cart.#.cloudinstances",
+					placeholder: "Quantity",
+					src: "cloudquantity",
+					dest: "cart.#.cloudquantity",
 					required: true,
 					validate: {
 						type: "number",
@@ -101,21 +99,7 @@ export default {
 					},
 					form: {
 						type: "number",
-						name: "cloudinstances",
-					}
-				},
-				{
-					placeholder: "Users",
-					src: "cloudusers",
-					dest: "cart.#.cloudusers",
-					required: true,
-					validate: {
-						type: "number",
-						min: 1,
-					},
-					form: {
-						type: "number",
-						name: "cloudusers",
+						name: "cloudquantity",
 					}
 				},
 			],
@@ -158,17 +142,22 @@ export default {
 			'checkDuplicateCloud'
 		]),
 		chooseCloud(){
+			let cloudquantity = document.getElementById('cloudquantity').value
+			let key = 'cloudquantity'
 
-			let cloudinstances = document.getElementById('cloudinstances').value
-			let errors = ValidateFormStep(this.fields[1], cloudinstances)
-			if(cloudinstances <= 0){
-				this.setError({key: 'cloudinstances', value: ['Must be greater than 0']})
+			let errors = ValidateFormStep(this.fields[1], cloudquantity)
+			if(cloudquantity <= 0){
+				this.setError({key: key, value: ['Must be greater than 0']})
 			}else{
-				this.instances = cloudinstances
+
+				this.cloudquantity = cloudquantity
 				this.current_step = 0
 				this.text = "If you need cloud support for a different provider please select below"
 				this.buttonAction(null, "addcloud")
 			}
+
+			this.buttons[0].label = "Finish Cloud"
+			this.buttons[0].class = "btn btn-lg btn-success"
 
 		},
 		goToLastStep(){
@@ -180,12 +169,24 @@ export default {
 			}
 		},
 		selectProvider(index){
-			this.checkDuplicateCloud(this.getCloudProviders[index].name).then(() =>{
+			let name = this.getCloudProviders[index].name
+			this.checkDuplicateCloud(name).then(() =>{
 				if(this.getCloudInCartAlready == false){
 					this.setAllowFormSubmit(false)
 					this.selected_provider = index
 					this.current_step = 1
 					this.text = ""
+
+					if(name == 'Amazon Web Services' ||
+						name == 'Google Cloud Platform' ||
+						name == 'Microsoft Azure' ||
+						name == 'VMware'){
+						this.quantity_text = "How many instances do you have with this cloud provider?"
+					}else if(name == 'Microsoft Office 365' ||
+							name == 'Dynamics 365'){
+						this.quantity_text = "How many users do you have on this cloud service?"
+					}
+					
 				}
 			})
 		},

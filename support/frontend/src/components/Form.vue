@@ -132,7 +132,7 @@ export default {
 
 			
 		},
-		addCloudItem(cloud_pk) {
+		addCloudItem(cloud_pk, quantity) {
 			let cloud = {};
 			for (let i=0; i<this.getCloudProviders.length; i++) {
 				if (this.getCloudProviders[i].pk == cloud_pk) {
@@ -143,6 +143,7 @@ export default {
 				sku: 'cloud',
 				category: this.getMultiplier('cloud'),
 				price_silver: cloud.price_multiplier,
+				quantity: quantity,
 				price_gold: 0.0,
 				price_black: 0.0,
 				type: 'cloud',
@@ -294,13 +295,14 @@ export default {
 
 						case "addcloud":
 
-							let temp = document.getElementById('cloudprovider').value
-							console.log(temp)
+							let cloud = document.getElementById('cloudprovider').value
+							let qty = document.getElementById('cloudquantity').value
+							console.log(cloud)
 
-							if (temp=="none") {
-								temp = this.getCurrentCloudSelection
+							if (cloud=="none") {
+								cloud = this.getCurrentCloudSelection
 							}
-							this.addCloudItem(temp)
+							this.addCloudItem(cloud, qty)
 						
 							break;
 						case "review":

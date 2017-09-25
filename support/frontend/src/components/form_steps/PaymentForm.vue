@@ -558,9 +558,9 @@ export default {
 				}
 			}
 
-			// if(noFormErrors){
-			// 	setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
-			// }
+			if(noFormErrors){
+				setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
+			}
 			
 
 		});

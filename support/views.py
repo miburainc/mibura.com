@@ -381,6 +381,7 @@ def get_create_cart(request):
 					name = prod.brand
 				cloud = Cloud.objects.get(name=name)
 				cart.cloud.add(cloud)
+				prod_obj = None
 			else:
 				try:
 					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
@@ -388,11 +389,12 @@ def get_create_cart(request):
 					cat = ProductCategory.objects.get(category_code="none")
 					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False, release=date.today() - timedelta(1))
 					prod_obj.save()
+				cloud = None
 
-				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
+			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
 
-				if not obj in cart.products.all():
-					cart.products.add(obj)
+			if not obj in cart.products.all():
+				cart.products.add(obj)	
 				
 		cart.plan = data.plan
 		cart.length = data.length

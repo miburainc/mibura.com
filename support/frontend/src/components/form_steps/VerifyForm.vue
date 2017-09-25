@@ -65,7 +65,7 @@
 			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
 			</div>
 			<br>
-			<div style="text-align:center">
+			<div style="text-align:center; margin-bottom:20px;">
 				
 				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
 				<a v-else role="button" class="btn btn-lg btn-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -219,7 +219,7 @@ export default {
 		])
 	},
 	mounted(){
-		setPaymentProcessing(false)
+		this.setPaymentProcessing(false)
 	}
 }
 

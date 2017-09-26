@@ -508,21 +508,26 @@ def get_estimate_pdf(request):
 
 		items = []
 
-		for client_prod in cart.products.all():
-			items.append({
-				**client_prod.__dict__,
-				'type': 'product',
-				'category': client_prod.product.category,
-				'cost': product_price(client_prod, cart.plan, cart.length)
-			})
 
-		for cloud in cart.cloud.all():
-			items.append({
-				'name': cloud.name,
+		for client_prod in cart.products.all():
+
+			if(client_prod.product != None):
+				items.append({
+					**client_prod.__dict__,
+					'type': 'product',
+					'category': client_prod.product.category,
+					'cost': product_price(client_prod, cart.plan, cart.length)
+				})
+			elif(client_prod.cloud != None):
+				items.append({
+				'name': client_prod.cloud.name,
 				'type': 'cloud',
 				'category': 'cloud',
-				'cost': cloud_price(cloud, cart.plan, cart.length)
-			})
+				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
+				})
+
+		
+			
 
 		client.get_freshbooks_id()
 
@@ -633,12 +638,13 @@ def checkout(request):
 		items = []
 
 		for client_prod in cart.products.all():
-			items.append({
-				**client_prod.__dict__,
-				'type': 'product',
-				'category': client_prod.product.category,
-				'cost': product_price(client_prod, cart.plan, cart.length)
-			})
+			if(client_prod.product != None):
+				items.append({
+					**client_prod.__dict__,
+					'type': 'product',
+					'category': client_prod.product.category,
+					'cost': product_price(client_prod, cart.plan, cart.length)
+				})
 
 		for cloud in cart.cloud.all():
 			items.append({

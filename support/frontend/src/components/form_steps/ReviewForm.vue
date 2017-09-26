@@ -2,7 +2,7 @@
 	
 <div>
 	<br>
-	<div class="container-fluid">
+	<div class="container-fluid" v-on:keyup.enter="submitForm">
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
 			<div :style="{padding: '10px 0px 10px 10px', background: getPlan(getCurrentPlan).color, color: getPlan(getCurrentPlan).code == 'black' ? 'white' : 'black'}" class="col-xs-12">
 				<h3 class="text-center">{{ getPlan(getCurrentPlan).name }}</h3>
@@ -113,6 +113,9 @@ export default {
 			'saveCart',
 			'serverSetClient'
 		]),
+		submitForm(){
+			this.buttonAction(null, "gotocheckout")
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

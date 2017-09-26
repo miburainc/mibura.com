@@ -31,7 +31,7 @@
 		
 	</div>
 		
-	<div v-if="current_step==1" v-on:keyup.enter="chooseCloud">
+	<div v-show="current_step==1" v-on:keyup.enter="chooseCloud">
 		<center><img :src="getCloudProviders[selected_provider].image" style="margin-top:25px; width: auto; height: 85px;" :alt="getCloudProviders[selected_provider].name"></center>
 		<br>
 		<h4 class="text-center">{{ quantity_text }}</h4>
@@ -139,6 +139,7 @@ export default {
 			'setCurrentCloudSelection',
 			'setAllowFormSubmit',
 			'setError',
+			'setCloudInCartAlready',
 			'checkDuplicateCloud'
 		]),
 		chooseCloud(){
@@ -158,6 +159,8 @@ export default {
 
 			this.buttons[0].label = "Finish Cloud"
 			this.buttons[0].class = "btn btn-lg btn-success"
+
+			this.setCloudInCartAlready(false)
 
 		},
 		goToLastStep(){
@@ -187,6 +190,7 @@ export default {
 						this.quantity_text = "How many users do you have on this cloud service?"
 					}
 					
+					document.getElementById('cloudquantity').focus()
 				}
 			})
 		},

@@ -48,6 +48,10 @@ class Cloud(models.Model):
 	website = models.CharField(max_length=128)
 	price_multiplier = models.FloatField(default=1.0)
 
+	price_silver = models.FloatField(default=1.0)
+	price_gold = models.FloatField(default=0.0)
+	price_black = models.FloatField(default=0.0)
+
 	color = models.CharField(max_length=64, blank=True)
 	image = models.ImageField(upload_to='images/cloud/', blank=True)
 
@@ -201,9 +205,11 @@ class Cart(models.Model):
 	def get_total_price(self):
 		total = 0
 		for prd in self.products.all():
-			total += product_price(prd, self.plan, self.length)
-		for cloud in self.cloud.all():
-			total += cloud_price(cloud, self.plan, self.length)
+			if(prd.product != None):
+				total += product_price(prd, self.plan, self.length)
+			else:
+				total += cloud_price(prd.cloud, self.plan, self.length) * prd.quantity
+		
 		return total
 
 class Subscription(models.Model):

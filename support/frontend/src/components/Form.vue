@@ -1,7 +1,7 @@
 <template>
 	<div id="purchase-form" class="row">
 		
-		<form v-on:submit.prevent v-on:keyup.enter="formHandleEnter">
+		<form v-on:submit.prevent>
 			<!-- Fade effects -->
 			<transition 
 				v-bind:css="false"

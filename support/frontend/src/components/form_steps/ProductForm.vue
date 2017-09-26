@@ -1,7 +1,7 @@
 <template>
 	
 <div>
-	<div class="form-group"> 
+	<div class="form-group" v-on:keyup.enter="submitForm"> 
 
 		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[fields[0].form.name][0] }}</label>
 		<autocomplete
@@ -38,13 +38,13 @@
 		</div>
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px;"> 	
 			<div class="col-xs-12 col-md-2 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[0].class" :id="'btn_' + form.buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button>
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[0].class" :id="'btn_' + buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[0].script)}">{{form.buttons[0].label}}</button>
 			</div>
 			<div class="col-xs-12 col-md-2 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[1].class" :id="'btn_' + form.buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[1].script)}">{{form.buttons[1].label}}</button>
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[1].class" :id="'btn_' + buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[1].script)}">{{form.buttons[1].label}}</button>
 			</div>
 			<div class="col-xs-12 col-md-4 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[2].class" :id="'btn_' + form.buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[2].script)}">
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[2].class" :id="'btn_' + buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[2].script)}">
 						{{form.buttons[2].label}}
 				</button>
 			</div>
@@ -123,6 +123,24 @@ export default {
 						type: "textarea"
 					}
 				}
+			],buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Add",
+					class: "btn btn-lg btn-success",
+					script: "start,additem"
+
+				},
+				{
+					label: "Add and Continue",
+					class: "btn btn-lg btn-success",
+					script: "next,additem"
+
+				},
 			],
 		}
 	},
@@ -137,6 +155,9 @@ export default {
 			'clearErrors',
 			'setAllowFormSubmit'
 		]),
+		submitForm(){
+			this.buttonAction(null, "next,additem")
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

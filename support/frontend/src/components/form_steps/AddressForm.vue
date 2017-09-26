@@ -1,7 +1,7 @@
 <template>
 	
 <div>
-	<div class="form-group" >
+	<div class="form-group" v-on:keyup.enter="submitForm">
 
 		<div ref="input" v-for="(step, index) in fields" 
 			:style="{
@@ -144,6 +144,9 @@ export default {
 			'setCurrentItemProp',
 			'setClientProp'
 		]),
+		submitForm(){
+			this.buttonAction(null, "next")
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

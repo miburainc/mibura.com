@@ -54,14 +54,32 @@ def send_quote_email(name, recipient, subject, file):
 	msg.content_subtype = 'html'
 	return msg.send()
 
-def send_purchasesuccess_email(name, recipient, subject):
+def send_purchasesuccess_email(name, recipient, subject, length):
 	to = [recipient]
 	from_email = 'cs@mibura.com'
+
+	date = datetime.now()
+	account_manager = "Imran Mirza"
+	vendor_engineer = ""
+	infrastructure_engineer = "Imran Mirza"
+	num_engineers = "22"
+	sales_support = "Imran Mirza"
+
+	brands = ['Dell']
 
 	print(name)
 
 	ctx = {
 		'name': name,
+		'date': date,
+		'account_manager': account_manager,
+		'vendor_engineer': vendor_engineer,
+		'num_engineers': num_engineers,
+		'infrastructure_engineer': infrastructure_engineer,
+		'sales_support': sales_support,
+		'engineer': "Imran Mirza",
+		'brands': brands,
+		'length': length
 	}
 
 	message = get_template('email/purchase_success.html').render(ctx)
@@ -380,7 +398,7 @@ def get_create_cart(request):
 				else:
 					name = prod.brand
 				cloud = Cloud.objects.get(name=name)
-				cart.cloud.add(cloud)
+				# cart.cloud.add(cloud)
 				prod_obj = None
 			else:
 				try:
@@ -518,16 +536,13 @@ def get_estimate_pdf(request):
 					'category': client_prod.product.category,
 					'cost': product_price(client_prod, cart.plan, cart.length)
 				})
-			elif(client_prod.cloud != None):
+			elif client_prod.cloud != None:
 				items.append({
 				'name': client_prod.cloud.name,
 				'type': 'cloud',
 				'category': 'cloud',
 				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
 				})
-
-		
-			
 
 		client.get_freshbooks_id()
 
@@ -543,7 +558,7 @@ def get_estimate_pdf(request):
 			cart.save()
 			cart.replaced = False
 			cart.products.add(*old_cart.products.all())
-			cart.cloud.add(*old_cart.cloud.all())
+			# cart.cloud.add(*old_cart.cloud.all())
 			cart.freshbooks_estimate_id = estimate_id
 			cart.reference = old_cart.reference
 			cart.save()
@@ -618,22 +633,7 @@ def checkout(request):
 			date_begin=time)
 		sub.save()
 		sub.products.add(*cart.products.all())
-		sub.cloud.add(*cart.cloud.all())
-
-		# Dynamics 365 CreateAccount
-		# crm_res = createAccount({
-		# 	"company": client.company,
-		# 	"phone": client.phone,
-		# 	"email": client.email,
-		# 	"client_name": client.get_full_name(),
-		# 	"address1": client.street,
-		# 	"address2": client.street2,
-		# 	"city": client.city,
-		# 	"state": client.state,
-		# 	"zipcode": client.zipcode,
-		# 	"country": client.country,
-		# 	"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
-		# })
+		# sub.cloud.add(*cart.cloud.all())
 
 		items = []
 
@@ -645,14 +645,14 @@ def checkout(request):
 					'category': client_prod.product.category,
 					'cost': product_price(client_prod, cart.plan, cart.length)
 				})
-
-		for cloud in cart.cloud.all():
-			items.append({
-				'name': cloud.name,
-				'type': 'cloud',
-				'category': 'cloud',
-				'cost': cloud_price(cloud, cart.plan, cart.length)
-			})
+			else:
+				items.append({
+					'name': client_prod.cloud.name,
+					'type': 'cloud',
+					'category': 'cloud',
+					'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
+				})
+				
 
 		active_discount = 0.0
 
@@ -686,8 +686,6 @@ def checkout(request):
 				line_item['model'] = 'cloud'
 				line_item['name'] = item['name']
 
-			
-			
 			line_item['description'] = desc
 			line_item['unit_cost'] = {
 				'amount': str(round(item['cost'], 2)),
@@ -711,7 +709,7 @@ def checkout(request):
 		sub.freshbooks_invoice_num = invoice_id
 		sub.save()
 
-		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase")
+		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)
 	return HttpResponse({'result': True}, status=200)
 
 # Django Rest Framework

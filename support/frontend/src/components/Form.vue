@@ -356,7 +356,22 @@ export default {
 								}
 							}
 							
+							let verified = this.getCurrentItemProp('verified')
+							console.log("VERIFIED")
+							console.log(verified)
+
+							var type = ''
+
+							if(verified){
+								type = "product"
+							}else{
+								type = "unknown"
+							}
+
+							let brand = this.getCurrentItemProp('brand')
+							console.log(brand)
 							let model = this.getCurrentItemProp('model')
+							console.log(model)
 							let prd = this.getAllProducts
 							let prd_info = null;
 
@@ -366,6 +381,8 @@ export default {
 							else {
 								prd_info = {
 									sku: 'none',
+									brand: brand,
+									model: model,
 									category: {
 										category_code: 'none',
 										name: 'None',
@@ -375,7 +392,7 @@ export default {
 									price_silver: 1.0,
 									price_gold: 1.0,
 									price_black: 1.0,
-									type: 'product',
+									type: type,
 								}
 							}
 							this.addCartItem(

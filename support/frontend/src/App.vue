@@ -10,7 +10,7 @@
 					</div>
 					<div class="modal-body">
 						<div id="pdf">
-							<object width="100%" height="500" type="application/pdf" :data="getTermsPDF" id="pdf_content">
+							<object width="100%" height="500" type="application/pdf" id="pdf_content">
 							
 							</object>
 						</div>

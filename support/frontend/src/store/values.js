@@ -107,7 +107,7 @@ export const form_steps = [
 			{
 				placeholder: "Product Name",
 				src: "item",
-				dest: "cart.#.brand",
+				dest: "cart.#.model",
 				required: true,
 				form: {
 					type: "text",

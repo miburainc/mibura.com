@@ -36,24 +36,22 @@ def product_price(product, plan, length):
 	diff = math.floor(months_between(date_start, date_now) / 6)
 	result = 0.0
 	increment = product.product.category.yearly_tax
+	
 	for i in range(0,diff):
-		result += base_price * increment
+		result = base_price * increment
 	print("base:", result)
 	for l in range(0,int(length*2)):
 		result += base_price + (base_price*increment)
 	print("final:",int(length*2), result)
 	return result
 
-def unknown_product_price(product, plan, length):
+def unknown_product_price(product, length, yearly_tax, base_price):
 	
 	age = product.unknown.device_age
-	result = 0.0
-	increment = Category.objects.get(category_code="none").yearly_tax
-
-	base_price = Plans.objects.get(short_name=plan)
-
-	result = base_price * increment * length
-	print(product.unknown.brand, "Price:", result)
+	result = base_price * length
+	result += base_price * yearly_tax
+	print(product.brand, "Price:", result)
+	
 	return result
 
 def cloud_price(cloud, plan, length, quantity):

@@ -165,8 +165,8 @@ export default {
 			console.log(el)
 		},
 		ValidateFormStepFunction(step, value){
-			let s = step.dest.split('.')
-			this.setCurrentItemProp({prop: s[s.length-1], data: value})
+			//let s = step.dest.split('.')
+			//this.setCurrentItemProp({prop: s[s.length-1], data: value})
 			let errors = ValidateFormStep(step, value)
 
 			if(errors['valid'] == true){

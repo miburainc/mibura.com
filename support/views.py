@@ -25,7 +25,7 @@ from .models import *
 from .serializers import *
 
 from scripts.dotdict import dotdict
-from scripts.sss_pricing import product_price, cloud_price
+from scripts.sss_pricing import product_price, cloud_price, unknown_product_price
 from freshbooks import estimates, invoices
 
 # from weasyprint import HTML
@@ -376,7 +376,17 @@ def get_create_cart(request):
 			prod_obj = None
 			cloud = None
 			unknown_prod = None
-			
+
+			if(prod.model == None):
+				model = ""
+			else:
+				model = prod.model
+
+			if(prod.brand == None):
+				brand = ""
+			else:
+				brand = prod.brand
+
 			if prod.type == "cloud":
 				print(prod)
 				if not prod.brand:
@@ -386,16 +396,17 @@ def get_create_cart(request):
 				cloud = Cloud.objects.get(name=name)
 				cart.cloud.add(cloud)
 			elif prod.type == "unknown":
-				unknown_prod = UnknownProduct(name=prod.brand, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
+				unknown_prod = UnknownProduct(name=prod.model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
+				unknown_prod.save()
 			else:
 				try:
-					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
+					prod_obj = Product.objects.get(brand=prod.model, model=model)
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code="none")
 					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
 
-			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
+			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=brand, model=model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
 
 			if not obj in cart.products.all():
 				cart.products.add(obj)	
@@ -531,10 +542,14 @@ def get_estimate_pdf(request):
 				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
 				})
 			elif(client_prod.unknown != None):
+				base_price = Plan.objects.get(short_name=cart.plan).price
+				yearly_tax = ProductCategory.objects.get(category_code="none").yearly_tax
+
 				items.append({
 					**client_prod.__dict__,
 					'type': 'unknown',
-					'cost': unknown_product_price(client_prod, cart.plan, cart.length)
+					'category': 'none',
+					'cost': unknown_product_price(client_prod, cart.length, yearly_tax, base_price)
 				})
 
 		

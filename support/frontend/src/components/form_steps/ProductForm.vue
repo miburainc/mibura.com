@@ -6,7 +6,7 @@
 		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[fields[0].form.name][0] }}</label>
 		<autocomplete
 			:style="{borderColor: (getErrors[fields[0].form.name] ? 'red' : '#8493A8')}"
-			:url="getAPIRoot + 'productcomplete'"
+			:url="getAPIRoot + 'productcomplete/'"
 			data-root="results"
 			label="brand"
 			anchor="model"

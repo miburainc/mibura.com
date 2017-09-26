@@ -255,6 +255,7 @@
 				</div>
 			</div>
 		</div>
+		<change-personal-modal></change-personal-modal>
 		<div v-if="!getPurchaseSuccess" class="notifications-container" style="padding: 0 5px;z-index: 5;">
 			<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
 		</div>
@@ -285,6 +286,8 @@ import SuccessScreen from './components/SuccessScreen.vue'
 import Notification from './components/Notification.vue'
 import Progressbar from './components/ProgressBar.vue'
 
+import ChangePersonalModal from './modals/ChangePersonalModal.vue'
+
 import {toJSONLocal} from './scripts/functions'
 
 import {mapActions,mapGetters} from 'vuex'
@@ -314,7 +317,8 @@ export default {
 		SupportCart,
 		SuccessScreen,
 		Notification,
-		Progressbar
+		Progressbar,
+		ChangePersonalModal,
 	},
 	computed: {
 		...mapGetters([
@@ -548,7 +552,7 @@ export default {
 			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
 		}, 1000)
 		
-		axios.get(this.getAPIRoot + 'cloud')
+		axios.get(this.getAPIRoot + 'cloud/')
 			.then((response) => {
 				console.log(response)
 				this.setCloudProviders(response.data.results)

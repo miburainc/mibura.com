@@ -153,6 +153,8 @@ class UnknownProduct(models.Model):
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
 
+
+
 class CloudAddOn(models.Model):
 	cloud = models.ForeignKey(Cloud, null=True)
 	cloud_backup_name = models.CharField(max_length=128, default="")
@@ -166,7 +168,10 @@ class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
 	cloud = models.ForeignKey(Cloud, blank=True, null=True)
 	product = models.ForeignKey(Product, blank=True, null=True)
+	unknown = models.ForeignKey(UnknownProduct, blank=True, null=True)
 	quantity = models.IntegerField(default=1, blank=True, null=True)
+
+	approved = models.BooleanField(default=False)
 
 	brand = models.CharField(max_length=64, blank=True) # Take off
 	model = models.CharField(max_length=64, blank=True) # take off

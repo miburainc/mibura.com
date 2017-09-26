@@ -1,6 +1,8 @@
 from datetime import datetime, date
 import math
 
+from support.models import *
+
 def months_between(date1,date2):
 	if date1>date2:
 		date1,date2=date2,date1
@@ -40,6 +42,18 @@ def product_price(product, plan, length):
 	for l in range(0,int(length*2)):
 		result += base_price + (base_price*increment)
 	print("final:",int(length*2), result)
+	return result
+
+def unknown_product_price(product, plan, length):
+	
+	age = product.unknown.device_age
+	result = 0.0
+	increment = Category.objects.get(category_code="none").yearly_tax
+
+	base_price = Plans.objects.get(short_name=plan)
+
+	result = base_price * increment * length
+	print(product.unknown.brand, "Price:", result)
 	return result
 
 def cloud_price(cloud, plan, length, quantity):

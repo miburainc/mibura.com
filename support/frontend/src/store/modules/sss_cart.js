@@ -82,6 +82,9 @@ const mutations = {
 }
 
 const actions = {
+	setCloudInCartAlready({commit}, value){
+		commit(TYPE.SET_CLOUD_IN_CART_ALREADY, value)
+	},
 	setCart({commit}, payload){
 		commit(TYPE.SET_CART, payload.items)
 		commit(TYPE.CART_SET_ID, payload.id)

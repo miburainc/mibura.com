@@ -390,6 +390,10 @@ def get_create_cart(request):
 
 		for prod in data.products:
 			prod = dotdict(prod)
+
+			prod_obj = None
+			cloud = None
+			unknown_prod = None
 			
 			if prod.type == "cloud":
 				print(prod)
@@ -398,18 +402,18 @@ def get_create_cart(request):
 				else:
 					name = prod.brand
 				cloud = Cloud.objects.get(name=name)
-				# cart.cloud.add(cloud)
 				prod_obj = None
+			elif prod.type == "unknown":
+				unknown_prod = UnknownProduct(name=prod.brand, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
 			else:
 				try:
 					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code="none")
-					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False, release=date.today() - timedelta(1))
+					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
-				cloud = None
 
-			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
+			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
 
 			if not obj in cart.products.all():
 				cart.products.add(obj)	
@@ -542,6 +546,12 @@ def get_estimate_pdf(request):
 				'type': 'cloud',
 				'category': 'cloud',
 				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
+				})
+			elif(client_prod.unknown != None):
+				items.append({
+					**client_prod.__dict__,
+					'type': 'unknown',
+					'cost': unknown_product_price(client_prod, cart.plan, cart.length)
 				})
 
 		client.get_freshbooks_id()

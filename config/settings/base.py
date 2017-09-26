@@ -83,6 +83,7 @@ CSRF_HEADER_NAME = "HTTP-X-CSRFToken"
 
 CORS_ORIGIN_WHITELIST = (
     'localhost',
+    'http://localhost:8080',
     '127.0.0.1',
     'mibura.herokuapp.com',
     '.mibura.com',
@@ -91,6 +92,7 @@ CORS_ORIGIN_WHITELIST = (
 
 CSRF_TRUSTED_ORIGINS = (
     'localhost',
+    'localhost:8080',
     '127.0.0.1',
     'mibura.herokuapp.com',
     '.mibura.com',
@@ -108,7 +110,7 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 
 # REST API
 
@@ -131,6 +133,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'config.urls'
 

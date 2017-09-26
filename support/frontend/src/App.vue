@@ -552,7 +552,7 @@ export default {
 			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
 		}, 1000)
 		
-		axios.get(this.getAPIRoot + 'cloud')
+		axios.get(this.getAPIRoot + 'cloud/')
 			.then((response) => {
 				console.log(response)
 				this.setCloudProviders(response.data.results)

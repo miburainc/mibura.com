@@ -45,7 +45,7 @@ const actions = {
 		})
 	},
 	serverGetDiscounts() {
-		return axios.get(API_ROOT+'discounts')
+		return axios.get(API_ROOT+'discounts/')
 		.then((response) => {
 			return response
 		})

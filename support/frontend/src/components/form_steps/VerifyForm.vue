@@ -41,7 +41,7 @@
 					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
 					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
 				</div>
-				<div class="col-lg-2"><a href="#" style="color:lightblue;">Change</a></div>
+				<div class="col-lg-2"><a role="button" @click="openModal" style="color:blue;">Change</a></div>
 			</div>
 
 			<!-- <div v-if="Object.keys(getPaymentInfo).length > 0" class="pad-10 row" style="padding:10px 0px 10px 0px; margin: 0px 10px 0px 10px; border-bottom: 1px solid lightgray">
@@ -81,6 +81,7 @@
 		<div v-bind:style="buttonStyle"> 	
 			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
+		
 	</div>
 </div>
 
@@ -90,10 +91,9 @@
 
 import {mapGetters, mapActions} from 'vuex'
 
-import Autocomplete from 'vue2-autocomplete-js';
+
 
 export default {
-
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
@@ -135,6 +135,9 @@ export default {
 			'setAcceptedTerms',
 			'setPaymentProcessing'
 		]),
+		openModal(){
+			$('#ChangePersonalModal').modal('show')
+		},
 		submitForm(){
 			this.buttonAction(null, "purchase")
 		},

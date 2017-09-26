@@ -75,7 +75,7 @@ export default {
 			quantity_text: "",
 			cloudquantity: 0,
 			current_step: 0,
-			selected_provider: null,
+			selected_provider: 0,
 			fields: [
 				{
 					placeholder: "Cloud Provider",

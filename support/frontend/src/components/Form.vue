@@ -252,10 +252,9 @@ export default {
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
 								let name = data[i].form.name;
-								if (!this.getCurrentItemProp(name)) {
-									let val = document.getElementById(name).value
-									this.setFormItem(val, data[i])
-								}
+
+								let val = document.getElementById(name).value
+								this.setFormItem(val, data[i])
 							}
 
 							this.goToStep(this.getCurrentFormStep+1)

@@ -3,6 +3,7 @@
 	<div id="stripe-payment-form" style="margin-top:15px;">
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
+			<li role="presentation" :class="{active: payment_type=='paypal'}"><a style="cursor: pointer;" @click="switchTabs('paypal')">PayPal</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 			<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('po')">P.O.</a></li>
 			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
@@ -36,6 +37,19 @@
 				</div>
 				<br><br>
 			</div>
+
+			<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">
+
+				<!-- <form-text-input 
+				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+				:step="cc_fields.cardname" 
+				id="cardName"></form-text-input> -->
+
+				<label>PayPal</label>
+				<div id="paypal-button-container"></div>
+			</div>
+
+			
 
 			<!-- <div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
 				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
@@ -289,6 +303,51 @@ export default {
 		}
 	},
 	mounted() {
+
+		// PayPal
+
+		paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+            client: {
+                sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                production: '<insert production client id>'
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // payment() is called when the button is clicked
+            payment: function(data, actions) {
+
+                // Make a call to the REST api to create the payment
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '0.01', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            // onAuthorize() is called when the buyer approves the payment
+            onAuthorize: function(data, actions) {
+
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function() {
+                    window.alert('Payment Complete!');
+                });
+            }
+
+        }, '#paypal-button-container');
+
+		// Plaid
+
 		var linkHandler = Plaid.create({
 			env: 'sandbox',
 			clientName: 'MiBURA',

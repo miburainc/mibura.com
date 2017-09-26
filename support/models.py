@@ -192,7 +192,6 @@ class Cart(models.Model):
 	client = models.ForeignKey(Client)
 	products = models.ManyToManyField(ClientProduct)
 	length = models.FloatField(default=.5)
-	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
@@ -213,7 +212,7 @@ class Cart(models.Model):
 			if(prd.product != None):
 				total += product_price(prd, self.plan, self.length)
 			else:
-				total += cloud_price(prd.cloud, self.plan, self.length) * prd.quantity
+				total += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
 		
 		return total
 

@@ -8,9 +8,9 @@
 				<p>{{ successMessage2 }}</p>
 			</div>
 			<div style="width:100%; text-align:center; margin:0px 0px 20px 0px;">
-				<div v-if="getEstimatePDF">
+				<div v-if="getInvoicePDF">
 					<div id="pdf">
-							<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
+							<object width="100%" height="500" type="application/pdf" :data="getInvoicePDF" id="pdf_content">
 							<p>Error, reciept cannot be displayed at this time.</p>
 							</object>
 					</div>
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="col-xs-12" style="width: 100%; text-align: center;">
-			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Estimate-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-success" id="pdf-link" target="_blank" :href="getEstimatePDF">Download Receipt</a>
+			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Invoice-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-success" id="pdf-link" target="_blank" :href="getInvoicePDF">Download Receipt</a>
 		</div>
 	</div>
 </template>
@@ -57,17 +57,18 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
-			'getEstimatePDF'
+			'getInvoicePDF'
 		])
 	},
 	mounted() {
-		if (!this.getEstimatePDF) {
-			this.serverGetEstimatePdf()
+		if (!this.getInvoicePDF) {
+			// this.serverGetInvoicePdf()
+			console.log("No pdf file")
 		}
 	},
 	methods: {
 		...mapActions([
-			'serverGetEstimatePdf'
+			'serverGetInvoicePdf'
 		]),
 		writeOutSupportLength() {
 			let str = ""

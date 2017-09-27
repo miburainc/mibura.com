@@ -29,6 +29,9 @@ export const store = new Vuex.Store({
     stripe: {},
     discounts: [],
     current_discount: 0.0,
+
+    estimate_pdf: null,
+    invoice_pdf: null,
   },
   getters,
   mutations,

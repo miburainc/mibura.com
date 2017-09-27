@@ -749,7 +749,10 @@ def checkout(request):
 		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)
 
 		invoice_pdf = get_invoice_pdf(invoice_id)
-		invoices.add_invoice_payment(invoice_id, client.get_freshbooks_id(), "Credit Card", cart.get_total_price())
+
+		print("total", discount_total)
+		
+		invoices.add_invoice_payment(invoice_id, client.get_freshbooks_id(), "Credit Card", discount_total)
 		file_name = "Mibura_SmartSupport_Invoice.pdf"
 		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
 
@@ -757,7 +760,7 @@ def checkout(request):
 		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
 		response['Content-Length'] = os.path.getsize(path_to_file)
 		return response
-	return HttpResponse("success", status=200)
+	return HttpResponse("fail", status=400)
 
 # Django Rest Framework
 

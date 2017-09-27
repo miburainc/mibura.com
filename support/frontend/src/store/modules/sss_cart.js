@@ -18,15 +18,11 @@ const state = {
 	support_months: 12,
 	current_item_id: null,
 	estimate_id: 0,
-	estimate_pdf: null,
+	
 	cart_changed: true,
-	cloud_in_cart_already: false,
 }
 
 const mutations = {
-	[TYPE.SET_CLOUD_IN_CART_ALREADY]: (state, value) =>{
-		state.cloud_in_cart_already = value
-	},
 	[TYPE.SET_CART]: (state, array) =>{
 		state.cart = array
 	},
@@ -73,18 +69,13 @@ const mutations = {
 	[TYPE.SET_ESTIMATE_ID]: (state, value) => {
 		state.estimate_id = value
 	},
-	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
-		state.estimate_pdf = value
-	},
+	
 	[TYPE.CART_CHANGED]: (state, value) => {
 		state.cart_changed = value
 	}
 }
 
 const actions = {
-	setCloudInCartAlready({commit}, value){
-		commit(TYPE.SET_CLOUD_IN_CART_ALREADY, value)
-	},
 	setCart({commit}, payload){
 		commit(TYPE.SET_CART, payload.items)
 		commit(TYPE.CART_SET_ID, payload.id)
@@ -189,9 +180,7 @@ const actions = {
 			$('#pdfModal').modal('hide')
 		})
 	},
-	setEstimatePdfFile({commit}, payload) {
-		commit(TYPE.SET_ESTIMATE_PDF, payload)
-	},
+	
 	serverGetEstimatePdf({state, rootState, commit}) {
 		let client = rootState.Form.client_info
 		let cart_ref = state.cart_ref
@@ -235,6 +224,10 @@ const actions = {
 		if (can_checkout) {
 			cart.api_checkout(data)
 				.then((response) => {
+					console.log(response)
+					var blob=new Blob([response.data], {type:"application/pdf"});
+					let file_url = window.URL.createObjectURL(blob)
+					dispatch('setInvoicePdfFile', file_url)
 					dispatch('setPurchaseSuccess', true)
 				})
 			return true
@@ -350,7 +343,6 @@ const getters = {
 	getCartId: state => state.cart_id,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
-	getEstimatePDF: state => state.estimate_pdf,
 	getEstimateID: state => state.estimate_id,
 	getCartChanged: state => state.cart_changed,
 	// Plans

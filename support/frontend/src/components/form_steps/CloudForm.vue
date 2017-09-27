@@ -3,7 +3,7 @@
 	<h2 class="text-center">{{ title }}</h2>
 	<h4 class="text-center">{{ text }}</h4>
 
-	<div v-show="current_step==0" id="cloud-selector-formstep" class="carousel slide" data-ride="carousel" data-interval="false" style="margin-top: 25px;">
+	<div v-if="this.filteredClouds.length > 0" v-show="current_step==0" id="cloud-selector-formstep" class="carousel slide" data-ride="carousel" data-interval="false" style="margin-top: 25px;">
 		<!-- Indicators -->
 		<!-- <ol class="carousel-indicators">
 			<li v-for="(cloud, index) in getCloudProviders" data-target="#cloud-selector-formstep" :data-slide-to="index" :class="{'active': index==0}"></li>
@@ -11,7 +11,7 @@
 
 		<!-- Wrapper for slides -->
 		<div class="carousel-inner" role="listbox">
-			<div v-for="(cloud, index) in getCloudProviders" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
+			<div v-for="(cloud, index) in filteredClouds" :class="{'item': true, 'active': cloud.pk==getCurrentCloudSelection}" :data-cloud-pk="cloud.pk">
 				<img class="clickable" @click="selectProvider(index)" :src="cloud.image" style="width: auto; height: 85px;" :alt="cloud.name">
 				<center><button class="btn btn-lg btn-success" @click="selectProvider(index)" style="margin-top: 20px">Select</button></center>
 			</div>
@@ -31,13 +31,16 @@
 		
 	</div>
 		
-	<div v-show="current_step==1" v-on:keyup.enter="chooseCloud">
-		<center><img :src="getCloudProviders[selected_provider].image" style="margin-top:25px; width: auto; height: 85px;" :alt="getCloudProviders[selected_provider].name"></center>
+	<div v-if="this.filteredClouds.length > 0" v-show="current_step==1" v-on:keyup.enter="chooseCloud">
+		<center><img :src="filteredClouds[selected_provider].image" style="margin-top:25px; width: auto; height: 85px;" :alt="filteredClouds[selected_provider].name"></center>
 		<br>
 		<h4 class="text-center">{{ quantity_text }}</h4>
 		<div class="container-fluid">
-			<div class="col-xs-11 col-md-11"><form-text-input :step="fields[1]">
-				</form-text-input></div>
+			<div class="col-xs-11 col-md-11">
+				<label>{{fields[1].placeholder}}</label>
+				<input class="form-control" type="number" :id="fields[1].form.name" :name="fields[1].form.name" v-model="cloudquantity">
+				<!-- <form-text-input :step="fields[1]"></form-text-input>-->
+			</div>
 			<div class="col-xs-1 col-md-1" style="text-align: center;">
 				<button class="btn btn-sm btn-success" style="margin: 22px 0px 0px 0px" @click="chooseCloud">Enter</button>
 			</div>
@@ -76,6 +79,7 @@ export default {
 			cloudquantity: 0,
 			current_step: 0,
 			selected_provider: 0,
+			slide_index: 0,
 			fields: [
 				{
 					placeholder: "Cloud Provider",
@@ -139,29 +143,34 @@ export default {
 			'setCurrentCloudSelection',
 			'setAllowFormSubmit',
 			'setError',
-			'setCloudInCartAlready',
 			'checkDuplicateCloud'
 		]),
 		chooseCloud(){
-			let cloudquantity = document.getElementById('cloudquantity').value
 			let key = 'cloudquantity'
 
-			let errors = ValidateFormStep(this.fields[1], cloudquantity)
-			if(cloudquantity <= 0){
+			let errors = ValidateFormStep(this.fields[1], this.cloudquantity)
+			if(this.cloudquantity <= 0){
 				this.setError({key: key, value: ['Must be greater than 0']})
 			}else{
-
-				this.cloudquantity = cloudquantity
 				this.current_step = 0
 				this.text = "If you need cloud support for a different provider please select below"
+				let clouds = this.filteredClouds.slice(0)
+				clouds.splice(this.slide_index, 1)
+
+				let new_index = 0
+				new_index = this.slide_index == this.filteredClouds.length - 1 && this.filteredClouds.length > 1 ? clouds.length - 1 : this.slide_index
+
+				if (this.filteredClouds.length > 0) {
+					this.setCurrentCloudSelection(String(clouds[new_index].pk))
+				}
 				this.buttonAction(null, "addcloud")
+				this.slide_index = new_index
+				this.selected_provider = 0
+				this.cloudquantity = 1
 			}
 
 			this.buttons[0].label = "Finish Cloud"
 			this.buttons[0].class = "btn btn-lg btn-success"
-
-			this.setCloudInCartAlready(false)
-
 		},
 		goToLastStep(){
 			if(this.current_step > 0){
@@ -173,26 +182,22 @@ export default {
 		},
 		selectProvider(index){
 			let name = this.getCloudProviders[index].name
-			this.checkDuplicateCloud(name).then(() =>{
-				if(this.getCloudInCartAlready == false){
-					this.setAllowFormSubmit(false)
-					this.selected_provider = index
-					this.current_step = 1
-					this.text = ""
+			this.setAllowFormSubmit(false)
+			this.selected_provider = index
+			this.current_step = 1
+			this.text = ""
 
-					if(name == 'Amazon Web Services' ||
-						name == 'Google Cloud Platform' ||
-						name == 'Microsoft Azure' ||
-						name == 'VMware'){
-						this.quantity_text = "How many instances do you have with this cloud provider?"
-					}else if(name == 'Microsoft Office 365' ||
-							name == 'Dynamics 365'){
-						this.quantity_text = "How many users do you have on this cloud service?"
-					}
-					
-					document.getElementById('cloudquantity').focus()
-				}
-			})
+			if(name == 'Amazon Web Services' ||
+				name == 'Google Cloud Platform' ||
+				name == 'Microsoft Azure' ||
+				name == 'VMware'){
+				this.quantity_text = "How many instances do you have with this cloud provider?"
+			}else if(name == 'Microsoft Office 365' ||
+					name == 'Dynamics 365'){
+				this.quantity_text = "How many users do you have on this cloud service?"
+			}
+			
+			document.getElementById('cloudquantity').focus()
 		},
 		goToStep(step_num) {
 
@@ -216,7 +221,8 @@ export default {
 			'getCurrentCloudSelection',
 			'getCloudProviders',
 			'getErrors',
-			'getCloudInCartAlready'
+			'getCart',
+			'filteredClouds'
 		])
 	},
 	mounted() {
@@ -237,6 +243,9 @@ export default {
 		});
 
 		$("#cloud-selector-formstep").bind('slid.bs.carousel', (e) => {
+			console.log("carousel slide")
+			this.slide_index = $('#cloud-selector-formstep .active').index('#cloud-selector-formstep .item')
+			console.log("carousel index: ", this.slide_index)
 			console.log(e)
 			let cloud_pk = e.relatedTarget.dataset.cloudPk
 			console.log(cloud_pk)

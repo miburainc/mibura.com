@@ -162,6 +162,17 @@ const getters = {
 	getPaymentInfoProp: state => prop => state.payment_info[prop],	
 	getCurrentCloudSelection: state => state.current_cloud_selection,
 	getNotifications: state => state.notifications,
+	filteredClouds: (state, getters, rootState) => {
+		return state.cloud_providers.filter((cloud) => {
+			let cart = rootState.Cart.cart
+			for (let i=0; i<cart.length; i++) {
+				if (cloud.name == cart[i].brand) {
+					return false
+				}
+			}
+			return true
+		})
+	}
 }
 
 export default {

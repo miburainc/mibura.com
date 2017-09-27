@@ -420,7 +420,7 @@ def get_create_cart(request):
 				try:
 					prod_obj = Product.objects.get(brand=prod.model, model=model)
 				except ObjectDoesNotExist:
-					cat = ProductCategory.objects.get(category_code="none")
+					cat = ProductCategory.objects.get(category_code=prod.category['category_code'])
 					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
 
@@ -545,10 +545,11 @@ def get_estimate_pdf(request):
 		for client_prod in cart.products.all():
 
 			if(client_prod.product != None):
+				print("CATEGORY CODE::::",client_prod.product.category.category_code)
 				items.append({
 					**client_prod.__dict__,
 					'type': 'product',
-					'category': client_prod.product.category,
+					'category': client_prod.product.category.category_code,
 					'cost': product_price(client_prod, cart.plan, cart.length)
 				})
 			elif client_prod.cloud != None:

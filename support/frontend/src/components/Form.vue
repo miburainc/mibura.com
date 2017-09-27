@@ -369,32 +369,48 @@ export default {
 							}
 
 							let brand = this.getCurrentItemProp('brand')
-							console.log(brand)
 							let model = this.getCurrentItemProp('model')
-							console.log(model)
-							let prd = this.getAllProducts
-							let prd_info = null;
-
-							if (prd.hasOwnProperty(model)) {
-								prd_info = prd[model]
-							}
-							else {
-								prd_info = {
-									sku: 'none',
-									brand: brand,
-									model: model,
-									category: {
-										category_code: 'none',
-										name: 'None',
-										price_multiplier: 1.0,
-										yearly_tax: 0.1,
-									},
-									price_silver: 1.0,
-									price_gold: 1.0,
-									price_black: 1.0,
-									type: type,
+							let sku = this.getCurrentItemProp('sku')
+							var category = this.getCurrentItemProp('category')
+							if(!category){
+								category = {
+									category_code: 'none',
+									name: 'None',
+									price_multiplier: 1.0,
+									yearly_tax: 0.1,
 								}
 							}
+							
+							var price_silver = this.getCurrentItemProp('price_silver')
+							if(!price_silver){
+								price_silver = 1.0
+							}
+
+							let price_gold = this.getCurrentItemProp('price_gold')
+							if(!price_gold){
+								price_gold = 1.0
+							}
+
+							let price_black = this.getCurrentItemProp('price_black')
+							if(!price_black){
+								price_black = 1.0
+							}
+
+
+							var prd_info = {
+								sku: 'none',
+								brand: brand,
+								model: model,
+								category: category,
+								price_silver: price_silver,
+								price_gold: price_gold,
+								price_black: price_black,
+								type: type,
+							}
+
+							console.log("PROD INFO")
+							console.log(prd_info)
+							
 							this.addCartItem(
 								{
 									...prd_info,

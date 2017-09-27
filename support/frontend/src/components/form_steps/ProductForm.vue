@@ -174,9 +174,12 @@ export default {
 			}
 		},
 		setFormItemAutoselect (obj, name) {
-			this.setCurrentItemProp({ prop: "brand", data: obj["brand"] })
-			this.setCurrentItemProp({ prop: "category", data: obj["category"] })
-			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
+			console.log(obj)
+			for(var key in obj){
+				if(obj.hasOwnProperty(key)){
+					this.setCurrentItemProp({prop:key, data:obj[key]})	
+				}
+			}
 			this.setCurrentItemProp({ prop: 'verified', data: true })
 
 			this.setAllowFormSubmit(false)

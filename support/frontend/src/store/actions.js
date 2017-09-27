@@ -125,5 +125,26 @@ export default {
   },
   setPurchaseSuccess({commit}, payload) {
     commit(TYPE.SET_PURCHASE_SUCCESS, payload)
-  }
+  },
+
+  // PDFS
+
+  serverGetInvoicePdf({state, rootState, commit}) {
+    let client = rootState.Form.client_info
+    let cart_ref = state.cart_ref
+    return freshbooks.getInvoicePDF(client, cart_ref)
+      .then(response => {
+        // commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
+        var blob=new Blob([response.data], {type:"application/pdf"});
+        let file_url = window.URL.createObjectURL(blob)
+        commit(TYPE.SET_INVOICE_PDF, file_url)
+      })
+  },
+
+  setEstimatePdfFile({commit}, payload) {
+    commit(TYPE.SET_ESTIMATE_PDF, payload)
+  },
+  setInvoicePdfFile({commit}, payload) {
+    commit(TYPE.SET_INVOICE_PDF, payload)
+  },
 }

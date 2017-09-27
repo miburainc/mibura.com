@@ -51,4 +51,9 @@ export default {
       return ""
     }
   },
+
+  // PDFS
+  getEstimatePDF: state => state.estimate_pdf,
+  getInvoicePDF: state => state.invoice_pdf
+
 }

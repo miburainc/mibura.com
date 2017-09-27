@@ -34,4 +34,12 @@ export default {
 	[TYPE.SET_CURRENT_DISCOUNT]: (state, value) => {
 		state.current_discount = value
 	},
+
+	// PDFS
+	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
+		state.estimate_pdf = value
+	},
+	[TYPE.SET_INVOICE_PDF]: (state, value) => {
+		state.invoice_pdf = value
+	},
 }

@@ -47,6 +47,7 @@ class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
 	price_multiplier = models.FloatField(default=1.0)
+	quantity_multiplier = models.FloatField(default=0.1)
 
 	price_silver = models.FloatField(default=1.0)
 	price_gold = models.FloatField(default=0.0)

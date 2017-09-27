@@ -48,17 +48,24 @@ def product_price(product, plan, length):
 def unknown_product_price(product, length, yearly_tax, base_price):
 	
 	age = product.unknown.device_age
+
+	print(age)
+	print(length)
+	print(base_price)
+	print(yearly_tax)
+
 	result = base_price * length
-	result += base_price * yearly_tax
-	print(product.brand, "Price:", result)
-	
+	result += base_price * age * yearly_tax
+
 	return result
 
 def cloud_price(cloud, plan, length, quantity):
-	base_price = (plan_prices[plan] * cloud.price_multiplier * quantity) / 2
-	result = 0.0
-	for l in range(0,int(length*2)):
-		result += base_price
+
+	base_price = (plan_prices[plan] * (cloud.price_multiplier + cloud.quantity_multiplier * quantity)) / 2
+	
+	result = base_price * length * 2
+
 	if plan == 'gold' or plan == 'black':
 		return 0.0
+
 	return result

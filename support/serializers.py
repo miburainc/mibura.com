@@ -31,6 +31,7 @@ class CloudSerializer(serializers.HyperlinkedModelSerializer):
 			'name', 
 			'image', 
 			'price_multiplier',
+			'quantity_multiplier',
 			'pk',
 		)
 

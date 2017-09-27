@@ -30,7 +30,7 @@ admin.site.register(Cart, CartAdmin)
 
 class ClientProductAdmin(admin.ModelAdmin):
 	search_fields = ['product', 'brand', 'model', 'client']
-	list_filter = ['client', 'product', 'brand']
+	list_filter = ['client', 'brand']
 	list_display = ['client', 'product', 'brand', 'model', 'serial_number']
 
 admin.site.register(ClientProduct, ClientProductAdmin)

@@ -26,6 +26,8 @@ def remove_namespace(doc, namespace):
 			elem.tag = elem.tag[nsl:]
 
 def create_estimate(client, plan, length, items):
+	print("create_estimate")
+	print(items)
 	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
 	categories = ProductCategory.objects.all()
@@ -84,8 +86,6 @@ def create_estimate(client, plan, length, items):
 	lines = estimate.find('lines')
 
 	for index,item in enumerate(items):
-		print("item type:",item['type'])
-		print(item)
 		cat = categories.get(category_code=item['category'])
 		print("CATEGORY!!!!!",cat)
 		line = ET.Element('line')
@@ -97,7 +97,6 @@ def create_estimate(client, plan, length, items):
 			desc = text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(length) + ' years.')
 		elif item['type'] == 'cloud':
 			cloud = Cloud.objects.get(name=item['name'])
-			print("cloud: ",cloud)
 			text = EstimateText.objects.get(category=cat, cloud=cloud)
 			name.text = text.item
 			desc = text.description

@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.dateformat import DateFormat
 
-import sys, requests, json, re
+import sys, os, requests, json, re
 from datetime import datetime
 
 from rest_framework.renderers import JSONRenderer
@@ -166,7 +166,9 @@ def get_estimate_pdf(estimate_id):
 
 
 	file_name = "Mibura_SmartSupport_Estimate.pdf"
-	path_to_file = settings.MEDIA_ROOT + file_name
+
+	path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
 	with open(path_to_file, 'wb') as f:
 		f.write(r.content)
 	# with open(path_to_file, 'wb') as f:

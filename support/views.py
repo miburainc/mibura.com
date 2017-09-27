@@ -595,7 +595,8 @@ def get_estimate_pdf(request):
 		pdf = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = settings.MEDIA_ROOT + file_name
+		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
 		pdf = FileWrapper(pdf)
 
 		response = HttpResponse(pdf, content_type='application/pdf')
@@ -604,6 +605,16 @@ def get_estimate_pdf(request):
 		return response
 
 	return HttpResponse('Not POST', status=400)
+
+def get_invoice_pdf(invoice_id):
+	pdf = invoices.get_invoice_pdf(invoice_id)
+	
+	file_name = "Mibura_SmartSupport_Invoice.pdf"
+	path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+	pdf = FileWrapper(pdf)
+
+	return pdf
+
 
 @csrf_exempt
 def checkout(request):
@@ -723,7 +734,7 @@ def checkout(request):
 			line_item['cost'] = item['cost']
 			
 			line_items.append(line_item)
-			
+		
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Invoice'
 
@@ -736,7 +747,17 @@ def checkout(request):
 		sub.save()
 
 		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)
-	return HttpResponse({'result': True}, status=200)
+
+		invoice_pdf = get_invoice_pdf(invoice_id)
+		invoices.add_invoice_payment(invoice_id, client.get_freshbooks_id(), "Credit Card", cart.get_total_price())
+		file_name = "Mibura_SmartSupport_Invoice.pdf"
+		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
+		response = HttpResponse(invoice_pdf, content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		response['Content-Length'] = os.path.getsize(path_to_file)
+		return response
+	return HttpResponse("success", status=200)
 
 # Django Rest Framework
 

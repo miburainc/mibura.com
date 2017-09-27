@@ -108,3 +108,57 @@ def create_invoice(client, plan, length, items):
 	root = ET.fromstring(r.content)
 	invoice_id = root[0]
 	return invoice_id.text
+
+def add_invoice_payment(invoice_id, client_freshbooks_id, payment_type, amount):
+	tree = ET.ElementTree(file='freshbooks/xml_templates/create_payment.xml')
+	root = tree.getroot()
+	payment = root[0]
+
+	clientid = payment.find('client_id')
+	clientid.text = str(client_freshbooks_id)
+
+	invoice_id = payment.find('invoice_id')
+	invoice_id.text = str(invoice_id)
+
+	amount = payment.find('amount')
+	amount.text = str(amount)
+
+	_type = payment.find('type')
+	_type.text = payment_type
+
+	notes = payment.find('notes')
+	notes.text = "Payment posted"
+
+	data = ET.tostring(root)
+
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
+	root = ET.fromstring(r.content)
+	payment_id = root[0]
+	return payment_id.text
+
+def get_invoice_pdf(invoice_id):
+	tree = ET.ElementTree(file='freshbooks/xml_templates/get_invoice_pdf.xml')
+	root = tree.getroot()
+	_id = root[0]
+	_id.text = str(invoice_id)
+
+	input_xml = ET.tostring(root)
+	data = input_xml
+	headers = {'Content-Type': 'application/xml'}
+	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data, stream=True)
+	
+	r.raise_for_status()
+
+
+	file_name = "Mibura_SmartSupport_Invoice.pdf"
+
+	path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
+	with open(path_to_file, 'wb') as f:
+		f.write(r.content)
+	# with open(path_to_file, 'wb') as f:
+		# for chunk in r.iter_content(1024):
+			# f.write(chunk)
+	pdf = open(path_to_file, 'rb')
+	return pdf #open(path_to_file, 'r')

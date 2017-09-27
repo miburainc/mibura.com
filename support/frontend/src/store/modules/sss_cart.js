@@ -78,10 +78,16 @@ const mutations = {
 	},
 	[TYPE.CART_CHANGED]: (state, value) => {
 		state.cart_changed = value
-	}
+	},
+	[TYPE.SET_CART_SUBMITTED]: (state, value) => {
+		state.cart_submitted = value
+	},
 }
 
 const actions = {
+	setCartSubmitted({commit}, value){
+		commit(TYPE.SET_CART_SUBMITTED, value)
+	},
 	setCloudInCartAlready({commit}, value){
 		commit(TYPE.SET_CLOUD_IN_CART_ALREADY, value)
 	},
@@ -178,6 +184,7 @@ const actions = {
 				products: state.cart,
 				plan: state.current_plan,
 				length: state.support_months/12,
+				submitted: state.cart_submitted,
 			}).then(response => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
@@ -283,6 +290,8 @@ const getters = {
 		}
 		// Product multiplier per plan e.g 1.0x
 		let pp = product['price_'+plan_name]
+		console.log("Product Price for: " + product.brand)
+		console.log(pp)
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
 		
@@ -304,7 +313,7 @@ const getters = {
 		// Plan base product price e.g $49/yr
 		let pc = store.getPlan(store.getCurrentPlan).cost
 		// Calculation and then divided by half since plans are sold in 6 month increments
-		cost = (pc * (pp * pm + pq * qm + pa * pt)) / 2
+		cost = (pc * pp * (pm + pq * qm + pa * pt)) / 2
 
 		return cost
 	},
@@ -352,6 +361,16 @@ const getters = {
 			}
 		}
 		return false
+	},
+	getUnverifiedItems: state => {
+		let items = []
+
+		for (let i=0; i<state.cart.length; i++){
+			if(state.cart[i].type == "unknown"){
+				items.push(state.cart[i])
+			}
+		}
+		return items
 	},
 }
 

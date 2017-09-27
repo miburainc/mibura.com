@@ -414,14 +414,14 @@ def get_create_cart(request):
 				cloud = Cloud.objects.get(name=name)
 				prod_obj = None
 			elif prod.type == "unknown":
-				unknown_prod = UnknownProduct(name=prod.model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
+				unknown_prod = UnknownProduct(name=model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
 				unknown_prod.save()
 			else:
 				try:
-					prod_obj = Product.objects.get(brand=prod.model, model=model)
+					prod_obj = Product.objects.get(brand=brand, model=model)
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code=prod.category['category_code'])
-					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', release=date.today() - timedelta(1))
+					prod_obj = Product(brand=brand, model=model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
 
 			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=brand, model=model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
@@ -431,6 +431,7 @@ def get_create_cart(request):
 				
 		cart.plan = data.plan
 		cart.length = data.length
+		cart.submitted_for_verification = data.submitted
 		cart.save()
 		serializer_context = {
 			'request': Request(request),

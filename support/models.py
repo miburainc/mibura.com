@@ -196,6 +196,8 @@ class Cart(models.Model):
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
+	submitted_for_verification = models.NullBooleanField(default=False)
+
 	reference = models.CharField(max_length=128) # Reference code for client to use
 	freshbooks_estimate_id = models.CharField(max_length=32, blank=True)
 	freshbooks_estimate_num = models.CharField(max_length=32, blank=True)
@@ -220,7 +222,6 @@ class Cart(models.Model):
 class Subscription(models.Model):
 	client = models.ForeignKey(Client)
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
-	cart = models.ForeignKey(Cart, blank=True, null=True)
 	products = models.ManyToManyField(ClientProduct,blank=True)
 	cloud = models.ManyToManyField(Cloud, blank=True)
 

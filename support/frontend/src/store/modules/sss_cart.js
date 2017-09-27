@@ -278,11 +278,6 @@ const getters = {
 		let pp = product['price_'+plan_name]
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
-
-		console.log("PP PM")
-		console.log(pp)
-		console.log(pm)
-
 		
 		let pa = 0
 		let pt = 0
@@ -299,21 +294,11 @@ const getters = {
 			pt = product.category.yearly_tax
 		}
 
-		console.log(pq)
-		console.log(qm)
-
-		console.log(pa)
-		console.log(pt)
-		console.log(pa*pt)
-
 		// Plan base product price e.g $49/yr
 		let pc = store.getPlan(store.getCurrentPlan).cost
-		console.log(pc)
-		console.log(pp*pm +pa*pt)
 		// Calculation and then divided by half since plans are sold in 6 month increments
 		cost = (pc * (pp * pm + pq * qm + pa * pt)) / 2
 
-		console.log(cost)
 		return cost
 	},
 	getProductSubtotal: (state, store) => cart_index => {

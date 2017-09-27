@@ -139,11 +139,15 @@ export default {
 					cloud = this.getCloudProviders[i]
 				}
 			}
+
+			console.log(cloud)
+
 			let cloud_obj = {
 				sku: 'cloud',
 				category: this.getMultiplier('cloud'),
 				price_silver: cloud.price_multiplier,
 				quantity: quantity,
+				quantity_multiplier: cloud.quantity_multiplier,
 				price_gold: 0.0,
 				price_black: 0.0,
 				type: 'cloud',
@@ -396,6 +400,11 @@ export default {
 								price_black = 1.0
 							}
 
+							var age = this.getCurrentItemProp('age')
+							if(!age){
+								age = 0
+							}
+
 
 							var prd_info = {
 								sku: 'none',
@@ -406,6 +415,7 @@ export default {
 								price_gold: price_gold,
 								price_black: price_black,
 								type: type,
+								age: age
 							}
 
 							console.log("PROD INFO")

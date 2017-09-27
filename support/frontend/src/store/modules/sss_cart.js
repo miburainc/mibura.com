@@ -263,9 +263,7 @@ const getters = {
 		return Math.round(age)
 	},
 	getProductPrice: (state, store) => cart_index => {
-		// 
-		// Calculate product price depending on plan selected by customer
-		// 
+		
 		let cost = 0
 		let product = state.cart[cart_index]
 		let plan_name = ''
@@ -288,39 +286,49 @@ const getters = {
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
 
-		let pq = 1
+		console.log("PP PM")
+		console.log(pp)
+		console.log(pm)
+
+		
+		let pa = 0
+		let pt = 0
+
+		let pq = 0
+		let qm = 0
+
 		if(product.quantity != null){
 			pq = product.quantity
+			qm = product.quantity_multiplier
 		}
+		else{
+			pa = product.age
+			pt = product.category.yearly_tax
+		}
+
+		console.log(pq)
+		console.log(qm)
+
+		console.log(pa)
+		console.log(pt)
+		console.log(pa*pt)
+
 		// Plan base product price e.g $49/yr
 		let pc = store.getPlan(store.getCurrentPlan).cost
-
+		console.log(pc)
+		console.log(pp*pm +pa*pt)
 		// Calculation and then divided by half since plans are sold in 6 month increments
-		cost = (pp * pm * pc * pq) / 2
+		cost = (pc * (pp * pm + pq * qm + pa * pt)) / 2
+
+		console.log(cost)
 		return cost
 	},
 	getProductSubtotal: (state, store) => cart_index => {
-		//
-		// Get product line item price
-		//
-		let product = state.cart[cart_index]
 		let product_price = store.getProductPrice(cart_index)
-
-		let product_age = store.getProductAge(product)
 		// price_iterations - how many half year increments to add
 		let price_iterations = store.getSupportMonths/6
-		// inc - amount to add to base price based on product age
-		let inc = product.category.yearly_tax
-		let price = 0.0
-		// Calculate price base price depending on age
-		for (let e=0; e<product_age; e++) {
-			price += (product_price * inc)
-		}
-
-		// Calculate price into future for length of support bought by client
-		for (let i=0; i<price_iterations; i++) {
-			price += product_price + (product_price * inc)
-		}
+		
+		let price = product_price * price_iterations
 
 		return price
 	},

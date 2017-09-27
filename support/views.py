@@ -665,7 +665,6 @@ def checkout(request):
 			plan=cart.plan, 
 			length=data.length,
 			discount_percent=active_discount,
-			cart=cart,
 			subtotal=total,
 			price=discount_total, 
 			date_begin=time)
@@ -760,6 +759,11 @@ def checkout(request):
 		response = HttpResponse(invoice_pdf, content_type='application/pdf')
 		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
 		response['Content-Length'] = os.path.getsize(path_to_file)
+
+
+		#Delete cart from database once checkout is complete
+		Cart.objects.get(pk=cart.pk).delete()
+
 		return response
 	return HttpResponse("fail", status=400)
 

@@ -7,9 +7,9 @@
 					<h4 class="modal-title" id="myModalLabel">Unverified Items</h4>
 				</div>
 				<div class="modal-body">
-					<p>There are {{ getUnverifiedItems.length }} unverified items in your cart.</p>
+					<p>{{ getUnverifiedItems.length }} unverified items in your cart.</p>
 					<div v-for="item in getUnverifiedItems"><p>&nbsp;&nbsp;&nbsp;-&nbsp;{{ item.model }}</p></div> 
-					<p>You will not be able to checkout with these items.</p>
+					<br><p>You will not be able to checkout with these items.</p>
 					<p>If you would like to submit your cart for verification we will reach out to you within the next business day to help complete your order.</p>
 				</div>
 				<div class="modal-footer">
@@ -51,9 +51,11 @@ export default {
 			'setCurrentFormStep',
 			'serverSetClient',
 			'saveCart',
-			'setPurchaseSuccess'
+			'setPurchaseSuccess',
+			'setCartSubmitted'
 		]),
 		submitForm(){
+			this.setCartSubmitted(true)
 			this.serverSetClient()
 			.then(() => {
 				this.saveCart()

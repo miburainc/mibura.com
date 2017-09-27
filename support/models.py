@@ -223,7 +223,6 @@ class Subscription(models.Model):
 	client = models.ForeignKey(Client)
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 	products = models.ManyToManyField(ClientProduct,blank=True)
-	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	length = models.FloatField(default=1)
 	subtotal = models.FloatField(default=0.0)

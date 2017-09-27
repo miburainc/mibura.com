@@ -87,6 +87,7 @@ def create_estimate(client, plan, length, items):
 
 	for index,item in enumerate(items):
 		cat = categories.get(category_code=item['category'])
+		print("CATEGORY!!!!!",cat)
 		line = ET.Element('line')
 		name = ET.SubElement(line, 'name')
 		description = ET.SubElement(line, 'description')
@@ -99,6 +100,11 @@ def create_estimate(client, plan, length, items):
 			text = EstimateText.objects.get(category=cat, cloud=cloud)
 			name.text = text.item
 			desc = text.description
+		elif item['type'] == 'unknown':
+			text = EstimateText.objects.get(plan=plan_obj, category=cat)
+			name.text = text.item
+			desc = text.description.replace('[product]', item['model']).replace('[length]', str(length) + ' years.')
+
 		description.text = desc
 		unit_cost = ET.SubElement(line, 'unit_cost')
 		unit_cost.text = str(round(item['cost'], 2))

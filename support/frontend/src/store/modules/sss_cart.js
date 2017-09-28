@@ -266,6 +266,7 @@ const getters = {
 		
 		let cost = 0
 		let product = state.cart[cart_index]
+
 		let plan_name = ''
 		switch(store.getCurrentPlan) {
 			case 'silver':
@@ -282,9 +283,9 @@ const getters = {
 				break;
 		}
 		// Product multiplier per plan e.g 1.0x
+		console.log(product)
 		let pp = product['price_'+plan_name]
-		console.log("Product Price for: " + product.brand)
-		console.log(pp)
+		
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
 		
@@ -299,7 +300,17 @@ const getters = {
 			qm = product.quantity_multiplier
 		}
 		else{
-			pa = product.age
+			if(product.type == "product"){
+				let product_release = moment(product.age)
+				let today = moment()
+				let age_months = today.diff(product_release, 'months')
+				let final_age = age_months / 6
+				pa = final_age
+			}
+			else{
+				pa = product.age
+			}
+			
 			pt = product.category.yearly_tax
 		}
 
@@ -307,6 +318,15 @@ const getters = {
 		let pc = store.getPlan(store.getCurrentPlan).cost
 		// Calculation and then divided by half since plans are sold in 6 month increments
 		cost = (pc * pp * (pm + pq * qm + pa * pt)) / 2
+
+		console.log("ASDDFASDASFAFASD")
+		console.log(pp)
+		console.log(pc)
+		console.log(pm)
+		console.log(pq)
+		console.log(pa)
+		console.log(qm)
+		console.log(pt)
 
 		return cost
 	},

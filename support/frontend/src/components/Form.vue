@@ -409,6 +409,7 @@ export default {
 								age = 0
 							}
 
+							let additional_info = this.getCurrentItemProp('info')
 
 							var prd_info = {
 								sku: 'none',
@@ -419,7 +420,8 @@ export default {
 								price_gold: price_gold,
 								price_black: price_black,
 								type: type,
-								age: age
+								age: age,
+								additional_info: additional_info,
 							}
 
 							console.log("PROD INFO")

@@ -309,33 +309,63 @@ def get_cart(request):
 
 		for client_prod in cart.products.all():
 
-			product = {}
-			product.update(client_prod.product.__dict__)
-			product.update(client_prod.__dict__)
-			product['type'] = 'product'
-			product['verified'] = True
+			if(client_prod.product != None):
+				product = {}
+				product.update(client_prod.product.__dict__)
+				product.update(client_prod.__dict__)
+				product['sn'] = client_prod.serial_number
+				product['type'] = 'product'
+				product['verified'] = True
+				product['age'] = client_prod.product.release
 
-			del(product['_state'])
-			del(product['_product_cache'])
+				del(product['_state'])
+				del(product['_product_cache'])
 
-			product.update({'category':client_prod.product.category.__dict__})
-			del(product['category']['_state'])
+				product.update({'category':client_prod.product.category.__dict__})
+				del(product['category']['_state'])
 
-			items.append(product)
+				items.append(product)
 
-		
-		for cloud in cart.cloud.all():
-			cloud_item = cloud.__dict__
-			cloud_item['category'] = categories.get(category_code='none').__dict__
-			del(cloud_item['_state'])
-			del(cloud_item['category']['_state'])
-			cloud_item['price_silver'] = 1.0
-			cloud_item['price_gold'] = 0.0
-			cloud_item['price_black'] = 0.0
-			cloud_item['model'] = cloud_item['name']
-			cloud_item['type'] = 'cloud'
+			elif(client_prod.unknown != None):
+				product = {}
+				product.update(client_prod.unknown.__dict__)
+				product.update(client_prod.__dict__)
+				product['sn'] = client_prod.serial_number
+				product['type'] = 'unknown'
+				product['verified'] = False
+				product['age'] = client_prod.unknown.device_age
+				product['price_silver'] = 1.0
+				product['price_gold'] = 1.0
+				product['price_black'] = 1.0
 
-			items.append(cloud_item)
+				del(product['_state'])
+				del(product['_unknown_cache'])
+
+				product.update({'category': {
+									'category_code': 'none',
+									'name': 'None',
+									'price_multiplier': 1.0,
+									'yearly_tax': 0.1,
+								}})
+
+				print("UNKNOWN")
+				print(product)
+
+				items.append(product)
+
+			elif(client_prod.cloud != None):
+				cloud_item = client_prod.cloud.__dict__
+				cloud_item['category'] = categories.get(category_code='none').__dict__
+				del(cloud_item['_state'])
+				del(cloud_item['category']['_state'])
+				cloud_item['price_silver'] = 1.0
+				cloud_item['price_gold'] = 0.0
+				cloud_item['price_black'] = 0.0
+				cloud_item['model'] = cloud_item['name']
+				cloud_item['type'] = 'cloud'
+				cloud_item['quantity'] = client_prod.quantity
+
+				items.append(cloud_item)
 
 		serializer_context = {
 			'request': Request(request),
@@ -550,7 +580,6 @@ def get_estimate_pdf(request):
 		for client_prod in cart.products.all():
 
 			if(client_prod.product != None):
-				print("CATEGORY CODE::::",client_prod.product.category.category_code)
 				items.append({
 					**client_prod.__dict__,
 					'type': 'product',

@@ -149,7 +149,7 @@ export const form_steps = [
 				required: false,
 				validate: {},
 				form: {
-					name: "additionalinfo",
+					name: "info",
 					type: "textarea"
 				}
 			}

@@ -124,7 +124,7 @@ export default {
 					required: false,
 					validate: {},
 					form: {
-						name: "additionalinfo",
+						name: "info",
 						type: "textarea"
 					}
 				}

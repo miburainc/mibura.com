@@ -378,6 +378,7 @@ export default {
 					console.log(response)
 					this.cartLoaded = true
 					data = response.response.data
+					console.log(data)
 					let payload = {
 						'items': data.items,
 						'id': data.cart.id,

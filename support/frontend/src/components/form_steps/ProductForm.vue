@@ -77,6 +77,7 @@ export default {
 	},
 	data() {
 		return {
+			canSubmit: true,
 			fields: [
 				{
 					placeholder: "Product Name",
@@ -156,7 +157,13 @@ export default {
 			'setAllowFormSubmit'
 		]),
 		submitForm(){
-			this.buttonAction(null, "next,additem")
+			if(!this.canSubmit){
+				document.getElementById(this.fields[1].form.name).focus()
+				this.canSubmit = true
+			}
+			else{
+				this.buttonAction(null, "next,additem")
+			}
 		},
 		processAjaxResult(json) {
 			return json['results']
@@ -174,7 +181,7 @@ export default {
 			}
 		},
 		setFormItemAutoselect (obj, name) {
-			console.log(obj)
+			this.canSubmit = false
 			for(var key in obj){
 				if(obj.hasOwnProperty(key)){
 					this.setCurrentItemProp({prop:key, data:obj[key]})	

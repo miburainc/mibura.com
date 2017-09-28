@@ -12,9 +12,6 @@
 			>
 			<div v-if="show">
 
-				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
-				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
-
 				<!-- Dynamic component to switch between form steps -->
 				<component 
 					:is="currentComponent" 

@@ -15,12 +15,6 @@
 							</object>
 					</div>
 				</div>
-				<div v-else>
-					<h4>Loading Receipt</h4>
-					<button class="btn btn-lg btn-success" type="button" disabled="true">
-						<i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-					</button>
-				</div>
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
 				<p style="padding-top:10px;"><i style="color: blue" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>{{ upsell }}</p>
@@ -57,7 +51,8 @@ export default {
 			'getTotal',
 			'getGrandTotal',
 			'getCurrentDiscount',
-			'getInvoicePDF'
+			'getInvoicePDF',
+			'getEstimatePDF'
 		])
 	},
 	mounted() {

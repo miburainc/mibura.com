@@ -27,8 +27,12 @@ const actions = {
 		})
 	},
 	api_checkout(cart_obj) {
-		return axios.post(URL_ROOT + 'support/checkout/', cart_obj)
-		.then((response) => {
+		return axios({
+			method: 'post',
+			url: URL_ROOT + 'support/checkout/',
+			data: cart_obj,
+			responseType: 'arraybuffer'
+		}).then((response) => {
 			return response
 		})
 		.catch((error) => {

@@ -227,7 +227,7 @@ const actions = {
 					console.log(response)
 					var blob=new Blob([response.data], {type:"application/pdf"});
 					let file_url = window.URL.createObjectURL(blob)
-					dispatch('setInvoicePdfFile', file_url)
+					commit(TYPE.SET_INVOICE_PDF, file_url)
 					dispatch('setPurchaseSuccess', true)
 				})
 			return true

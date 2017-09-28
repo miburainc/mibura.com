@@ -17,7 +17,8 @@ try:
 except ImportError:
 	import xml.etree.ElementTree as ET
 
-def create_invoice(client, plan, length, items):
+def create_invoice(client_freshbooks_id, client, plan, length, items):
+	print("***create_invoice***")
 	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
 	categories = ProductCategory.objects.all()
@@ -34,7 +35,7 @@ def create_invoice(client, plan, length, items):
 	invoice = root[0]
 
 	clientid = invoice.find('client_id')
-	clientid.text = str(client['freshbooks_id'])
+	clientid.text = str(client_freshbooks_id)
 
 	discount = invoice.find('discount')
 	discount.text = str(int(active_discount*100))
@@ -75,8 +76,6 @@ def create_invoice(client, plan, length, items):
 	lines = invoice.find('lines')
 
 	for index,item in enumerate(items):
-		print("item type:",item['type'])
-		print(item)
 		cat = categories.get(category_code=item['category'])
 		line = ET.Element('line')
 		name = ET.SubElement(line, 'name')
@@ -107,21 +106,24 @@ def create_invoice(client, plan, length, items):
 	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
 	root = ET.fromstring(r.content)
 	invoice_id = root[0]
+	print(invoice_id)
 	return invoice_id.text
 
-def add_invoice_payment(invoice_id, client_freshbooks_id, payment_type, amount):
+def add_invoice_payment(invoiceid, client_freshbooks_id, payment_type, paymentamount):
+	print("___add_invoice_payment___")
 	tree = ET.ElementTree(file='freshbooks/xml_templates/create_payment.xml')
 	root = tree.getroot()
 	payment = root[0]
 
-	clientid = payment.find('client_id')
-	clientid.text = str(client_freshbooks_id)
+	# print("client_freshbooks_id", client_freshbooks_id)
+	# clientid = payment.find('client_id')
+	# clientid.text = str(client_freshbooks_id)
 
 	invoice_id = payment.find('invoice_id')
-	invoice_id.text = str(invoice_id)
+	invoice_id.text = str(invoiceid)
 
 	amount = payment.find('amount')
-	amount.text = str(amount)
+	amount.text = str(paymentamount)
 
 	_type = payment.find('type')
 	_type.text = payment_type
@@ -135,9 +137,12 @@ def add_invoice_payment(invoice_id, client_freshbooks_id, payment_type, amount):
 	r = requests.post(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data)
 	root = ET.fromstring(r.content)
 	payment_id = root[0]
+	print(r)
+	print(payment_id.text)
 	return payment_id.text
 
 def get_invoice_pdf(invoice_id):
+	print("---get_invoice_pdf---")
 	tree = ET.ElementTree(file='freshbooks/xml_templates/get_invoice_pdf.xml')
 	root = tree.getroot()
 	_id = root[0]
@@ -149,7 +154,6 @@ def get_invoice_pdf(invoice_id):
 	r = requests.get(settings.FRESHBOOKS_URL, auth=(settings.FRESHBOOKS_AUTH, ''), headers=headers, data=data, stream=True)
 	
 	r.raise_for_status()
-
 
 	file_name = "Mibura_SmartSupport_Invoice.pdf"
 

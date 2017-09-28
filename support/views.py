@@ -410,14 +410,14 @@ def get_create_cart(request):
 				cloud = Cloud.objects.get(name=name)
 				prod_obj = None
 			elif prod.type == "unknown":
-				unknown_prod = UnknownProduct(name=prod.model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
+				unknown_prod = UnknownProduct(name=model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
 				unknown_prod.save()
 			else:
 				try:
-					prod_obj = Product.objects.get(brand=prod.model, model=model)
+					prod_obj = Product.objects.get(brand=brand, model=model)
 				except ObjectDoesNotExist:
 					cat = ProductCategory.objects.get(category_code=prod.category['category_code'])
-					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', release=date.today() - timedelta(1))
+					prod_obj = Product(brand=brand, model=model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
 
 			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=brand, model=model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
@@ -427,6 +427,11 @@ def get_create_cart(request):
 				
 		cart.plan = data.plan
 		cart.length = data.length
+		#cart.submitted_for_verification = data.submitted
+		if(data.cart_status != None):
+			cart.cart_status = data.cart_status
+
+
 		cart.save()
 		serializer_context = {
 			'request': Request(request),
@@ -553,16 +558,17 @@ def get_estimate_pdf(request):
 				'name': client_prod.cloud.name,
 				'type': 'cloud',
 				'category': 'cloud',
+				'quantity': client_prod.quantity,
 				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
 				})
 			elif(client_prod.unknown != None):
 				base_price = Plan.objects.get(short_name=cart.plan).price
 				yearly_tax = ProductCategory.objects.get(category_code="none").yearly_tax
-
 				items.append({
 					**client_prod.__dict__,
 					'type': 'unknown',
 					'category': 'none',
+					'age': client_prod.device_age,
 					'cost': unknown_product_price(client_prod, cart.length, yearly_tax, base_price)
 				})
 
@@ -680,7 +686,6 @@ def checkout(request):
 			plan=cart.plan, 
 			length=data.length,
 			discount_percent=active_discount,
-			cart=cart,
 			subtotal=total,
 			price=discount_total, 
 			date_begin=time)
@@ -776,6 +781,11 @@ def checkout(request):
 		response = HttpResponse(invoice_pdf, content_type='application/pdf')
 		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
 		response['Content-Length'] = os.path.getsize(path_to_file)
+
+
+		#Delete cart from database once checkout is complete
+		Cart.objects.get(pk=cart.pk).delete()
+
 		return response
 	return HttpResponse("fail", status=400)
 

@@ -32,17 +32,15 @@ def product_price(product, plan, length):
 	product_plan_multiplier = getattr(product.product, prd_plan_name)
 	base_price = (plan_prices[plan] * product.product.category.price_multiplier * product_plan_multiplier) / 2
 	date_start = product.product.release
+
 	date_now = date.today()
 	diff = math.floor(months_between(date_start, date_now) / 6)
-	result = 0.0
+
 	increment = product.product.category.yearly_tax
-	
-	for i in range(0,diff):
-		result = base_price * increment
-	print("base:", result)
-	for l in range(0,int(length*2)):
-		result += base_price + (base_price*increment)
-	print("final:",int(length*2), result)
+
+	result = base_price * increment * diff
+	result += base_price * length * 2
+
 	return result
 
 def unknown_product_price(product, length, yearly_tax, base_price):

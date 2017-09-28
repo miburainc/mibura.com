@@ -255,7 +255,14 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Modal Components -->
 		<change-personal-modal></change-personal-modal>
+		<unverified-items-modal></unverified-items-modal>
+
+
+
 		<div v-if="!getPurchaseSuccess" class="notifications-container" style="padding: 0 5px;z-index: 5;">
 			<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
 		</div>
@@ -287,6 +294,7 @@ import Notification from './components/Notification.vue'
 import Progressbar from './components/ProgressBar.vue'
 
 import ChangePersonalModal from './modals/ChangePersonalModal.vue'
+import UnverifiedItemsModal from './modals/UnverifiedItemsModal.vue'
 
 import {toJSONLocal} from './scripts/functions'
 
@@ -319,6 +327,7 @@ export default {
 		Notification,
 		Progressbar,
 		ChangePersonalModal,
+		UnverifiedItemsModal,
 	},
 	computed: {
 		...mapGetters([

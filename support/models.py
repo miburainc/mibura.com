@@ -23,6 +23,13 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
+CART_STATUS_CHOICES = (
+	("awaiting_product_approval","Awaiting Product Approval"),
+	("awaiting_ach_verification","Awaiting ACH Verification"),
+	("awaiting_po_approval","Awaiting Product Order Approval"),
+	("none", "None"),
+)
+
 class Plan(models.Model):
 	name = models.CharField(max_length=64)
 	short_name = models.CharField(max_length=16)
@@ -196,6 +203,9 @@ class Cart(models.Model):
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
 
+	#submitted_for_verification = models.NullBooleanField(default=False)
+	cart_status = models.CharField(max_length=32, choices=CART_STATUS_CHOICES, default="none")
+
 	reference = models.CharField(max_length=128) # Reference code for client to use
 	freshbooks_estimate_id = models.CharField(max_length=32, blank=True)
 	freshbooks_estimate_num = models.CharField(max_length=32, blank=True)
@@ -220,9 +230,7 @@ class Cart(models.Model):
 class Subscription(models.Model):
 	client = models.ForeignKey(Client)
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
-	cart = models.ForeignKey(Cart, blank=True, null=True)
 	products = models.ManyToManyField(ClientProduct,blank=True)
-	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	length = models.FloatField(default=1)
 	subtotal = models.FloatField(default=0.0)

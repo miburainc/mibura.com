@@ -12,9 +12,6 @@
 			>
 			<div v-if="show">
 
-				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
-				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
-
 				<!-- Dynamic component to switch between form steps -->
 				<component 
 					:is="currentComponent" 
@@ -267,13 +264,20 @@ export default {
 
 						case "gotocheckout":
 							
-							var noItems = true;
+							var noItems = true
+							var unverifiedItems = false
 							for (var item of this.getCart){
 								if(item.type=="product"){
 									noItems = false
 								}
+								else if(item.type=="unknown"){
+									unverifiedItems = true
+								}
 							}
-							if (noItems) {
+							if (unverifiedItems){
+								$('#UnverifiedItemsModal').modal('show')
+							}
+							else if (noItems) {
 								this.addNotification({
 									type: 'warning',
 									message: 'You must add a physical item to your cart before checking out!'
@@ -283,14 +287,14 @@ export default {
 							else{
 								this.past_step = this.getCurrentFormStep
 
-								// Save all current form fields into vuex store
-								for (let i=0; i<data.length; i++) {
-									let name = data[i].form.name;
-									if (!this.getCurrentItemProp(name)) {
-										let val = document.getElementById(name).value
-										this.setFormItem(val, data[i])
-									}
-								}
+								// // Save all current form fields into vuex store
+								// for (let i=0; i<data.length; i++) {
+								// 	let name = data[i].form.name;
+								// 	if (!this.getCurrentItemProp(name)) {
+								// 		let val = document.getElementById(name).value
+								// 		this.setFormItem(val, data[i])
+								// 	}
+								// }
 
 								this.goToStep(this.getCurrentFormStep+1)
 							}
@@ -471,31 +475,6 @@ export default {
 											
 										}).then(() => {
 										this.checkout()
-											.then((status) => {
-												console.log("after purchase callback")
-												console.log(status)
-												if (status == false) {
-													// Failed
-													this.addNotification({
-														message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
-														type: "danger"
-													})
-												}
-												else{
-													//finish submission of ach
-													// let payload = {
-													// 	'cart_ref': null,
-													// 	'accountnumber': this.getPaymentInfo['accountnumber'],
-													// 	'bankname': this.getPaymentInfo['bankname'],
-													// 	'bankphone': this.getPaymentInfo['bankphone'],
-													// 	'routingnumber': this.getPaymentInfo['routingnumber']
-													// }
-
-													console.log(this.getPaymentInfo)
-
-													console.log("done")
-												}
-											})
 									})
 								})
 								

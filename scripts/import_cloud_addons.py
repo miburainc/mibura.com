@@ -60,6 +60,6 @@ if __name__ == '__main__':
 	django.setup()
 	from support.models import Cloud, CloudAddOn
 
-	#df = pd.read_csv("scripts/files/products/azure_addons.csv")
-	df = pd.read_csv("scripts/files/products/microsoft_addons.csv", encoding = 'ISO-8859-1')
+	df = pd.read_csv("scripts/files/products/azure_addons.csv")
+	#df = pd.read_csv("scripts/files/products/microsoft_addons.csv", encoding = 'ISO-8859-1')
 	App(df)

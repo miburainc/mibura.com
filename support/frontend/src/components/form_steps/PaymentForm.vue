@@ -1,6 +1,8 @@
 <template>
 
 	<div id="stripe-payment-form" style="margin-top:15px;">
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
 			<li role="presentation" :class="{active: payment_type=='paypal'}"><a style="cursor: pointer;" @click="switchTabs('paypal')">PayPal</a></li>
@@ -139,11 +141,14 @@ export default {
 	},
 	data() {
 		return {
+			title: "Payment",
+			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
 			URL_ROOT: URL_ROOT,
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,
-
+			title: "",
+			text: "",
 			cc_fields: {
 				cardname: {
 					placeholder: "Name on card",

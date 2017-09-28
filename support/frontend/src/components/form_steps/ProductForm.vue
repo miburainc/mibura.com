@@ -1,6 +1,8 @@
 <template>
 	
 <div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 	<div class="form-group" v-on:keyup.enter="submitForm"> 
 
 		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[fields[0].form.name][0] }}</label>
@@ -77,6 +79,9 @@ export default {
 	},
 	data() {
 		return {
+			title: "On-Premise Hardware - Software",
+			text: "Search for your hardware device or software below",
+			canSubmit: true,
 			fields: [
 				{
 					placeholder: "Product Name",
@@ -156,7 +161,13 @@ export default {
 			'setAllowFormSubmit'
 		]),
 		submitForm(){
-			this.buttonAction(null, "next,additem")
+			if(!this.canSubmit){
+				document.getElementById(this.fields[1].form.name).focus()
+				this.canSubmit = true
+			}
+			else{
+				this.buttonAction(null, "next,additem")
+			}
 		},
 		processAjaxResult(json) {
 			return json['results']
@@ -174,7 +185,7 @@ export default {
 			}
 		},
 		setFormItemAutoselect (obj, name) {
-			console.log(obj)
+			this.canSubmit = false
 			for(var key in obj){
 				if(obj.hasOwnProperty(key)){
 					this.setCurrentItemProp({prop:key, data:obj[key]})	

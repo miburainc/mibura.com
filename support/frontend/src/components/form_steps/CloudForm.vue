@@ -111,7 +111,7 @@ export default {
 				{
 
 					label: "Skip",
-					class: "btn btn-lg btn-info",
+					class: "btn btn-lg btn-success",
 					script: "skip"
 
 				},

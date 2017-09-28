@@ -177,7 +177,6 @@ def create_purchaseorder(request):
 
 	return HttpResponse("failed", status=400)
 
-# Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):
 	print("stripe_ach_begin")
@@ -211,7 +210,6 @@ def stripe_ach_begin(request):
 
 	return HttpResponse("not post", status=400)
 
-# Unfinished
 @csrf_exempt
 def verify_ach(request):
 	print('verify_ach')

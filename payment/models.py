@@ -1,4 +1,5 @@
 import stripe
+from datetime import datetime
 
 from django.conf import settings
 from django.db import models
@@ -19,6 +20,7 @@ class StripeClient(models.Model):
 	client = models.OneToOneField(Client)
 	customer_id = models.CharField(max_length=128)
 	bank_id = models.CharField(max_length=128, blank=True)
+	bank_type = models.CharField(max_length=32, blank=True)
 	bank_verified = models.BooleanField(default=False)
 
 	@classmethod
@@ -26,10 +28,9 @@ class StripeClient(models.Model):
 		# Make API calls to Stripe
 		# stripe_customer_id = stripe.create_customer(asdlfkajsd)
 		customer = stripe.Customer.create(
-			source=token_id,
 			description=client.get_full_name() + " customer",
 			email=client.email,
-			metadata={"first_name": client.first_name, "last_name": client.last_name, "company": client.company}
+			metadata={"created": datetime.now(), "first_name": client.first_name, "last_name": client.last_name, "company": client.company}
 		)
 
 		stripe_customer_id = customer['id']
@@ -48,8 +49,6 @@ class StripeClient(models.Model):
 		# Verify bank account
 		# Allows ACH payments with stripe
 		# uses two micro-deposits into bank
-
-		# get the existing bank account
 		customer = stripe.Customer.retrieve(self.customer_id)
 		bank_account = customer.sources.retrieve(self.bank_id)
 
@@ -57,11 +56,12 @@ class StripeClient(models.Model):
 
 		if request['status'] == 'verified':
 			self.bank_verified = True
+			self.bank_type = request['account_holder_type']
 
 		return request
 
 	def __str__(self):
-		return client.get_full_name() + " Stripe Client Obj"
+		return self.client.get_full_name() + " Stripe Client Obj"
 
 class PaymentManager(models.Manager):
 	def create_stripe_creditcard(self, client, payment_token, amount):

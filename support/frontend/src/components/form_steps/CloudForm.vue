@@ -76,7 +76,7 @@ export default {
 	data() {
 		return {
 			quantity_text: "",
-			cloudquantity: 0,
+			cloudquantity: 1,
 			current_step: 0,
 			selected_provider: 0,
 			slide_index: 0,
@@ -111,7 +111,7 @@ export default {
 				{
 
 					label: "Skip",
-					class: "btn btn-lg btn-info",
+					class: "btn btn-lg btn-success",
 					script: "skip"
 
 				},

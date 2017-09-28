@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 
+from payment.models import *
 from .models import *
 from .serializers import *
 
@@ -176,7 +177,6 @@ def create_purchaseorder(request):
 
 	return HttpResponse("failed", status=400)
 
-# Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):
 	print("stripe_ach_begin")
@@ -188,31 +188,28 @@ def stripe_ach_begin(request):
 
 		# Get the bank token submitted by the form
 		token_id = data.stripeAchToken
-		print("token_id", token_id)
 		client_id = data.client_id
+
+		# Get client object
 		client = get_object_or_404(Client, pk=client_id)
+		
+		# Create StripeClient object and link to Client object
+		stripe_client = StripeClient.create(client)
 
-		# Create a Customer
-		customer = stripe.Customer.create(
-			source=token_id,
-			description=client.get_full_name() + " customer",
-			email=client.email,
-			metadata={"first_name": client.first_name, "last_name": client.last_name, "company": client.company}
-		)
+		# Link bank account to StripeClient object
+		response = stripe_client.stripe_create_bank(token_id)
+		
+		# print response for debugging
+		print("stripe_ach_begin")
+		print(response)
 
-		print(customer)
-		print(customer['default_bank_account'])
+		if response['status'] == "new":
+			return HttpResponse(True, status=200)
+		else:
+			return HttpResponse(status=400)
 
-		client.stripe_customer_id = customer['id']
-		client.stripe_bank_id = customer['default_bank_account']
-		client.save()
+	return HttpResponse("not post", status=400)
 
-		return HttpResponse(True, status=200)
-
-
-	return HttpResponse("failed", status=400)
-
-# Unfinished
 @csrf_exempt
 def verify_ach(request):
 	print('verify_ach')
@@ -222,29 +219,26 @@ def verify_ach(request):
 		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
 
+		# Get ACH Verify amounts
 		ach_verify_amt1 = data.ach_verify_amt1
 		ach_verify_amt2 = data.ach_verify_amt2
+
+		# Debugging
 		print('ach_verify_amt1', ach_verify_amt1)
 		print('ach_verify_amt2', ach_verify_amt2)
 
+		# Get client object
 		client_id = data.client_id
-
 		client = get_object_or_404(Client, pk=client_id)
 
-		# get the existing bank account
-		customer = stripe.Customer.retrieve(client.stripe_customer_id)
-		bank_account = customer.sources.retrieve(client.stripe_bank_id)
-
-		# verify the account
-		try:
-			result = bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
-		except:
+		response = client.stripeclient.stripe_verify_bank_ach(ach_verify_amt1, ach_verify_amt2)
+		
+		if response['status'] == "verified":
+			return HttpResponse({"message": "Success"}, status=200)
+		else:
 			return HttpResponse(status=400)
 
-		return HttpResponse({"message": "Success"}, status=200)
-
-
-	return HttpResponse("failed", status=400)
+	return HttpResponse("not post", status=400)
 
 @csrf_exempt
 def get_create_client(request):
@@ -652,6 +646,25 @@ def get_invoice_pdf(invoice_id):
 
 
 @csrf_exempt
+def create_payment_object(request):
+	if request.method == 'POST':
+		print("create_payment_object")
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
+
+		client = get_object_or_404(Client, pk=data.client)
+		cart = get_object_or_404(Cart, reference=data.cart)
+
+		if data.payment_type == "creditcard":
+			payment = Payment.objects.create_stripe_creditcard(client, token, amount)
+		elif data.payment_type == "achplaid":
+			payment = Payment.objects.create_plaid(client, token)
+		elif data.payment_type == "achstripe":
+			payment = Payment.objects.create_stripe_ach(client, token)
+
+
+
+@csrf_exempt
 def checkout(request):
 	if request.method == 'POST':
 		print("Checkout View")
@@ -677,6 +690,7 @@ def checkout(request):
 		
 		discount_total = total - total*active_discount
 		stripe_total = math.floor(discount_total*100)
+		
 		if data.stripe_token:
 			stripe.Charge.create(
 				amount=stripe_total,
@@ -688,7 +702,7 @@ def checkout(request):
 			stripe.Charge.create(
 				amount=stripe_total,
 				currency="usd",
-				customer=client.stripe_customer_id,
+				customer=client.stripeclient.customer_id,
 				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 			)
 
@@ -740,8 +754,6 @@ def checkout(request):
 			}
 			cat = categories.get(category_code=item['category'])
 
-			print(item)
-
 			if item['type'] == 'product':
 				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
 				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
@@ -773,20 +785,23 @@ def checkout(request):
 		notes = 'Mibura Smart Support Invoice'
 
 		estimate_id = cart.freshbooks_estimate_id
-		print(cart)
-		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items)
-		
+		client_freshbooks_id = client.get_freshbooks_id()
+		invoice_id = invoices.create_invoice(client_freshbooks_id, client.__dict__, cart.plan, cart.length, line_items)
+		print("invoice_id in checkout", invoice_id)
 
 		sub.freshbooks_invoice_num = invoice_id
 		sub.save()
 
-		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)
+		# send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)	
+
+		print("total", discount_total)
+		invoice_total = float("{0:.2f}".format(discount_total))
+		print("invoice_total", invoice_total)
+
+		invoices.add_invoice_payment(invoice_id, client_freshbooks_id, "Credit Card", invoice_total)
 
 		invoice_pdf = get_invoice_pdf(invoice_id)
 
-		print("total", discount_total)
-		
-		invoices.add_invoice_payment(invoice_id, client.get_freshbooks_id(), "Credit Card", discount_total)
 		file_name = "Mibura_SmartSupport_Invoice.pdf"
 		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
 

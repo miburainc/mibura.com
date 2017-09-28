@@ -578,6 +578,20 @@ export default {
 
 <style lang="scss">
 
+.btn-success {
+	background-color: #2d85bf;
+	border-color: #2d81ae;
+
+	&:hover {
+		background-color: #389fd5;
+		border-color: #2d85bf;
+	}
+
+	&:active, &:focus, &:visited {
+		background-color: #2d85bf!important;
+		border-color: #2d81ae;
+	}
+}
 
 .notifications-container {
 	position: absolute;

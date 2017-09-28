@@ -431,7 +431,11 @@ def get_create_cart(request):
 				
 		cart.plan = data.plan
 		cart.length = data.length
-		cart.submitted_for_verification = data.submitted
+		#cart.submitted_for_verification = data.submitted
+		if(data.cart_status != None):
+			cart.cart_status = data.cart_status
+
+
 		cart.save()
 		serializer_context = {
 			'request': Request(request),
@@ -558,16 +562,17 @@ def get_estimate_pdf(request):
 				'name': client_prod.cloud.name,
 				'type': 'cloud',
 				'category': 'cloud',
+				'quantity': client_prod.quantity,
 				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
 				})
 			elif(client_prod.unknown != None):
 				base_price = Plan.objects.get(short_name=cart.plan).price
 				yearly_tax = ProductCategory.objects.get(category_code="none").yearly_tax
-
 				items.append({
 					**client_prod.__dict__,
 					'type': 'unknown',
 					'category': 'none',
+					'age': client_prod.device_age,
 					'cost': unknown_product_price(client_prod, cart.length, yearly_tax, base_price)
 				})
 

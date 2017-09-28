@@ -73,14 +73,14 @@ const mutations = {
 	[TYPE.CART_CHANGED]: (state, value) => {
 		state.cart_changed = value
 	},
-	[TYPE.SET_CART_SUBMITTED]: (state, value) => {
-		state.cart_submitted = value
+	[TYPE.SET_CART_STATUS]: (state, value) => {
+		state.cart_status = value
 	},
 }
 
 const actions = {
-	setCartSubmitted({commit}, value){
-		commit(TYPE.SET_CART_SUBMITTED, value)
+	setCartStatus({commit}, value){
+		commit(TYPE.SET_CART_STATUS, value)
 	},
 	setCart({commit}, payload){
 		commit(TYPE.SET_CART, payload.items)
@@ -175,7 +175,7 @@ const actions = {
 				products: state.cart,
 				plan: state.current_plan,
 				length: state.support_months/12,
-				submitted: state.cart_submitted,
+				cart_status: state.cart_status,
 			}).then(response => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)

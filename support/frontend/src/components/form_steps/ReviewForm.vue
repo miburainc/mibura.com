@@ -1,6 +1,8 @@
 <template>
 	
 <div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 	<br>
 	<div class="container-fluid" v-on:keyup.enter="submitForm">
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
@@ -71,6 +73,8 @@ export default {
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
+			title: "Looks good?",
+			text: "",
 			upsell: 'If you upgrade to Pure Gold you can get cloud support for free.',
 			fields: [
 

@@ -52,10 +52,10 @@ export default {
 			'serverSetClient',
 			'saveCart',
 			'setPurchaseSuccess',
-			'setCartSubmitted'
+			'setCartStatus'
 		]),
 		submitForm(){
-			this.setCartSubmitted(true)
+			this.setCartStatus("awaiting_product_approval")
 			this.serverSetClient()
 			.then(() => {
 				this.saveCart()

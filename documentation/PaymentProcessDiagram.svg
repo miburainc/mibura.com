@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="113cm" height="64cm" viewBox="-256 -260 2245 1269" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="387" y="263" width="170" height="114"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="387" y="263" width="170" height="114"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="472" y="323.9">
+      <tspan x="472" y="323.9">Enter card information</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="249.905" y1="315.992" x2="376.258" y2="318.272"/>
+    <polygon style="fill: #000000" points="383.757,318.407 373.668,323.226 376.258,318.272 373.848,313.228 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="383.757,318.407 373.668,323.226 376.258,318.272 373.848,313.228 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="616.077" y="282" width="189.85" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="616.077" y="282" width="189.85" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="711.002" y="312.9">
+      <tspan x="711.002" y="312.9">Send information to stripe</tspan>
+      <tspan x="711.002" y="328.9">recieve payment token</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="557.95" y1="318.921" x2="605.456" y2="318.325"/>
+    <polygon style="fill: #000000" points="612.955,318.231 603.019,323.356 605.456,318.325 602.893,313.357 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="612.955,318.231 603.019,323.356 605.456,318.325 602.893,313.357 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="853.652" y="288.25" width="155.7" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="853.652" y="288.25" width="155.7" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="931.502" y="311.15">
+      <tspan x="931.502" y="311.15">Send payment token</tspan>
+      <tspan x="931.502" y="327.15">to django server</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="806.879" y1="316.239" x2="842.928" y2="315.953"/>
+    <polygon style="fill: #000000" points="850.428,315.893 840.468,320.973 842.928,315.953 840.388,310.973 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="850.428,315.893 840.468,320.973 842.928,315.953 840.388,310.973 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1010.35" y1="315.795" x2="1055.96" y2="316.111"/>
+    <polygon style="fill: #000000" points="1063.46,316.163 1053.42,321.094 1055.96,316.111 1053.49,311.094 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1063.46,316.163 1053.42,321.094 1055.96,316.111 1053.49,311.094 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="164.237,477.185 245.229,546.822 164.237,616.458 83.2443,546.822 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="164.237,477.185 245.229,546.822 164.237,616.458 83.2443,546.822 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="164.237" y="542.722">
+      <tspan x="164.237" y="542.722">Pay with bank</tspan>
+      <tspan x="164.237" y="558.722">ACH</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="391.734,477.279 481.287,547.389 391.734,617.5 302.182,547.389 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="391.734,477.279 481.287,547.389 391.734,617.5 302.182,547.389 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="391.734" y="543.289">
+      <tspan x="391.734" y="543.289">Log into bank</tspan>
+      <tspan x="391.734" y="559.289">using Plaid</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="246.133" y1="547.026" x2="291.459" y2="547.139"/>
+    <polygon style="fill: #000000" points="298.959,547.158 288.946,552.133 291.459,547.139 288.971,542.133 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="298.959,547.158 288.946,552.133 291.459,547.139 288.971,542.133 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="617.962" y="521.75" width="184.15" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="617.962" y="521.75" width="184.15" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="710.037" y="544.65">
+      <tspan x="710.037" y="544.65">Send information to Plaid</tspan>
+      <tspan x="710.037" y="560.65">recieve payment token</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="482.054" y1="547.775" x2="607.233" y2="548.311"/>
+    <polygon style="fill: #000000" points="614.733,548.343 604.711,553.3 607.233,548.311 604.754,543.3 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="614.733,548.343 604.711,553.3 607.233,548.311 604.754,543.3 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="736.598" y1="520.745" x2="898.241" y2="350.319"/>
+    <polygon style="fill: #000000" points="903.402,344.877 900.148,355.573 898.241,350.319 892.893,348.692 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="903.402,344.877 900.148,355.573 898.241,350.319 892.893,348.692 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="594.212" y="770.5" width="200.95" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="594.212" y="770.5" width="200.95" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="694.687" y="793.4">
+      <tspan x="694.687" y="793.4">Enter bank account number</tspan>
+      <tspan x="694.687" y="809.4">and routing number</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1024.59" y="655.25" width="198.6" height="86"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1024.59" y="655.25" width="198.6" height="86"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1123.89" y="678.15">
+      <tspan x="1123.89" y="678.15">Send bank information</tspan>
+      <tspan x="1123.89" y="694.15">to stripe, link bank</tspan>
+      <tspan x="1123.89" y="710.15">to customer. Recieve stripe</tspan>
+      <tspan x="1123.89" y="726.15">bank id.</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="818.187" y="672.5" width="171.2" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="818.187" y="672.5" width="171.2" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="903.787" y="695.4">
+      <tspan x="903.787" y="695.4">Create Stripe customer</tspan>
+      <tspan x="903.787" y="711.4">account</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="610.037" y="669.25" width="170" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="610.037" y="669.25" width="170" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="695.037" y="692.15">
+      <tspan x="695.037" y="692.15">Send bank information</tspan>
+      <tspan x="695.037" y="708.15">to django server</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="694.784" y1="769.505" x2="694.906" y2="733.981"/>
+    <polygon style="fill: #000000" points="694.932,726.481 699.898,736.498 694.906,733.981 689.898,736.463 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="694.932,726.481 699.898,736.498 694.906,733.981 689.898,736.463 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="781.026" y1="697.589" x2="807.451" y2="698"/>
+    <polygon style="fill: #000000" points="814.95,698.117 804.873,702.961 807.451,698 805.029,692.962 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="814.95,698.117 804.873,702.961 807.451,698 805.029,692.962 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="990.388" y1="699.008" x2="1013.85" y2="698.875"/>
+    <polygon style="fill: #000000" points="1021.35,698.832 1011.38,703.889 1013.85,698.875 1011.32,693.889 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1021.35,698.832 1011.38,703.889 1013.85,698.875 1011.32,693.889 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1281.94" y="657" width="198.7" height="86"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1281.94" y="657" width="198.7" height="86"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1381.29" y="679.9">
+      <tspan x="1381.29" y="679.9">Stripe sends </tspan>
+      <tspan x="1381.29" y="695.9">2 micro-deposits</tspan>
+      <tspan x="1381.29" y="711.9">in customer's bank account</tspan>
+      <tspan x="1381.29" y="727.9">within 5-7 days</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1040.41" y="777" width="171.75" height="86"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1040.41" y="777" width="171.75" height="86"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1126.29" y="799.9">
+      <tspan x="1126.29" y="799.9">Mibura sends customer</tspan>
+      <tspan x="1126.29" y="815.9">an email with a link</tspan>
+      <tspan x="1126.29" y="831.9">to return and verify</tspan>
+      <tspan x="1126.29" y="847.9">deposit amounts</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1124.75" y1="742.249" x2="1125.23" y2="766.267"/>
+    <polygon style="fill: #000000" points="1125.38,773.765 1120.18,763.866 1125.23,766.267 1130.18,763.669 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1125.38,773.765 1120.18,763.866 1125.23,766.267 1130.18,763.669 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1224.19" y1="698.932" x2="1271.22" y2="699.252"/>
+    <polygon style="fill: #000000" points="1278.72,699.303 1268.69,704.235 1271.22,699.252 1268.76,694.235 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1278.72,699.303 1268.69,704.235 1271.22,699.252 1268.76,694.235 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="1377.52,770.031 1489.96,826.25 1377.52,882.469 1265.08,826.25 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1377.52,770.031 1489.96,826.25 1377.52,882.469 1265.08,826.25 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1377.52" y="822.15">
+      <tspan x="1377.52" y="822.15">Customer returns</tspan>
+      <tspan x="1377.52" y="838.15">using email link</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1303.09" y="937.5" width="151.35" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1303.09" y="937.5" width="151.35" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1378.77" y="960.4">
+      <tspan x="1378.77" y="960.4">Customer returns to</tspan>
+      <tspan x="1378.77" y="976.4">smart support site</tspan>
+      <tspan x="1378.77" y="992.4">on their own</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1569.57" y="937.5" width="165.9" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1569.57" y="937.5" width="165.9" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1652.52" y="960.4">
+      <tspan x="1652.52" y="960.4">Customer enters cart</tspan>
+      <tspan x="1652.52" y="976.4">reference number and</tspan>
+      <tspan x="1652.52" y="992.4">selects verify ACH</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1213.16" y1="822.161" x2="1258.78" y2="823.296"/>
+    <polygon style="fill: #000000" points="1266.28,823.483 1256.15,828.232 1258.78,823.296 1256.4,818.235 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1266.28,823.483 1256.15,828.232 1258.78,823.296 1256.4,818.235 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1379.98" y1="743.953" x2="1379.49" y2="760.136"/>
+    <polygon style="fill: #000000" points="1379.27,767.632 1374.57,757.488 1379.49,760.136 1384.56,757.786 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1379.27,767.632 1374.57,757.488 1379.49,760.136 1384.56,757.786 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1378.01" y1="883.165" x2="1378.38" y2="926.764"/>
+    <polygon style="fill: #000000" points="1378.44,934.264 1373.36,924.307 1378.38,926.764 1383.36,924.222 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1378.44,934.264 1373.36,924.307 1378.38,926.764 1383.36,924.222 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1455.44" y1="972.5" x2="1558.83" y2="972.5"/>
+    <polygon style="fill: #000000" points="1566.33,972.5 1556.33,977.5 1558.83,972.5 1556.33,967.5 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1566.33,972.5 1556.33,977.5 1558.83,972.5 1556.33,967.5 "/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1402.52" y="916.25">
+    <tspan x="1402.52" y="916.25">No</tspan>
+    <tspan x="1402.52" y="932.25"></tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1578.97" y="800.5" width="141.5" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1578.97" y="800.5" width="141.5" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1649.72" y="823.4">
+      <tspan x="1649.72" y="823.4">Customer enters</tspan>
+      <tspan x="1649.72" y="839.4">2 deposit amounts</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1490.91" y1="826.771" x2="1568.24" y2="827.126"/>
+    <polygon style="fill: #000000" points="1575.74,827.16 1565.72,832.114 1568.24,827.126 1565.76,822.114 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1575.74,827.16 1565.72,832.114 1568.24,827.126 1565.76,822.114 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1651.82" y1="936.515" x2="1650.45" y2="865.218"/>
+    <polygon style="fill: #000000" points="1650.3,857.72 1655.5,867.621 1650.45,865.218 1645.5,867.814 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1650.3,857.72 1655.5,867.621 1650.45,865.218 1645.5,867.814 "/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1517.22" y="806.842">
+    <tspan x="1517.22" y="806.842">Yes</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1572.32" y="678" width="154.8" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1572.32" y="678" width="154.8" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1649.72" y="700.9">
+      <tspan x="1649.72" y="700.9">Send verify amounts</tspan>
+      <tspan x="1649.72" y="716.9">to djago server</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1566.55" y="586.75" width="158.85" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1566.55" y="586.75" width="158.85" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1645.97" y="609.65">
+      <tspan x="1645.97" y="609.65">Send verify amounts</tspan>
+      <tspan x="1645.97" y="625.65">and bank id to stripe</tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="-167.778" cy="311.842" rx="86.6066" ry="43.3033"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="-167.778" cy="311.842" rx="86.6066" ry="43.3033"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="-167.778" y="315.742">
+      <tspan x="-167.778" y="315.742">Begin Payment</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="158.472,267.973 251.21,314.342 158.472,360.711 65.7338,314.342 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="158.472,267.973 251.21,314.342 158.472,360.711 65.7338,314.342 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="158.472" y="310.242">
+      <tspan x="158.472" y="310.242">Pay with</tspan>
+      <tspan x="158.472" y="326.242">Credit Card</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="391.162,659.876 497.64,759.342 391.162,858.807 284.684,759.342 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="391.162,659.876 497.64,759.342 391.162,858.807 284.684,759.342 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="391.162" y="747.242">
+      <tspan x="391.162" y="747.242">Verify bank account</tspan>
+      <tspan x="391.162" y="763.242">using stripe ACH </tspan>
+      <tspan x="391.162" y="779.242">verification</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="203.562" y1="583.65" x2="330.358" y2="702.397"/>
+    <polygon style="fill: #000000" points="335.832,707.524 325.115,704.338 330.358,702.397 331.951,697.039 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="335.832,707.524 325.115,704.338 330.358,702.397 331.951,697.039 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="485.949" y1="771.258" x2="583.562" y2="783.53"/>
+    <polygon style="fill: #000000" points="591.003,784.465 580.457,788.179 583.562,783.53 581.705,778.257 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="591.003,784.465 580.457,788.179 583.562,783.53 581.705,778.257 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-80.3214" y1="312.512" x2="55.4451" y2="313.552"/>
+    <polygon style="fill: #000000" points="62.9449,313.61 52.9069,318.533 55.4451,313.552 52.9835,308.533 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="62.9449,313.61 52.9069,318.533 55.4451,313.552 52.9835,308.533 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-116.985" y1="347.79" x2="111.383" y2="509.415"/>
+    <polygon style="fill: #000000" points="117.505,513.748 106.454,512.052 111.383,509.415 112.231,503.89 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="117.505,513.748 106.454,512.052 111.383,509.415 112.231,503.89 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1649.72" y1="799.499" x2="1649.72" y2="742.737"/>
+    <polygon style="fill: #000000" points="1649.72,735.237 1654.72,745.237 1649.72,742.737 1644.72,745.237 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1649.72,735.237 1654.72,745.237 1649.72,742.737 1644.72,745.237 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1648.57" y1="677.008" x2="1647.52" y2="651.47"/>
+    <polygon style="fill: #000000" points="1647.21,643.976 1652.62,653.763 1647.52,651.47 1642.63,654.173 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1647.21,643.976 1652.62,653.763 1647.52,651.47 1642.63,654.173 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1646.23" y1="585.751" x2="1646.55" y2="551.302"/>
+    <polygon style="fill: #000000" points="1646.62,543.802 1651.53,553.848 1646.55,551.302 1641.53,553.755 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1646.62,543.802 1651.53,553.848 1646.55,551.302 1641.53,553.755 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1823.47" y="457.842" width="165" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1823.47" y="457.842" width="165" height="38"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1905.97" y="480.742">
+      <tspan x="1905.97" y="480.742">Amounts are incorrect</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1769.84" y1="478.157" x2="1812.79" y2="477.742"/>
+    <polygon style="fill: #000000" points="1820.29,477.67 1810.34,482.766 1812.79,477.742 1810.24,472.766 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1820.29,477.67 1810.34,482.766 1812.79,477.742 1810.24,472.766 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="1647.22,417.835 1770.24,479.342 1647.22,540.848 1524.21,479.342 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1647.22,417.835 1770.24,479.342 1647.22,540.848 1524.21,479.342 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1647.22" y="475.242">
+      <tspan x="1647.22" y="475.242">Stripe sends success</tspan>
+      <tspan x="1647.22" y="491.242">or failure</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1905.97,495.842 1905.97,827.5 1730.21,827.5 "/>
+    <polygon style="fill: #000000" points="1722.71,827.5 1732.71,822.5 1730.21,827.5 1732.71,832.5 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1722.71,827.5 1732.71,822.5 1730.21,827.5 1732.71,832.5 "/>
+  </g>
+  <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="1917.22" y="690.592">
+    <tspan x="1917.22" y="690.592">Limit 10</tspan>
+    <tspan x="1917.22" y="706.592">incorrect</tspan>
+    <tspan x="1917.22" y="722.592">attempts</tspan>
+  </text>
+  <g>
+    <rect style="fill: #ffffff" x="1066.7" y="281.842" width="189.8" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1066.7" y="281.842" width="189.8" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1161.6" y="304.742">
+      <tspan x="1161.6" y="304.742">Customer verifies</tspan>
+      <tspan x="1161.6" y="320.742">cart and payment amount</tspan>
+      <tspan x="1161.6" y="336.742">and submits payment</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1257.49" y1="314.77" x2="1283.44" y2="314.209"/>
+    <polygon style="fill: #000000" points="1290.94,314.047 1281.05,319.262 1283.44,314.209 1280.83,309.264 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1290.94,314.047 1281.05,319.262 1283.44,314.209 1280.83,309.264 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1554.72" cy="55.5917" rx="91.6892" ry="45.8446"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1554.72" cy="55.5917" rx="91.6892" ry="45.8446"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1554.72" y="43.4917">
+      <tspan x="1554.72" y="43.4917">Customer is sent</tspan>
+      <tspan x="1554.72" y="59.4917">to Success Screen</tspan>
+      <tspan x="1554.72" y="75.4917">with Invoice</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1417.99" y1="272.272" x2="1521.41" y2="108.385"/>
+    <polygon style="fill: #000000" points="1525.41,102.042 1524.3,113.167 1521.41,108.385 1515.85,107.831 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1525.41,102.042 1524.3,113.167 1521.41,108.385 1515.85,107.831 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1578.05" y="344.092" width="153.35" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1578.05" y="344.092" width="153.35" height="38"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1654.72" y="366.992">
+      <tspan x="1654.72" y="366.992">Amounts are correct</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1566.35" y="246.842" width="169.5" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1566.35" y="246.842" width="169.5" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1651.1" y="269.742">
+      <tspan x="1651.1" y="269.742">Customer Verifies cart </tspan>
+      <tspan x="1651.1" y="285.742">and payment amount</tspan>
+      <tspan x="1651.1" y="301.742">and submits payment</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="1568.92" y="156.842" width="174.1" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="1568.92" y="156.842" width="174.1" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1655.97" y="179.742">
+      <tspan x="1655.97" y="179.742">Send payment amount</tspan>
+      <tspan x="1655.97" y="195.742">and customer and bank</tspan>
+      <tspan x="1655.97" y="211.742">id to stripe</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1651.13" y1="418.804" x2="1652.81" y2="392.802"/>
+    <polygon style="fill: #000000" points="1653.29,385.318 1657.63,395.619 1652.81,392.802 1647.65,394.975 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1653.29,385.318 1657.63,395.619 1652.81,392.802 1647.65,394.975 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1653.83" y1="343.087" x2="1653.14" y2="327.561"/>
+    <polygon style="fill: #000000" points="1652.8,320.069 1658.24,329.836 1653.14,327.561 1648.25,330.282 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1652.8,320.069 1658.24,329.836 1653.14,327.561 1648.25,330.282 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1653.05" y1="245.84" x2="1653.5" y2="237.566"/>
+    <polygon style="fill: #000000" points="1653.9,230.077 1658.35,240.333 1653.5,237.566 1648.37,239.792 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1653.9,230.077 1658.35,240.333 1653.5,237.566 1648.37,239.792 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1629.22" y1="155.842" x2="1593.07" y2="107.19"/>
+    <polygon style="fill: #000000" points="1588.59,101.17 1598.57,106.215 1593.07,107.19 1590.54,112.179 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1588.59,101.17 1598.57,106.215 1593.07,107.19 1590.54,112.179 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="165.508,88.0891 255.666,127.593 165.508,167.096 75.3506,127.593 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="165.508,88.0891 255.666,127.593 165.508,167.096 75.3506,127.593 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="165.508" y="123.493">
+      <tspan x="165.508" y="123.493">Pay with</tspan>
+      <tspan x="165.508" y="139.493">PayPal</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-108.816" y1="279.246" x2="116.12" y2="154.896"/>
+    <polygon style="fill: #000000" points="122.684,151.267 116.351,160.481 116.12,154.896 111.513,151.729 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="122.684,151.267 116.351,160.481 116.12,154.896 111.513,151.729 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="321.697" y="99.8417" width="150.9" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="321.697" y="99.8417" width="150.9" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="397.147" y="122.742">
+      <tspan x="397.147" y="122.742">Paypal log in screen</tspan>
+      <tspan x="397.147" y="138.742"> pops up</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="551.572" y="94.8417" width="196.3" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="551.572" y="94.8417" width="196.3" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="649.722" y="117.742">
+      <tspan x="649.722" y="117.742">Customer is authenticated;</tspan>
+      <tspan x="649.722" y="133.742">receive payment token</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="690.482" y1="149.819" x2="882.714" y2="281.763"/>
+    <polygon style="fill: #000000" points="888.898,286.007 877.824,284.471 882.714,281.763 883.483,276.226 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="888.898,286.007 877.824,284.471 882.714,281.763 883.483,276.226 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="473.363" y1="125.333" x2="541.079" y2="123.992"/>
+    <polygon style="fill: #000000" points="548.578,123.844 538.679,129.041 541.079,123.992 538.481,119.043 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="548.578,123.844 538.679,129.041 541.079,123.992 538.481,119.043 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="256.666" y1="127.297" x2="311.178" y2="127.12"/>
+    <polygon style="fill: #000000" points="318.678,127.096 308.695,132.128 311.178,127.12 308.662,122.129 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="318.678,127.096 308.695,132.128 311.178,127.12 308.662,122.129 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="1393.03,260.76 1495.19,311.842 1393.03,362.923 1290.86,311.842 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1393.03,260.76 1495.19,311.842 1393.03,362.923 1290.86,311.842 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1393.03" y="307.742">
+      <tspan x="1393.03" y="307.742">send payment</tspan>
+      <tspan x="1393.03" y="323.742">to stripe</tspan>
+    </text>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="1161.78,4.51013 1263.94,55.5917 1161.78,106.673 1059.61,55.5917 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1161.78,4.51013 1263.94,55.5917 1161.78,106.673 1059.61,55.5917 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1161.78" y="51.4917">
+      <tspan x="1161.78" y="51.4917">send payment</tspan>
+      <tspan x="1161.78" y="67.4917">to paypal</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1161.62" y1="280.853" x2="1161.73" y2="117.39"/>
+    <polygon style="fill: #000000" points="1161.74,109.89 1166.73,119.893 1161.73,117.39 1156.73,119.886 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1161.74,109.89 1166.73,119.893 1161.73,117.39 1156.73,119.886 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="1264.94" y1="55.5917" x2="1452.3" y2="55.5917"/>
+    <polygon style="fill: #000000" points="1459.8,55.5917 1449.8,60.5917 1452.3,55.5917 1449.8,50.5917 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="1459.8,55.5917 1449.8,60.5917 1452.3,55.5917 1449.8,50.5917 "/>
+  </g>
+  <g>
+    <polygon style="fill: #ffffff" points="163.961,-109.527 259.17,-40.3159 163.961,28.8956 68.7522,-40.3159 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="163.961,-109.527 259.17,-40.3159 163.961,28.8956 68.7522,-40.3159 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="163.961" y="-44.4159">
+      <tspan x="163.961" y="-44.4159">Submit Purchase</tspan>
+      <tspan x="163.961" y="-28.4159">Order</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="-130.188" y1="271.938" x2="118.035" y2="8.43708"/>
+    <polygon style="fill: #000000" points="123.177,2.97787 119.96,13.6853 118.035,8.43708 112.681,6.82836 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="123.177,2.97787 119.96,13.6853 118.035,8.43708 112.681,6.82836 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="318.24" y="-62.6583" width="129" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="318.24" y="-62.6583" width="129" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="382.74" y="-39.7583">
+      <tspan x="382.74" y="-39.7583">Customer enters</tspan>
+      <tspan x="382.74" y="-23.7583">P.O. Number</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="302.065" y="-218.908" width="158.85" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="302.065" y="-218.908" width="158.85" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="381.49" y="-196.008">
+      <tspan x="381.49" y="-196.008">P.O. Number is</tspan>
+      <tspan x="381.49" y="-180.008">sent to django server</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="382.516" y1="-63.6677" x2="381.792" y2="-154.163"/>
+    <polygon style="fill: #000000" points="381.732,-161.663 386.812,-151.703 381.792,-154.163 376.812,-151.623 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="381.732,-161.663 386.812,-151.703 381.792,-154.163 376.812,-151.623 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="257.781" y1="-38.3185" x2="307.509" y2="-37.2599"/>
+    <polygon style="fill: #000000" points="315.007,-37.1002 304.903,-32.3142 307.509,-37.2599 305.116,-42.3119 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="315.007,-37.1002 304.903,-32.3142 307.509,-37.2599 305.116,-42.3119 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="570.44" y="-226.908" width="114.6" height="70"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="570.44" y="-226.908" width="114.6" height="70"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="627.74" y="-204.008">
+      <tspan x="627.74" y="-204.008">P.O. is verified</tspan>
+      <tspan x="627.74" y="-188.008">and approved</tspan>
+      <tspan x="627.74" y="-172.008">by Mibura</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="747.44" y="-218.908" width="165.6" height="54"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="747.44" y="-218.908" width="165.6" height="54"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="830.24" y="-196.008">
+      <tspan x="830.24" y="-196.008">Customer is notified</tspan>
+      <tspan x="830.24" y="-180.008">that order is approved</tspan>
+    </text>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="1085.96" cy="-191.193" rx="102.086" ry="67.6494"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="1085.96" cy="-191.193" rx="102.086" ry="67.6494"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="1085.96" y="-195.293">
+      <tspan x="1085.96" y="-195.293">Customer makes</tspan>
+      <tspan x="1085.96" y="-179.293">payment outside of system</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="461.87" y1="-191.908" x2="559.748" y2="-191.908"/>
+    <polygon style="fill: #000000" points="567.248,-191.908 557.248,-186.908 559.748,-191.908 557.248,-196.908 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="567.248,-191.908 557.248,-186.908 559.748,-191.908 557.248,-196.908 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="686.041" y1="-191.908" x2="736.7" y2="-191.908"/>
+    <polygon style="fill: #000000" points="744.2,-191.908 734.2,-186.908 736.7,-191.908 734.2,-196.908 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="744.2,-191.908 734.2,-186.908 736.7,-191.908 734.2,-196.908 "/>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="914.039" y1="-191.674" x2="973.141" y2="-191.508"/>
+    <polygon style="fill: #000000" points="980.641,-191.488 970.627,-186.516 973.141,-191.508 970.655,-196.515 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="980.641,-191.488 970.627,-186.516 973.141,-191.508 970.655,-196.515 "/>
+  </g>
+  <g>
+    <ellipse style="fill: #ffffff" cx="632.296" cy="-38.1583" rx="94.6523" ry="47.3261"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="632.296" cy="-38.1583" rx="94.6523" ry="47.3261"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="632.296" y="-50.2583">
+      <tspan x="632.296" y="-50.2583">Customer is sent to</tspan>
+      <tspan x="632.296" y="-34.2583">Thank you page</tspan>
+      <tspan x="632.296" y="-18.2583">with Estimate</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="448.244" y1="-36.3145" x2="526.928" y2="-37.1027"/>
+    <polygon style="fill: #000000" points="534.428,-37.1778 524.479,-32.0779 526.928,-37.1027 524.378,-42.0774 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="534.428,-37.1778 524.479,-32.0779 526.928,-37.1027 524.378,-42.0774 "/>
+  </g>
+</svg>

@@ -1,6 +1,8 @@
 <template>
 	
 <div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 	<div class="form-group" v-on:keyup.enter="submitForm">
 
 		<div ref="input" v-for="(step, index) in fields" 
@@ -33,6 +35,8 @@ export default {
 	props: ['form', 'buttonAction'],
 	data() {
 		return {
+			title: "About Your Company",
+			text: "",
 			fields: [
 				{
 					placeholder: "First Name",

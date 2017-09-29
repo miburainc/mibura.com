@@ -233,6 +233,9 @@ export default {
 			'getAcceptedTerms',
 			'getPaymentProcessing'
 		])
+	},
+	mounted(){
+		this.setPaymentProcessing(false)
 	}
 }
 

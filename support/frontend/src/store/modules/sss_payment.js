@@ -1,10 +1,14 @@
 import * as TYPE from '../types'
 import Vue from 'vue'
 
-import client from '../api/client'
-import payment_api from '../api/payment'
+import paymentApi from '../api/payment'
+import plaidApi from '../api/plaid'
+import stripeApi from '../api/stripe'
 
-import {form_steps} from '../values'
+import {step_names} from '../values'
+
+
+import stripe from '../stripe'
 
 const state = {
 	payment_info: {},
@@ -30,7 +34,7 @@ const mutations = {
 
 const actions = {
 	createPaymentObject({commit}, payload) {
-		payment_api.serverCreatePayment(payload)
+		paymentApi.serverCreatePayment(payload)
 			.then(response => {
 				console.log(response)
 				for (let key in response.data) {
@@ -46,16 +50,18 @@ const actions = {
 			})
 	},
 	plaidSendCredentials({commit, state}) {
-		plaid.sendPlaidCredentials(state.stripe.ach_account_id, state.stripe.ach_public_token)
+		plaidApi.sendPlaidCredentials(state.payment_info.ach_account_id, state.payment_info.ach_public_token)
 			.then((response) => {
+				// commit and return response
 				commit(TYPE.SET_PAYMENT_PROP, {
 					prop: 'ach_payment_token',
 					value: response.data
 				})
+				return response
 			})
 	},
 	achSendCredentials({commit, rootState}, achToken) {
-		stripe.postAchCredentials(rootState.Form.client_info.pk, achToken)
+		stripeApi.postAchCredentials(rootState.Client.client_info.pk, achToken)
 			.then((response) => {
 				console.log(response)
 				commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'achsubmitted'})
@@ -64,7 +70,7 @@ const actions = {
 			})
 	},
 	achSendVerify({commit, rootState}) {
-		stripe.postAchVerify(rootState.Form.client_info.pk, rootState.Form.payment_info.verify1, rootState.Form.payment_info.verify2)
+		stripeApi.postAchVerify(rootState.Client.client_info.pk, rootState.Payment.payment_info.verify1, rootState.Payment.payment_info.verify2)
 		.then(
 			response => {
 
@@ -90,7 +96,7 @@ const actions = {
 		console.log("sendPaymentPoNumber begin")
 		console.log(payload)
 		
-		payment_api.sendPaymentPoNumber(payload)
+		paymentApi.sendPaymentPoNumber(payload)
 			.then((response) => {
 				commit(TYPE.SET_PURCHASE_SUCCESS, true)
 				console.log("sendPaymentPoNumber response")

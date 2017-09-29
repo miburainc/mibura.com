@@ -188,14 +188,14 @@ const actions = {
 	
 	
 	checkout({commit, dispatch, state, rootState}) {
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
 		}
 		let payment_token = null
 
 		if (rootState.Payment.payment_info.ach_payment_token != null || rootState.Payment.payment_info.cc_payment_token != null) {
-			payment_token = rootState.Payment.payment_info.ach_payment_token ? rootState.Payment.payment_info.ach_payment_token : rootState.stripe.cc_payment_token
+			payment_token = rootState.Payment.payment_info.ach_payment_token ? rootState.Payment.payment_info.ach_payment_token : rootState.Payment.payment_info.cc_payment_token
 		}
 
 		let data = {

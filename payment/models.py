@@ -1,4 +1,4 @@
-import stripe
+import stripe, paypalrestsdk
 from datetime import datetime
 
 from django.conf import settings
@@ -7,6 +7,11 @@ from django.db import models
 from support.models import Client, Cart, Subscription
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+paypalrestsdk.configure({
+	"mode": "sandbox", # sandbox or live
+	"client_id": "EBWKjlELKMYqRNQ6sYvFo64FtaRLRR5BdHEESmha49TM",
+	"client_secret": "EO422dn3gQLgDbuwqTjzrFgFtaRLRR5BdHEESmha49TM" })
 
 payment_type_choices = (
 	('creditcard', 'Credit Card'),
@@ -86,31 +91,31 @@ class StripeClient(models.Model):
 		return self.client.get_full_name() + " Stripe Client Obj"
 
 class PaymentManager(models.Manager):
-	def create_stripe_creditcard(self, client, payment_token, amount):
-		payment = self.create(client=client, token=payment_token, amount=amount)
+	def create_stripe_creditcard(self, client, cart, payment_token, amount):
+		payment = self.create(client=client, cart=cart, token=payment_token, amount=amount)
 		payment.payment_type="creditcard"
 		return payment
 
-	def create_stripe_ach(self, client, payment_token):
-		payment = self.create(client=client, title=title)
+	def create_stripe_ach(self, client, cart, payment_token, amount):
+		payment = self.create(client=client, cart=cart, token=payment_token, amount=amount)
 		# do something with the book
 		payment.payment_type="achstripe"
 		return payment
 
-	def create_plaid(self, client, payment_token, amount):
-		payment = self.create(client=client, token=payment_token, amount=amount)
+	def create_plaid(self, client, cart, payment_token, amount):
+		payment = self.create(client=client, cart=cart, token=payment_token, amount=amount)
 		# do something with the book
 		payment.payment_type="achplaid"
 		return payment
 
-	def create_paypal(self, client, payment_token, amount):
-		payment = self.create(client=client, token=payment_token, amount=amount)
+	def create_paypal(self, client, cart, payment_token, amount):
+		payment = self.create(client=client, cart=cart, token=payment_token, amount=amount)
 		# do something with the book
 		payment.payment_type="paypal"
 		return payment
 
-	def create_purchaseorder(self, client, po_number):
-		payment = self.create(client=client, token=po_number)
+	def create_purchaseorder(self, client, cart, po_number):
+		payment = self.create(client=client, cart=cart, token=po_number)
 		payment.payment_type="po"
 		return payment
 
@@ -140,18 +145,32 @@ class Payment(models.Model):
 			token = self.client.stripeclient.bank_id
 			# stripe.create_payment(token=token, amount=self.amount)
 
+		elif self.payment_type == "paypal":
+			payment = paypalrestsdk.Payment({
+				"intent": "sale",
+				"payer": {
+					"payment_method": "paypal"},
+				"redirect_urls": {
+					"return_url": "http://localhost:3000/payment/execute",
+					"cancel_url": "http://localhost:3000/"},
+				"transactions": [{
+					"item_list": {
+						"items": [{
+							"name": "item",
+							"sku": "item",
+							"price": "5.00",
+							"currency": "USD",
+							"quantity": 1}]},
+					"amount": {
+						"total": self.amount,
+						"currency": "USD"},
+					"description": "This is the payment transaction description."}
+				]}
+			)
+
+			if payment.create():
+				print("Payment created successfully")
+			else:
+				print(payment.error)
 
 		return True
-	
-
-class Receipt(models.Model):
-	# customer = models.ForeignKey(Customer) # After adding customer login accounts
-	subscription = models.ForeignKey(Subscription)
-	payment_type = models.CharField(max_length=64, choices=payment_type_choices)
-	amount = models.FloatField(default=0.0)
-	discount_percentage = models.FloatField(default=0.0)
-	# coupons = models.ManyToManyField(Coupon) # After adding coupons to system
-	# discounts = models.ManyToManyField(Discount) # After adding discounts/sales to system
-
-	date_created = models.DateTimeField(auto_now_add=True)
-	date_updated = models.DateTimeField(auto_now=True)

@@ -316,7 +316,6 @@ export default {
 		return {
 			stripe: stripe,
 			estimate_id: '',
-			stripe: null,
 			verifyError1: false,
 			verifyError2: false,
 			cartLoaded: false,
@@ -343,6 +342,7 @@ export default {
 			'getPaymentInfo',
 			'getCart',
 			'getCartChanged',
+			'getPaymentInfoProp',
 			
 		]),
 		isCartLoaded(){
@@ -359,6 +359,7 @@ export default {
 			'setCloudProviders',
 			'setCurrentFormStep',
 			'setEstimatePdfFile',
+			'createPaymentObject',
 			'achSendCredentials',
 			'serverGetEstimatePdf',
 			'serverSetClient',
@@ -535,6 +536,8 @@ export default {
 				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
 				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
 
+				
+
 				// Reset pdf to nothing
 				this.setEstimatePdfFile(null);
 				// Send request for new pdf file
@@ -546,6 +549,12 @@ export default {
 					payload['cart_ref'] = this.getCartReference
 					console.log("SEND PAYLOAD TO API ENDPOINT")
 					console.log(payload)
+					this.createPaymentObject({
+						client_id: this.getClientInfo['pk'],
+						cart_ref: this.getCartReference,
+						payment_type: 'achstripe',
+						token: this.getPaymentInfoProp('banktoken')
+					})
 					this.achSendCredentials(this.getPaymentInfo['banktoken'])
 				})
 				
@@ -559,10 +568,6 @@ export default {
 		}
 	},
 	mounted() {
-		setTimeout(() => {
-			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
-		}, 1000)
-		
 		axios.get(this.getAPIRoot + 'cloud/')
 			.then((response) => {
 				console.log(response)

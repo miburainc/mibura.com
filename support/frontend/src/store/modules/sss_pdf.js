@@ -24,7 +24,7 @@ const getters = {
 
 const actions = {
 	serverGetEstimatePdf({state, rootState, commit}) {
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		let cart_ref = state.cart_ref
 		return freshbooks.getEstimatePDF(client, cart_ref)
 			.then(response => {
@@ -35,7 +35,7 @@ const actions = {
 			})
 	},
 	serverGetInvoicePdf({state, rootState, commit}) {
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		let cart_ref = state.cart_ref
 		return freshbooks.getInvoicePDF(client, cart_ref)
 			.then(response => {

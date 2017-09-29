@@ -664,15 +664,15 @@ def create_payment_object(request):
 
 		if data.payment_type == "creditcard":
 			print("creditcard")
-			payment = Payment.objects.create_stripe_creditcard(client, token, amount)
+			payment = Payment.objects.create_stripe_creditcard(client, cart, token, amount)
 		elif data.payment_type == "achplaid":
-			payment = Payment.objects.create_plaid(client, token)
+			payment = Payment.objects.create_plaid(client, cart, token, amount)
 		elif data.payment_type == "achstripe":
-			payment = Payment.objects.create_stripe_ach(client, token)
+			payment = Payment.objects.create_stripe_ach(client, cart, token, amount)
 		elif data.payment_type == "paypal":
-			payment = Payment.objects.create_paypal(client, token, amount)
+			payment = Payment.objects.create_paypal(client, cart, token, amount)
 		elif data.payment_type == "po":
-			payment = Payment.objects.create_purchaseorder(client, data.po_number)
+			payment = Payment.objects.create_purchaseorder(client, cart, data.po_number)
 
 		payment.cart = cart
 		payment.save()

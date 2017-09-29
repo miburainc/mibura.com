@@ -302,7 +302,6 @@ export default {
 		...mapActions([
 			'setPaymentProp',
 			'setPaymentToken',
-			'setStripe',
 			'plaidSendCredentials',
 			'clearError',
 			'clearErrors',
@@ -314,6 +313,14 @@ export default {
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
+				.then(() => {
+					this.createPaymentObject({
+						client_id: this.getClientInfo['pk'],
+						cart_ref: this.getCartReference,
+						payment_type: 'achplaid',
+						token: this.getPaymentInfoProp('ach_payment_token')
+					})
+				})
 		},
 		switchTabs(newTab){
 			this.payment_type = newTab
@@ -443,14 +450,6 @@ export default {
 					script = "submitach"
 
 					if(noFormErrors){
-						this.createPaymentObject(
-							{
-								client_id: this.getClientInfo['pk'],
-								cart_ref: this.getCartReference,
-								payment_type: 'achstripe',
-								token: this.getPaymentInfoProp('cc_payment_token')
-							}
-						)
 						this.buttonAction(null, "submitach")
 					}
 				}

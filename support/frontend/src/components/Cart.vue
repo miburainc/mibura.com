@@ -85,15 +85,21 @@
 
 		</div> -->
 			
-		<div style="background: #DEDEDE; margin-bottom: 110px;">
+		<div class="container-fluid" style="background: #DEDEDE; margin-bottom: 110px; margin-left:0px; padding:0px;">
 
-			<button class="btn btn-sm" style="margin: 0px 0px 3px 0px; width: 15%; border: none; background: transparent;  text-align: center;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus-square fa-2x" style="color:#d9534f" aria-hidden="true"></i></button>
-			
-			<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; width:68%; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
-			
-			
-			<button class="btn btn-sm" style="width: 11%; margin: 0px 0px 3px 0px; border: none; background: transparent; text-align: center;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus-square fa-2x" style="color:#00a25c" aria-hidden="true"></i></button>
-		
+			<div class="row" style="padding:0px; margin:0px;">
+				<div class="col-md-2 col-xs-2" style="padding:0px; margin:0px 0px 0px 0px">
+					<button class="btn btn-sm btn-success" style="width:100%; margin: 5px 0px 3px 5px;" @click="setSupportYears(getSupportMonths - 6)"><i class="fa fa-minus fa-2x" style="color:white" aria-hidden="true"></i></button>
+				</div>
+
+				<div class="col-md-8 col-xs-8 text-center">
+				<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+				</div>
+
+				<div class="col-md-2 col-xs-2" style="padding:0px; margin:0px 0px 0px 0px">
+					<button class="btn btn-sm btn-success" style="width:90%; margin: 5px 10px 3px 0px;" @click="setSupportYears(getSupportMonths + 6)"><i class="fa fa-plus fa-2x" style="color:white" aria-hidden="true"></i></button>
+				</div>
+			</div>
 				
 			<input style="color: black;" class="form-control" type="hidden" min="0.5" max="9" step="0.5" name="years" @change="setSupportYears" :value="getSupportMonths/12">
 			

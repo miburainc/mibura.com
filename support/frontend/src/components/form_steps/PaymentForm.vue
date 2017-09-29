@@ -22,7 +22,7 @@
 				id="cardName"></form-text-input>
 
 				<label>Card Info</label>
-				<div id="card-element" class="field" :class="{'error-border': cardError}"></div>
+				<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
 				<div class="outcome" style="margin:0px 0px 10px 0px;" >
 					<div class="error" role="alert"></div>
 					<!--
@@ -110,18 +110,19 @@
 
 		<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
 			
-			<div v-show="!getPaymentProcessing" class="col-xs-12" style="padding:0px; margin:0px;">
+			
+			<div class="col-xs-12" style="padding:0px; margin:0px;">
 				<button v-on:keypress.enter.prevent :class="buttons[0].class" type="button"
 			@click="(el) => {buttonAction(el, buttons[0].script)}" style="width:50%;white-space:normal;">
 					{{form.buttons[0].label}}
-				</button><button id="btn_review" v-on:keypress.enter.prevent @click="buttonContinue" :class="buttons[1].class" type="button" style="width:50%; white-space:normal;">
-					{{buttons[1].label}}
+				</button><button id="btn_review" v-on:keypress.enter.prevent @click="buttonContinue" :class="buttons[1].class" type="button" style="width:50%; white-space:normal;" :disabled="getPaymentProcessing">
+					{{ !getPaymentProcessing ? buttons[1].label : "Processing"}} <i v-if="getPaymentProcessing" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
 				</button>
 			</div>
 
-			<button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>
+			<!-- <button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>
 				Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-			</button>
+			</button> -->
 			
 		</div>
 
@@ -153,6 +154,9 @@ export default {
 			title: "Payment",
 			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
 			URL_ROOT: URL_ROOT,
+			stripe: null,
+			elements: null,
+			cards: null,
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,
@@ -315,6 +319,30 @@ export default {
 		checkError(){
 			return(true)
 		},
+		stripeSetOutcome(result) {
+
+			var errorElement = document.querySelector('.error');
+			errorElement.classList.remove('visible');
+
+			var error = false
+			if (result.token) {
+
+				// Use the token to create a charge or a customer
+				// https://stripe.com/docs/charges
+				this.setPaymentToken(result.token.id);
+				this.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
+				setTimeout(function(){this.setPaymentProcessing(false)}, 400)
+
+			} else if (result.error) {
+				errorElement.textContent = result.error.message;
+				errorElement.classList.add('visible');
+				error = true
+			}
+
+			this.cardError = error
+			
+			return(error)
+		},
 		buttonContinue() {
 			var extraDetails = {
 				
@@ -344,7 +372,7 @@ export default {
 				}
 
 				if(noFormErrors){
-					stripe.createToken(card, extraDetails).then(setOutcome).then(() => {
+					this.stripe.createToken(this.card, extraDetails).then(this.stripeSetOutcome).then(() => {
 						if(!this.cardError){
 							this.buttonAction(null, script)	
 						}
@@ -582,9 +610,9 @@ export default {
 			linkHandler.open();
 		};
 		
-		var stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
-		var elements = stripe.elements();
-		var card = elements.create('card', {
+		this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
+		this.elements = this.stripe.elements();
+		this.card = this.elements.create('card', {
 			style: {
 				base: {
 					iconColor: '#548ebf',
@@ -600,37 +628,12 @@ export default {
 				},
 			}
 		});
-		card.mount('#card-element');
+		this.card.mount('#card-element');
 		var self = this;
-		function setOutcome(result) {
-
-			var errorElement = document.querySelector('.error');
-			errorElement.classList.remove('visible');
-
-			var error = false
-			if (result.token) {
-
-				// Use the token to create a charge or a customer
-				// https://stripe.com/docs/charges
-				this.setPaymentToken(result.token.id);
-				this.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
-				setTimeout(function(){this.setPaymentProcessing(false)}, 400)
-
-			} else if (result.error) {
-				errorElement.textContent = result.error.message;
-				errorElement.classList.add('visible');
-				error = true
-
-
-			}
-
-			this.cardError = error
+		
+		this.card.on('change', (event) => {
 			
-			return(error)
-		}
-		card.on('change', function(event) {
-			
-			this.cardError = setOutcome(event);
+			this.cardError = this.stripeSetOutcome(event);
 			console.log(this.cardError)
 		});
 	},

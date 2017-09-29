@@ -232,11 +232,11 @@ def verify_ach(request):
 		client = get_object_or_404(Client, pk=client_id)
 
 		response = client.stripeclient.stripe_verify_bank_ach(ach_verify_amt1, ach_verify_amt2)
-		
+		print(response)
 		if response['status'] == "verified":
 			return HttpResponse({"message": "Success"}, status=200)
 		else:
-			return HttpResponse(status=400)
+			return HttpResponse(response['error'], status=400)
 
 	return HttpResponse("not post", status=400)
 
@@ -700,7 +700,7 @@ def checkout(request):
 				source=data.stripe_token,
 				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 			)
-		else:
+		elif client.stripeclient.bank_verified:
 			stripe.Charge.create(
 				amount=stripe_total,
 				currency="usd",

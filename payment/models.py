@@ -27,11 +27,14 @@ class StripeClient(models.Model):
 	def create(cls, client):
 		# Make API calls to Stripe
 		# stripe_customer_id = stripe.create_customer(asdlfkajsd)
-		customer = stripe.Customer.create(
-			description=client.get_full_name() + " customer",
-			email=client.email,
-			metadata={"created": datetime.now(), "first_name": client.first_name, "last_name": client.last_name, "company": client.company}
-		)
+		try:
+			customer = stripe.Customer.create(
+				description=client.get_full_name() + " customer",
+				email=client.email,
+				metadata={"created": datetime.now(), "first_name": client.first_name, "last_name": client.last_name, "company": client.company}
+			)
+		except stripe.error.InvalidRequestError as e:
+			return e
 
 		stripe_customer_id = customer['id']
 
@@ -52,11 +55,20 @@ class StripeClient(models.Model):
 		customer = stripe.Customer.retrieve(self.customer_id)
 		bank_account = customer.sources.retrieve(self.bank_id)
 
-		request = bank_account.verify(amounts=[ach_verify_amt1, ach_verify_amt2])
+		try:
+			request = bank_account.verify(amounts=[amt1, amt2])
+		except stripe.error.InvalidRequestError as e:
+			body = e.json_body
+			err  = body.get('error', {})
+			return {
+				'status': 400,
+				'error': err.get('message')
+			}
 
 		if request['status'] == 'verified':
 			self.bank_verified = True
 			self.bank_type = request['account_holder_type']
+			self.save()
 
 		return request
 

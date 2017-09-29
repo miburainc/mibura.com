@@ -1,43 +1,42 @@
 <template>
-	<div>
-		<div id="stripe-payment-form" style="margin-top:15px;">
-			<h2 class="text-center">{{ title }}</h2>
-			<h4 class="text-center">{{ text }}</h4>
-			<ul class="nav nav-tabs" style="min-width:325px;">
-				<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
-				<li role="presentation" :class="{active: payment_type=='paypal'}"><a style="cursor: pointer;" @click="switchTabs('paypal')">PayPal</a></li>
-				<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
-				<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('po')">P.O.</a></li>
-				<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
-				
 
-			</ul>
-			<div class="payment-box">
+	<div id="stripe-payment-form" style="margin-top:15px;" @keyup.enter="buttonContinue">
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
+		<ul class="nav nav-tabs" style="min-width:325px;">
+			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
+			<li role="presentation" :class="{active: payment_type=='paypal'}"><a style="cursor: pointer;" @click="switchTabs('paypal')">PayPal</a></li>
+			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
+			<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('po')">P.O.</a></li>
+			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
+			
+
+		</ul>
+		<div class="payment-box">
 
 				<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
-					<form-text-input 
-					:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
-					:step="cc_fields.cardname" 
-					id="cardName"></form-text-input>
+				<div class="outcome" style="margin:0px 0px 0px 0px;" >
+					<div class="error" role="alert"></div>
+					<!--
+					<div class="success"> 
+					Success! Your Stripe token is <span class="token"></span>
+					</div>
+					-->
+				</div>
+				<form-text-input 
+				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+				:step="cc_fields.cardname" 
+				id="cardName"></form-text-input>
 
-					<label>Card Info</label>
-					<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
-					<div class="outcome" style="margin:0px 0px 10px 0px;" >
-						<div class="error" role="alert"></div>
-						<!--
-						<div class="success"> 
-						Success! Your Stripe token is <span class="token"></span>
-						</div>
-						-->
-					</div>
-					<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
-						<i class="fa fa-cc-visa" aria-hidden="true"></i>
-						<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
-						<i class="fa fa-cc-discover" aria-hidden="true"></i>
-						<i class="fa fa-cc-amex" aria-hidden="true"></i>
-					</div>
-					<br><br>
+				<label>Card Info</label>
+				<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
+				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
+					<i class="fa fa-cc-visa" aria-hidden="true"></i>
+					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
+					<i class="fa fa-cc-discover" aria-hidden="true"></i>
+					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+
 				</div>
 
 				<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">
@@ -607,7 +606,10 @@ export default {
 		});
 		this.card.mount('#card-element');
 		var self = this;
-		
+
+		this.card.addEventListener("submit", (event) =>{
+			this.buttonContinue()
+		})
 		this.card.on('change', (event) => {
 			
 			this.cardError = this.stripeSetOutcome(event);

@@ -10,6 +10,7 @@ import {step_names} from './values'
 import * as TYPE from './types'
 
 export default {
+
 	ServerRequestPastEstimate({commit, state, rootState}, estimate_ref) {
 		freshbooks.request_past_estimate(estimate_ref).then((response) => {
 			commit(TYPE.CART_CLEAR)

@@ -25,7 +25,7 @@ def remove_namespace(doc, namespace):
 		if elem.tag.startswith(ns):
 			elem.tag = elem.tag[nsl:]
 
-def create_estimate(client, plan, length, items):
+def create_estimate(client, plan, length, items, cart_ref):
 	print("create_estimate")
 	print(items)
 	discount_list = Discount.objects.all()
@@ -51,7 +51,10 @@ def create_estimate(client, plan, length, items):
 	discount.text = str(int(active_discount*100))
 
 	terms = estimate.find('terms')
-	terms.text = 'Estimate for ' + plan + ' plan for ' + str(length) + ' years.'
+	terms.text = 'https://Mibura.com/terms'
+
+	notes = estimate.find('notes')
+	notes.text = 'Smart Support Cart ID: ' + cart_ref
 
 	first_name = estimate.find('first_name')
 	first_name.text = client['first_name']

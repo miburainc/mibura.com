@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^cloud/', include('cloud.urls', namespace="cloud")),
     url(r'^support/', include('support.urls', namespace="support")),
     url(r'^staffing/', include('staffing.urls', namespace="staffing")),
+    url(r'^terms/', views.terms, name="terms"),
     
     # SEO
     url(r'^robots\.txt$', views.robot_txt),

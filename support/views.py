@@ -603,7 +603,7 @@ def get_estimate_pdf(request):
 
 		client.get_freshbooks_id()
 
-		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items, cart.reference)
 
 		if cart.freshbooks_estimate_id:
 			old_cart = deepcopy(cart)
@@ -819,7 +819,7 @@ def checkout(request):
 
 		estimate_id = cart.freshbooks_estimate_id
 		client_freshbooks_id = client.get_freshbooks_id()
-		invoice_id = invoices.create_invoice(client_freshbooks_id, client.__dict__, cart.plan, cart.length, line_items)
+		invoice_id = invoices.create_invoice(client_freshbooks_id, client.__dict__, cart.plan, cart.length, line_items, cart.reference)
 		print("invoice_id in checkout", invoice_id)
 
 		sub.freshbooks_invoice_num = invoice_id

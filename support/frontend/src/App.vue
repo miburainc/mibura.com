@@ -158,9 +158,9 @@
 					</div>
 					<div class="modal-footer">
 						<!-- <button v-if="getEstimatePDF" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
-						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>-->
+						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToReview">Go to Payment</button>-->
 						<button v-if="cartLoaded" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
-						<button v-if="cartLoaded" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>
+						<button v-if="cartLoaded" type="button" class="btn btn-primary" @click="goToReview">Go to Review</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						<button v-if="cartLoadError" type="button" class="btn btn-info" @click="submitQuoteId2">Retry</button>
 					</div>
@@ -373,7 +373,6 @@ export default {
 		submitQuoteId(){
 
 			var data = {
-				// client_id: this.getClientInfo['pk'],
 				reference: document.getElementById('quoteIdInput').value,
 			}
 
@@ -409,6 +408,7 @@ export default {
 			
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
+			this.setCurrentFormStep(1)
 			
 		},
 		submitQuoteId2(){
@@ -431,10 +431,9 @@ export default {
 			$('#returnSuccessModal').modal('toggle')
 			$('#verifyModal').modal('show')
 		},
-		goToPayment(){
-			console.log("LOAD CUSTOMER'S ESTIMATE DATA INTO STATE AND GO TO PAYMENT PAGE")
+		goToReview(){
 			$('#returnSuccessModal').modal('toggle')
-			this.setCurrentFormStep(6)
+			this.setCurrentFormStep(5)
 		},
 		submitVerification(){
 			let v1 = document.getElementById('verify1').value
@@ -487,7 +486,8 @@ export default {
 			}
 
 			if(allGood){
-				
+				this.setPaymentProp({prop: 'verify1', data: v1})
+          		this.setPaymentProp({prop: 'verify2', data: v2})
 				this.achSendVerify()
 			}
 		},
@@ -596,6 +596,14 @@ export default {
 	&:active, &:focus, &:visited {
 		background-color: #2d85bf!important;
 		border-color: #2d81ae;
+	}
+}
+
+.btn-success[disabled] {
+
+	&:hover {
+		background-color: #389fd5;
+		border-color: #2d85bf;
 	}
 }
 

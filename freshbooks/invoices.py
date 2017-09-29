@@ -17,7 +17,7 @@ try:
 except ImportError:
 	import xml.etree.ElementTree as ET
 
-def create_invoice(client_freshbooks_id, client, plan, length, items):
+def create_invoice(client_freshbooks_id, client, plan, length, items, cart_ref):
 	print("***create_invoice***")
 	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
@@ -41,8 +41,8 @@ def create_invoice(client_freshbooks_id, client, plan, length, items):
 	discount.text = str(int(active_discount*100))
 
 	terms = invoice.find('terms')
-	terms.text = 'Invoice for ' + plan + ' plan for ' + str(length) + ' years.'
-
+	terms.text = 'https://Mibura.com/terms'
+	
 	first_name = invoice.find('first_name')
 	first_name.text = client['first_name']
 
@@ -127,9 +127,6 @@ def add_invoice_payment(invoiceid, client_freshbooks_id, payment_type, paymentam
 
 	_type = payment.find('type')
 	_type.text = payment_type
-
-	notes = payment.find('notes')
-	notes.text = "Payment posted"
 
 	data = ET.tostring(root)
 

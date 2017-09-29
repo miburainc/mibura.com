@@ -68,9 +68,14 @@
 			</div>
 			<br>
 			<div style="text-align:center; margin-bottom:20px;">
-				
-				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
-				<a v-else role="button" class="btn btn-lg btn-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="form-check">
+					<label>
+					<input type="checkbox" class="form-check-input" @change="(e) => {setAcceptedTerms(e.target.checked)}">
+						<span style="color:gray; margin-left:5px;"> I agree to the <a target="blank" href="/terms">Mibura Terms &amp; Conditions</a></span>
+					</label>
+				</div>
+				<!-- <a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-default" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
+				<a v-else role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Accept Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
 
 				
 				<!-- <label style="font-size: 20px; color: lightblue;">
@@ -99,6 +104,7 @@ export default {
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
+			acceptedTerms: false,
 			title: "Verify",
 			text: "",
 			processing: false,

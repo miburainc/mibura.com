@@ -1,6 +1,8 @@
 import * as TYPE from '../types'
 import Vue from 'vue'
 
+import freshbooks from '../api/freshbooks'
+
 import client from '../api/client'
 
 const state = {

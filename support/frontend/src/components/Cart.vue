@@ -45,7 +45,7 @@
 			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartNewItem"><i class="fa fa-plus" aria-hidden="true"></i> Item</button>
 			<button type="button" class="btn btn-sm btn-outline-info" style="border: none" @click="buttonStartCloud"><i class="fa fa-plus" aria-hidden="true"></i> Cloud</button>
 		</div>
-		<div v-show="this.getCart.length > 0" style="max-height:150px;overflow:auto;margin: 0px; padding:0px;">
+		<div v-show="this.getCart.length > 0" style="margin: 0px; padding:0px;">
 			<table class="table table-striped table-condensed table-hover" style="padding:0px; margin:0px; border-bottom: 1px solid lightgray">
 				<tbody class="cart-table-body">
 					<!-- <tr v-if="this.getCart.length < 1" class="text-center">

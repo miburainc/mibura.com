@@ -78,6 +78,7 @@ ndg-httpsclient==0.4.2
 oauthlib==2.0.2
 olefile==0.44
 openpyxl==2.4.8
+paypalrestsdk==1.13.1
 pbr==3.1.1
 Pillow==4.2.1
 pinax-stripe==3.4.1

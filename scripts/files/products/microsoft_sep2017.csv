@@ -1,0 +1,600 @@
+Doc currency,USD,,,,,,,,,
+,,,,,,,,,,
+A/C/D/U,Valid-From Date,Valid To Date,Offer Display Name,Offer ID,License Agreement Type,Purchase Unit,Secondary License Type,End Customer Type,List Price,ERP Price
+ADD,20170901,99991231,Windows 10 Enterprise E3,39504991-553b-48c2-bdf4-ea47f93bf784,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,9.60,12.00
+,,,Windows 10 Enterprise E3 VDA,4b608b64-3a27-4373-854c-fd33115a8ce1,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,14.40,18.00
+,,,Windows 10 Enterprise E5,f2c42110-ec7b-4434-b55e-1a9e456ac2f0,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,15.20,19.00
+CHG,20170901,99991231,Additional PSTN numbers to extend Skype for Business features (Government Pricing),c9a1f66b-d7af-4a1b-b1e1-b1c1d529f601,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.00,5.00
+,,,Azure Active Directory Basic (Government Pricing),0a7983cd-961f-4c7c-9cbf-1f6bb322cbf3,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.80,1.00
+,,,Azure Active Directory Premium P1 (Government Pricing),ceca6875-f3ba-4f9a-916f-9cc9e322d4aa,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.80,6.00
+,,,Azure Information Protection Plan 1 (Government Pricing),e60e0348-1710-484b-992a-32b294d4cde1,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Cloud App Security for Government,855b3ebe-2483-4696-aef9-75652133a387,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.00,5.00
+,,,Customer Lockbox (Government Pricing),f8a22f25-2b60-4fdb-b920-b0bec26bff5f,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Delve Analytics (Government Pricing),58de892e-9962-4477-96f9-bc1bef83a02c,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.20,4.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Retail (Government Pricing),b5482513-1360-446a-902d-f0344f4d2245,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,66.50,95.00
+,,,Dyn365 Cloud Add-on From AX Functional to Retail (Government Pricing),553867f7-18ec-407a-84c5-0fa5ced5eb05,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,101.50,145.00
+,,,Dyn365 Cloud Add-on From AXEnt/Func to Unified Operations Plan (Government Pricing) (Qualified Offer),e24314a6-91dc-4ff0-a4af-1147e47de981,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,45.14,64.50
+,,,"Dyn365 for Operations Activity, Enterprise Edition (Government Pricing)",45a5c94f-8f85-404f-a4ab-d57691b70d67,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,35.00,50.00
+,,,Dyn365 for Retail FromSA From AX Enterprise/Functional (Government Pricing),8c2d4389-3a3b-4b55-af76-463d8ae2ad6b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,101.50,145.00
+,,,Dyn365 for Talent FromSA From AX Enterprise (Government Pricing),4fd28a28-d0e2-4de4-9edf-c60df0125600,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,23.80,34.00
+,,,Dyn365 Unified Operations Plan From SA From AX Ent/Func (Government Pricing) (Qualified Offer),0b64cd57-e4f9-40e3-878e-f939950bfadc,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,79.80,114.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Basic (Qualified Offer) (Government Pricing),af76013f-8d2a-4a72-82e0-ff84d62e2bf3,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,24.97,33.30
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Pro (Qualified Offer) (Government Pricing),d6b8d2ee-b1ee-4638-9060-12d50b8e51c7,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,37.29,49.70
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Basic (Qualified Offer) (Government Pricing),a1f241a6-d3de-4a37-b888-cca5dc2cef57,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,30.00,40.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Pro (Qualified Offer) (Government Pricing),f88658e1-9a50-4663-b5ea-6ae6e32eea8b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,51.75,69.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA From Cust Eng Plan Business Apps (On-Premises) User CALs (Government Pricing),20328fab-1e67-48f2-865f-8dcffd14b9f5,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,73.31,97.80
+,,,Dynamics 365 Ent edition Cust Eng Plan - Tier 1 (1-99 users) (Government Pricing),c57a709a-965a-4924-9816-84698b913c4b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,86.25,115.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 1 Qualified Offer for CRMOL Pro Add-On to O365 Users (Government Pricing),cd96bc4f-9b90-42e5-9272-0d9ef276800a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,49.81,66.40
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 2 (100-249 Users) (Government Pricing),b5b371b0-fa5e-47b9-8728-471aa1078f20,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,67.50,90.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 3 (250-499 Users) (Government Pricing),e4b8f8b3-48f1-42e3-814f-64fe73ab1d83,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,60.00,80.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 4 (500-999 Users) (Government Pricing),0c7433bb-fccc-485f-9226-035d3514bf6e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,52.50,70.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 5 (1000+ Users) (Government Pricing),c870a456-a1a0-439f-9a86-5e75b27f9e1f,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,45.00,60.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Basic (Qualified Offer) (Government Pricing),07c69e23-443d-40bc-8e06-9b3623c970f1,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,43.13,57.50
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Professional (Qualified Offer) (Government Pricing),48a55976-722a-4a19-8597-2544ee28315d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,64.69,86.30
+,,,Dynamics 365 Ent Edition Plan - Add-On for AX Ent/Functional (Qualified Offer) (Government Pricing),493cc8b8-7873-4125-bd4a-7479cb4ccc80,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,53.54,76.50
+,,,Dynamics 365 Ent Edition Plan - From SA for AX Ent/Functional (Qualified Offer) (Government Pricing),2b8c363a-d960-47a6-8d17-62645919ea1d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,88.20,126.00
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl Database Storage (Government Pricing),003f9f2f-7cbc-42db-9d60-7308c140e4e0,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.50,5.00
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl File Storage (Government Pricing),2e7810b4-faf4-4d98-aefb-fa7bc7d00b0b,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,0.70,1.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 1:Developer & Test Instance (Government Pricing),58718cc7-2477-4016-90a4-f3d7c2747de6,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,297.50,425.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 2:Standard Acceptance Testing (Government Pricing),f1b1bf48-db29-46c9-836d-9c1e916cb583,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,945.00,1350.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 3:Premier Acceptance Testing (Government Pricing),2c0d88aa-f73c-409a-b90f-af2cb5c8e4cd,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2835.00,4050.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 4:Standard Performance Testing (Government Pricing),dd69ef92-314e-445b-a131-f33bd85b036a,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,5530.00,7900.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 5:Premier Performance Testing (Government Pricing),eca123e6-23dc-4649-94bf-b26c4dda22cb,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,8400.00,12000.00
+,,,Dynamics 365 Ent edition Plan (Government Pricing),34c191b8-ced7-4e9b-ae6f-653531387d73,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,147.00,210.00
+,,,Dynamics 365 Enterprise Edition - Additional Database Storage (Government Pricing),7f975734-3e60-4a1a-9200-084befa083e6,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.75,5.00
+,,,Dynamics 365 Enterprise Edition - Additional Non-Production Instance (Government Pricing),f5a22ff0-71e6-4569-92a9-826290151fd8,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,112.50,150.00
+,,,Dynamics 365 Enterprise Edition - Additional Portal (Government Pricing),e7afc5a3-049a-4a0e-b2b0-c8921d1d9b97,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,375.00,500.00
+,,,Dynamics 365 Enterprise Edition - Additional Portal Page Views (Government Pricing),f9e4c71e-bde1-440a-b010-d1ec89a74dae,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,37.50,50.00
+,,,Dynamics 365 Enterprise Edition - Additional Production Instance (Government Pricing),d99c49c8-c9eb-4651-b8b8-5ec217b8ccd8,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,412.50,550.00
+,,,Dynamics 365 Enterprise Edition - Additional Social Posts (Government Pricing),df26b9db-f90f-4f3d-b515-eca5b47a7779,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,75.00,100.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - Add-On for CRM Basic (Qualified Offer) (Government Pricing)",6eb448f0-0114-44bd-b7cc-eb5ae7487ca0,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,21.22,28.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA for CRM Basic (Qualified Offer) (Government Pricing)",76114f23-5046-4371-9ba2-498462d6782e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.25,35.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) Device CAL (Government Pricing)",7d020c0c-ba44-4a59-91e6-ee68dceeea68,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,92.44,123.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) User CAL (Government Pricing)",3b854428-991c-4285-bc89-ea4c8375ced5,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,60.56,80.80
+,,,"Dynamics 365 for Customer Service, Enterprise Edition (Government Pricing)",73a04bc3-ff6f-46f3-ad24-288c0d831074,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,71.25,95.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Device (Government Pricing)",b103ccd5-91ab-4d55-8722-ba08a4f9e892,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,108.75,145.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Basic (Qualified Offer) (Government Pricing)",912d5032-8d77-4850-a000-a0656fecadd6,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,37.50,50.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Professional (Qualified Offer) (Government Pricing)",82fa6933-3b92-47df-b222-7aeb22c3d139,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,57.00,76.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users (Government Pricing)",90c77c82-8815-44af-a8b6-436c76f06f8a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,43.89,58.50
+,,,"Dynamics 365 for Field Service, Enterprise Edition - Resource Scheduling Optimization (Government Pricing)",39804b12-6330-4b66-a8cd-455955a357c9,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,22.50,30.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition (Government Pricing)",f0ac1c7d-d4d9-49aa-bcbb-54f986c688da,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,71.25,95.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition Device (Government Pricing)",bca2331c-db82-44dc-a33a-f76b1fe14246,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,108.75,145.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition for CRMOL Basic + Field Service Add-On (Qualified Offer) (Government Pricing)",74766768-999e-4fb5-8c96-a3a0c3f63e10,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,57.00,76.00
+,,,"Dynamics 365 for Financials, Business Edition (Government Pricing)",d1c0e307-7bfb-4348-a2ec-a55e6f62730d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,28.00,40.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV/GP Full or SL Pro (qualified offer) - Government Pricing",9d831a9c-4508-4341-9fe5-7e8f1d1dab3b,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,2.10,3.00
+,,,"Dynamics 365 for Financials, Business Edition from SA for NAV/GP Full, NAV Ltd, or SL AM/BE/Std/Pro (qualified offer) - Government Pricing",c85f51e3-155f-4c43-971d-f193100190c8,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,16.80,24.00
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Functional (Government Pricing)",48fff6d4-bc85-4267-97aa-71e2269e5585,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,15.88,22.70
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Functional (Qualified Offer) (Government Pricing)",7a10e169-6373-463f-a3d3-7873f320c01a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,7.14,10.20
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Task (Government Pricing)",a7d7dfd6-27fb-4711-8e76-5825d6334016,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.30,37.60
+,,,"Dynamics 365 for Operations Activity, Enterprise edition Cloud Add-on from AX Task (Qualified Offer) (Government Pricing)",3771a4c3-c304-4541-a594-139decf3dc71,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,17.54,25.10
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition from SA from AX Functional or Task (Qualified Offer) (Government Pricing)",86c2d6d2-57a8-4960-a879-b2bfa562091c,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,21.00,30.00
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition From SA from AX Functionality or Task (Government Pricing)",10d3144a-ebfe-4103-84b1-5c8c1f7b825e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,29.75,42.50
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional Database Storage (Government Pricing)",dc15133c-7cf0-47e5-a070-a7a39ea2d1d3,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.50,5.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional File Storage (Government Pricing)",9d27e58e-4555-45a7-8ca8-ae9955ebf86c,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,0.70,1.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 1:Developer & Test Instance (Government Pricing)",6002d250-f68d-4915-bd92-501df8159d0d,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,297.50,425.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 2:Standard Acceptance Testing (Government Pricing)",e49abe4f-e17f-4574-9890-ce6ab9373d9e,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,945.00,1350.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 3:Premier Acceptance Testing (Government Pricing)",1e1560da-7e92-4fc6-8b48-6099a44f4005,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,2835.00,4050.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 4:Standard Performance Testing (Government Pricing)",2d6990c1-9192-4bd7-8913-ea830ac5f151,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,5530.00,7900.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 5:Premier Performance Testing (Government Pricing)",b2fba3d7-af0c-49bf-8a82-e015e2d420f6,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,8400.00,12000.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device (Government Pricing)",d292432d-6f77-4b5f-9cb1-7db8ac292755,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,52.50,75.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device add-on for AX Task Device (qualified offer) (Government Pricing)",bae44560-609c-4a5b-a8ff-f2347b8c2b1c,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.31,37.60
+,,,"Dynamics 365 for Operations, Enterprise Edition Device from SA for AX Task Device (qualified offer) (Government Pricing)",55134101-227a-4eeb-a13c-831b9030afe6,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,31.50,45.00
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition (Government Pricing)",4db68a68-8ec9-472b-95bc-e1dfe98f1d3b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,71.25,95.00
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for CRMOL Basic + Project Service Add-On (Qualified Offer) (Government Pricing)",c62f7fb2-d939-4e9d-b714-49d928f75668,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,57.00,76.00
+,,,"Dynamics 365 for Retail, Enterprise Edition (Government Pricing)",9d127031-c9b0-471c-aa76-a9dbff93ef0d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,119.00,170.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing),ed617729-4456-44c1-b094-563c938a760f,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,71.25,95.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) Add-On for CRM Basic (Qualified Offer),dc7ea830-5bba-4eb7-b18a-8fe7c5096633,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,21.22,28.30
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) CRMOL Basic (Qualified Offer),4bcf28d2-5570-4a07-88a7-50c515ffae16,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,37.50,50.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) CRMOL Professional (Qualified Offer),da6372a4-5f8c-4150-9660-62c270ac866a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,57.00,76.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) Device,875e261a-33e7-444c-b05f-c4ef02f1f238,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,108.75,145.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) From SA for CRM Basic (Qualified Offer),aa4b5f32-57c4-44f3-bf96-06b3243bf7e9,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.25,35.00
+,,,Dynamics 365 for Sales Enterprise Edition (Government Pricing) Qualified Offer for CRMOL Pro Add-On to O365 Users,cdd5d9c0-27d4-402e-bdef-7737b8dd9152,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,43.89,58.50
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) Device CAL (Government Pricing)",6e296ff7-bc2f-45d7-90c3-8926c257736d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,92.44,123.30
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) User CAL (Government Pricing)",fa3d1005-c16d-4c28-8f06-3724958ef485,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,60.56,80.80
+,,,"Dynamics 365 for Talent, Enterprise Edition (Government Pricing)",ec7512e7-b9cf-4a84-9e3b-2ea4f641b1f3,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,28.00,40.00
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing),f0451b38-4b71-4bab-b7a1-34cc6d666afe,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,6.00,8.00
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing) (SMB Offer),81eeeac5-0eae-4f40-b7b2-2cffae499980,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,3.50,5.00
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing) Add-On for AX Task or Self-serve (Qualified Offer),2ddf64e0-2d36-4f1e-b215-30739d585a9a,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,0.74,1.10
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing) Add-On for CRM Essentials (Qualified Offer),1ac4008e-3d89-4534-bae8-13a4de46b5b8,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.34,4.50
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing) From SA for AX Task or Self-serve (Qualified Offer),0ca8c4b5-7fe1-47d4-a606-b5cc13335dbf,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.20,6.00
+,,,Dynamics 365 for Team Members Enterprise Edition (Government Pricing) From SA for CRM Essentials (Qualified Offer),941178c1-7cc1-45cd-9924-9dcd53f0661d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.50,6.00
+,,,"Dynamics 365 for Team Members, Business Edition (Government Pricing)",0532ade2-5431-4825-9aa1-66a8b35357dc,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,3.50,5.00
+,,,"Dynamics 365 for Team Members, Business Edition from SA for GP/SL Ltd (qualified offer) - Government Pricing",61dac174-3462-46b0-8192-b1d4a725c5be,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,2.10,3.00
+,,,"Dynamics 365 for Team Members, Enterprise Edition - From SA From Team Members (On-Premises) User/Device CAL (Government Pricing)",e8ec67c1-c9bc-4db1-8468-acc9345e72c6,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,6.38,8.50
+,,,"Dynamics 365 for Unf Ops Plan, Ent Edition (Government Pricing)",ff2de9b7-5ad9-4038-89b5-a446e770eb0a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,133.00,190.00
+,,,Enterprise Mobility + Security E3 (Government Pricing),461d7db7-ec67-4671-bf9b-22efde413f0f,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,6.99,8.70
+,,,Exchange Online (Plan 2) (Government Pricing),ec0d51df-916f-4455-a096-5ab08f58dbd2,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,6.40,8.00
+,,,Exchange Online Advanced Threat Protection (Government Pricing),84690799-e043-4de3-b4bd-3e6493283c92,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Exchange Online Archiving for Exchange Online (Government Pricing),cb038730-6cbe-47b9-afd4-ca7fa5d0c39b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2.40,3.00
+,,,Exchange Online Kiosk (Government Pricing),22b61e04-b7eb-4405-9cb3-6a4407b9f95a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Exchange Online Plan 1 (Government Pricing),24cc266d-6fd3-4b85-b9c8-4d5f587521ac,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,3.20,4.00
+,,,Intune (Government Pricing),16879030-563b-4c89-9586-2cb79ed270ee,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.80,6.00
+,,,Microsoft 365 E3 (Government Pricing),e9025a44-59b1-497b-a5be-f148006549ba,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,27.16,34.00
+,,,Microsoft 365 E5 (Government Pricing),e016b974-a412-404f-98cd-db92311afb10,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,48.85,61.10
+,,,Microsoft 365 E5 without PSTN Conferencing (Government Pricing),096fabdf-aeb1-43db-b04b-ff453b0afadc,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,48.47,60.60
+,,,Microsoft Cloud App Security (Government Pricing),a5f80a44-fde7-4b16-8fc4-1a9db7a4375b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.00,5.00
+,,,Microsoft Social Engagement Additional 10K Posts (Government Pricing),21e4b963-3d7c-4bde-946c-b4110e4de0bf,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,75.00,100.00
+,,,Microsoft Social Engagement Additional 10k Posts (minimum 10 licenses) (Government Pricing),853bc104-2ce1-4727-ac31-3c454bcb0e73,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,52.50,70.00
+,,,Microsoft Social Engagement Additional 10k Posts (minimum 100 licenses) (Government Pricing),59e61ebc-b1f5-4e58-9887-ecf6993d38e8,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,30.00,40.00
+,,,Microsoft Stream Plan 2 for Office 365 Add-On (Government Pricing),63780231-f383-4408-80e2-be7807e79545,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Office 365 Advanced eDiscovery (Government Pricing),c11d32d0-7943-4137-9fcc-40797c9bea85,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,6.40,8.00
+,,,Office 365 Advanced Security Management (Government Pricing),8777f87a-aad2-44d8-a8bf-3bd7f5bde155,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2.40,3.00
+,,,Office 365 Enterprise E1 (Government Pricing),cfc69058-5106-40bd-81e4-44e0e29034b2,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,6.40,8.00
+,,,Office 365 Enterprise E3 (Government Pricing),6b551829-de8c-41e5-8678-41d52c27aee8,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,16.00,20.00
+,,,Office 365 Enterprise E4 (Government Pricing),379dc555-ddcb-4ccb-bebf-37437333e278,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,17.60,22.00
+,,,Office 365 Enterprise E5 (Government Pricing),0f797c58-3b74-40a8-bfa5-383440a99445,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,28.40,35.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing (Government Pricing),c4158aa7-00e7-4ce1-9cf3-3cf8321f377a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.40,33.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing (Government Pricing),8ba3fd99-cd7c-48b0-811b-e78f7a4a1b32,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,28.00,35.00
+,,,Office 365 Exchange Online Protection (Goverment Pricing),0cca44d6-68e9-4762-94ee-31ece98783b9,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.80,1.00
+,,,Office 365 F1 (Government Pricing),6ce1ccc8-8b18-4e1b-a1c4-f89de9904389,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,3.20,4.00
+,,,Office 365 ProPlus (Government Pricing),2b6f895d-dfd3-4fb5-8c8c-1a551c9db59a,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,9.60,12.00
+,,,Office 365 Threat Intelligence (Government Pricing),7e614c9d-1738-4bf8-a963-b724cd4b1baa,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,6.40,8.00
+,,,OneDrive for Business (Plan 1) (Government Pricing),8f827dc9-5d95-4321-b4b3-a0ee086d02a3,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.00,5.00
+,,,OneDrive for Business (Plan 2) (Government Pricing),e2efc935-4a17-45ee-a643-bb59f1961261,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,8.00,10.00
+,,,Power BI Premium P1 (Government Pricing),74d3f73d-cd57-4ec8-bf8a-b2131a20d4d4,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,3996.00,4995.00
+,,,Power BI Premium P2 (Government Pricing),66c00255-e2be-4720-ae1e-e71d277c50e1,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,7996.00,9995.00
+,,,Power BI Premium P3 (Government Pricing),481a5316-b3bc-4b90-a103-275af1c88507,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,15996.00,19995.00
+,,,Power BI Pro (Government Pricing),a6acbc1c-9d2a-482a-abda-dfb9285e301e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,7.99,10.00
+,,,Project Online (Government Pricing),fa86a86a-2266-41ef-91ef-48e31a6200ac,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,26.40,33.00
+,,,Project Online Essentials (Government Pricing),af87bced-1900-4bde-9037-9356bc08e235,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,5.60,7.00
+,,,Project Online Premium (Government Pricing),405d71a7-d6a0-4e80-b6ed-98d7dba00def,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,44.00,55.00
+,,,Project Online Professional (Government Pricing),410fcf83-972a-4ac6-a90b-f8d55b69e26e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,24.00,30.00
+,,,Project Pro for Office 365 (Government Pricing),11e3c9a9-24a2-4cfd-9f60-a9797d68e296,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,20.00,25.00
+,,,SharePoint Online (Plan 1) (Government Pricing),708decda-77df-47bb-a682-84748e5ba40f,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.00,5.00
+,,,SharePoint Online (Plan 2) (Government Pricing),9344b43b-3b9d-45ab-8f88-b258a0e7d283,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,8.00,10.00
+,,,Skype for Business Cloud PBX (Government Pricing),d6985a19-c58d-4352-88ae-9095d2fe8736,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,6.40,8.00
+,,,Skype for Business Online (Plan 1) (Government Pricing),ae1d0798-28fa-4460-8c67-c09b3ac7133d,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Skype for Business Online (Plan 2) (Government Pricing),a6c260a7-545c-42f7-bb27-461c1e131534,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,4.40,5.50
+,,,Skype for Business Plus CAL (Government Pricing),65c891ba-418c-41ef-9f18-364ee7d6435c,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,1.60,2.00
+,,,Skype for Business PSTN Conferencing (Government Pricing),4ef473f8-b01a-48de-907f-7b20dd495e84,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,4.00,4.00
+,,,Skype for Business PSTN Conferencing for E5 without PSTN Conferencing Customers (Government Pricing),a2dbdb89-fcee-48da-b9ac-acb7dd4825fd,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2.00,2.00
+,,,Skype for Business PSTN Domestic (Government Pricing),96b96fd8-b77d-41a4-ae5d-0a6652f454b7,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,12.00,12.00
+,,,Skype for Business PSTN Domestic and International Calling (Government Pricing),d97b23b4-627c-41db-8f55-ce342b0db656,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,24.00,24.00
+,,,Visio Pro for Office 365 (Government Pricing),b0b0890d-f5bc-404e-898e-7b6932766528,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,10.40,13.00
+,,,Yammer Enterprise (Government Pricing),8aa7e78b-b265-4ac6-ada0-14900a8a3f94,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2.40,3.00
+DEL,20170901,99991231,Azure Rights Management for faculty,5ebcbff5-6ecd-41e1-a681-0a991dd864ae,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.00,0.00
+,,,Azure Rights Management for students,8942c63e-ae18-4ab5-b9c7-d080d4aa7524,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.00,0.00
+,,,Dynamics 365 for Financials Business Edition Trial,75816b01-d6e5-46dc-b2cd-0c6cf7f00761,Corporate,1 Month(s),TRIAL,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,Windows 10 Enterprise E5,f7f342b3-177c-41f2-8896-7b06c54fc977,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,11.20,14.00
+UNC,20170901,99991231,Additional PSTN numbers to extend Skype for Business features,dedc5004-129a-4d9c-9edc-4d90f120d423,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,Azure Active Directory Basic,84a03d81-6b37-4d66-8d4a-faea24541538,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.80,1.00
+,,,Azure Active Directory Basic for Faculty,7da6cd50-24d3-477f-8848-3fad610535f9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.00,0.00
+,,,Azure Active Directory Basic for Students,afb11d0e-f236-4915-a38a-53153e27c9ff,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.00,0.00
+,,,Azure Active Directory Premium P1,16c9f982-a827-4003-a88e-e75df1927f27,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.80,6.00
+,,,Azure Active Directory Premium P1 for Faculty,3e3e9ccc-cdd4-4c7d-8644-336431f50e2b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.50,0.60
+,,,Azure Active Directory Premium P1 for Students,2084c385-65b3-4fac-867b-e9a2e1dde635,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.20,0.30
+,,,Azure Active Directory Premium P2,e59159fc-6f67-4599-b3cb-17ff4020f643,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,7.20,9.00
+,,,Azure Active Directory Premium P2 for Faculty,da22b4b5-e211-4e95-905d-fc24ff5a90a9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.75,0.90
+,,,Azure Active Directory Premium P2 for Students,190adaa1-f3fc-40d3-94f3-1474ef1629d0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.00,1.30
+,,,Azure Information Protection Plan 1,648bf77b-1f0a-4911-8066-caf37d67dc72,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Azure Information Protection Premium P1 for Faculty,dbf3d646-ff57-461f-910c-f2a922820475,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.50,0.60
+,,,Azure Information Protection Premium P1 for Students,d4a16afd-1d3f-4761-82cb-408a6dbc0f1f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.50,0.60
+,,,Azure Information Protection Premium P2,0962a210-418f-4d36-ba9c-4f01c673f57c,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,Azure Information Protection Premium P2 for Faculty,d10fa413-a055-4196-b18f-a014908c7208,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.88,1.10
+,,,Azure Information Protection Premium P2 for Students,edf471ca-1ff8-4378-a057-276ef3b430ba,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.66,0.80
+,,,Customer Lockbox,68f6373c-31cb-43f0-bfaa-85f3688f8cfb,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Customer Lockbox for faculty,6a0f8362-ced1-43e7-a39e-7bb4f91f8ef7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.60,0.80
+,,,Customer Lockbox for students,5a36abed-7e69-46d3-ab8c-44006e7107e9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.45,0.60
+,,,Delve Analytics,45320ec9-9b8e-49d0-b900-f14141a0abd1,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.20,4.00
+,,,Delve Analytics for faculty,2eb59242-162a-40ac-bb17-5b658bf8a9c1,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.20,1.50
+,,,Delve Analytics for students,262a0187-2979-4c1e-909c-4c3094238264,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.90,1.10
+,,,Dyn365 Cloud Add-on From AX Enterprise to Retail,1f36df5a-13ca-483c-b9f1-127f64193cc4,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,66.50,95.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Retail for Faculty,8fc1f867-d2e8-410b-a1bb-72d8b54e35e1,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,36.58,52.30
+,,,Dyn365 Cloud Add-on From AX Enterprise to Retail for Student,8fcec2d6-9908-404a-8dcf-930c5443d024,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,26.60,38.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Talent,f3b0dc86-4b5f-4f5d-860d-c9fcc30d0964,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Talent (Government Pricing),33d5545d-0d3c-46f6-82c9-e0657ceecd82,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.00,0.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Talent for Faculty,42a92457-c90c-466a-85a9-9321bfa037a0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.00,0.00
+,,,Dyn365 Cloud Add-on From AX Enterprise to Talent for Student,924c03d0-a617-426a-9387-2802e26ecc6e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.00,0.00
+,,,Dyn365 Cloud Add-on From AX Functional to Retail,eb148a57-f59a-4864-909b-62a753f7122e,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,101.50,145.00
+,,,Dyn365 Cloud Add-on From AX Functional to Retail for Faculty,f4b9a211-f3e5-4695-8456-5f60413976eb,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,55.83,79.80
+,,,Dyn365 Cloud Add-on From AX Functional to Retail for Student,ed463870-0e07-440c-9d29-2e35c734cb69,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,40.60,58.00
+,,,Dyn365 Cloud Add-on From AXEnt/Func to Unified Operations Plan (Qualified Offer),d82e1de4-dd2e-4627-9343-ee68c3c8349b,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,45.14,64.50
+,,,Dyn365 Cloud Add-on From AXEnt/Func to Unified Operations Plan for Faculty (Qualified Offer),50636977-1216-428b-9f37-22ec1ac47de5,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,24.83,35.50
+,,,Dyn365 Cloud Add-on From AXEnt/Func to Unified Operations Plan for Student (Qualified Offer),bf3903e3-0a25-441e-9ca1-f97930931998,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,18.06,25.80
+,,,"Dyn365 for Operations Activity, Enterprise Edition",6130626e-bee0-4e76-8abb-e919b0ec9483,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,35.00,50.00
+,,,"Dyn365 for Operations Activity, Enterprise Edition for Faculty",1ec83327-72dd-481c-acc4-87ab518d5a00,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,19.25,27.50
+,,,"Dyn365 for Operations Activity, Enterprise Edition for Student",eca4378b-b97e-4f23-ae73-ef01a63293ed,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,14.00,20.00
+,,,Dyn365 for Retail FromSA From AX Enterprise/Functional,442e3bb0-2209-4ee2-9282-9b871eb24191,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,101.50,145.00
+,,,Dyn365 for Retail FromSA From AX Enterprise/Functional for Faculty,ff407f28-91a0-42eb-b208-380269a5551f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,55.83,79.80
+,,,Dyn365 for Retail FromSA From AX Enterprise/Functional for Student,b04c7073-a410-4348-b8bb-985c915e3d6f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,40.61,58.00
+,,,Dyn365 for Talent FromSA From AX Enterprise,2c25322a-9384-48e8-b331-65c469276fb6,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,23.80,34.00
+,,,Dyn365 for Talent FromSA From AX Enterprise for Faculty,088d3f4b-70ee-4041-8b81-d60bcafef420,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,13.09,18.70
+,,,Dyn365 for Talent FromSA From AX Enterprise for Student,eeca9dd2-abfd-4b54-af20-dca132253a4a,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,9.52,13.60
+,,,Dyn365 Unified Operations Plan From SA From AX Ent/Func (Qualified Offer),d55a6d58-8bd0-4732-bda4-b03b4786eaf4,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,79.80,114.00
+,,,Dyn365 Unified Operations Plan From SA From AX Ent/Func for Faculty (Qualified Offer),7cbb523a-fb77-45f5-b5b0-9f3665079c1e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,43.89,62.70
+,,,Dyn365 Unified Operations Plan From SA From AX Ent/Func for Student (Qualified Offer),b66e2218-9864-4fc6-8022-5efe94acd424,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,31.92,45.60
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Basic (Qualified Offer),1e51e973-0bb4-4358-8202-c417f8239bc0,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,24.97,33.30
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Basic (Qualified Offer) for Faculty,613684be-ffb4-4d77-90fc-b8a8604436c6,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,13.74,18.30
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Basic (Qualified Offer) for Students,90fa6840-b6f3-40d7-8ecc-0af19847799c,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,9.99,13.30
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Pro (Qualified Offer),e6467568-7452-4ad6-948f-ea83a1d8c69c,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,37.29,49.70
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Pro (Qualified Offer) for Faculty,3aedaac6-fa0f-42e7-83db-16b8eea05a5f,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,20.51,27.40
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Add-On for CRM Pro (Qualified Offer) for Students,00282a15-250d-4e01-8534-aa9866c3f252,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,14.92,19.90
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Basic (Qualified Offer),2d691bc1-f5cb-4639-836a-04af74bb1eb5,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,30.00,40.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Basic (Qualified Offer) for Faculty,e888ed46-c04a-474d-95d3-ba3b8cf3c4da,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,16.50,22.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Basic (Qualified Offer) for Students,3348abf6-bb5a-4836-a85b-aacc0d7e1e6c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,12.00,16.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Pro (Qualified Offer),71c5d4a8-a6b5-4fe6-a411-0c3cf35dae81,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,51.75,69.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Pro (Qualified Offer) for Faculty,f6ff8458-159f-4a99-9518-4bb58ee6205f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,28.46,38.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA for CRM Pro (Qualified Offer) for Students,cb277332-3931-4548-9053-1ee075c1d7b5,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,20.70,27.60
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA From Cust Eng Plan Business Apps (On-Premises) User CALs,c0843120-8e35-48a6-aa11-ecc82571fc69,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,73.31,97.80
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA From Cust Eng Plan Business Apps (On-Premises) User CALs for Faculty,c2dd3300-aca0-4f43-9a5e-3406b72617a8,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,40.32,53.80
+,,,Dynamics 365 Ent Edition Cust Eng Plan - From SA From Cust Eng Plan Business Apps (On-Premises) User CALs for Students,c45a2230-2ae2-46d2-adaa-0806ac6c6b9f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,29.32,39.10
+,,,Dynamics 365 Ent edition Cust Eng Plan - Tier 1 (1-99 users),bb30b486-53be-4ecf-bb85-6f50979f0579,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,86.25,115.00
+,,,Dynamics 365 Ent edition Cust Eng Plan - Tier 1 (1-99 users) for Faculty,cfe0bb2d-b539-4228-9c5c-97c1cee84fe0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,47.44,63.30
+,,,Dynamics 365 Ent edition Cust Eng Plan - Tier 1 (1-99 users) for Students,aa20b0cc-a88a-4fe4-9458-93cb73a14d59,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,34.50,46.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 1 Qualified Offer for CRMOL Pro Add-On to O365 Users,09fdfa2e-a64e-4589-a550-3416214d2594,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,49.81,66.40
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 1 Qualified Offer for CRMOL Pro Add-On to O365 Users for Faculty,8f32b7f1-ff25-4a60-8a8f-bae9dcc47a32,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,27.39,36.50
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 1 Qualified Offer for CRMOL Pro Add-On to O365 Users for Students,89407873-da0e-45ba-93cb-1f350da2f40f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,19.92,26.60
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 2 (100-249 Users),349fc43d-f262-4703-9f46-9b030fb9a6f9,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,67.50,90.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 3 (250-499 Users),a82e4a9d-7da4-41f9-9129-19c2d54100bc,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,60.00,80.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 4 (500-999 Users),ade46300-5273-4080-b1f6-8feda26dcecf,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,52.50,70.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan - Tier 5 (1000+ Users),c891f143-b4d2-4f2a-beea-e2c96a044b1f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,45.00,60.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Basic (Qualified Offer),04e69be9-3bf0-4461-8eee-c83dae1439c8,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,43.13,57.50
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Basic (Qualified Offer) for Faculty,779871de-6e59-4249-a0ce-8c4e0f8ec20e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,23.72,31.60
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Basic (Qualified Offer) for Students,bb8f16fd-5408-4a5c-80c3-759c0beae558,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,17.25,23.00
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Professional (Qualified Offer),696a7e6b-4017-49b9-89d6-028e9d1aeb26,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,64.69,86.30
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Professional (Qualified Offer) for Faculty,85538938-525a-44a5-bae3-b316adc79159,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,35.58,47.40
+,,,Dynamics 365 Ent Edition Cust Eng Plan for CRMOL Professional (Qualified Offer) for Students,daa51547-8c69-4a4b-b756-33af65d3f804,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,25.88,34.50
+,,,Dynamics 365 Ent Edition Plan,725d5132-22a7-42d8-8a9b-988549a565f7,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,147.00,210.00
+,,,Dynamics 365 Ent Edition Plan - Add-On for AX Ent/Functional (Qualified Offer),01f8a684-cf0f-4adb-b0c7-f94cbbea691f,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,53.54,76.50
+,,,Dynamics 365 Ent Edition Plan - Add-On for AX Ent/Functional (Qualified Offer) for Faculty,a86f5ba7-a02c-4fee-9580-11fa4add13da,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,29.45,42.10
+,,,Dynamics 365 Ent Edition Plan - Add-On for AX Ent/Functional (Qualified Offer) for Students,7d997620-324c-4929-85a1-e977fec5a684,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,21.42,30.60
+,,,Dynamics 365 Ent Edition Plan - From SA for AX Ent/Functional (Qualified Offer),03a0e68f-3145-4eda-a73a-e438495122b0,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,88.20,126.00
+,,,Dynamics 365 Ent Edition Plan - From SA for AX Ent/Functional (Qualified Offer) for Faculty,f806e2c5-b35c-43d1-a80c-f641bf002b19,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,48.51,69.30
+,,,Dynamics 365 Ent Edition Plan - From SA for AX Ent/Functional (Qualified Offer) for Students,b7772766-c8c5-4849-b339-fa7ab5c38980,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,35.28,50.40
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl Database Storage,b26aa30c-1de1-4f43-ac81-910442cf5335,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.50,5.00
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl Database Storage for Faculty,a6d9afb1-9782-4db7-a2c7-ef0642b7c096,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.93,2.80
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl Database Storage for Students,f934020a-7e3c-4703-8ecb-a193011bb38e,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.40,2.00
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl File Storage,466c1866-e335-4277-bfa0-5189c23b951a,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,0.70,1.00
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl File Storage for Faculty,015f6e33-cb92-4e8a-b3e7-946c20dd2e8a,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.39,0.60
+,,,Dynamics 365 Ent Edition Plan - Operations Addnl File Storage for Students,6365af7b-d7fa-4f7b-8755-946daf8573fd,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.28,0.40
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 1:Developer & Test Instance,7c362aff-7c7a-41f1-b6c1-d3406bb74dac,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,297.50,425.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 1:Developer & Test Instance for Faculty,b8bf0a36-80d1-4fbf-8cf7-1176221651aa,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,163.63,233.80
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 1:Developer & Test Instance for Students,c4ffb9fe-f5cc-413f-a8bb-8568d2590f04,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,119.00,170.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 2:Standard Acceptance Testing,2ff677d8-e55c-4a9f-ab2d-8774a80bd52d,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,945.00,1350.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 2:Standard Acceptance Testing for Faculty,347756ec-46d1-43e6-baab-39a6b185239d,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,519.75,742.50
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 2:Standard Acceptance Testing for Students,061e9607-a97a-46e0-8ffc-b7c2756f4158,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,378.00,540.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 3:Premier Acceptance Testing,7b0cdb70-934a-4592-9008-595c22e9d35a,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,2835.00,4050.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 3:Premier Acceptance Testing for Faculty,ad535433-e845-4d9d-ac9e-859bf6c7667f,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1559.25,2227.50
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 3:Premier Acceptance Testing for Students,0d65a70c-a7ac-41e1-aab3-cebed8460239,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1134.00,1620.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 4:Standard Performance Testing,6d5cc8e4-15b8-4297-a7d3-b22aacbb29fb,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,5530.00,7900.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 4:Standard Performance Testing for Faculty,01c354cc-970f-4a64-9da1-582042a12896,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,3041.50,4345.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 4:Standard Performance Testing for Students,157baf7f-42bc-42ff-acb4-0cf069b6976e,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,2211.99,3160.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 5:Premier Performance Testing,2d142966-93c9-45c3-b1fd-ad6c76294dc2,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,8400.00,12000.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 5:Premier Performance Testing for Faculty,bb3ce8c3-b9b4-4170-a929-4c5b0b138dc0,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,4620.00,6600.00
+,,,Dynamics 365 Ent Edition Plan - Operations Sandbox Tier 5:Premier Performance Testing for Students,01ad5fa2-3ab6-48e1-b00c-6f0b0489335a,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,3359.99,4800.00
+,,,Dynamics 365 Ent edition Plan for Faculty,7b5f116e-2bee-4f40-8b4c-0570fde8ab63,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,80.85,115.50
+,,,Dynamics 365 Ent edition Plan for Students,50072d1d-f1d5-446f-8427-6b7ae1f5c20c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,58.80,84.00
+,,,Dynamics 365 Enterprise Edition - Additional Database Storage,fbf0328a-8b0f-47a6-9483-dc2b36183fce,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.75,5.00
+,,,Dynamics 365 Enterprise Edition - Additional Non-Production Instance,3396e762-af96-42f1-bea4-5c97a1efa94f,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,112.50,150.00
+,,,Dynamics 365 Enterprise Edition - Additional Portal,67b82638-fdf8-456b-8d36-32737a3b2a9b,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,375.00,500.00
+,,,Dynamics 365 Enterprise Edition - Additional Portal Page Views,1e8bbd2f-ad7e-4105-b140-66f475458bb8,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,37.50,50.00
+,,,Dynamics 365 Enterprise Edition - Additional Production Instance,2bcf9fe8-8b65-4fcf-9240-419203fb8cf4,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,412.50,550.00
+,,,Dynamics 365 Enterprise Edition - Additional Social Posts,b60519c3-658d-4574-8273-151b82c40b21,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,75.00,100.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition",58cd6573-6784-4467-b2fc-1a06bb874ed6,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,71.25,95.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - Add-On for CRM Basic (Qualified Offer)",cd21662b-5780-4263-8e1e-697ed4931c2e,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,21.22,28.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - Add-On for CRM Basic (Qualified Offer) for Faculty",26d24afe-431c-4388-9755-d410fbc2e80d,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,11.67,15.60
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - Add-On for CRM Basic (Qualified Offer) for Students",be7eb839-760b-4c9c-98fe-8a3c960b40ce,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,8.49,11.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA for CRM Basic (Qualified Offer)",02941bea-4df5-4eb2-b20a-7dc0f6879d48,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.25,35.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA for CRM Basic (Qualified Offer) for Faculty",0a297a32-cdf5-433d-8039-38e551c6ccd4,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,14.44,19.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA for CRM Basic (Qualified Offer) for Students",a41a4d13-4116-431a-bfb6-55d7fd341b41,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,10.50,14.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) Device CAL",f2b9f0f2-9c96-4bfb-90a0-1641f8092be6,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,92.44,123.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) Device CAL for Faculty",aaecb67f-b8a7-495f-9ceb-87f3a55a2248,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,50.84,67.80
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) Device CAL for Students",f2ceb838-d1fb-41dd-8b8d-25b3765d71e6,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,36.97,49.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) User CAL",a04227c6-dbe1-4bca-abbc-ffe05a756c6c,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,60.56,80.80
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) User CAL for Faculty",c2989f81-ae6c-4dbb-8818-3afb44c581f7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,33.31,44.40
+,,,"Dynamics 365 for Customer Service, Enterprise Edition - From SA From Customer Service (On-Premises) User CAL for Students",2d141b4b-4f17-411e-a8d9-655ec58d1045,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,24.23,32.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Device",56433e2b-3378-4b35-867d-31ebb879deac,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,108.75,145.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Device for Faculty",c1267a47-0d56-4305-b975-7ba45e51eb5d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,59.81,79.80
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Device for Students",9c6e2220-643f-41ce-9fcc-b6db3d1a25ec,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,43.50,58.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Basic (Qualified Offer)",ecb1b235-b7da-4cd1-a329-c33bab25cfe5,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,37.50,50.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Basic (Qualified Offer) for Faculty",e5cb287f-04e9-4e64-82ba-530f5deba85d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,20.63,27.50
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Basic (Qualified Offer) for Students",122361de-3248-4167-8401-328809cbffaf,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,15.00,20.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Professional (Qualified Offer)",52e3b82a-8035-4fd9-8f42-a709c6e6aaac,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,57.00,76.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Professional (Qualified Offer) for Faculty",a4b60dc9-c2f9-410e-9b9a-3eb10c695375,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,31.35,41.80
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for CRMOL Professional (Qualified Offer) for Students",82219c13-1274-4679-9dee-d524cc83e3ec,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,22.80,30.40
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for Faculty",9b97f77a-106a-4039-9f30-08954636d5a7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,39.19,52.30
+,,,"Dynamics 365 for Customer Service, Enterprise Edition for Students",3ea6fca5-1502-4ec1-8d87-f65d65f382bf,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,28.50,38.00
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users",3bab1b9d-e4e1-4c30-94b8-3a6ebd4952b8,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,43.89,58.50
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users for Faculty",5de61724-806e-4a5b-8e1c-3a2291cde856,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,24.14,32.20
+,,,"Dynamics 365 for Customer Service, Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users for Students",cbad0657-e763-4af7-b95b-06ef5dc7f887,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,17.56,23.40
+,,,"Dynamics 365 for Field Service, Enterprise Edition",5eb287f2-f34f-4bc8-a8b0-c2e9b23f7430,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,71.25,95.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition - Resource Scheduling Optimization",df67a19b-60bc-4284-9b20-70ca4fa3c16a,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,22.50,30.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition Device",a7fc021e-0eb1-4fdb-ada1-3fe7ddf4e887,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,108.75,145.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition Device for Faculty",2fec701c-4de9-498a-b104-d9e22a923029,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,59.81,79.80
+,,,"Dynamics 365 for Field Service, Enterprise Edition Device for Students",685760e2-b019-489f-a71d-f647a1626cac,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,43.50,58.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition for CRMOL Basic + Field Service Add-On (Qualified Offer)",6928a9e5-153f-40d2-8661-3d2ab885353f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,57.00,76.00
+,,,"Dynamics 365 for Field Service, Enterprise Edition for CRMOL Basic + Field Service Add-On (Qualified Offer) for Faculty",4834289c-3d41-4ed1-a4d0-8225190b5aef,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,31.35,41.80
+,,,"Dynamics 365 for Field Service, Enterprise Edition for CRMOL Basic + Field Service Add-On (Qualified Offer) for Students",43cf1795-2d6c-4f8f-83d0-29bf28d191aa,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,22.80,30.40
+,,,"Dynamics 365 for Field Service, Enterprise Edition for Faculty",41d5856b-9cdc-4194-944d-181517f1268e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,39.19,52.30
+,,,"Dynamics 365 for Field Service, Enterprise Edition for Students",6b332b2d-863a-4a18-ad8a-b3d1434c27d9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,28.50,38.00
+,,,"Dynamics 365 for Financials, Business Edition",CF4D7D0D-D6ED-4A5C-BD02-C73DD1844575,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,28.00,40.00
+,,,"Dynamics 365 for Financials, Business Edition - External Accountant",88F9EB8A-0636-45E8-A601-553E0A48AA9E,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition - External Accountant (Government Pricing)",8d3506d5-ee8c-461b-b278-2cada9e40608,Government,1 Month(s),ADDON,CLOUD RESELLER GOVERNMENT,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition - External Accountant for Faculty",e9df434f-0be9-440b-a06b-0dc0ce93be93,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition - External Accountant for Students",d884fc51-643d-4f12-bbf5-a13e9320a950,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV Ltd, or SL AM/BE/Std (qualified offer)",575034e9-aef8-436c-ab73-c123256b076b,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV Ltd, or SL AM/BE/Std (qualified offer) - Government Pricing",c65d7c17-11ad-4e86-9605-875c4826b8e8,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV Ltd, or SL AM/BE/Std (qualified offer) for Faculty",1e6fb2e8-4ecd-45f3-b864-4cbb2cbe8bac,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV Ltd, or SL AM/BE/Std (qualified offer) for Students",c66f5ec1-6ef1-46e7-885e-8693f3f0078f,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.00,0.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV/GP Full or SL Pro (qualified offer)",14e6457a-84c4-40cd-99bb-0b17f6a77699,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,2.10,3.00
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV/GP Full or SL Pro (qualified offer) for Faculty",3bc4ec50-c530-4175-9f8d-35a13835f3ea,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.16,1.70
+,,,"Dynamics 365 for Financials, Business Edition add-on for NAV/GP Full or SL Pro (qualified offer) for Students",d5fcf730-314d-4a81-9a91-55efb1d6f12a,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.84,1.20
+,,,"Dynamics 365 for Financials, Business Edition for Faculty",7eee99b0-c430-4cb8-86d8-073f6279b013,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,15.40,22.00
+,,,"Dynamics 365 for Financials, Business Edition for Students",0e233635-311d-4b75-aa9a-8119b051d4cc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,11.20,16.00
+,,,"Dynamics 365 for Financials, Business Edition from SA for NAV/GP Full, NAV Ltd, or SL AM/BE/Std/Pro (qualified offer)",d5ae8159-5f88-446a-962b-200f2461b4be,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,16.80,24.00
+,,,"Dynamics 365 for Financials, Business Edition from SA for NAV/GP Full, NAV Ltd, or SL AM/BE/Std/Pro (qualified offer) for Faculty",405404ce-1417-41cb-a797-80fb612e3ca2,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,9.24,13.20
+,,,"Dynamics 365 for Financials, Business Edition from SA for NAV/GP Full, NAV Ltd, or SL AM/BE/Std/Pro (qualified offer) for Students",c512fbce-9449-416e-8a4b-ed2ab494cf7d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,6.72,9.60
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition Cloud Add-on from AX Functional",f0769f58-cc93-47fb-8792-c87062747cfc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,8.73,12.50
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition Cloud Add-on from AX Functional (Qualified Offer)",fc6235dd-0552-4567-a651-4d45f33a0920,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,3.93,5.60
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition Cloud Add-on from AX Task ",171de1e2-cf70-4e62-872d-22500f32bf80,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,14.46,20.70
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition Cloud Add-on from AX Task (Qualified Offer)",3ea5ea94-2592-42c5-9d94-ebf620f65083,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,9.65,13.80
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition from SA from AX Functional or Task (Qualified Offer)",25b1159c-51af-41d9-b036-4c21d5d720bb,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,11.55,16.50
+,,,"Dynamics 365 for Operations Activity for Faculty, Enterprise Edition From SA from AX Functionality or Task",63e35cdb-d75a-4f18-987e-08fd6d26014f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,16.36,23.40
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition Cloud Add-on from AX Functional",22fd6f43-ea56-438b-ba30-55ba227f0e38,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,6.35,9.10
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition Cloud Add-on from AX Functional (Qualified Offer)",995e3239-fac9-4565-9ab5-12e565b47a12,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,2.86,4.10
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition Cloud Add-on from AX Task ",d86da76c-a03e-49fb-a0e8-e2af76015a98,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,10.52,15.00
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition Cloud Add-on from AX Task (Qualified Offer)",8f221147-7be9-49ed-8bb8-a74309545165,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,7.02,10.00
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition from SA from AX Functional or Task (Qualified Offer)",1f3a4274-16bb-44a4-8246-b2cadf7122c1,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,8.40,12.00
+,,,"Dynamics 365 for Operations Activity for Student, Enterprise Edition From SA from AX Functionality or Task",8629aa63-e884-45c0-b205-fa8c540133bb,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,11.90,17.00
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Functional",8fa24deb-9b37-4d22-be3c-4b876ab07d64,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,15.88,22.70
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Functional (Qualified Offer)",038f2538-4813-4a94-93a3-8e2425ac78a2,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,7.14,10.20
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition Cloud Add-on from AX Task ",5f736867-b579-430e-be0b-cd6eb60e7611,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.30,37.60
+,,,"Dynamics 365 for Operations Activity, Enterprise edition Cloud Add-on from AX Task (Qualified Offer)",77721748-0ef0-43ce-b4ce-1165d1fcf3b2,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,17.54,25.10
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition from SA from AX Functional or Task (Qualified Offer)",1fd13474-75a5-4c9b-80a2-fd233c346879,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,21.00,30.00
+,,,"Dynamics 365 for Operations Activity, Enterprise Edition From SA from AX Functionality or Task",58e15e1a-43f1-4d0c-a7b7-b0b4c4d934c4,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,29.75,42.50
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional Database Storage",ad09ac56-f17b-4e23-9af2-de8f91f75fa9,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.50,5.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional Database Storage for Faculty",32147dad-57ec-422c-898a-c8a826ea1454,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.93,2.80
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional Database Storage for Students",b761739f-daf3-4feb-96cc-98f93dd3e81e,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.40,2.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional File Storage",0e5bfb17-8c11-49a9-865d-05d4f48a0a35,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,0.70,1.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional File Storage for Faculty",53cd62df-0727-45a0-863b-d67f5a0a4e07,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.39,0.60
+,,,"Dynamics 365 for Operations, Enterprise Edition - Additional File Storage for Students",455d3132-8cca-458c-883b-973ccac98b69,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.28,0.40
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 1:Developer & Test Instance",ddbae3c0-f883-4823-a1e9-4ffa47ab0c5b,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,297.50,425.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 1:Developer & Test Instance for Faculty",79aab72c-6da9-462d-afc0-5ed20091610a,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,163.63,233.80
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 1:Developer & Test Instance for Students",626b3a75-1b18-4e2c-bef6-88db6ecea1c7,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,119.00,170.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 2:Standard Acceptance Testing",615cbbc1-0b6c-43fa-99c5-ada5a0965500,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,945.00,1350.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 2:Standard Acceptance Testing for Faculty",f2871ea5-b26e-4a13-8d3a-6a1dda820c72,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,519.75,742.50
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 2:Standard Acceptance Testing for Students",23cae6d3-753c-4996-88c8-d6c3c6681538,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,378.00,540.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 3:Premier Acceptance Testing",708b4081-1ae3-4d40-99b9-db75470df408,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,2835.00,4050.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 3:Premier Acceptance Testing for Faculty",76642878-563b-4b30-9c9a-f7049b853743,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1559.25,2227.50
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 3:Premier Acceptance Testing for Students",2167cc44-7ea9-49bf-abeb-ee88b7934102,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1134.00,1620.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 4:Standard Performance Testing",04329f1d-1d37-4445-b426-48dd65d14850,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,5530.00,7900.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 4:Standard Performance Testing for Faculty",c7bcf2b6-7558-4013-ac24-5f4db30df525,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,3041.50,4345.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 4:Standard Performance Testing for Students",98ac91c3-8844-4b11-9c3c-5cd4f62b9026,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,2211.99,3160.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 5:Premier Performance Testing",e49012e8-b9d7-44b3-8134-ee84cf160bc9,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,8400.00,12000.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 5:Premier Performance Testing for Faculty",435f5608-fdf6-4413-a0f1-26b7d2c01cbd,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,4620.00,6600.00
+,,,"Dynamics 365 for Operations, Enterprise Edition - Sandbox Tier 5:Premier Performance Testing for Students",e89b34e4-b92b-4113-9d08-ac8f944e8f49,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,3359.99,4800.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device",16e05c5c-b536-42a0-a26e-d920c267d723,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,52.50,75.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device add-on for AX Task Device (qualified offer)",432c0d13-8944-4c1c-97ba-f237608009cc,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.31,37.60
+,,,"Dynamics 365 for Operations, Enterprise Edition Device add-on for AX Task Device (qualified offer) for Faculty",bce0bf56-7d8b-4893-8303-450de893dc43,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,14.47,20.70
+,,,"Dynamics 365 for Operations, Enterprise Edition Device add-on for AX Task Device (qualified offer) for Students",1f7b3647-ce32-44b3-a5e7-f8a259839298,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,10.52,15.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device for Faculty",e67fe55c-1e6c-47d7-b8b8-9c7d85c778ff,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,28.88,41.30
+,,,"Dynamics 365 for Operations, Enterprise Edition Device for Students",16fa20c0-cecd-422d-9cb6-dad535d7ee9f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,21.00,30.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device from SA for AX Task Device (qualified offer)",0068e30e-0734-4be6-a01f-5ff597bb5647,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,31.50,45.00
+,,,"Dynamics 365 for Operations, Enterprise Edition Device from SA for AX Task Device (qualified offer) for Faculty",6b1fd750-3ebd-45eb-8dcf-98238de9abd5,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,17.33,24.80
+,,,"Dynamics 365 for Operations, Enterprise Edition Device from SA for AX Task Device (qualified offer) for Students",4c950dd5-d871-4c9d-9e7f-8113e74fd677,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,12.60,18.00
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition",df406c18-5deb-4f8b-9af3-0f743fffedc9,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,71.25,95.00
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for CRMOL Basic + Project Service Add-On (Qualified Offer)",dddfa1c3-8bc1-4149-b5ce-88da720bb31a,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,57.00,76.00
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for CRMOL Basic + Project Service Add-On (Qualified Offer) for Faculty",5fa082ee-101f-4c6d-b331-c0e9b1e85b0f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,31.35,41.80
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for CRMOL Basic + Project Service Add-On (Qualified Offer) for Students",8a34983a-2606-4884-b9c9-fa3d20cc4fcc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,22.80,30.40
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for Faculty",6b63efaa-6ec5-4a22-a0ed-a275cd515ea2,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,39.19,52.30
+,,,"Dynamics 365 for Project Service Automation, Enterprise Edition for Students",05aa9dc1-f354-4691-8dd0-9149c580be98,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,28.50,38.00
+,,,"Dynamics 365 for Retail, Enterprise Edition",79c103c3-35e2-4e1f-81bb-aae69800a3ef,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,119.00,170.00
+,,,"Dynamics 365 for Retail, Enterprise Edition for Faculty",83a531ed-e7e8-4b78-94d0-3073d415f347,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,65.45,93.50
+,,,"Dynamics 365 for Retail, Enterprise Edition for Student",f65ba0cd-dd42-4b7a-8df2-2adcb3c01299,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,47.60,68.00
+,,,"Dynamics 365 for Sales and Customer Service, Enterprise Editions (SMB Offer)",4f01c23a-c125-4e94-aac4-e7b741c98052,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,48.75,65.00
+,,,Dynamics 365 for Sales Enterprise Edition,e5aeedc5-e2f0-4099-aa45-95802034d7f8,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,71.25,95.00
+,,,Dynamics 365 for Sales Enterprise Edition (SMB Offer),8b81ff1a-7280-4bba-827d-265dc702c583,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,28.00,40.00
+,,,Dynamics 365 for Sales Enterprise Edition Add-On for CRM Basic (Qualified Offer),1d68b1a7-60cf-4dd9-b87c-78af613b9c96,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,21.22,28.30
+,,,Dynamics 365 for Sales Enterprise Edition Add-On for CRM Basic (Qualified Offer) for Faculty,fc5e4cba-179c-4a2a-8677-b111dc0745e8,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,11.67,15.60
+,,,Dynamics 365 for Sales Enterprise Edition Add-On for CRM Basic (Qualified Offer) for Students,b236ab9e-9448-4a34-9c68-dbec31b1a9b1,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,8.49,11.30
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Basic (Qualified Offer),a536b3a8-1481-4633-adfe-d7356f6f4188,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,37.50,50.00
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Basic (Qualified Offer) for Faculty,2bd510c8-f2d8-42d3-8c54-7f7806f7cc56,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,20.63,27.50
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Basic (Qualified Offer) for Students,b541c340-880f-4e2e-a720-0667f5119936,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,15.00,20.00
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Professional (Qualified Offer),bb9c9324-55d1-42e4-9014-45801c1fbe46,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,57.00,76.00
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Professional (Qualified Offer) for Faculty,fb33e24a-349a-4ed2-868b-c5492381fb5c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,31.35,41.80
+,,,Dynamics 365 for Sales Enterprise Edition CRMOL Professional (Qualified Offer) for Students,7f168a39-b39e-46f1-8625-55201d31c757,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,22.80,30.40
+,,,Dynamics 365 for Sales Enterprise Edition Device,9fb981e1-9531-402e-875c-c69957137939,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,108.75,145.00
+,,,Dynamics 365 for Sales Enterprise Edition Device for Faculty,c0fadb1c-9940-4405-9c28-2ed7405cb01b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,59.81,79.80
+,,,Dynamics 365 for Sales Enterprise Edition for Faculty,512f56e6-9f94-4345-8a5b-fb74420c7857,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,39.19,52.30
+,,,Dynamics 365 for Sales Enterprise Edition for Students,82fd9a89-80aa-4870-a145-ea50564b1a2c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,28.50,38.00
+,,,Dynamics 365 for Sales Enterprise Edition From SA for CRM Basic (Qualified Offer),dc990904-bfc2-45c8-9f8a-29e2e9f88b09,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.25,35.00
+,,,Dynamics 365 for Sales Enterprise Edition From SA for CRM Basic (Qualified Offer) for Faculty,20f55a30-9609-424a-a67d-0b9ea54fb46b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,14.44,19.30
+,,,Dynamics 365 for Sales Enterprise Edition From SA for CRM Basic (Qualified Offer) for Students,a4b0d45f-7fbc-4828-ac92-5bb67bc258c5,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,10.50,14.00
+,,,Dynamics 365 for Sales Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users,9e196c64-9a0a-435a-b16e-f103eff6bb91,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,43.89,58.50
+,,,Dynamics 365 for Sales Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users for Faculty,c0db2330-e6f6-414e-a7b5-2b030c58ddc9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,24.14,32.20
+,,,Dynamics 365 for Sales Enterprise Edition Qualified Offer for CRMOL Pro Add-On to O365 Users for Students,00b2aa79-7da2-4229-85ef-b413e2b770a9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,17.56,23.40
+,,,Dynamics 365 for Sales Enterprise Edition Device for Students,f776b4da-d4e3-4f0c-b1d2-d78ebd410a03,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,43.50,58.00
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) Device CAL",cd8f2ed6-3fc1-4fc5-a2cf-c5229123165e,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,92.44,123.30
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) Device CAL for Faculty",afe6618e-0f30-4f46-9d02-51df5e8853a9,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,50.84,67.80
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) Device CAL for Students",7500e760-3e98-45ac-bb4c-3ce039440ea7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,36.97,49.30
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) User CAL",55abb5d2-4d8d-4a10-9bf8-e6e04d210554,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,60.56,80.80
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) User CAL for Faculty",31ae1263-b0de-4294-817b-dbfc5ec8a04b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,33.31,44.40
+,,,"Dynamics 365 for Sales, Enterprise Edition - From SA From Sales (On-Premises) User CAL for Students",c78735a9-fffc-4744-b9a1-ed55904f524d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,24.23,32.30
+,,,"Dynamics 365 for Talent, Enterprise Edition",5b2900bc-5067-4c17-99be-1560a8e8e6a1,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,28.00,40.00
+,,,"Dynamics 365 for Talent, Enterprise Edition for Faculty",b5df9912-97fb-45a2-bb07-2c65060f05cb,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,15.40,22.00
+,,,"Dynamics 365 for Talent, Enterprise Edition for Student",a283854d-2568-4ceb-9f55-3617e5c32b57,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,11.20,16.00
+,,,Dynamics 365 for Team Members Enterprise Edition,a6c5a400-70b4-458f-aaf9-dade77a70418,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.00,8.00
+,,,Dynamics 365 for Team Members Enterprise Edition (SMB Offer),4d2fc9b9-6b69-41e8-b039-885839d40475,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,3.50,5.00
+,,,Dynamics 365 for Team Members Enterprise Edition (SMB Offer) for Faculty,7db6d84b-c060-471c-955a-40cdc01fb945,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,2.06,2.80
+,,,Dynamics 365 for Team Members Enterprise Edition (SMB Offer) for Students,4bca5b48-36bb-4c44-bd07-ea6b83b16fdc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.50,2.00
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for AX Task or Self-serve (Qualified Offer),1cb59946-ae97-4786-8a40-83db44c0da97,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,0.74,1.10
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for AX Task or Self-serve (Qualified Offer) for Faculty,3caf9f58-4cca-43d2-b18f-1577fd90ddcc,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.41,0.60
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for AX Task or Self-serve (Qualified Offer) for Students,87c6b4e0-abb4-4853-9a5d-3a6729cfdbd3,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.30,0.40
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for CRM Essentials (Qualified Offer),78a7b9b1-5a30-4993-b549-fd9a1ae0bce2,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.34,4.50
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for CRM Essentials (Qualified Offer) for Faculty,4aa7cc66-c4c0-4f74-af21-bfe19abbb41d,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.84,2.50
+,,,Dynamics 365 for Team Members Enterprise Edition Add-On for CRM Essentials (Qualified Offer) for Students,c09799a3-c581-4f3c-be9b-8b1cc9680c5f,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.34,1.80
+,,,Dynamics 365 for Team Members Enterprise Edition for Faculty,f9707a06-e673-4bc2-a0b1-b994b6fcc4b4,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,3.30,4.40
+,,,Dynamics 365 for Team Members Enterprise Edition for Students,f0d83f3f-f944-48eb-b3d8-290ddad81a9b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,2.40,3.20
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for AX Task or Self-serve (Qualified Offer),1eff8e29-f1f5-4b83-83b8-d1e392d29f45,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.20,6.00
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for AX Task or Self-serve (Qualified Offer) for Faculty,a05fc4a5-daee-42f7-be3e-08b6c95ae8de,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,2.31,3.30
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for AX Task or Self-serve (Qualified Offer) for Students,12bff0ca-39ef-4b05-946e-b9398a250f6f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.68,2.40
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for CRM Essentials (Qualified Offer),598ec605-9d45-47f5-8464-73bb98a120cc,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.50,6.00
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for CRM Essentials (Qualified Offer) for Faculty,14993bd4-2fcb-462b-866c-b7c1a7f8a277,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,2.48,3.30
+,,,Dynamics 365 for Team Members Enterprise Edition From SA for CRM Essentials (Qualified Offer) for Students,8b62f89b-410d-40fc-a8da-ec9afa862bff,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.80,2.40
+,,,"Dynamics 365 for Team Members, Business Edition",5BA3E6DC-89A5-4F4A-91C8-A78CFB6174DD,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,3.50,5.00
+,,,"Dynamics 365 for Team Members, Business Edition add-on for GP Ltd/SL Light (qualified offer)",badc6bff-4fd9-4a16-bb9d-6b7e1cd8c990,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,"Dynamics 365 for Team Members, Business Edition add-on for GP Ltd/SL Light (qualified offer) - Government Pricing",f4299172-51b4-4010-b42b-d126f131195e,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.00,0.00
+,,,"Dynamics 365 for Team Members, Business Edition add-on for GP Ltd/SL Light (qualified offer) for Faculty",d85513d0-c382-49f1-a3b7-3ba5b2b5803a,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.00,0.00
+,,,"Dynamics 365 for Team Members, Business Edition add-on for GP Ltd/SL Light (qualified offer) for Students",73c79e48-aa4c-402a-899d-716c8915765d,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.00,0.00
+,,,"Dynamics 365 for Team Members, Business Edition for Faculty",900f5009-8127-4c2f-b8de-ab431ff7f9b8,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.93,2.80
+,,,"Dynamics 365 for Team Members, Business Edition for Students",ee956d03-d956-4487-805b-355d51ceb7df,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.40,2.00
+,,,"Dynamics 365 for Team Members, Business Edition from SA for GP/SL Ltd (qualified offer)",5fcf9044-a265-4914-ab27-ca83c34b2051,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,2.10,3.00
+,,,"Dynamics 365 for Team Members, Business Edition from SA for GP/SL Ltd (qualified offer) for Faculty",a3d90b50-4645-4e12-8f26-ff7817351523,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.16,1.70
+,,,"Dynamics 365 for Team Members, Business Edition from SA for GP/SL Ltd (qualified offer) for Students",ec31b392-0c74-4d47-9708-01fd11278a86,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.84,1.20
+,,,"Dynamics 365 for Team Members, Enterprise Edition - From SA From Team Members (On-Premises) User/Device CAL",f59d25dd-bc3d-48f8-84ff-d8f9d58bcde0,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.38,8.50
+,,,"Dynamics 365 for Team Members, Enterprise Edition - From SA From Team Members (On-Premises) User/Device CAL for Faculty",e7f8478a-54e6-4c6c-bdad-37757bf5383e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,3.51,4.70
+,,,"Dynamics 365 for Team Members, Enterprise Edition - From SA From Team Members (On-Premises) User/Device CAL for Students",d92052a0-8b60-43f5-8d37-e416af46609e,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,2.55,3.40
+,,,"Dynamics 365 for Unf Ops Plan, Ent Edition",1ec5a993-0779-43a9-a857-ac8fe83e977b,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,133.00,190.00
+,,,"Dynamics 365 for Unf Ops Plan, Ent Edition for Faculty",7f303aab-0b09-458a-a3dc-1bc912a62aef,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,73.15,104.50
+,,,"Dynamics 365 for Unf Ops Plan, Ent Edition for Students",22e29fb3-d7f4-4bc5-ad6e-343a9a684483,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,53.20,76.00
+,,,Enterprise Mobility + Security E3,79c29af7-3cd0-4a6f-b182-a81e31dec84e,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.99,8.70
+,,,Enterprise Mobility + Security E3 for Faculty,6b645205-ac52-4dc8-a7d5-437cbd7dbf9b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.50,1.90
+,,,Enterprise Mobility + Security E3 for Students,2bd75585-880a-4325-9060-6a12cf002c97,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.50,1.90
+,,,Enterprise Mobility + Security E5,37402a1d-0c6e-4d49-baae-0e45bd8ecb44,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,11.82,14.80
+,,,Enterprise Mobility + Security E5 for Faculty,63e05d17-a272-4bfc-a847-313b16002a9a,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,2.64,3.30
+,,,Enterprise Mobility + Security E5 for Students,844b77b7-3c44-42bb-9d29-aefd8be7e093,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,2.64,3.30
+,,,Exchange Online (Plan 1),195416c1-3447-423a-b37b-ee59a99a19c4,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,3.20,4.00
+,,,Exchange Online (Plan 2),2f707c7c-2433-49a5-a437-9ca7cf40d3eb,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.40,8.00
+,,,Exchange Online Advanced Threat Protection ,a2706f86-868d-4048-989b-0c69e5c76b63,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Exchange Online Advanced Threat Protection for faculty,a9d8546b-4e19-4d08-b8e2-6814f2c2d8b1,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.12,1.40
+,,,Exchange Online Advanced Threat Protection for students,8723dbc7-4782-464f-95d8-7ffe5be9c752,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.56,0.70
+,,,Exchange Online Archiving (EOA) for Exchange Server,c082b70a-0e63-47ca-9cf7-5a962a920452,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,2.40,3.00
+,,,Exchange Online Archiving for Exchange Online,2828be95-46ba-4f91-b2fd-0bef192ecf60,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,2.40,3.00
+,,,Exchange Online Kiosk,35a36b80-270a-44bf-9290-00545d350866,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Exchange Online Protection,d903a2db-bf6f-4434-83f1-21ba44017813,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.80,1.00
+,,,"Flow Additional Runs per 50,000",38eebb1f-d330-4120-b44d-aae6ccf8d6ae,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,32.00,40.00
+,,,"Flow Additional Runs per 50,000 (Dyn365)",67f0533a-8c6e-4475-97f7-2491e00820c3,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,32.00,40.00
+,,,"Flow Additional Runs per 50,000 for Faculty",8f2bd36e-3c37-4cf0-9a80-f4f9e6b767cb,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,17.60,22.00
+,,,"Flow Additional Runs per 50,000 for Faculty (Dyn365)",7b70ef05-6ecb-4efa-a9c8-e22d77d3a8dd,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,17.60,22.00
+,,,"Flow Additional Runs per 50,000 for Students",d753be82-d35b-4012-a3cf-703db48047ea,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,12.80,16.00
+,,,"Flow Additional Runs per 50,000 for Students (Dyn365)",69c7de26-0c0c-4345-861a-7eba79841890,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,12.80,16.00
+,,,Intune Additional Storage (Government Pricing),1641fe13-5a95-4ba7-a5eb-740caee8d509,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,2.00,2.50
+,,,Microsoft 365 Business Preview,0678a59a-bf0f-4872-a7a6-87246890a432,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,0.00,0.00
+,,,Microsoft 365 E3,2b3b8d2d-10aa-4be4-b5fd-7f2feb0c3091,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,27.16,34.00
+,,,Microsoft 365 E5,8bdbb60b-e526-43e9-92ef-ab760c8e0b72,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,48.85,61.10
+,,,Microsoft 365 E5 without PSTN Conferencing,db5e0b1c-9cc3-459c-9d08-c61993959fd3,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,48.47,60.60
+,,,Microsoft Azure Multi-Factor Authentication,F4753E83-1A85-4962-8D0A-C1DB12BC82AB,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1.12,1.40
+,,,Microsoft Cloud App Security,dbd10351-5631-4a01-a643-00e8ff14e7b2,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,Microsoft Flow P1,3dd9350b-27d6-4501-93a4-c8d107f1de47,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,Microsoft Flow P1 for Faculty,2369e688-7e9d-4e19-bbac-11186e15bcbf,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,2.20,2.80
+,,,Microsoft Flow P1 for Students,ae02e3b5-2a44-4fab-9911-d83963417286,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.60,2.00
+,,,Microsoft Flow P2,39a72396-9c43-46e2-8bb9-efef342c8f76,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,12.00,15.00
+,,,Microsoft Flow P2 for Faculty,c3cccd3e-4c79-4c23-a541-52e048dd24f0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,6.60,8.30
+,,,Microsoft Flow P2 for Students,61d37e6f-e2d2-480c-94a3-a8635472d6fd,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,4.80,6.00
+,,,Microsoft Intune,51e95709-dc35-4780-9040-22278cb7c0e1,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.80,6.00
+,,,Microsoft Intune Device,db2e705f-b82a-4024-a3d5-d88e12f2db35,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,7.20,9.00
+,,,Microsoft Intune for Education for Faculty,249eaae1-50df-42d0-8d69-ca66d53248b6,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.55,0.69
+,,,Microsoft Intune for Education for Students,eb93319f-34eb-45fd-92bf-6c4bdf63120d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.55,0.69
+,,,Microsoft Intune™ Extra Storage,ced5f693-2d40-40ae-8848-9809ab1b0ee9,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,2.00,2.50
+,,,Microsoft PowerApps P1,2389eb32-a60d-474a-936c-5feb8ab06aad,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,5.60,7.00
+,,,Microsoft PowerApps P1 for Faculty,29292213-53d6-4def-9b72-86f6326a48a6,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,3.08,3.90
+,,,Microsoft PowerApps P1 for Students,fb0aa8c3-0111-4555-b463-2614c834b5c8,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,2.24,2.80
+,,,Microsoft PowerApps P2,525a468b-18eb-4d4b-b556-02e2699de020,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,32.00,40.00
+,,,Microsoft PowerApps P2 for Faculty,f0157581-ad19-46d2-9981-bd5a0e9b40fd,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,17.60,22.00
+,,,Microsoft PowerApps P2 for Students,0df87001-8d06-4feb-b105-932300016d05,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,12.80,16.00
+,,,Microsoft Social Engagement Additional 10K Posts,145A2B93-3583-4A9A-8564-BCDC20714651,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,75.00,100.00
+,,,Microsoft Social Engagement Additional 10k Posts (minimum 10 licenses),CBE22A27-20C4-48AD-B8D2-F41644DDC0B2,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,52.50,70.00
+,,,Microsoft Social Engagement Additional 10k Posts (minimum 100 licenses),D91596FF-B990-4A15-A9F0-704B91DB2583,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,30.00,40.00
+,,,Microsoft Stream Plan 2 for Office 365 Add-On,7a6cf83d-b4e3-4a2d-ad58-70677698b8a4,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Microsoft Stream Plan 2 for Office 365 Add-On for faculty,cbb7a0ff-cbc5-425f-8051-a1b1f981a924,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.40,0.50
+,,,Microsoft Stream Plan 2 for Office 365 Add-On for students,46f7b110-8370-4f99-a713-94a970160a65,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.30,0.40
+,,,Minecraft: Education Edition,EE10CBD2-7A12-45DE-BE11-0C2C7C6EEEB1,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.34,0.42
+,,,Office 365 Advanced eDiscovery,6b648c1e-f472-46c0-8379-09f50a3315e0,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,6.40,8.00
+,,,Office 365 Advanced eDiscovery for faculty,4d1f0e32-0972-499c-b1fc-673576d54f12,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,2.40,3.00
+,,,Office 365 Advanced eDiscovery for students,4d30d083-68d4-454d-9fc0-8fd42281564b,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.80,2.30
+,,,Office 365 Advanced Security Management,5d8c82e0-4386-4129-8b3b-5b5c193d1138,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,2.40,3.00
+,,,Office 365 Business,5c9fd4cc-edce-44a8-8e91-07df09744609,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.60,8.30
+,,,Office 365 Business Essentials,bd938f12-058f-4927-bba3-ae36b1d2501c,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,Office 365 Business Premium,031c9e47-4802-4248-838e-778fb1d2cc05,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,10.00,12.50
+,,,Office 365 Education E5 for faculty,8c484fd0-1f3f-44fb-b6d2-26ca107273f6,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,6.52,8.00
+,,,Office 365 Education E5 for students,3891169e-2323-45f7-95c2-4497cda23d1c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,4.90,6.00
+,,,Office 365 Education for faculty,512e27aa-19d1-4c38-b2cb-5813375c8201,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,0.00,0.00
+,,,Office 365 Education for students,c60e9cc5-7339-479e-8003-285f6bd195c7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.00,0.00
+,,,Office 365 Enterprise E1,91fd106f-4b2c-4938-95ac-f54f74e9a239,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,6.40,8.00
+,,,Office 365 Enterprise E3,796b6b5f-613c-4e24-a17c-eba730d49c02,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,16.00,20.00
+,,,Office 365 Enterprise E4,8909e28e-5832-42f4-9886-b0a5545f3645,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,17.60,22.00
+,,,Office 365 Enterprise E5,a044b16a-1861-4308-8086-a3a3b506fac2,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,28.40,35.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing,4f7ecaf1-e9d6-4cac-9687-e22eb3dfdd70,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.40,33.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing,02c07b64-2cd3-4667-b014-561192fc5d1a,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,28.00,35.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing for faculty,e035317b-9f18-4102-b350-0afbb207c05d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,5.92,7.40
+,,,Office 365 Enterprise E5 without PSTN Conferencing for faculty,a5676fc6-38bb-4f91-9618-81a0c9465a6f,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,6.40,8.00
+,,,Office 365 Enterprise E5 without PSTN Conferencing for students,392951dd-5bcb-42f2-b1e9-c96180a0c01b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,4.40,5.50
+,,,Office 365 Enterprise E5 without PSTN Conferencing for students,0126406e-ff5b-448e-affb-6d253c4c720c,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,4.80,6.00
+,,,Office 365 Extra File Storage,53fc25f7-6639-4f78-bb44-3c2dfec3ed40,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,0.16,0.20
+,,,Office 365 Extra File Storage (Government Pricing),3ea7e320-65e2-45f0-abf5-6f6fabb2255b,Government,1 Month(s),NON-SPECIFIC,CLOUD RESELLER GOVERNMENT,0.16,0.20
+,,,Office 365 F1,6fbad345-b7de-42a6-b6ab-79b363d0b371,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,3.20,4.00
+,,,Office 365 ProPlus,be57ff4c-100c-4f1f-b82d-f1c5ab63a665,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,9.60,12.00
+,,,Office 365 ProPlus for faculty,35eb491f-5484-496e-978b-f349eed3c699,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.60,2.00
+,,,Office 365 ProPlus for students,5699c6f3-cc7a-4212-9042-8f85ce30f4e0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.20,1.50
+,,,Office 365 Threat Intelligence,efe1183a-8fa0-4138-bf0a-5ae271ab6e3c,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,6.40,8.00
+,,,Office 365 Threat Intelligence for faculty,f8aa0b4e-0799-4149-8dbc-b6105b5b4209,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,2.40,3.00
+,,,Office 365 Threat Intelligence for students,5fd2b092-f47a-44c2-a79f-b3208bba335b,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.80,2.30
+,,,OneDrive for Business (Plan 1),90d3615e-aa96-478e-b6ce-8eb1e9a96b4b,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,OneDrive for Business (Plan 2),bf1f6907-1f8e-4f05-b327-4896d1395c15,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,8.00,10.00
+,,,Power BI Premium P1,47490014-3ed5-4a67-937e-c7de2422d888,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,3996.00,4995.00
+,,,Power BI Premium P1 for Faculty,4ebcded4-77ce-43c2-a282-644390ba79c7,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1598.40,1998.00
+,,,Power BI Premium P1 for Students,3d42385f-10bd-4230-bee1-2189565224b8,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1598.40,1998.00
+,,,Power BI Premium P2,4daeed88-7f6e-4210-b7d9-50e0853c9e4f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,7996.00,9995.00
+,,,Power BI Premium P2 for Faculty,457b704a-5f90-49e0-be43-1b2124b2dd02,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,3198.40,3998.00
+,,,Power BI Premium P2 for Students,cd7967ef-4c48-484c-a539-7dc876d61e88,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,3198.40,3998.00
+,,,Power BI Premium P3,30a0221f-6b2d-4c3c-93d9-c76e3b409d1f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,15996.00,19995.00
+,,,Power BI Premium P3 for Faculty,cfe79d8a-1948-4b68-b867-e53b771aaea0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,6398.40,7998.00
+,,,Power BI Premium P3 for Students,f17c5ab1-86b4-4d0d-9807-478c24576384,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,6398.40,7998.00
+,,,Power BI Pro,800f4f3b-cfe1-42c1-9cea-675512810488,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,7.99,10.00
+,,,Power BI Pro for faculty,98fa9c4d-ef56-4480-86cb-b10d49effa73,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.80,2.30
+,,,Power BI Pro for students,15a38d13-62c6-48a0-a752-aea1627cb00b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.00,1.30
+,,,PowerApps Additional Data Storage,8f944660-266f-47ae-afea-305a4175da77,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,60.00,75.00
+,,,PowerApps Additional Data Storage (Dyn365),10e11653-6175-4286-9512-757cec3d35bc,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,60.00,75.00
+,,,PowerApps Additional Data Storage for Faculty,eb408baa-da99-4cd8-a9c7-d913504af543,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,33.00,41.30
+,,,PowerApps Additional Data Storage for Faculty (Dyn365),ae55de41-3fa6-4b43-8405-03488508b4e0,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,33.00,41.30
+,,,PowerApps Additional Data Storage for Students,654156f7-602e-4080-89ed-105675770a3b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,24.00,30.00
+,,,PowerApps Additional Data Storage for Students (Dyn365),45ce3c05-0820-4435-a8ed-028143ec6968,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,24.00,30.00
+,,,PowerApps Additional File Storage per 500GB,3603483f-086d-4c97-b372-32ca856d8cce,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,40.00,50.00
+,,,PowerApps Additional File Storage per 500GB (Dyn365),bc07a976-0468-48db-ad63-f426fa415bd1,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,40.00,50.00
+,,,PowerApps Additional File Storage per 500GB for Faculty,bb6244a0-403b-4ecc-bb51-a063fe99e31a,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,22.00,27.50
+,,,PowerApps Additional File Storage per 500GB for Faculty (Dyn365),10de2ef2-b242-4d53-9454-db9a15523095,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,22.00,27.50
+,,,PowerApps Additional File Storage per 500GB for Students,81ef0a38-c3b0-4636-9d5c-2ac4b2dc2856,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,16.00,20.00
+,,,PowerApps Additional File Storage per 500GB for Students (Dyn365),eb430c09-5c74-49b6-8cf3-058df6432a9b,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,16.00,20.00
+,,,PowerApps Enterprise Environment,e81c863e-b078-4f25-a4b2-dbac5fab12a6,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,8000.00,10000.00
+,,,PowerApps Enterprise Environment (Dyn365),eb0d0b25-56c1-492f-8d02-3b88e0ae6590,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,8000.00,10000.00
+,,,PowerApps Enterprise Environment for Faculty,a19f1dc9-2d4f-4ff9-91ce-9ffb8ea18c23,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,4400.00,5500.00
+,,,PowerApps Enterprise Environment for Faculty (Dyn365),229cd1fa-2a40-46c3-b157-35a8d481b230,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,4400.00,5500.00
+,,,PowerApps Enterprise Environment for Students,3f242116-0e68-42d2-844e-fab8cbe5bc4d,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,3199.99,4000.00
+,,,PowerApps Enterprise Environment for Students (Dyn365),18811bfa-f12d-4092-b4db-dc606dc2ff85,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,3199.99,4000.00
+,,,PowerApps Professional Environment,ab0d7fcc-9af0-45e9-92ef-6f40da16e7e6,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1600.00,2000.00
+,,,PowerApps Professional Environment (Dyn365),0596958c-38c5-40c3-8532-9906f47149cb,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1600.00,2000.00
+,,,PowerApps Professional Environment for Faculty,ace7a49a-0cda-4c3a-b3c0-5c58010ea1dc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,880.00,1100.00
+,,,PowerApps Professional Environment for Faculty (Dyn365),9b9af547-ad1d-48cf-bc39-492df10a9697,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,880.00,1100.00
+,,,PowerApps Professional Environment for Students,5771c699-54af-47e1-82f8-50e056a70fcc,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,640.00,800.00
+,,,PowerApps Professional Environment for Students (Dyn365),81efa59c-a6ef-4b48-8d41-81588b671095,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,640.00,800.00
+,,,Project Online,1f1d89ab-6c52-4a16-a9b6-b358edb27aab,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,26.40,33.00
+,,,Project Online Essentials,a4179d30-cc09-49f0-977e-dc2cb70b874f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,5.60,7.00
+,,,Project Online Premium,d85c8762-22e4-44c0-97fe-27ed3fc4e61a,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,44.00,55.00
+,,,Project Online Professional,a56baa74-d4e3-49fd-b228-ca0b62d08bad,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,24.00,30.00
+,,,Project Online with Project Pro for Office 365,63741246-68c5-4ae2-8a2d-333b9eda85d4,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,46.40,58.00
+,,,Project Pro for Office 365,d3bca131-4772-47bc-9c2e-e4040f82268c,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,20.00,25.00
+,,,SharePoint Online (Plan 1),ff7a4f5b-4973-4241-8c43-80f2be39311d,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.00,5.00
+,,,SharePoint Online (Plan 2),69c67983-cf78-4102-83f6-3e5fd246864f,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,8.00,10.00
+,,,Skype for Business Cloud PBX,4260988e-990d-479c-ae7b-f01ce8e1bb4d,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,6.40,8.00
+,,,Skype for Business Cloud PBX for faculty,331e4150-94df-4517-8d5c-9346deea7665,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,2.40,3.00
+,,,Skype for Business Cloud PBX for students,40d1eb22-daeb-4e72-80e9-566375a83b55,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,1.80,2.30
+,,,Skype for Business Online (Plan 1),aca0c06c-890d-4abb-83cf-bc519a2565e5,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Skype for Business Online (Plan 2),14c61739-b45a-42c0-832c-d330972d3173,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,4.40,5.50
+,,,Skype for Business Plus CAL,fc233c3f-25bc-4bba-8984-860ce561af86,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,1.60,2.00
+,,,Skype for Business Plus CAL for faculty,8637b090-a710-44e8-96ec-230e0c7f1e19,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER FACULTY,1.20,1.50
+,,,Skype for Business Plus CAL for students,17853361-4de9-487f-b897-ac65b9e508a3,Academic,1 Month(s),NON-SPECIFIC,CLOUD RESELLER STUDENT,0.40,0.50
+,,,Skype for Business PSTN Conferencing,c94271d8-b431-4a25-a3c5-a57737a1c909,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,4.00,4.00
+,,,Skype for Business PSTN Conferencing for E5 without PSTN Conferencing Customers,64c8233d-29d5-47c1-91b2-773226487213,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,2.00,2.00
+,,,Skype for Business PSTN Conferencing for E5 without PSTN Conferencing for faculty Customers,d5cc531a-a8c6-4f4d-a468-9607fe67b783,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,0.60,0.60
+,,,Skype for Business PSTN Conferencing for E5 without PSTN Conferencing for students,ada504e3-99e7-456d-84a1-d19c27677b4b,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,0.50,0.50
+,,,Skype for Business PSTN Conferencing for faculty,061391db-34bc-4aca-bf89-bb7c28aca20b,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,1.50,1.50
+,,,Skype for Business PSTN Conferencing for students,468e089f-8e8d-41f8-a688-8a91d875269a,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,1.13,1.13
+,,,Skype for Business PSTN Domestic and International Calling,ded34535-507f-4246-8370-f9180318c537,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,24.00,24.00
+,,,Skype for Business PSTN Domestic and International Calling for faculty,492b8a14-381c-4536-bf63-bd5785c14734,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,24.00,24.00
+,,,Skype for Business PSTN Domestic and International Calling for students,64ed3fb4-9f46-4e8a-b287-7a3662245c37,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,24.00,24.00
+,,,Skype for Business PSTN Domestic Calling,0f598efe-f330-4d79-b79f-c9480bb7ce3e,Corporate,1 Month(s),ADDON,CLOUD RESELLER CORPORATE,12.00,12.00
+,,,Skype for Business PSTN Domestic Calling for faculty,5e8853ed-611c-4f9c-af21-540ba351a636,Academic,1 Month(s),ADDON,CLOUD RESELLER FACULTY,12.00,12.00
+,,,Skype for Business PSTN Domestic Calling for students,da2034e1-c147-4aae-afab-9c15acf16ea5,Academic,1 Month(s),ADDON,CLOUD RESELLER STUDENT,12.00,12.00
+,,,Visio Pro for Office 365,b4d4b7f4-4089-43b6-9c44-de97b760fb11,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,10.40,13.00
+,,,Windows 10 Enterprise E3,62F28745-3F17-4337-BE15-EA4B8C8DC872,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,5.60,7.00
+,,,Yammer Enterprise,a3f4ab4e-6239-4ecb-a859-77369dca1c08,Corporate,1 Month(s),NON-SPECIFIC,CLOUD RESELLER CORPORATE,2.40,3.00

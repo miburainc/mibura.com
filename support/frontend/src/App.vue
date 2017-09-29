@@ -10,7 +10,7 @@
 					</div>
 					<div class="modal-body">
 						<div id="pdf">
-							<object width="100%" height="500" type="application/pdf" :data="getTermsPDF" id="pdf_content">
+							<object width="100%" height="500" type="application/pdf" id="pdf_content">
 							
 							</object>
 						</div>
@@ -158,9 +158,9 @@
 					</div>
 					<div class="modal-footer">
 						<!-- <button v-if="getEstimatePDF" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
-						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>-->
+						<button v-if="getEstimatePDF" type="button" class="btn btn-primary" @click="goToReview">Go to Payment</button>-->
 						<button v-if="cartLoaded" class="btn btn-success" id="verify-ach" @click="goToVerify">Verify ACH</button>
-						<button v-if="cartLoaded" type="button" class="btn btn-primary" @click="goToPayment">Go to Payment</button>
+						<button v-if="cartLoaded" type="button" class="btn btn-primary" @click="goToReview">Go to Review</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 						<button v-if="cartLoadError" type="button" class="btn btn-info" @click="submitQuoteId2">Retry</button>
 					</div>
@@ -255,6 +255,14 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Modal Components -->
+		<change-personal-modal></change-personal-modal>
+		<unverified-items-modal></unverified-items-modal>
+
+
+
 		<div v-if="!getPurchaseSuccess" class="notifications-container" style="padding: 0 5px;z-index: 5;">
 			<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
 		</div>
@@ -285,6 +293,9 @@ import SuccessScreen from './components/SuccessScreen.vue'
 import Notification from './components/Notification.vue'
 import Progressbar from './components/ProgressBar.vue'
 
+import ChangePersonalModal from './modals/ChangePersonalModal.vue'
+import UnverifiedItemsModal from './modals/UnverifiedItemsModal.vue'
+
 import {toJSONLocal} from './scripts/functions'
 
 import {mapActions,mapGetters} from 'vuex'
@@ -297,12 +308,14 @@ import cart from './store/api/cart'
 
 import axios from './store/api/api-config'
 
+import stripe from './store/stripe'
+
 export default {
 	name: 'app',
 	data () {
 		return {
+			stripe: stripe,
 			estimate_id: '',
-			stripe: null,
 			verifyError1: false,
 			verifyError2: false,
 			cartLoaded: false,
@@ -314,7 +327,9 @@ export default {
 		SupportCart,
 		SuccessScreen,
 		Notification,
-		Progressbar
+		Progressbar,
+		ChangePersonalModal,
+		UnverifiedItemsModal,
 	},
 	computed: {
 		...mapGetters([
@@ -327,6 +342,7 @@ export default {
 			'getPaymentInfo',
 			'getCart',
 			'getCartChanged',
+			'getPaymentInfoProp',
 			
 		]),
 		isCartLoaded(){
@@ -343,6 +359,7 @@ export default {
 			'setCloudProviders',
 			'setCurrentFormStep',
 			'setEstimatePdfFile',
+			'createPaymentObject',
 			'achSendCredentials',
 			'serverGetEstimatePdf',
 			'serverSetClient',
@@ -356,7 +373,6 @@ export default {
 		submitQuoteId(){
 
 			var data = {
-				// client_id: this.getClientInfo['pk'],
 				reference: document.getElementById('quoteIdInput').value,
 			}
 
@@ -365,6 +381,7 @@ export default {
 					console.log(response)
 					this.cartLoaded = true
 					data = response.response.data
+					console.log(data)
 					let payload = {
 						'items': data.items,
 						'id': data.cart.id,
@@ -391,6 +408,7 @@ export default {
 			
 			$('#returnModal').modal('toggle')
 			$('#returnSuccessModal').modal('show')
+			this.setCurrentFormStep(1)
 			
 		},
 		submitQuoteId2(){
@@ -413,10 +431,9 @@ export default {
 			$('#returnSuccessModal').modal('toggle')
 			$('#verifyModal').modal('show')
 		},
-		goToPayment(){
-			console.log("LOAD CUSTOMER'S ESTIMATE DATA INTO STATE AND GO TO PAYMENT PAGE")
+		goToReview(){
 			$('#returnSuccessModal').modal('toggle')
-			this.setCurrentFormStep(6)
+			this.setCurrentFormStep(5)
 		},
 		submitVerification(){
 			let v1 = document.getElementById('verify1').value
@@ -469,9 +486,8 @@ export default {
 			}
 
 			if(allGood){
-				$('#verifyModal').modal('toggle')
 				this.setPaymentProp({prop: 'verify1', data: v1})
-				this.setPaymentProp({prop: 'verify2', data: v2})
+          		this.setPaymentProp({prop: 'verify2', data: v2})
 				this.achSendVerify()
 			}
 		},
@@ -520,6 +536,8 @@ export default {
 				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
 				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
 
+				
+
 				// Reset pdf to nothing
 				this.setEstimatePdfFile(null);
 				// Send request for new pdf file
@@ -531,6 +549,12 @@ export default {
 					payload['cart_ref'] = this.getCartReference
 					console.log("SEND PAYLOAD TO API ENDPOINT")
 					console.log(payload)
+					this.createPaymentObject({
+						client_id: this.getClientInfo['pk'],
+						cart_ref: this.getCartReference,
+						payment_type: 'achstripe',
+						token: this.getPaymentInfoProp('banktoken')
+					})
 					this.achSendCredentials(this.getPaymentInfo['banktoken'])
 				})
 				
@@ -544,11 +568,7 @@ export default {
 		}
 	},
 	mounted() {
-		setTimeout(() => {
-			this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
-		}, 1000)
-		
-		axios.get(this.getAPIRoot + 'cloud')
+		axios.get(this.getAPIRoot + 'cloud/')
 			.then((response) => {
 				console.log(response)
 				this.setCloudProviders(response.data.results)
@@ -564,6 +584,28 @@ export default {
 
 <style lang="scss">
 
+.btn-success {
+	background-color: #2d85bf;
+	border-color: #2d81ae;
+
+	&:hover {
+		background-color: #389fd5;
+		border-color: #2d85bf;
+	}
+
+	&:active, &:focus, &:visited {
+		background-color: #2d85bf!important;
+		border-color: #2d81ae;
+	}
+}
+
+.btn-success[disabled] {
+
+	&:hover {
+		background-color: #389fd5;
+		border-color: #2d85bf;
+	}
+}
 
 .notifications-container {
 	position: absolute;

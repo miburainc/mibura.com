@@ -2,7 +2,7 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.dateformat import DateFormat
 
-import sys, requests, json, re
+import sys, os, requests, json, re
 from datetime import datetime
 
 from rest_framework.renderers import JSONRenderer
@@ -25,7 +25,9 @@ def remove_namespace(doc, namespace):
 		if elem.tag.startswith(ns):
 			elem.tag = elem.tag[nsl:]
 
-def create_estimate(client, plan, length, items):
+def create_estimate(client, plan, length, items, cart_ref):
+	print("create_estimate")
+	print(items)
 	discount_list = Discount.objects.all()
 	plan_obj = Plan.objects.get(short_name=plan)
 	categories = ProductCategory.objects.all()
@@ -49,7 +51,10 @@ def create_estimate(client, plan, length, items):
 	discount.text = str(int(active_discount*100))
 
 	terms = estimate.find('terms')
-	terms.text = 'Estimate for ' + plan + ' plan for ' + str(length) + ' years.'
+	terms.text = 'https://Mibura.com/terms'
+
+	notes = estimate.find('notes')
+	notes.text = 'Smart Support Cart ID: ' + cart_ref
 
 	first_name = estimate.find('first_name')
 	first_name.text = client['first_name']
@@ -84,8 +89,6 @@ def create_estimate(client, plan, length, items):
 	lines = estimate.find('lines')
 
 	for index,item in enumerate(items):
-		print("item type:",item['type'])
-		print(item)
 		cat = categories.get(category_code=item['category'])
 		line = ET.Element('line')
 		name = ET.SubElement(line, 'name')
@@ -96,10 +99,15 @@ def create_estimate(client, plan, length, items):
 			desc = text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(length) + ' years.')
 		elif item['type'] == 'cloud':
 			cloud = Cloud.objects.get(name=item['name'])
-			print("cloud: ",cloud)
 			text = EstimateText.objects.get(category=cat, cloud=cloud)
-			name.text = text.item
+			name.text = text.item + " @ " + str(item['quantity']) + " instances"
 			desc = text.description
+		elif item['type'] == 'unknown':
+			text = EstimateText.objects.get(plan=plan_obj, category=cat)
+			print(name.text)
+			name.text = text.item + " @ " + str(item['age']) + " years old"
+			desc = text.description.replace('[product]', item['model']).replace('[length]', str(length) + ' years.')
+
 		description.text = desc
 		unit_cost = ET.SubElement(line, 'unit_cost')
 		unit_cost.text = str(round(item['cost'], 2))
@@ -161,7 +169,9 @@ def get_estimate_pdf(estimate_id):
 
 
 	file_name = "Mibura_SmartSupport_Estimate.pdf"
-	path_to_file = settings.MEDIA_ROOT + file_name
+
+	path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
 	with open(path_to_file, 'wb') as f:
 		f.write(r.content)
 	# with open(path_to_file, 'wb') as f:

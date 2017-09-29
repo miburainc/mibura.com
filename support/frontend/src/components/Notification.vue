@@ -1,5 +1,5 @@
 <template>
-	<div :class="['alert alert-dismissable', 'alert-'+data.type]" role="alert">
+	<div :class="['alert alert-dismissable', 'text-center', 'alert-'+data.type]" role="alert">
 		<button type="button" class="close" @click="remove_notification(index)" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		<span v-html="data.message"></span>
 	</div>

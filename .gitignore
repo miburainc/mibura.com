@@ -16,6 +16,7 @@ db.sqlite3
 # Distribution / packaging
 .Python
 build/
+pdfs/
 develop-eggs/
 downloads/
 eggs/

@@ -1,12 +1,14 @@
 <template>
 	
 <div>
-	<div class="form-group"> 
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
+	<div class="form-group" v-on:keyup.enter="submitForm"> 
 
 		<label>Product Name</label> &nbsp;&nbsp;&nbsp;&nbsp;<label class="text-red" v-if="getErrors[form.data[0].form.name]"> {{ getErrors[fields[0].form.name][0] }}</label>
 		<autocomplete
 			:style="{borderColor: (getErrors[fields[0].form.name] ? 'red' : '#8493A8')}"
-			:url="getAPIRoot + 'productcomplete'"
+			:url="getAPIRoot + 'productcomplete/'"
 			data-root="results"
 			label="brand"
 			anchor="model"
@@ -25,26 +27,23 @@
 				resetVerified()
 				ValidateFormStepFunction(fields[0], el)
 			}"
+			:on-blur="test"
 			style="position:relative; z-index:1;">
 		</autocomplete>
 
-		<div ref="input" v-for="(step, index) in fields" v-if="index > 0" 
-			:style="{
-					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
-				}">
-			
-			<form-text-input :step="step"></form-text-input>
-			
-		</div>
+		<form-text-input :step="fields[1]"></form-text-input>
+		<form-text-input v-show="unverified_item" :step="fields[2]"></form-text-input>
+		<form-text-input v-show="unverified_item" :step="fields[3]"></form-text-input>
+		
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px;"> 	
 			<div class="col-xs-12 col-md-2 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[0].class" :id="'btn_' + form.buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button>
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[0].class" :id="'btn_' + buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[0].script)}">{{form.buttons[0].label}}</button>
 			</div>
 			<div class="col-xs-12 col-md-2 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[1].class" :id="'btn_' + form.buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[1].script)}">{{form.buttons[1].label}}</button>
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[1].class" :id="'btn_' + buttons[1].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[1].script)}">{{form.buttons[1].label}}</button>
 			</div>
 			<div class="col-xs-12 col-md-4 btn-container">
-				<button type="button" v-on:keypress.enter.prevent :class="form.buttons[2].class" :id="'btn_' + form.buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, form.buttons[2].script)}">
+				<button type="button" v-on:keypress.enter.prevent :class="buttons[2].class" :id="'btn_' + buttons[2].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[2].script)}">
 						{{form.buttons[2].label}}
 				</button>
 			</div>
@@ -77,6 +76,11 @@ export default {
 	},
 	data() {
 		return {
+			unverified_item: false,
+			autoselected: false,
+			title: "On-Premise Hardware - Software",
+			text: "Search for your hardware device or software below",
+			canSubmit: true,
 			fields: [
 				{
 					placeholder: "Product Name",
@@ -119,10 +123,28 @@ export default {
 					required: false,
 					validate: {},
 					form: {
-						name: "additionalinfo",
+						name: "info",
 						type: "textarea"
 					}
 				}
+			],buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Add",
+					class: "btn btn-lg btn-success",
+					script: "start,additem"
+
+				},
+				{
+					label: "Add and Continue",
+					class: "btn btn-lg btn-success",
+					script: "next,additem"
+
+				},
 			],
 		}
 	},
@@ -137,25 +159,41 @@ export default {
 			'clearErrors',
 			'setAllowFormSubmit'
 		]),
+		test(el){
+			if(!this.autoselected && el.relatedTarget.localName != 'a'){
+				this.unverified_item = true
+			}
+		},
+		submitForm(){
+			if(!this.canSubmit){
+				document.getElementById(this.fields[1].form.name).focus()
+				this.canSubmit = true
+			}
+			else{
+				this.buttonAction(null, "next,additem")
+			}
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},
-		test(el){
-			console.log(el)
-		},
 		ValidateFormStepFunction(step, value){
-			let s = step.dest.split('.')
-			this.setCurrentItemProp({prop: s[s.length-1], data: value})
+			//let s = step.dest.split('.')
+			//this.setCurrentItemProp({prop: s[s.length-1], data: value})
 			let errors = ValidateFormStep(step, value)
-
+			this.autoselected = false
 			if(errors['valid'] == true){
 				this.clearError(step.form.name)
 			}
 		},
 		setFormItemAutoselect (obj, name) {
-			this.setCurrentItemProp({ prop: "brand", data: obj["brand"] })
-			this.setCurrentItemProp({ prop: "category", data: obj["category"] })
-			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
+			this.canSubmit = false
+			this.autoselected = true
+			this.unverified_item = false
+			for(var key in obj){
+				if(obj.hasOwnProperty(key)){
+					this.setCurrentItemProp({prop:key, data:obj[key]})	
+				}
+			}
 			this.setCurrentItemProp({ prop: 'verified', data: true })
 
 			this.setAllowFormSubmit(false)

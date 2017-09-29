@@ -21,11 +21,12 @@ from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.request import Request
 
+from payment.models import *
 from .models import *
 from .serializers import *
 
 from scripts.dotdict import dotdict
-from scripts.sss_pricing import product_price, cloud_price
+from scripts.sss_pricing import product_price, cloud_price, unknown_product_price
 from freshbooks import estimates, invoices
 
 # from weasyprint import HTML
@@ -54,14 +55,32 @@ def send_quote_email(name, recipient, subject, file):
 	msg.content_subtype = 'html'
 	return msg.send()
 
-def send_purchasesuccess_email(name, recipient, subject):
+def send_purchasesuccess_email(name, recipient, subject, length):
 	to = [recipient]
 	from_email = 'cs@mibura.com'
+
+	date = datetime.now()
+	account_manager = "Imran Mirza"
+	vendor_engineer = ""
+	infrastructure_engineer = "Imran Mirza"
+	num_engineers = "22"
+	sales_support = "Imran Mirza"
+
+	brands = ['Dell']
 
 	print(name)
 
 	ctx = {
 		'name': name,
+		'date': date,
+		'account_manager': account_manager,
+		'vendor_engineer': vendor_engineer,
+		'num_engineers': num_engineers,
+		'infrastructure_engineer': infrastructure_engineer,
+		'sales_support': sales_support,
+		'engineer': "Imran Mirza",
+		'brands': brands,
+		'length': length
 	}
 
 	message = get_template('email/purchase_success.html').render(ctx)
@@ -158,7 +177,6 @@ def create_purchaseorder(request):
 
 	return HttpResponse("failed", status=400)
 
-# Unfinished
 @csrf_exempt
 def stripe_ach_begin(request):
 	print("stripe_ach_begin")
@@ -170,31 +188,28 @@ def stripe_ach_begin(request):
 
 		# Get the bank token submitted by the form
 		token_id = data.stripeAchToken
-		print("token_id", token_id)
 		client_id = data.client_id
+
+		# Get client object
 		client = get_object_or_404(Client, pk=client_id)
+		
+		# Create StripeClient object and link to Client object
+		stripe_client = StripeClient.create(client)
 
-		# Create a Customer
-		customer = stripe.Customer.create(
-			source=token_id,
-			description=client.get_full_name() + " customer",
-			email=client.email,
-			metadata={"first_name": client.first_name, "last_name": client.last_name, "company": client.company}
-		)
+		# Link bank account to StripeClient object
+		response = stripe_client.stripe_create_bank(token_id)
+		
+		# print response for debugging
+		print("stripe_ach_begin")
+		print(response)
 
-		print(customer)
-		print(customer['default_bank_account'])
+		if response['status'] == "new":
+			return HttpResponse(True, status=200)
+		else:
+			return HttpResponse(status=400)
 
-		client.stripe_customer_id = customer['id']
-		client.stripe_bank_id = customer['default_bank_account']
-		client.save()
+	return HttpResponse("not post", status=400)
 
-		return HttpResponse(True, status=200)
-
-
-	return HttpResponse("failed", status=400)
-
-# Unfinished
 @csrf_exempt
 def verify_ach(request):
 	print('verify_ach')
@@ -204,29 +219,26 @@ def verify_ach(request):
 		# data = json.loads(request.body)
 		data = dotdict(data) # access properties with . instead of []
 
+		# Get ACH Verify amounts
 		ach_verify_amt1 = data.ach_verify_amt1
 		ach_verify_amt2 = data.ach_verify_amt2
+
+		# Debugging
 		print('ach_verify_amt1', ach_verify_amt1)
 		print('ach_verify_amt2', ach_verify_amt2)
 
+		# Get client object
 		client_id = data.client_id
-
 		client = get_object_or_404(Client, pk=client_id)
 
-		# get the existing bank account
-		customer = stripe.Customer.retrieve(client.stripe_customer_id)
-		bank_account = customer.sources.retrieve(client.stripe_bank_id)
+		response = client.stripeclient.stripe_verify_bank_ach(ach_verify_amt1, ach_verify_amt2)
+		print(response)
+		if response['status'] == "verified":
+			return HttpResponse({"message": "Success"}, status=200)
+		else:
+			return HttpResponse(response['error'], status=400)
 
-		# verify the account
-		try:
-			result = bank_account.verify(amounts= [ach_verify_amt1, ach_verify_amt2])
-		except:
-			return HttpResponse(status=400)
-
-		return HttpResponse({"message": "Success"}, status=200)
-
-
-	return HttpResponse("failed", status=400)
+	return HttpResponse("not post", status=400)
 
 @csrf_exempt
 def get_create_client(request):
@@ -291,33 +303,63 @@ def get_cart(request):
 
 		for client_prod in cart.products.all():
 
-			product = {}
-			product.update(client_prod.product.__dict__)
-			product.update(client_prod.__dict__)
-			product['type'] = 'product'
-			product['verified'] = True
+			if(client_prod.product != None):
+				product = {}
+				product.update(client_prod.product.__dict__)
+				product.update(client_prod.__dict__)
+				product['sn'] = client_prod.serial_number
+				product['type'] = 'product'
+				product['verified'] = True
+				product['age'] = client_prod.product.release
 
-			del(product['_state'])
-			del(product['_product_cache'])
+				del(product['_state'])
+				del(product['_product_cache'])
 
-			product.update({'category':client_prod.product.category.__dict__})
-			del(product['category']['_state'])
+				product.update({'category':client_prod.product.category.__dict__})
+				del(product['category']['_state'])
 
-			items.append(product)
+				items.append(product)
 
-		
-		for cloud in cart.cloud.all():
-			cloud_item = cloud.__dict__
-			cloud_item['category'] = categories.get(category_code='none').__dict__
-			del(cloud_item['_state'])
-			del(cloud_item['category']['_state'])
-			cloud_item['price_silver'] = 1.0
-			cloud_item['price_gold'] = 0.0
-			cloud_item['price_black'] = 0.0
-			cloud_item['model'] = cloud_item['name']
-			cloud_item['type'] = 'cloud'
+			elif(client_prod.unknown != None):
+				product = {}
+				product.update(client_prod.unknown.__dict__)
+				product.update(client_prod.__dict__)
+				product['sn'] = client_prod.serial_number
+				product['type'] = 'unknown'
+				product['verified'] = False
+				product['age'] = client_prod.unknown.device_age
+				product['price_silver'] = 1.0
+				product['price_gold'] = 1.0
+				product['price_black'] = 1.0
 
-			items.append(cloud_item)
+				del(product['_state'])
+				del(product['_unknown_cache'])
+
+				product.update({'category': {
+									'category_code': 'none',
+									'name': 'None',
+									'price_multiplier': 1.0,
+									'yearly_tax': 0.1,
+								}})
+
+				print("UNKNOWN")
+				print(product)
+
+				items.append(product)
+
+			elif(client_prod.cloud != None):
+				cloud_item = client_prod.cloud.__dict__
+				cloud_item['category'] = categories.get(category_code='none').__dict__
+				del(cloud_item['_state'])
+				del(cloud_item['category']['_state'])
+				cloud_item['price_silver'] = 1.0
+				cloud_item['price_gold'] = 0.0
+				cloud_item['price_black'] = 0.0
+				cloud_item['model'] = cloud_item['name']
+				cloud_item['type'] = 'cloud'
+				cloud_item['quantity'] = client_prod.quantity
+
+				items.append(cloud_item)
 
 		serializer_context = {
 			'request': Request(request),
@@ -372,7 +414,21 @@ def get_create_cart(request):
 
 		for prod in data.products:
 			prod = dotdict(prod)
-			
+
+			prod_obj = None
+			cloud = None
+			unknown_prod = None
+
+			if(prod.model == None):
+				model = ""
+			else:
+				model = prod.model
+
+			if(prod.brand == None):
+				brand = ""
+			else:
+				brand = prod.brand
+
 			if prod.type == "cloud":
 				print(prod)
 				if not prod.brand:
@@ -380,22 +436,30 @@ def get_create_cart(request):
 				else:
 					name = prod.brand
 				cloud = Cloud.objects.get(name=name)
-				cart.cloud.add(cloud)
+				prod_obj = None
+			elif prod.type == "unknown":
+				unknown_prod = UnknownProduct(name=model, serial_number=prod.sn, device_age=prod.age, additional_info=prod.info, client=client)
+				unknown_prod.save()
 			else:
 				try:
-					prod_obj = Product.objects.get(brand=prod.brand, model=prod.model)
+					prod_obj = Product.objects.get(brand=brand, model=model)
 				except ObjectDoesNotExist:
-					cat = ProductCategory.objects.get(category_code="none")
-					prod_obj = Product(brand=prod.brand, model=prod.model, category=cat, sku='NONE', approved=False, release=date.today() - timedelta(1))
+					cat = ProductCategory.objects.get(category_code=prod.category['category_code'])
+					prod_obj = Product(brand=brand, model=model, category=cat, sku='NONE', release=date.today() - timedelta(1))
 					prod_obj.save()
 
-				obj,created = ClientProduct.objects.get_or_create(client=client, brand=prod.brand, model=prod.model, serial_number=prod.sn, product=prod_obj)
+			obj,created = ClientProduct.objects.get_or_create(client=client, cloud=cloud, unknown=unknown_prod, brand=brand, model=model, serial_number=prod.sn, product=prod_obj, quantity=prod.quantity)
 
-				if not obj in cart.products.all():
-					cart.products.add(obj)
+			if not obj in cart.products.all():
+				cart.products.add(obj)	
 				
 		cart.plan = data.plan
 		cart.length = data.length
+		#cart.submitted_for_verification = data.submitted
+		if(data.cart_status != None):
+			cart.cart_status = data.cart_status
+
+
 		cart.save()
 		serializer_context = {
 			'request': Request(request),
@@ -506,25 +570,40 @@ def get_estimate_pdf(request):
 
 		items = []
 
-		for client_prod in cart.products.all():
-			items.append({
-				**client_prod.__dict__,
-				'type': 'product',
-				'category': client_prod.product.category,
-				'cost': product_price(client_prod, cart.plan, cart.length)
-			})
 
-		for cloud in cart.cloud.all():
-			items.append({
-				'name': cloud.name,
+		for client_prod in cart.products.all():
+
+			if(client_prod.product != None):
+				print("CLIENT PROD!!!!!!!!!!!",client_prod.__dict__['_product_cache'].__dict__['release'])
+				items.append({
+					**client_prod.__dict__,
+					'device_age': client_prod.__dict__['_product_cache'].__dict__['release'],
+					'type': 'product',
+					'category': client_prod.product.category.category_code,
+					'cost': product_price(client_prod, cart.plan, cart.length)
+				})
+			elif client_prod.cloud != None:
+				items.append({
+				'name': client_prod.cloud.name,
 				'type': 'cloud',
 				'category': 'cloud',
-				'cost': cloud_price(cloud, cart.plan, cart.length)
-			})
+				'quantity': client_prod.quantity,
+				'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
+				})
+			elif(client_prod.unknown != None):
+				base_price = Plan.objects.get(short_name=cart.plan).price
+				yearly_tax = ProductCategory.objects.get(category_code="none").yearly_tax
+				items.append({
+					**client_prod.__dict__,
+					'type': 'unknown',
+					'category': 'none',
+					'age': client_prod.device_age,
+					'cost': unknown_product_price(client_prod, cart.length, yearly_tax, base_price)
+				})
 
 		client.get_freshbooks_id()
 
-		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items)
+		estimate_id = estimates.create_estimate(client.__dict__, cart.plan, cart.length, items, cart.reference)
 
 		if cart.freshbooks_estimate_id:
 			old_cart = deepcopy(cart)
@@ -536,7 +615,7 @@ def get_estimate_pdf(request):
 			cart.save()
 			cart.replaced = False
 			cart.products.add(*old_cart.products.all())
-			cart.cloud.add(*old_cart.cloud.all())
+			# cart.cloud.add(*old_cart.cloud.all())
 			cart.freshbooks_estimate_id = estimate_id
 			cart.reference = old_cart.reference
 			cart.save()
@@ -547,7 +626,8 @@ def get_estimate_pdf(request):
 		pdf = estimates.get_estimate_pdf(estimate_id)
 		
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = settings.MEDIA_ROOT + file_name
+		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
 		pdf = FileWrapper(pdf)
 
 		response = HttpResponse(pdf, content_type='application/pdf')
@@ -556,6 +636,66 @@ def get_estimate_pdf(request):
 		return response
 
 	return HttpResponse('Not POST', status=400)
+
+def get_invoice_pdf(invoice_id):
+	pdf = invoices.get_invoice_pdf(invoice_id)
+	
+	file_name = "Mibura_SmartSupport_Invoice.pdf"
+	path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+	pdf = FileWrapper(pdf)
+
+	return pdf
+
+
+@csrf_exempt
+def create_payment_object(request):
+	print("create_payment_object")
+	if request.method == 'POST':
+		data = json.loads(request.body.decode("utf-8"))
+		data = dotdict(data)
+
+		print(data)
+
+		client = get_object_or_404(Client, pk=data.client_id)
+		cart = get_object_or_404(Cart, reference=data.cart_ref)
+
+		token = data.token
+		amount = cart.get_total()
+
+		if data.payment_type == "creditcard":
+			print("creditcard")
+			payment = Payment.objects.create_stripe_creditcard(client, cart, token, amount)
+		elif data.payment_type == "achplaid":
+			payment = Payment.objects.create_plaid(client, cart, token, amount)
+		elif data.payment_type == "achstripe":
+			payment = Payment.objects.create_stripe_ach(client, cart, token, amount)
+		elif data.payment_type == "paypal":
+			payment = Payment.objects.create_paypal(client, cart, token, amount)
+		elif data.payment_type == "po":
+			payment = Payment.objects.create_purchaseorder(client, cart, data.po_number)
+
+		payment.cart = cart
+		payment.save()
+		data = payment.__dict__
+
+		
+
+		del(data['_state'])
+		del(data['_cart_cache'])
+		del(data['_client_cache'])
+		del(data['date_created'])
+		del(data['date_updated'])
+
+		print(data)
+		
+		response_data = json.dumps(data)
+
+		print(response_data)
+
+		return HttpResponse(response_data, status=200)
+	else:
+		return HttpResponse('Not POST', status=400)
+
 
 @csrf_exempt
 def checkout(request):
@@ -568,7 +708,7 @@ def checkout(request):
 
 		client = get_object_or_404(Client, pk=data.client)
 		cart = get_object_or_404(Cart, reference=data.cart)
-		total = cart.get_total_price()
+		total = cart.get_total()
 
 		discount_list = Discount.objects.all()
 
@@ -583,6 +723,7 @@ def checkout(request):
 		
 		discount_total = total - total*active_discount
 		stripe_total = math.floor(discount_total*100)
+		
 		if data.stripe_token:
 			stripe.Charge.create(
 				amount=stripe_total,
@@ -590,11 +731,11 @@ def checkout(request):
 				source=data.stripe_token,
 				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 			)
-		else:
+		elif client.stripeclient.bank_verified:
 			stripe.Charge.create(
 				amount=stripe_total,
 				currency="usd",
-				customer=client.stripe_customer_id,
+				customer=client.stripeclient.customer_id,
 				description="SSS " + cart.plan + " purchase for " + client.email + ", length: " + str(cart.length) + " years."
 			)
 
@@ -605,46 +746,31 @@ def checkout(request):
 			plan=cart.plan, 
 			length=data.length,
 			discount_percent=active_discount,
-			cart=cart,
 			subtotal=total,
 			price=discount_total, 
 			date_begin=time)
 		sub.save()
 		sub.products.add(*cart.products.all())
-		sub.cloud.add(*cart.cloud.all())
-
-		# Dynamics 365 CreateAccount
-		# crm_res = createAccount({
-		# 	"company": client.company,
-		# 	"phone": client.phone,
-		# 	"email": client.email,
-		# 	"client_name": client.get_full_name(),
-		# 	"address1": client.street,
-		# 	"address2": client.street2,
-		# 	"city": client.city,
-		# 	"state": client.state,
-		# 	"zipcode": client.zipcode,
-		# 	"country": client.country,
-		# 	"description": "Smart Support " + cart.plan + " for " + str(cart.length) + " years. Django Subscription ID for product reference: " + str(sub.pk)
-		# })
+		# sub.cloud.add(*cart.cloud.all())
 
 		items = []
 
 		for client_prod in cart.products.all():
-			items.append({
-				**client_prod.__dict__,
-				'type': 'product',
-				'category': client_prod.product.category,
-				'cost': product_price(client_prod, cart.plan, cart.length)
-			})
-
-		for cloud in cart.cloud.all():
-			items.append({
-				'name': cloud.name,
-				'type': 'cloud',
-				'category': 'cloud',
-				'cost': cloud_price(cloud, cart.plan, cart.length)
-			})
+			if(client_prod.product != None):
+				items.append({
+					**client_prod.__dict__,
+					'type': 'product',
+					'category': client_prod.product.category,
+					'cost': product_price(client_prod, cart.plan, cart.length)
+				})
+			else:
+				items.append({
+					'name': client_prod.cloud.name,
+					'type': 'cloud',
+					'category': 'cloud',
+					'cost': cloud_price(client_prod.cloud, cart.plan, cart.length, client_prod.quantity)
+				})
+				
 
 		active_discount = 0.0
 
@@ -661,8 +787,6 @@ def checkout(request):
 			}
 			cat = categories.get(category_code=item['category'])
 
-			print(item)
-
 			if item['type'] == 'product':
 				estimate_text = EstimateText.objects.get(plan=plan_obj, category=cat)
 				desc = estimate_text.description.replace('[product]', item['brand'] + " " + item['model']).replace('[length]', str(cart.length) + ' years.')
@@ -678,8 +802,6 @@ def checkout(request):
 				line_item['model'] = 'cloud'
 				line_item['name'] = item['name']
 
-			
-			
 			line_item['description'] = desc
 			line_item['unit_cost'] = {
 				'amount': str(round(item['cost'], 2)),
@@ -691,20 +813,41 @@ def checkout(request):
 			line_item['cost'] = item['cost']
 			
 			line_items.append(line_item)
-			
+		
 		terms = 'Estimate for ' + cart.plan + ' plan for ' + str(cart.length) + ' years.'
 		notes = 'Mibura Smart Support Invoice'
 
 		estimate_id = cart.freshbooks_estimate_id
-		print(cart)
-		invoice_id = invoices.create_invoice(client.__dict__, cart.plan, cart.length, line_items)
-		
+		client_freshbooks_id = client.get_freshbooks_id()
+		invoice_id = invoices.create_invoice(client_freshbooks_id, client.__dict__, cart.plan, cart.length, line_items, cart.reference)
+		print("invoice_id in checkout", invoice_id)
 
 		sub.freshbooks_invoice_num = invoice_id
 		sub.save()
 
-		send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase")
-	return HttpResponse({'result': True}, status=200)
+		# send_purchasesuccess_email(client.get_full_name(), client.email, "Your New Smart Support Purchase", cart.length)	
+
+		print("total", discount_total)
+		invoice_total = float("{0:.2f}".format(discount_total))
+		print("invoice_total", invoice_total)
+
+		invoices.add_invoice_payment(invoice_id, client_freshbooks_id, "Credit Card", invoice_total)
+
+		invoice_pdf = get_invoice_pdf(invoice_id)
+
+		file_name = "Mibura_SmartSupport_Invoice.pdf"
+		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
+
+		response = HttpResponse(invoice_pdf, content_type='application/pdf')
+		response['Content-Disposition'] = 'attachment; filename=%s' % encoding.smart_str(file_name)
+		response['Content-Length'] = os.path.getsize(path_to_file)
+
+
+		#Delete cart from database once checkout is complete
+		Cart.objects.get(pk=cart.pk).delete()
+
+		return response
+	return HttpResponse("fail", status=400)
 
 # Django Rest Framework
 

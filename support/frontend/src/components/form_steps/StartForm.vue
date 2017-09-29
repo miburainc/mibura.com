@@ -1,6 +1,6 @@
 <template>
 	
-<div>
+<div v-on:keyup.enter="submitForm">
 	<br><br>
 	<h2 class="text-center">
 		Welcome to Mibura Smart Support
@@ -49,6 +49,9 @@ export default {
 			set_current_item_prop: 'setCurrentItemProp',
 			set_current_form_step: 'setCurrentFormStep'
 		}),
+		submitForm(){
+			this.buttonAction(null, "next")
+		},
 		formHandleEnter(index) {
 			// console.log(this.$refs)
 			// console.log(this.$refs.input)

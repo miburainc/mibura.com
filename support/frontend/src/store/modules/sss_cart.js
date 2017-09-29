@@ -18,7 +18,6 @@ const state = {
 	support_months: 12,
 	current_item_id: null,
 	estimate_id: 0,
-	estimate_pdf: null,
 	cart_changed: true,
 }
 
@@ -69,15 +68,18 @@ const mutations = {
 	[TYPE.SET_ESTIMATE_ID]: (state, value) => {
 		state.estimate_id = value
 	},
-	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
-		state.estimate_pdf = value
-	},
 	[TYPE.CART_CHANGED]: (state, value) => {
 		state.cart_changed = value
-	}
+	},
+	[TYPE.SET_CART_STATUS]: (state, value) => {
+		state.cart_status = value
+	},
 }
 
 const actions = {
+	setCartStatus({commit}, value){
+		commit(TYPE.SET_CART_STATUS, value)
+	},
 	setCart({commit}, payload){
 		commit(TYPE.SET_CART, payload.items)
 		commit(TYPE.CART_SET_ID, payload.id)
@@ -86,6 +88,20 @@ const actions = {
 	},
 	setCartChanged({commit}, value) {
 		commit(TYPE.CART_CHANGED, value)
+	},
+	checkDuplicateCloud({commit, state, dispatch, rootState}, value){
+		console.log("asdffdsasadf")
+		for (let i=0; i<state.cart.length; i++) {
+			if (state.cart[i].brand == value) {
+				dispatch('addNotification', {
+					type: "danger",
+					message: "You already have " + value + " in your cart!<br>Select another provider or click the Skip button."
+				})
+				commit(TYPE.SET_CLOUD_IN_CART_ALREADY, true)
+				return
+			}
+		}
+		commit(TYPE.SET_CLOUD_IN_CART_ALREADY, false)
 	},
 	addCartItem({commit, dispatch, state, rootState}, payload) {
 		let cloud_in_cart_already = false
@@ -148,7 +164,7 @@ const actions = {
 	},
 	saveCart({state, rootState, commit, dispatch}) {
 		let ref = state.cart_ref ? state.cart_ref : makeid(8)
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		
 		return cart.getOrCreateCart({
 				email: client.email,
@@ -157,6 +173,7 @@ const actions = {
 				products: state.cart,
 				plan: state.current_plan,
 				length: state.support_months/12,
+				cart_status: state.cart_status,
 			}).then(response => {
 				commit(TYPE.CART_SET_ID, response.data.pk)
 				commit(TYPE.CART_SET_REF, response.data.reference)
@@ -168,29 +185,17 @@ const actions = {
 			$('#pdfModal').modal('hide')
 		})
 	},
-	setEstimatePdfFile({commit}, payload) {
-		commit(TYPE.SET_ESTIMATE_PDF, payload)
-	},
-	serverGetEstimatePdf({state, rootState, commit}) {
-		let client = rootState.Form.client_info
-		let cart_ref = state.cart_ref
-		return freshbooks.getEstimatePDF(client, cart_ref)
-			.then(response => {
-				// commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
-				var blob=new Blob([response.data], {type:"application/pdf"});
-				let file_url = window.URL.createObjectURL(blob)
-				commit(TYPE.SET_ESTIMATE_PDF, file_url)
-			})
-	},
+	
+	
 	checkout({commit, dispatch, state, rootState}) {
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		if (!state.cart_ref) {
 			dispatch('saveCart', client)
 		}
 		let payment_token = null
 
-		if (rootState.stripe.ach_payment_token != null || rootState.stripe.cc_payment_token != null) {
-			payment_token = rootState.stripe.ach_payment_token ? rootState.stripe.ach_payment_token : rootState.stripe.cc_payment_token
+		if (rootState.Payment.payment_info.ach_payment_token != null || rootState.Payment.payment_info.cc_payment_token != null) {
+			payment_token = rootState.Payment.payment_info.ach_payment_token ? rootState.Payment.payment_info.ach_payment_token : rootState.Payment.payment_info.cc_payment_token
 		}
 
 		let data = {
@@ -214,6 +219,10 @@ const actions = {
 		if (can_checkout) {
 			cart.api_checkout(data)
 				.then((response) => {
+					console.log(response)
+					var blob=new Blob([response.data], {type:"application/pdf"});
+					let file_url = window.URL.createObjectURL(blob)
+					commit(TYPE.SET_INVOICE_PDF, file_url)
 					dispatch('setPurchaseSuccess', true)
 				})
 			return true
@@ -226,12 +235,10 @@ const actions = {
 	setCurrentPlan({commit, dispatch}, value) {
 		dispatch('setCartChanged', true)
 		commit(TYPE.SET_CURRENT_PLAN, value)
-    },
+		},
 }
 
 const getters = {
-
-	// //////////////
 	// Products
 
 	getProductAge: state => product => {
@@ -242,11 +249,10 @@ const getters = {
 		return Math.round(age)
 	},
 	getProductPrice: (state, store) => cart_index => {
-		// 
-		// Calculate product price depending on plan selected by customer
-		// 
+		
 		let cost = 0
 		let product = state.cart[cart_index]
+
 		let plan_name = ''
 		switch(store.getCurrentPlan) {
 			case 'silver':
@@ -263,38 +269,59 @@ const getters = {
 				break;
 		}
 		// Product multiplier per plan e.g 1.0x
+		console.log(product)
 		let pp = product['price_'+plan_name]
+		
 		// Product Category multiplier e.g 1.2x
 		let pm = product.category.price_multiplier
+		
+		let pa = 0
+		let pt = 0
+
+		let pq = 0
+		let qm = 0
+
+		if(product.quantity != null){
+			pq = product.quantity
+			qm = product.quantity_multiplier
+		}
+		else{
+			if(product.type == "product"){
+				let product_release = moment(product.release)
+				let today = moment()
+				let age_months = today.diff(product_release, 'months')
+				let final_age = age_months / 6
+				pa = Math.floor(final_age)
+			}
+			else{
+				pa = product.age
+			}
+			
+			pt = product.category.yearly_tax
+		}
+
 		// Plan base product price e.g $49/yr
 		let pc = store.getPlan(store.getCurrentPlan).cost
-
 		// Calculation and then divided by half since plans are sold in 6 month increments
-		cost = (pp * pm * pc) / 2
+		cost = (pc * pp * (pm + pq * qm + pa * pt)) / 2
+
+		console.log("ASDDFASDASFAFASD")
+		console.log(pp)
+		console.log(pc)
+		console.log(pm)
+		console.log(pq)
+		console.log(pa)
+		console.log(qm)
+		console.log(pt)
+
 		return cost
 	},
 	getProductSubtotal: (state, store) => cart_index => {
-		//
-		// Get product line item price
-		//
-		let product = state.cart[cart_index]
 		let product_price = store.getProductPrice(cart_index)
-
-		let product_age = store.getProductAge(product)
 		// price_iterations - how many half year increments to add
 		let price_iterations = store.getSupportMonths/6
-		// inc - amount to add to base price based on product age
-		let inc = product.category.yearly_tax
-		let price = 0.0
-		// Calculate price base price depending on age
-		for (let e=0; e<product_age; e++) {
-			price += (product_price * inc)
-		}
-
-		// Calculate price into future for length of support bought by client
-		for (let i=0; i<price_iterations; i++) {
-			price += product_price + (product_price * inc)
-		}
+		
+		let price = product_price * price_iterations
 
 		return price
 	},
@@ -311,17 +338,17 @@ const getters = {
 		let final = total - (total * store.getCurrentDiscount)
 		return final
 	},
+	getCloudInCartAlready: state => state.cloud_in_cart_already,
 	getCart: state => state.cart,
 	getCartId: state => state.cart_id,
 	getSupportMonths: state => state.support_months,
 	getCartReference: state => state.cart_ref,
-	getEstimatePDF: state => state.estimate_pdf,
 	getEstimateID: state => state.estimate_id,
 	getCartChanged: state => state.cart_changed,
 	// Plans
 	getPlans: state => state.plans,
 	getCurrentPlan: state => state.current_plan,
-    getPlan: state => plan => {
+		getPlan: state => plan => {
 		// console.log("getPlan", plan)
 		// console.log(state.plans.length)
 		for (let i=0; i<state.plans.length; i++) {
@@ -332,6 +359,16 @@ const getters = {
 			}
 		}
 		return false
+	},
+	getUnverifiedItems: state => {
+		let items = []
+
+		for (let i=0; i<state.cart.length; i++){
+			if(state.cart[i].type == "unknown"){
+				items.push(state.cart[i])
+			}
+		}
+		return items
 	},
 }
 

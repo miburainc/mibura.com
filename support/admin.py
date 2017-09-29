@@ -30,7 +30,7 @@ admin.site.register(Cart, CartAdmin)
 
 class ClientProductAdmin(admin.ModelAdmin):
 	search_fields = ['product', 'brand', 'model', 'client']
-	list_filter = ['client', 'product', 'brand']
+	list_filter = ['client', 'brand']
 	list_display = ['client', 'product', 'brand', 'model', 'serial_number']
 
 admin.site.register(ClientProduct, ClientProductAdmin)
@@ -44,6 +44,11 @@ class CloudAdmin(admin.ModelAdmin):
 	list_display = ['name', 'website', 'price_multiplier',]
 
 admin.site.register(Cloud, CloudAdmin)
+
+class CloudAddOnAdmin(admin.ModelAdmin):
+	list_display = ['cloud', 'category', 'price',]
+
+admin.site.register(CloudAddOn, CloudAddOnAdmin)
 
 class ProductCategoryAdmin(admin.ModelAdmin):
 	list_display = ['name', 'yearly_tax', 'category_code', 'price_multiplier',]

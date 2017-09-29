@@ -1,8 +1,10 @@
 <template>
 	
 <div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 	<br>
-	<div class="container-fluid">
+	<div class="container-fluid" v-on:keyup.enter="submitForm">
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
 			<div :style="{padding: '10px 0px 10px 10px', background: getPlan(getCurrentPlan).color, color: getPlan(getCurrentPlan).code == 'black' ? 'white' : 'black'}" class="col-xs-12">
 				<h3>{{ getPlan(getCurrentPlan).name }}</h3>
@@ -41,7 +43,7 @@
 					{{getClientInfo['city']}}, {{getClientInfo['state']}}<br>
 					{{getClientInfo['zipcode']}}, {{getClientInfo['country']}}<br>
 				</div>
-				<div class="col-lg-2"><a href="#" style="color:lightblue;">Change</a></div>
+				<div class="col-lg-2"><a role="button" @click="openModal" style="color:blue;">Change</a></div>
 			</div>
 
 			<!-- <div v-if="Object.keys(getPaymentInfo).length > 0" class="pad-10 row" style="padding:10px 0px 10px 0px; margin: 0px 10px 0px 10px; border-bottom: 1px solid lightgray">
@@ -65,10 +67,15 @@
 			<h4>If you have any questions about your order please call us at 1.800.862.5144.</h4>
 			</div>
 			<br>
-			<div style="text-align:center">
-				
-				<a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
-				<a v-else role="button" class="btn btn-lg btn-info" href="#" data-toggle="modal" data-target="#termsModal">Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<div style="text-align:center; margin-bottom:20px;">
+				<div class="form-check">
+					<label>
+					<input type="checkbox" class="form-check-input" @change="(e) => {setAcceptedTerms(e.target.checked)}">
+						<span style="color:gray; margin-left:5px;"> I agree to the <a target="blank" href="/terms">Mibura Terms &amp; Conditions</a></span>
+					</label>
+				</div>
+				<!-- <a v-if="getAcceptedTerms" role="button" class="btn btn-lg btn-default" href="#" data-toggle="modal" data-target="#termsModal">Terms Accepted &nbsp;&nbsp;<i aria-hidden="true" class="fa fa-check"></i></a>
+				<a v-else role="button" class="btn btn-lg btn-success" href="#" data-toggle="modal" data-target="#termsModal">Accept Terms &amp; Conditions</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
 
 				
 				<!-- <label style="font-size: 20px; color: lightblue;">
@@ -78,9 +85,10 @@
 				</label> -->
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
+		<div v-bind:style="buttonStyle"> 	
+			<button v-if="!getPaymentProcessing" v-on:keypress.enter.prevent type="button" style="white-space: normal;" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script);}">{{btn.label}}</button><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success">Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
 		</div>
+		
 	</div>
 </div>
 
@@ -90,14 +98,37 @@
 
 import {mapGetters, mapActions} from 'vuex'
 
-import Autocomplete from 'vue2-autocomplete-js';
+
 
 export default {
-
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
-			processing: false
+			acceptedTerms: false,
+			title: "Verify",
+			text: "",
+			processing: false,
+			data: [
+				
+				
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Submit Payment",
+					class: "btn btn-lg btn-success payment-button",
+					script: "purchase"
+				},
+			],
+			title: "Verify",
+			text: "",
+			error: "",
+			step: 3,
+			buttonStyle: ""
 		}
 	},
 	mounted() {
@@ -114,6 +145,12 @@ export default {
 			'setAcceptedTerms',
 			'setPaymentProcessing'
 		]),
+		openModal(){
+			$('#ChangePersonalModal').modal('show')
+		},
+		submitForm(){
+			this.buttonAction(null, "purchase")
+		},
 		setTerms(value){
 			this.setAcceptedTerms(value)
 			console.log(value)
@@ -198,7 +235,7 @@ export default {
 		])
 	},
 	mounted(){
-		setPaymentProcessing(false)
+		this.setPaymentProcessing(false)
 	}
 }
 

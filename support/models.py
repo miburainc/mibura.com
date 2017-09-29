@@ -23,6 +23,13 @@ PRODUCT_CATEGORIES = (
 	("appliances", "Appliances"),
 )
 
+CART_STATUS_CHOICES = (
+	("awaiting_product_approval","Awaiting Product Approval"),
+	("awaiting_ach_verification","Awaiting ACH Verification"),
+	("awaiting_po_approval","Awaiting Product Order Approval"),
+	("none", "None"),
+)
+
 class Plan(models.Model):
 	name = models.CharField(max_length=64)
 	short_name = models.CharField(max_length=16)
@@ -47,6 +54,11 @@ class Cloud(models.Model):
 	name = models.CharField(max_length=128)
 	website = models.CharField(max_length=128)
 	price_multiplier = models.FloatField(default=1.0)
+	quantity_multiplier = models.FloatField(default=0.1)
+
+	price_silver = models.FloatField(default=1.0)
+	price_gold = models.FloatField(default=0.0)
+	price_black = models.FloatField(default=0.0)
 
 	color = models.CharField(max_length=64, blank=True)
 	image = models.ImageField(upload_to='images/cloud/', blank=True)
@@ -143,21 +155,31 @@ class UnknownProduct(models.Model):
 	name = models.CharField(max_length=128)
 	serial_number = models.CharField(max_length=128, null=True, blank=True)
 	device_age = models.IntegerField(default=0)
-	additional_info = models.TextField(blank=True)
+	additional_info = models.TextField(blank=True, null=True)
 	client = models.ForeignKey(Client)
 
 	date_created = models.DateTimeField(auto_now_add=True)
 	date_updated = models.DateTimeField(auto_now=True)
 
+
+
 class CloudAddOn(models.Model):
-	cloud = models.ForeignKey(Cloud)
-	name = models.CharField(max_length=128)
+	cloud = models.ForeignKey(Cloud, null=True)
+	cloud_backup_name = models.CharField(max_length=128, default="")
+	category = models.CharField(max_length=128)
+	sub_category = models.CharField(max_length=128)
+	price = models.FloatField(default=0.0)
+	is_price_final = models.BooleanField(default=False)
 
 
 class ClientProduct(models.Model):
 	client = models.ForeignKey(Client)
 	cloud = models.ForeignKey(Cloud, blank=True, null=True)
 	product = models.ForeignKey(Product, blank=True, null=True)
+	unknown = models.ForeignKey(UnknownProduct, blank=True, null=True)
+	quantity = models.IntegerField(default=1, blank=True, null=True)
+
+	approved = models.BooleanField(default=False)
 
 	brand = models.CharField(max_length=64, blank=True) # Take off
 	model = models.CharField(max_length=64, blank=True) # take off
@@ -178,9 +200,11 @@ class Cart(models.Model):
 	client = models.ForeignKey(Client)
 	products = models.ManyToManyField(ClientProduct)
 	length = models.FloatField(default=.5)
-	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
+
+	#submitted_for_verification = models.NullBooleanField(default=False)
+	cart_status = models.CharField(max_length=32, choices=CART_STATUS_CHOICES, default="none")
 
 	reference = models.CharField(max_length=128) # Reference code for client to use
 	freshbooks_estimate_id = models.CharField(max_length=32, blank=True)
@@ -193,20 +217,37 @@ class Cart(models.Model):
 	def __str__(self):
 		return self.client.get_full_name() + " Cart " + str(self.date_created)
 
-	def get_total_price(self):
-		total = 0
+	def get_subtotal(self):
+		result = 0
 		for prd in self.products.all():
-			total += product_price(prd, self.plan, self.length)
-		for cloud in self.cloud.all():
-			total += cloud_price(cloud, self.plan, self.length)
-		return total
+			if(prd.product != None):
+				result += product_price(prd, self.plan, self.length)
+			else:
+				result += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
+		
+		return result
+
+	def get_total(self):
+		result = 0
+		for prd in self.products.all():
+			if(prd.product != None):
+				result += product_price(prd, self.plan, self.length)
+			else:
+				result += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
+		discounts = Discount.objects.all()
+		active_discount = 0.0
+
+		for index, dis in enumerate(discounts):
+			if float(self.length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+
+		return result - result*active_discount
 
 class Subscription(models.Model):
 	client = models.ForeignKey(Client)
 	plan = models.CharField(max_length=32, choices=PLAN_CHOICES)
-	cart = models.ForeignKey(Cart, blank=True, null=True)
 	products = models.ManyToManyField(ClientProduct,blank=True)
-	cloud = models.ManyToManyField(Cloud, blank=True)
 
 	length = models.FloatField(default=1)
 	subtotal = models.FloatField(default=0.0)

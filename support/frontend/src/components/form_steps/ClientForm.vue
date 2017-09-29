@@ -1,9 +1,11 @@
 <template>
 	
 <div>
-	<div class="form-group" >
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
+	<div class="form-group" v-on:keyup.enter="submitForm">
 
-		<div ref="input" v-for="(step, index) in form.data" 
+		<div ref="input" v-for="(step, index) in fields" 
 			:style="{
 					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
 				}">
@@ -11,8 +13,8 @@
 			<form-text-input :step="step"></form-text-input>
 
 		</div>
-		<div v-bind:style="form.buttonStyle"> 	
-			<button style="margin-right:3px; white-space: normal;" v-on:keypress.enter.prevent type="button" v-for="btn in form.buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
+		<div v-bind:style="buttonStyle"> 	
+			<button style="margin-right:3px; white-space: normal;" v-on:keypress.enter.prevent type="button" v-for="btn in buttons" :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button>
 		</div>
 	</div>
 </div>
@@ -31,6 +33,100 @@ export default {
 		'form-text-input': FormTextInput
 	},
 	props: ['form', 'buttonAction'],
+	data() {
+		return {
+			title: "About Your Company",
+			text: "",
+			fields: [
+				{
+					placeholder: "First Name",
+					dest: "client.first_name",
+					required: true,
+					validate: {
+						type: "text", 
+						min: 3
+					},
+					form: {
+						type: "text",
+						name: "firstname",
+					}
+				},
+				{
+					placeholder: "Last Name",
+					src: "",
+					dest: "client.last_name",
+					required: true,
+					validate: {
+						type: "text", 
+						min: 3
+					},
+					form: {
+						type: "text",
+						name: "lastname",
+					}
+				},
+				{
+					placeholder: "Company",
+					src: "",
+					dest: "client.company",
+					required: true,
+					validate: {
+						type: "text", 
+						min: 3
+					},
+					form: {
+						type: "text",
+						name: "company",
+					}
+				},
+				{
+					placeholder: "Phone Number",
+					src: "",
+					dest: "client.phone",
+					required: true,
+					validate: {
+						type: "phone",
+						min: 6,
+					},
+					form: {
+						type: "text",
+						name: "phonenumber",
+					}
+				},
+				{
+					placeholder: "Email Address",
+					src: "",
+					dest: "client.email",
+					required: true,
+					validate: {
+						type: "email",
+					},
+					form: {
+						type: "text",
+						name: "email",
+					}
+				},
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Continue",
+					class: "btn btn-lg btn-success",
+					script: "next"
+
+				},
+			],
+			title: "About your company",
+			text: "",
+			error: "",
+			step: 2,
+			buttonStyle: "margin-top: 14px;"
+		}
+	},
 	mounted() {
 
 	},
@@ -39,6 +135,9 @@ export default {
 			'setCurrentItemProp',
 			'setClientProp'
 		]),
+		submitForm(){
+			this.buttonAction(null, "next")
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

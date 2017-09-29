@@ -1,8 +1,11 @@
 <template>
 
-	<div id="stripe-payment-form" style="margin-top:15px;">
+	<div id="stripe-payment-form" style="margin-top:15px;" @keyup.enter="buttonContinue">
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 		<ul class="nav nav-tabs" style="min-width:325px;">
 			<li role="presentation" :class="{active: payment_type=='card'}"><a style="cursor: pointer;" @click="switchTabs('card')">Credit Card</a></li>
+			<li role="presentation" :class="{active: payment_type=='paypal'}"><a style="cursor: pointer;" @click="switchTabs('paypal')">PayPal</a></li>
 			<li role="presentation" :class="{active: payment_type=='ach'}"><a style="cursor: pointer;" @click="switchTabs('ach')">Bank ACH</a></li>
 			<li role="presentation" :class="{active: payment_type=='po'}"><a style="cursor: pointer;" @click="switchTabs('po')">P.O.</a></li>
 			<!-- <li role="presentation" :class="{active: payment_type=='verify'}"><a style="cursor: pointer;" @click="switchTabs('verify')">Verify ACH</a></li> -->
@@ -11,16 +14,9 @@
 		</ul>
 		<div class="payment-box">
 
-			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
+				<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
-				<form-text-input 
-				:class="{'error-border': getErrors[form.data[0].form.name]}" 
-				:step="form.data[0]" 
-				id="cardName"></form-text-input>
-
-				<label>Card Info</label>
-				<div id="card-element" class="field" :class="{'error-border': cardError}"></div>
-				<div class="outcome" style="margin:0px 0px 10px 0px;" >
+				<div class="outcome" style="margin:0px 0px 0px 0px;" >
 					<div class="error" role="alert"></div>
 					<!--
 					<div class="success"> 
@@ -28,84 +24,114 @@
 					</div>
 					-->
 				</div>
+				<form-text-input 
+				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+				:step="cc_fields.cardname" 
+				id="cardName"></form-text-input>
+
+				<label>Card Info</label>
+				<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
 				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
 					<i class="fa fa-cc-visa" aria-hidden="true"></i>
 					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
 					<i class="fa fa-cc-discover" aria-hidden="true"></i>
 					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+
 				</div>
-				<br><br>
-			</div>
 
-			<div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
-				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
-				<form-text-input 
-				:class="{'error-border': getErrors[form.data[4].form.name]}" 
-				:step="form.data[4]"></form-text-input>
-				<form-text-input 
-				:class="{'error-border': getErrors[form.data[5].form.name]}" 
-				:step="form.data[5]"></form-text-input>
-			</div>
+				<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">
 
-			<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
+					<!-- <form-text-input 
+					:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+					:step="cc_fields.cardname" 
+					id="cardName"></form-text-input> -->
 
-				<form-text-input 
-				:class="{'error-border': getErrors[form.data[6].form.name]}" 
-				:step="form.data[6]" 
-				id="cardName"></form-text-input>
+					<label>PayPal</label>
+					<div id="paypal-button-container"></div>
+				</div>
 
 				
-			</div>
-			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
 
-				<form-text-input :step="form.data[1]"></form-text-input>
+				<!-- <div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
+					<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
+					<form-text-input 
+					:class="{'error-border': getErrors[ach_fields[3].form.name]}" 
+					:step="ach_fields[3]"></form-text-input>
+					<form-text-input 
+					:class="{'error-border': getErrors[ach_fields[4].form.name]}" 
+					:step="ach_fields[4]"></form-text-input>
+				</div> -->
+
+				<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
+
+					<form-text-input 
+					:class="{'error-border': getErrors[po_fields[0].form.name]}" 
+					:step="po_fields[0]" 
+					id="cardName"></form-text-input>
+
+					
+				</div>
 				
-				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
-					<div class="row">
-						<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
-							<button 
-							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
-							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-primary payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
-						</div>
-						<div class="col-xs-12 col-md-2 text-center payment-or">
-							<div class="line"></div>
-							<div class="orText">or</div>
-							<div class="line"></div>
-						</div>
-						<div class="col-xs-12 col-md-5">
-							
-							<form-text-input 
-								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
-								id="accountNumber" 
-								style="margin-top:15px"
-								:step="form.data[2]"></form-text-input>
-							<form-text-input  
-								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
-								id="routingNumber" 
-								:step="form.data[3]"></form-text-input>
-							<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
-							This is a company account
-							<br>
-							<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
+				<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
+
+					<form-text-input :step="ach_fields[0]"></form-text-input>
+					
+					<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
+						<div class="row">
+							<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
+								<button 
+								:class="{'btn-plaid-success': getAchPaymentToken != ''}"
+								style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-primary payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
+							</div>
+							<div class="col-xs-12 col-md-2 text-center payment-or">
+								<div class="line"></div>
+								<div class="orText">or</div>
+								<div class="line"></div>
+							</div>
+							<div class="col-xs-12 col-md-5">
+								
+								<form-text-input 
+									:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
+									style="margin-top:15px"
+									:step="ach_fields[1]"></form-text-input>
+								<form-text-input  
+									:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
+									:step="ach_fields[2]"></form-text-input>
+								<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
+								This is a company account
+								<br>
+								<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
-			<div v-show="!getPaymentProcessing"class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button v-on:keypress.enter.prevent style="width:100%; white-space: normal;" :class="form.buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, form.buttons[0].script)}">{{form.buttons[0].label}}</button></div><div v-show="!getPaymentProcessing" class="col-xs-12 col-md-6" style="padding:0px; margin:0px;"><button id="btn_review" style="width:100%; white-space: normal;" v-on:keypress.enter.prevent :class="form.buttons[1].class" type="button" >{{form.buttons[1].label}}</button></div><button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i></button>
-			
-		</div>
+			<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
+				
+				
+				<div class="col-xs-12" style="padding:0px; margin:0px;">
+					<button v-on:keypress.enter.prevent :class="buttons[0].class" type="button"
+				@click="(el) => {buttonAction(el, buttons[0].script)}" style="width:50%;white-space:normal;">
+						{{form.buttons[0].label}}
+					</button><button id="btn_review" v-on:keypress.enter.prevent @click="buttonContinue" :class="buttons[1].class" type="button" style="width:50%; white-space:normal;" :disabled="getPaymentProcessing">
+						{{ !getPaymentProcessing ? buttons[1].label : "Processing"}} <i v-if="getPaymentProcessing" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+					</button>
+				</div>
 
-		<div class="text-center">
-			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
-			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe@2x.png'" height="26" alt="Powered by Stripe">
-		</div>
-			
+				<!-- <button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>
+					Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+				</button> -->
+				
+			</div>
 
+			<div class="text-center">
+				<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
+				<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe@2x.png'" height="26" alt="Powered by Stripe">
+			</div>
+				
+
+		</div>
 	</div>
 </template>
 
@@ -119,16 +145,155 @@ import {URL_ROOT} from '../../store/values'
 
 import { forEachValue } from '../../scripts/util'
 
+import stripe from '../../store/stripe'
+
 export default {
 	components: {
 		'form-text-input': FormTextInput
 	},
 	data() {
 		return {
+			stripe: stripe,
+			title: "Payment",
+			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
 			URL_ROOT: URL_ROOT,
+			elements: null,
+			cards: null,
 			payment_type: 'card',
 			cardError: false,
 			formErrors: false,
+			title: "",
+			text: "",
+			cc_fields: {
+				cardname: {
+					placeholder: "Name on card",
+					src: "",
+					dest: "payment.cardname",
+					required: true,
+					validate: {
+						type: "text",
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "cardname",
+						class: "field",
+					}
+				}
+			},
+			ach_fields: [
+				{
+					placeholder: "Bank Customer Name",
+					src: "",
+					dest: "payment.bankcustomername",
+					required: true,
+					validate: {
+						type: "text",
+						min: 3,
+					},
+					form: {
+						type: "text",
+						name: "bankcustomername",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Account Number",
+					src: "",
+					dest: "payment.accountnumber",
+					required: true,
+					validate: {
+						type: "number",
+						min: 6,
+					},
+					form: {
+						type: "number",
+						name: "accountnumber",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Routing Number",
+					src: "",
+					dest: "payment.routingnumber",
+					required: true,
+					validate: {
+						type: "number",
+						min: 6,
+					},
+					form: {
+						type: "number",
+						name: "routingnumber",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Verify Ammount #1",
+					src: "",
+					dest: "payment.verify1",
+					required: true,
+					validate: {
+						type: "number",
+						min: 2,
+					},
+					form: {
+						type: "number",
+						name: "verify1",
+						class: "field",
+					}
+				},
+				{
+					placeholder: "Verify Ammount #2",
+					src: "",
+					dest: "payment.verify2",
+					required: true,
+					validate: {
+						type: "number",
+						min: 2,
+					},
+					form: {
+						type: "number",
+						name: "verify2",
+						class: "field",
+					}
+				},
+			],
+			po_fields: [
+				{
+					placeholder: "P.O. Number",
+					src: "",
+					dest: "payment.ponumber",
+					required: true,
+					validate: {
+						type: "text",
+						min: 4,
+					},
+					form: {
+						type: "text",
+						name: "ponumber",
+						class: "field",
+					}
+				}			
+			],
+			paypal_fields: [
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Continue",
+					class: "btn btn-lg btn-success payment-button",
+					script: "review"
+				},
+			],
+			title: "Payment",
+			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
+			error: "",
+			step: 3,
+			buttonStyle: ""
 		}
 	},
 	props: ['form', 'buttonAction'],
@@ -136,7 +301,6 @@ export default {
 		...mapActions([
 			'setPaymentProp',
 			'setPaymentToken',
-			'setStripeProp',
 			'plaidSendCredentials',
 			'clearError',
 			'clearErrors',
@@ -144,10 +308,18 @@ export default {
 			'setCurrentFormStep',
 			'serverSetClient',
 			'setPaymentProcessing',
-			
+			'createPaymentObject'
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
+				.then(() => {
+					this.createPaymentObject({
+						client_id: this.getClientInfo['pk'],
+						cart_ref: this.getCartReference,
+						payment_type: 'achplaid',
+						token: this.getPaymentInfoProp('ach_payment_token')
+					})
+				})
 		},
 		switchTabs(newTab){
 			this.payment_type = newTab
@@ -155,9 +327,212 @@ export default {
 		},
 		checkError(){
 			return(true)
+		},
+		stripeSetOutcome(result) {
+			var errorElement = document.querySelector('.error');
+			errorElement.classList.remove('visible');
+
+			var error = false
+			if (result.token) {
+
+				// Use the token to create a charge or a customer
+				// https://stripe.com/docs/charges
+				this.setPaymentToken(result.token.id);
+				this.setPaymentProp({prop: 'cc_payment_token', data: result.token.id})
+				setTimeout(function(){this.setPaymentProcessing(false)}, 400)
+
+			} else if (result.error) {
+				errorElement.textContent = result.error.message;
+				errorElement.classList.add('visible');
+				error = true
+			}
+
+			this.cardError = error
+			
+			return(error)
+		},
+		
+		buttonContinue() {
+			var extraDetails = {
+				
+			};
+
+			var script = "submitpayment"
+
+			var noFormErrors = true
+
+			let errors = null
+
+			if(this.payment_type == 'card'){
+				
+				let cardName = document.getElementById("cardname").value
+				extraDetails['name'] = cardName
+
+				errors = ValidateFormStep(this.cc_fields.cardname, cardName)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							this.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				if(noFormErrors){
+					this.stripe.createToken(this.card, extraDetails).then(this.stripeSetOutcome).then(() => {
+						if(!this.cardError){
+							this.createPaymentObject({
+								client_id: this.getClientInfo['pk'],
+								cart_ref: this.getCartReference,
+								payment_type: 'creditcard',
+								token: this.getPaymentInfoProp('cc_payment_token')
+							})
+							this.buttonAction(null, script)	
+						}
+					});
+				}
+			}
+			else if(this.payment_type == 'ach'){
+
+				let bankcustomername = document.getElementById("bankcustomername").value
+				extraDetails['bankcustomername'] = bankcustomername
+
+				console.log("error bankcustomername:", bankcustomername)
+
+				errors = ValidateFormStep(this.ach_fields[0], bankcustomername)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							this.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				if(this.getAchPaymentToken == ""){
+					let accountNumber = document.getElementById("accountnumber").value
+					extraDetails['accountnumber'] = accountNumber
+
+					errors = ValidateFormStep(this.ach_fields[1], accountNumber)
+					if (errors["valid"] == false)
+					{
+						forEachValue(errors["errors"], (value, key) => {
+							value.map((val) => {
+								this.setError({key: key, value: value})
+							})
+						})
+
+						noFormErrors = false
+					}
+
+					let routingNumber = document.getElementById("routingnumber").value
+					extraDetails['routingnumber'] = routingNumber
+
+
+
+					errors = ValidateFormStep(this.ach_fields[2], routingNumber)
+					if (errors["valid"] == false)
+					{
+						forEachValue(errors["errors"], (value, key) => {
+							value.map((val) => {
+								this.setError({key: key, value: value})
+							})
+						})
+
+						noFormErrors = false
+					}
+
+					script = "submitach"
+
+					if(noFormErrors){
+						this.buttonAction(null, "submitach")
+					}
+				}
+				else{
+					if(noFormErrors){
+						this.buttonAction(null, script)	
+					}
+				}
+			}
+			else if(this.payment_type == 'po'){
+
+				console.log("payment_type: po")
+				let ponumber = document.getElementById("ponumber").value
+
+				errors = ValidateFormStep(this.po_fields[0], ponumber)
+				if (errors["valid"] == false)
+				{
+					forEachValue(errors["errors"], (value, key) => {
+						value.map((val) => {
+							this.setError({key: key, value: value})
+						})
+					})
+
+					noFormErrors = false
+				}
+
+				script = "sendponumber"
+
+				if(noFormErrors){
+					this.buttonAction(null, script)
+				}
+			}
+
+			if(noFormErrors){
+				setTimeout(()=>{if(!this.cardError){this.setPaymentProcessing(true)}}, 50)
+			}
 		}
 	},
 	mounted() {
+
+		// PayPal
+
+		paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            // PayPal Client IDs - replace with your own
+            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+            client: {
+                sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                production: '<insert production client id>'
+            },
+
+            // Show the buyer a 'Pay Now' button in the checkout flow
+            commit: true,
+
+            // payment() is called when the button is clicked
+            payment: function(data, actions) {
+
+                // Make a call to the REST api to create the payment
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: '0.01', currency: 'USD' }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            // onAuthorize() is called when the buyer approves the payment
+            onAuthorize: function(data, actions) {
+
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function() {
+                    window.alert('Payment Complete!');
+                });
+            }
+
+        }, '#paypal-button-container');
+
+		// Plaid
+
 		var linkHandler = Plaid.create({
 			env: 'sandbox',
 			clientName: 'MiBURA',
@@ -172,8 +547,8 @@ export default {
 				//   public_token: public_token,
 				//   account_id: metadata.account_id
 				// });
-				this.setStripeProp({prop: 'ach_public_token', value: public_token})
-				this.setStripeProp({prop: 'ach_account_id', value: metadata.account_id})
+				this.setPaymentProp({prop: 'ach_public_token', data: public_token})
+				this.setPaymentProp({prop: 'ach_account_id', data: metadata.account_id})
 				this.plaidSendCredentials()
 
 				var extraDetails = {
@@ -187,7 +562,7 @@ export default {
 
 				console.log("errors: bankcustomername", bankcustomername)
 
-				errors = ValidateFormStep(self.form.data[1], bankcustomername)
+				errors = ValidateFormStep(this.ach_fields[0], bankcustomername)
 				if (errors["valid"] == false)
 				{
 					forEachValue(errors["errors"], (value, key) => {
@@ -212,9 +587,8 @@ export default {
 			linkHandler.open();
 		};
 		
-		var stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
-		var elements = stripe.elements();
-		var card = elements.create('card', {
+		this.elements = this.stripe.elements();
+		this.card = this.elements.create('card', {
 			style: {
 				base: {
 					iconColor: '#548ebf',
@@ -230,209 +604,18 @@ export default {
 				},
 			}
 		});
-		card.mount('#card-element');
+		this.card.mount('#card-element');
 		var self = this;
-		function setOutcome(result) {
 
-			var errorElement = document.querySelector('.error');
-			errorElement.classList.remove('visible');
-
-			var error = false
-			if (result.token) {
-
-				// Use the token to create a charge or a customer
-				// https://stripe.com/docs/charges
-				self.setPaymentToken(result.token.id);
-				self.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
-				setTimeout(function(){self.setPaymentProcessing(false)}, 400)
-
-			} else if (result.error) {
-				errorElement.textContent = result.error.message;
-				errorElement.classList.add('visible');
-				error = true
-
-
-			}
-
-			self.cardError = error
+		this.card.addEventListener("submit", (event) =>{
+			this.buttonContinue()
+		})
+		this.card.on('change', (event) => {
 			
-			return(error)
-		}
-		card.on('change', function(event) {
-			
-			self.cardError = setOutcome(event);
-			console.log(self.cardError)
+			this.cardError = this.stripeSetOutcome(event);
+			console.log(this.cardError)
 		});
-		document.querySelector('#btn_review').addEventListener('click', function(e) {
-			//e.preventDefault();
 
-			
-
-			var extraDetails = {
-				
-			};
-
-			var script = "submitpayment"
-
-			var noFormErrors = true
-
-			let errors = null
-
-			if(self.payment_type == 'card'){
-				
-				let cardName = document.getElementById("cardname").value
-				extraDetails['name'] = cardName
-
-				errors = ValidateFormStep(self.form.data[0], cardName)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				if(noFormErrors){
-					stripe.createToken(card, extraDetails).then(setOutcome).then(() => {
-						if(!self.cardError){
-							self.buttonAction(null, script)	
-						}
-					});
-				}
-			}
-			else if(self.payment_type == 'ach'){
-
-				let bankcustomername = document.getElementById("bankcustomername").value
-				extraDetails['bankcustomername'] = bankcustomername
-
-				console.log("error bankcustomername:", bankcustomername)
-
-				errors = ValidateFormStep(self.form.data[1], bankcustomername)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				if(self.getAchPaymentToken == ""){
-					let accountNumber = document.getElementById("accountnumber").value
-					extraDetails['accountNumber'] = accountNumber
-
-					errors = ValidateFormStep(self.form.data[2], accountNumber)
-					if (errors["valid"] == false)
-					{
-						forEachValue(errors["errors"], (value, key) => {
-							value.map((val) => {
-								self.setError({key: key, value: value})
-							})
-						})
-
-						noFormErrors = false
-					}
-
-					let routingNumber = document.getElementById("routingnumber").value
-					extraDetails['routingNumber'] = routingNumber
-
-					errors = ValidateFormStep(self.form.data[3], routingNumber)
-					if (errors["valid"] == false)
-					{
-						forEachValue(errors["errors"], (value, key) => {
-							value.map((val) => {
-								self.setError({key: key, value: value})
-							})
-						})
-
-						noFormErrors = false
-					}
-
-					script = "submitach"
-
-					if(noFormErrors){
-						self.buttonAction(null, "submitach")
-					}
-				}
-				else{
-					if(noFormErrors){
-						self.buttonAction(null, script)	
-					}
-				}
-			}
-			else if(self.payment_type == 'po'){
-
-				console.log("payment_type: po")
-				let ponumber = document.getElementById("ponumber").value
-
-				errors = ValidateFormStep(self.form.data[6], ponumber)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				script = "sendponumber"
-
-				if(noFormErrors){
-					self.buttonAction(null, script)
-				}
-			}
-			else if(self.payment_type == 'verify'){
-
-				let verify1 = document.getElementById("verify1").value
-				extraDetails['verify1'] = verify1
-
-				errors = ValidateFormStep(self.form.data[4], verify1)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				let verify2 = document.getElementById("verify2").value
-				extraDetails['verify2'] = verify2
-
-				errors = ValidateFormStep(self.form.data[5], verify2)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							self.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				script = "verifyach"
-
-				if(noFormErrors){
-					self.buttonAction(null, script)
-				}
-			}
-
-			// if(noFormErrors){
-			// 	setTimeout(()=>{if(!self.cardError){self.setPaymentProcessing(true)}}, 50)
-			// }
-			
-
-		});
 	},
 	computed: {
 		...mapGetters([

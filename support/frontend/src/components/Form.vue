@@ -1,7 +1,7 @@
 <template>
 	<div id="purchase-form" class="row">
 		
-		<form v-on:submit.prevent v-on:keyup.enter="formHandleEnter">
+		<form v-on:submit.prevent>
 			<!-- Fade effects -->
 			<transition 
 				v-bind:css="false"
@@ -11,9 +11,6 @@
 				v-on:leave="animateLeave"
 			>
 			<div v-if="show">
-
-				<h2 class="text-center">{{ getFormSteps[getCurrentFormStep].title }}</h2>
-				<h4 class="text-center">{{ getFormSteps[getCurrentFormStep].text }}</h4>
 
 				<!-- Dynamic component to switch between form steps -->
 				<component 
@@ -132,17 +129,22 @@ export default {
 
 			
 		},
-		addCloudItem(cloud_pk) {
+		addCloudItem(cloud_pk, quantity) {
 			let cloud = {};
 			for (let i=0; i<this.getCloudProviders.length; i++) {
 				if (this.getCloudProviders[i].pk == cloud_pk) {
 					cloud = this.getCloudProviders[i]
 				}
 			}
+
+			console.log(cloud)
+
 			let cloud_obj = {
 				sku: 'cloud',
 				category: this.getMultiplier('cloud'),
 				price_silver: cloud.price_multiplier,
+				quantity: quantity,
+				quantity_multiplier: cloud.quantity_multiplier,
 				price_gold: 0.0,
 				price_black: 0.0,
 				type: 'cloud',
@@ -251,10 +253,9 @@ export default {
 							// Save all current form fields into vuex store
 							for (let i=0; i<data.length; i++) {
 								let name = data[i].form.name;
-								if (!this.getCurrentItemProp(name)) {
-									let val = document.getElementById(name).value
-									this.setFormItem(val, data[i])
-								}
+
+								let val = document.getElementById(name).value
+								this.setFormItem(val, data[i])
 							}
 
 							this.goToStep(this.getCurrentFormStep+1)
@@ -263,13 +264,20 @@ export default {
 
 						case "gotocheckout":
 							
-							var noItems = true;
+							var noItems = true
+							var unverifiedItems = false
 							for (var item of this.getCart){
 								if(item.type=="product"){
 									noItems = false
 								}
+								else if(item.type=="unknown"){
+									unverifiedItems = true
+								}
 							}
-							if (noItems) {
+							if (unverifiedItems){
+								$('#UnverifiedItemsModal').modal('show')
+							}
+							else if (noItems) {
 								this.addNotification({
 									type: 'warning',
 									message: 'You must add a physical item to your cart before checking out!'
@@ -279,30 +287,29 @@ export default {
 							else{
 								this.past_step = this.getCurrentFormStep
 
-								// Save all current form fields into vuex store
-								for (let i=0; i<data.length; i++) {
-									let name = data[i].form.name;
-									if (!this.getCurrentItemProp(name)) {
-										let val = document.getElementById(name).value
-										this.setFormItem(val, data[i])
-									}
-								}
+								// // Save all current form fields into vuex store
+								// for (let i=0; i<data.length; i++) {
+								// 	let name = data[i].form.name;
+								// 	if (!this.getCurrentItemProp(name)) {
+								// 		let val = document.getElementById(name).value
+								// 		this.setFormItem(val, data[i])
+								// 	}
+								// }
 
 								this.goToStep(this.getCurrentFormStep+1)
 							}
-
-							
-
 							break;
 
 						case "addcloud":
 
-							let temp = document.getElementById('cloudprovider').value
+							let cloud = document.getElementById('cloudprovider').value
+							let qty = document.getElementById('cloudquantity').value
+							console.log(cloud)
 
-							if (temp=="none") {
-								temp = this.getCurrentCloudSelection
+							if (cloud=="none") {
+								cloud = this.getCurrentCloudSelection
 							}
-							this.addCloudItem(temp)
+							this.addCloudItem(cloud, qty)
 						
 							break;
 						case "review":
@@ -316,7 +323,7 @@ export default {
 									this.setFormItem(val, card_data[i])
 								}
 							}
-							// velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
+							//velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
 							
 							break;
 						case "getquote":
@@ -357,28 +364,69 @@ export default {
 								}
 							}
 							
-							let model = this.getCurrentItemProp('model')
-							let prd = this.getAllProducts
-							let prd_info = null;
+							let verified = this.getCurrentItemProp('verified')
+							console.log("VERIFIED")
+							console.log(verified)
 
-							if (prd.hasOwnProperty(model)) {
-								prd_info = prd[model]
+							var type = ''
+
+							if(verified){
+								type = "product"
+							}else{
+								type = "unknown"
 							}
-							else {
-								prd_info = {
-									sku: 'none',
-									category: {
-										category_code: 'none',
-										name: 'None',
-										price_multiplier: 1.0,
-										yearly_tax: 0.1,
-									},
-									price_silver: 1.0,
-									price_gold: 1.0,
-									price_black: 1.0,
-									type: 'product',
+
+							let brand = this.getCurrentItemProp('brand')
+							let model = this.getCurrentItemProp('model')
+							let sku = this.getCurrentItemProp('sku')
+							var category = this.getCurrentItemProp('category')
+							if(!category){
+								category = {
+									category_code: 'none',
+									name: 'None',
+									price_multiplier: 1.0,
+									yearly_tax: 0.1,
 								}
 							}
+							
+							var price_silver = this.getCurrentItemProp('price_silver')
+							if(!price_silver){
+								price_silver = 1.0
+							}
+
+							let price_gold = this.getCurrentItemProp('price_gold')
+							if(!price_gold){
+								price_gold = 1.0
+							}
+
+							let price_black = this.getCurrentItemProp('price_black')
+							if(!price_black){
+								price_black = 1.0
+							}
+
+							var age = this.getCurrentItemProp('age')
+							if(!age){
+								age = 0
+							}
+
+							let additional_info = this.getCurrentItemProp('info')
+
+							var prd_info = {
+								sku: 'none',
+								brand: brand,
+								model: model,
+								category: category,
+								price_silver: price_silver,
+								price_gold: price_gold,
+								price_black: price_black,
+								type: type,
+								age: age,
+								additional_info: additional_info,
+							}
+
+							console.log("PROD INFO")
+							console.log(prd_info)
+							
 							this.addCartItem(
 								{
 									...prd_info,
@@ -387,6 +435,7 @@ export default {
 							)
 							this.clearCurrentItem()
 							break;
+
 						case "purchase":
 							var noItems = true;
 							for (var item of this.getCart){
@@ -428,31 +477,6 @@ export default {
 											
 										}).then(() => {
 										this.checkout()
-											.then((status) => {
-												console.log("after purchase callback")
-												console.log(status)
-												if (status == false) {
-													// Failed
-													this.addNotification({
-														message: "Unverified items in cart.  Please call Mibura to get your cart approved for purchase.",
-														type: "danger"
-													})
-												}
-												else{
-													//finish submission of ach
-													// let payload = {
-													// 	'cart_ref': null,
-													// 	'accountnumber': this.getPaymentInfo['accountnumber'],
-													// 	'bankname': this.getPaymentInfo['bankname'],
-													// 	'bankphone': this.getPaymentInfo['bankphone'],
-													// 	'routingnumber': this.getPaymentInfo['routingnumber']
-													// }
-
-													console.log(this.getPaymentInfo)
-
-													console.log("done")
-												}
-											})
 									})
 								})
 								
@@ -500,7 +524,9 @@ export default {
 			setTimeout(() => {
 				this.show = true;
 				// Set another timer to ensure dom elements are loaded before calling js
+				velocity(document.body, "scroll", { duration: 0, mobileHA: false, offset: 0 });
 				setTimeout(() => {
+
 					document.forms[0].elements[0].focus();
 					if (this.getCurrentFormStep == this.step_names.cloud) {
 						this.addNotification({
@@ -737,7 +763,7 @@ input[type=text], select, .form-control {
 }
 
 .text-red {
-	color: red;
+	color: red!important;
 }
 
 /* Enter and leave animations can use different */

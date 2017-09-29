@@ -12,9 +12,7 @@ export default {
 	clearError(state, name) {
 		Vue.set(state.errors, name, null)
 	},
-	[TYPE.SET_STRIPE_PROP]: (state, payload) => {
-		Vue.set(state.stripe, payload.prop, payload.value)
-	},
+
 
 	[TYPE.SET_CATEGORY_MULTIPLIER]: (state, payload) => {
 		Vue.set(state, 'multiplier', payload)
@@ -34,4 +32,7 @@ export default {
 	[TYPE.SET_CURRENT_DISCOUNT]: (state, value) => {
 		state.current_discount = value
 	},
+
+	// PDFS
+	
 }

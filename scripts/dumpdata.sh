@@ -4,3 +4,4 @@ python manage.py dumpdata support.ProductCategory > support/data/ProductCategory
 python manage.py dumpdata support.EstimateText > support/data/EstimateText.json;
 python manage.py dumpdata support.Product > support/data/Product.json;
 python manage.py dumpdata support.Discount > support/data/Discount.json;
+python manage.py dumpdata support.CloudAddon > support/data/CloudAddon.json;

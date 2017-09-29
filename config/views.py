@@ -18,6 +18,16 @@ def index(request):
 		context
 	)
 
+def terms(request):
+
+	context = {}
+
+	return render(
+		request,
+		'company/terms.html',
+		context
+	)
+
 def ssl_verification(request):
 	return HttpResponse(open('static/ssl/937697B349ECB0FB31EF5BAE50010670.txt').read())
 

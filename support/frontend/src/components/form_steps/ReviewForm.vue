@@ -1,8 +1,10 @@
 <template>
 	
 <div>
+	<h2 class="text-center">{{ title }}</h2>
+	<h4 class="text-center">{{ text }}</h4>
 	<br>
-	<div class="container-fluid">
+	<div class="container-fluid" v-on:keyup.enter="submitForm">
 		<div style="margin:0px 0px 20px 0px; padding: 0px; background: rgba(255,255,255,1);" class="col-xs-12">
 			<div :style="{padding: '10px 0px 10px 10px', background: getPlan(getCurrentPlan).color, color: getPlan(getCurrentPlan).code == 'black' ? 'white' : 'black'}" class="col-xs-12">
 				<h3 class="text-center">{{ getPlan(getCurrentPlan).name }}</h3>
@@ -53,8 +55,8 @@
 				<h4>Still need help? Speak to our Smart Support Technical Specialist Now 1.800.862.5144</h4>
 			</div>
 		</div>
-		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px"> 	
-			<div v-for="btn in form.buttons" style="padding:0px; margin:0px" class="col-xs-12 col-md-4"><button v-on:keypress.enter.prevent style="width:100%; whitespace: normal;" type="button"  :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
+		<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
+			<div v-for="btn in buttons" style="padding:0px; margin:0px" class="col-xs-12 col-md-4"><button v-on:keypress.enter.prevent style="width:100%; whitespace: normal;" type="button"  :class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
 		</div>
 	</div>
 </div>
@@ -71,7 +73,34 @@ export default {
 	props: ['form', 'buttonAction'],
 	data(){
 		return{
-			upsell: 'If you upgrade to Pure Gold you can get cloud support for free.'
+			title: "Looks good?",
+			text: "",
+			upsell: 'If you upgrade to Pure Gold you can get cloud support for free.',
+			fields: [
+
+			],
+			buttons: [
+				{
+					label: "Back",
+					class: "btn btn-lg btn-default",
+					script: "back"
+				},
+				{
+					label: "Get Quote",
+					class: "btn btn-lg btn-info",
+					script: "getquote"
+				},
+				{
+					label: "Checkout Now",
+					class: "btn btn-lg btn-success payment-button",
+					script: "gotocheckout"
+				},
+			],
+			title: "Looks good?",
+			text: "",
+			error: "",
+			step: 3,
+			buttonStyle: ""
 		}
 	},
 	mounted() {
@@ -79,7 +108,6 @@ export default {
 			.then(() => {
 				this.saveCart()
 			})
-		
 	},
 	methods: {
 		...mapActions([
@@ -88,6 +116,9 @@ export default {
 			'saveCart',
 			'serverSetClient'
 		]),
+		submitForm(){
+			this.buttonAction(null, "gotocheckout")
+		},
 		processAjaxResult(json) {
 			return json['results']
 		},

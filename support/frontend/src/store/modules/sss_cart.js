@@ -18,7 +18,6 @@ const state = {
 	support_months: 12,
 	current_item_id: null,
 	estimate_id: 0,
-	
 	cart_changed: true,
 }
 
@@ -69,7 +68,6 @@ const mutations = {
 	[TYPE.SET_ESTIMATE_ID]: (state, value) => {
 		state.estimate_id = value
 	},
-	
 	[TYPE.CART_CHANGED]: (state, value) => {
 		state.cart_changed = value
 	},
@@ -166,7 +164,7 @@ const actions = {
 	},
 	saveCart({state, rootState, commit, dispatch}) {
 		let ref = state.cart_ref ? state.cart_ref : makeid(8)
-		let client = rootState.Form.client_info
+		let client = rootState.Client.client_info
 		
 		return cart.getOrCreateCart({
 				email: client.email,
@@ -188,17 +186,7 @@ const actions = {
 		})
 	},
 	
-	serverGetEstimatePdf({state, rootState, commit}) {
-		let client = rootState.Form.client_info
-		let cart_ref = state.cart_ref
-		return freshbooks.getEstimatePDF(client, cart_ref)
-			.then(response => {
-				// commit(TYPE.SET_ESTIMATE_ID, response.data.estimate_id)
-				var blob=new Blob([response.data], {type:"application/pdf"});
-				let file_url = window.URL.createObjectURL(blob)
-				commit(TYPE.SET_ESTIMATE_PDF, file_url)
-			})
-	},
+	
 	checkout({commit, dispatch, state, rootState}) {
 		let client = rootState.Form.client_info
 		if (!state.cart_ref) {
@@ -206,8 +194,8 @@ const actions = {
 		}
 		let payment_token = null
 
-		if (rootState.stripe.ach_payment_token != null || rootState.stripe.cc_payment_token != null) {
-			payment_token = rootState.stripe.ach_payment_token ? rootState.stripe.ach_payment_token : rootState.stripe.cc_payment_token
+		if (rootState.Payment.payment_info.ach_payment_token != null || rootState.Payment.payment_info.cc_payment_token != null) {
+			payment_token = rootState.Payment.payment_info.ach_payment_token ? rootState.Payment.payment_info.ach_payment_token : rootState.stripe.cc_payment_token
 		}
 
 		let data = {
@@ -247,12 +235,10 @@ const actions = {
 	setCurrentPlan({commit, dispatch}, value) {
 		dispatch('setCartChanged', true)
 		commit(TYPE.SET_CURRENT_PLAN, value)
-    },
+		},
 }
 
 const getters = {
-
-	// //////////////
 	// Products
 
 	getProductAge: state => product => {
@@ -362,7 +348,7 @@ const getters = {
 	// Plans
 	getPlans: state => state.plans,
 	getCurrentPlan: state => state.current_plan,
-    getPlan: state => plan => {
+		getPlan: state => plan => {
 		// console.log("getPlan", plan)
 		// console.log(state.plans.length)
 		for (let i=0; i<state.plans.length; i++) {

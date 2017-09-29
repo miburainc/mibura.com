@@ -14,7 +14,7 @@
 		</ul>
 		<div class="payment-box">
 
-			<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
+				<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
 
 				<div class="outcome" style="margin:0px 0px 0px 0px;" >
 					<div class="error" role="alert"></div>
@@ -36,102 +36,102 @@
 					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
 					<i class="fa fa-cc-discover" aria-hidden="true"></i>
 					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+
 				</div>
-				<br><br>
-			</div>
 
-			<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">
+				<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">
 
-				<!-- <form-text-input 
-				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
-				:step="cc_fields.cardname" 
-				id="cardName"></form-text-input> -->
+					<!-- <form-text-input 
+					:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+					:step="cc_fields.cardname" 
+					id="cardName"></form-text-input> -->
 
-				<label>PayPal</label>
-				<div id="paypal-button-container"></div>
-			</div>
-
-			
-
-			<!-- <div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
-				<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
-				<form-text-input 
-				:class="{'error-border': getErrors[ach_fields[3].form.name]}" 
-				:step="ach_fields[3]"></form-text-input>
-				<form-text-input 
-				:class="{'error-border': getErrors[ach_fields[4].form.name]}" 
-				:step="ach_fields[4]"></form-text-input>
-			</div> -->
-
-			<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
-
-				<form-text-input 
-				:class="{'error-border': getErrors[po_fields[0].form.name]}" 
-				:step="po_fields[0]" 
-				id="cardName"></form-text-input>
+					<label>PayPal</label>
+					<div id="paypal-button-container"></div>
+				</div>
 
 				
-			</div>
-			
-			<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
 
-				<form-text-input :step="ach_fields[0]"></form-text-input>
+				<!-- <div v-if="payment_type=='verify'" style="margin: 10px 0px 10px 0px;">
+					<br><p><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>Enter the two payments that were put into your bank account and we can verify your bank account.</p><br>
+					<form-text-input 
+					:class="{'error-border': getErrors[ach_fields[3].form.name]}" 
+					:step="ach_fields[3]"></form-text-input>
+					<form-text-input 
+					:class="{'error-border': getErrors[ach_fields[4].form.name]}" 
+					:step="ach_fields[4]"></form-text-input>
+				</div> -->
+
+				<div v-show="payment_type=='po'" class="stripe-form-cc pad-10">
+
+					<form-text-input 
+					:class="{'error-border': getErrors[po_fields[0].form.name]}" 
+					:step="po_fields[0]" 
+					id="cardName"></form-text-input>
+
+					
+				</div>
 				
-				<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
-					<div class="row">
-						<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
-							<button 
-							:class="{'btn-plaid-success': getAchPaymentToken != ''}"
-							style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-primary payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
-						</div>
-						<div class="col-xs-12 col-md-2 text-center payment-or">
-							<div class="line"></div>
-							<div class="orText">or</div>
-							<div class="line"></div>
-						</div>
-						<div class="col-xs-12 col-md-5">
-							
-							<form-text-input 
-								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
-								style="margin-top:15px"
-								:step="ach_fields[1]"></form-text-input>
-							<form-text-input  
-								:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
-								:step="ach_fields[2]"></form-text-input>
-							<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
-							This is a company account
-							<br>
-							<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
+				<div v-show="payment_type=='ach'" class="stripe-form-ach pad-5" style="margin-bottom:5px;">
+
+					<form-text-input :step="ach_fields[0]"></form-text-input>
+					
+					<div class="container-fluid" style="border-top: 1px solid #8493A8; padding-top:15px; margin-top:10px; ">
+						<div class="row">
+							<div class="col-xs-12 col-md-5 plaid-button-container" style=" text-align:center;">
+								<button 
+								:class="{'btn-plaid-success': getAchPaymentToken != ''}"
+								style="" v-on:keypress.enter.prevent type="button" v-show="payment_type=='ach'" id='linkButton' class="btn btn-lg btn-primary payment-button">{{ plaid_btn_text1 }}<br>{{ plaid_btn_text2 }}</button>
+							</div>
+							<div class="col-xs-12 col-md-2 text-center payment-or">
+								<div class="line"></div>
+								<div class="orText">or</div>
+								<div class="line"></div>
+							</div>
+							<div class="col-xs-12 col-md-5">
+								
+								<form-text-input 
+									:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
+									style="margin-top:15px"
+									:step="ach_fields[1]"></form-text-input>
+								<form-text-input  
+									:achToken="getAchPaymentToken != '' ? 'success' : 'failure'"
+									:step="ach_fields[2]"></form-text-input>
+								<input type="checkbox" name="accounttype" @click="(checked) => {setPaymentProp({prop: 'accounttype', data: checked.target.checked ? 'company' : 'individual'})}">
+								This is a company account
+								<br>
+								<a role="button" data-toggle="modal" data-target="#achInfoModal" style="text-align: center; margin-bottom:0px; color:gray;"><i style="color: #3285C4" class="fa fa-info-circle" aria-hidden="false"> &nbsp; </i>What is this?</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
-			
-			
-			<div class="col-xs-12" style="padding:0px; margin:0px;">
-				<button v-on:keypress.enter.prevent :class="buttons[0].class" type="button"
-			@click="(el) => {buttonAction(el, buttons[0].script)}" style="width:50%;white-space:normal;">
-					{{form.buttons[0].label}}
-				</button><button id="btn_review" v-on:keypress.enter.prevent @click="buttonContinue" :class="buttons[1].class" type="button" style="width:50%; white-space:normal;" :disabled="getPaymentProcessing">
-					{{ !getPaymentProcessing ? buttons[1].label : "Processing"}} <i v-if="getPaymentProcessing" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-				</button>
+			<div v-bind:style="buttonStyle" class="container-fluid" style="padding:0px"> 	
+				
+				
+				<div class="col-xs-12" style="padding:0px; margin:0px;">
+					<button v-on:keypress.enter.prevent :class="buttons[0].class" type="button"
+				@click="(el) => {buttonAction(el, buttons[0].script)}" style="width:50%;white-space:normal;">
+						{{form.buttons[0].label}}
+					</button><button id="btn_review" v-on:keypress.enter.prevent @click="buttonContinue" :class="buttons[1].class" type="button" style="width:50%; white-space:normal;" :disabled="getPaymentProcessing">
+						{{ !getPaymentProcessing ? buttons[1].label : "Processing"}} <i v-if="getPaymentProcessing" class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+					</button>
+				</div>
+
+				<!-- <button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>
+					Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
+				</button> -->
+				
 			</div>
 
-			<!-- <button v-if="getPaymentProcessing" style="width:100%" class="btn btn-lg btn-success" disabled>
-				Processing <i class="fa fa-circle-o-notch fa-spin" style="font-size:24px"></i>
-			</button> -->
-			
-		</div>
+			<div class="text-center">
+				<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
+				<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe@2x.png'" height="26" alt="Powered by Stripe">
+			</div>
+				
 
-		<div class="text-center">
-			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/comodo_secure_seal_76x26_transp.png'" alt="Comodo Secure">
-			<img style="margin-top: 10px; margin-right: 5px;" :src="URL_ROOT+'static/images/powered_by_stripe@2x.png'" height="26" alt="Powered by Stripe">
 		</div>
-			
-
 	</div>
 </template>
 
@@ -145,16 +145,18 @@ import {URL_ROOT} from '../../store/values'
 
 import { forEachValue } from '../../scripts/util'
 
+import stripe from '../../store/stripe'
+
 export default {
 	components: {
 		'form-text-input': FormTextInput
 	},
 	data() {
 		return {
+			stripe: stripe,
 			title: "Payment",
 			text: "We accept all major credit cards, Bank ACH, or if you already have an account with Mibura, simply create a purchase order here",
 			URL_ROOT: URL_ROOT,
-			stripe: null,
 			elements: null,
 			cards: null,
 			payment_type: 'card',
@@ -299,7 +301,7 @@ export default {
 		...mapActions([
 			'setPaymentProp',
 			'setPaymentToken',
-			'setStripeProp',
+			'setStripe',
 			'plaidSendCredentials',
 			'clearError',
 			'clearErrors',
@@ -307,7 +309,7 @@ export default {
 			'setCurrentFormStep',
 			'serverSetClient',
 			'setPaymentProcessing',
-			
+			'createPaymentObject'
 		]),
 		sendplaidcredentials() {
 			this.plaidSendCredentials()
@@ -320,7 +322,6 @@ export default {
 			return(true)
 		},
 		stripeSetOutcome(result) {
-
 			var errorElement = document.querySelector('.error');
 			errorElement.classList.remove('visible');
 
@@ -330,7 +331,7 @@ export default {
 				// Use the token to create a charge or a customer
 				// https://stripe.com/docs/charges
 				this.setPaymentToken(result.token.id);
-				this.setStripeProp({prop: 'cc_payment_token', value: result.token.id})
+				this.setPaymentProp({prop: 'cc_payment_token', data: result.token.id})
 				setTimeout(function(){this.setPaymentProcessing(false)}, 400)
 
 			} else if (result.error) {
@@ -343,6 +344,7 @@ export default {
 			
 			return(error)
 		},
+		
 		buttonContinue() {
 			var extraDetails = {
 				
@@ -374,6 +376,12 @@ export default {
 				if(noFormErrors){
 					this.stripe.createToken(this.card, extraDetails).then(this.stripeSetOutcome).then(() => {
 						if(!this.cardError){
+							this.createPaymentObject({
+								client_id: this.getClientInfo['pk'],
+								cart_ref: this.getCartReference,
+								payment_type: 'creditcard',
+								token: this.getPaymentInfoProp('cc_payment_token')
+							})
 							this.buttonAction(null, script)	
 						}
 					});
@@ -434,6 +442,14 @@ export default {
 					script = "submitach"
 
 					if(noFormErrors){
+						this.createPaymentObject(
+							{
+								client_id: this.getClientInfo['pk'],
+								cart_ref: this.getCartReference,
+								payment_type: 'achstripe',
+								token: this.getPaymentInfoProp('cc_payment_token')
+							}
+						)
 						this.buttonAction(null, "submitach")
 					}
 				}
@@ -466,44 +482,6 @@ export default {
 					this.buttonAction(null, script)
 				}
 			}
-			else if(this.payment_type == 'verify'){
-
-				let verify1 = document.getElementById("verify1").value
-				extraDetails['verify1'] = verify1
-
-				errors = ValidateFormStep(this.ach_fields[3], verify1)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							this.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				let verify2 = document.getElementById("verify2").value
-				extraDetails['verify2'] = verify2
-
-				errors = ValidateFormStep(this.ach_fields[4], verify2)
-				if (errors["valid"] == false)
-				{
-					forEachValue(errors["errors"], (value, key) => {
-						value.map((val) => {
-							this.setError({key: key, value: value})
-						})
-					})
-
-					noFormErrors = false
-				}
-
-				script = "verifyach"
-
-				if(noFormErrors){
-					this.buttonAction(null, script)
-				}
-			}
 
 			if(noFormErrors){
 				setTimeout(()=>{if(!this.cardError){this.setPaymentProcessing(true)}}, 50)
@@ -521,7 +499,7 @@ export default {
             // PayPal Client IDs - replace with your own
             // Create a PayPal app: https://developer.paypal.com/developer/applications/create
             client: {
-                sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
                 production: '<insert production client id>'
             },
 
@@ -570,8 +548,8 @@ export default {
 				//   public_token: public_token,
 				//   account_id: metadata.account_id
 				// });
-				this.setStripeProp({prop: 'ach_public_token', value: public_token})
-				this.setStripeProp({prop: 'ach_account_id', value: metadata.account_id})
+				this.setPaymentProp({prop: 'ach_public_token', data: public_token})
+				this.setPaymentProp({prop: 'ach_account_id', data: metadata.account_id})
 				this.plaidSendCredentials()
 
 				var extraDetails = {
@@ -610,7 +588,6 @@ export default {
 			linkHandler.open();
 		};
 		
-		this.stripe = Stripe('pk_test_jW4CJTGamhoH2cCxQljIKiwd');
 		this.elements = this.stripe.elements();
 		this.card = this.elements.create('card', {
 			style: {
@@ -639,6 +616,7 @@ export default {
 			this.cardError = this.stripeSetOutcome(event);
 			console.log(this.cardError)
 		});
+
 	},
 	computed: {
 		...mapGetters([

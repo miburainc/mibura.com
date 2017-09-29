@@ -93,7 +93,7 @@
 				</div>
 
 				<div class="col-md-8 col-xs-8 text-center">
-				<span><h4 style="margin: 2px; 0px 0px 0px; display:inline-block; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
+				<span><h4 style="font-size: 20px; margin: 2px; 0px 0px 0px; display:inline-block; color: black; text-align: center;">{{writeOutSupportLength}}</h4></span>
 				</div>
 
 				<div class="col-md-2 col-xs-2" style="padding:0px; margin:0px 0px 0px 0px">

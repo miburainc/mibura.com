@@ -305,7 +305,7 @@ const getters = {
 				let today = moment()
 				let age_months = today.diff(product_release, 'months')
 				let final_age = age_months / 6
-				pa = final_age
+				pa = Math.floor(final_age)
 			}
 			else{
 				pa = product.age

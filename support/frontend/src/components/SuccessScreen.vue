@@ -15,13 +15,23 @@
 							</object>
 					</div>
 				</div>
+				<div v-else>
+					<div id="pdf">
+							<object width="100%" height="500" type="application/pdf" :data="getEstimatePDF" id="pdf_content">
+							<p>Error, reciept cannot be displayed at this time.</p>
+							</object>
+					</div>
+				</div>
 			</div>
 			<div v-show="upsell != ''" style="margin:0px 0px 0px 0px; background: rgba(255,255,255,0.30);" class="col-xs-12">
 				<p style="padding-top:10px;"><i style="color: blue" class="fa fa-info-circle" aria-hidden="false"> &nbsp;</i>{{ upsell }}</p>
 			</div>
 		</div>
-		<div class="col-xs-12" style="width: 100%; text-align: center;">
+		<div v-if="getInvoicePDF" class="col-xs-12" style="width: 100%; text-align: center;">
 			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Invoice-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-success" id="pdf-link" target="_blank" :href="getInvoicePDF">Download Receipt</a>
+		</div>
+		<div v-else class="col-xs-12" style="width: 100%; text-align: center;">
+			<a style="font-weight:bold" :download="'Mibura_SmartSupport_Invoice-' + localDate(new Date()) + '.pdf'" class="btn btn-lg btn-success" id="pdf-link" target="_blank" :href="getEstimatePDF">Download Receipt</a>
 		</div>
 	</div>
 </template>
@@ -52,18 +62,23 @@ export default {
 			'getGrandTotal',
 			'getCurrentDiscount',
 			'getInvoicePDF',
-			'getEstimatePDF'
+			'getEstimatePDF',
+
 		])
 	},
 	mounted() {
 		if (!this.getInvoicePDF) {
 			// this.serverGetInvoicePdf()
 			console.log("No pdf file")
+			if (!this.getEstimatePDF) {
+				this.serverGetEstimatePdf()
+			}
 		}
 	},
 	methods: {
 		...mapActions([
-			'serverGetInvoicePdf'
+			'serverGetInvoicePdf',
+			'serverGetEstimatePdf'
 		]),
 		writeOutSupportLength() {
 			let str = ""

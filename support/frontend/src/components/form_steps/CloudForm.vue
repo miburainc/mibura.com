@@ -36,19 +36,16 @@
 		<br>
 		<h4 class="text-center">{{ quantity_text }}</h4>
 		<div class="container-fluid">
-			<div class="col-xs-11 col-md-11">
+			<div class="col-xs-12 col-md-12">
 				<label>{{fields[1].placeholder}}</label>
 				<input class="form-control" type="number" :id="fields[1].form.name" :name="fields[1].form.name" v-model="cloudquantity">
 				<!-- <form-text-input :step="fields[1]"></form-text-input>-->
-			</div>
-			<div class="col-xs-1 col-md-1" style="text-align: center;">
-				<button class="btn btn-sm btn-success" style="margin: 22px 0px 0px 0px" @click="chooseCloud">Enter</button>
 			</div>
 		</div>
 	</div>
 
 	<div v-bind:style="buttonStyle" class="container-fluid"> 	
-			<div class="col-xs-12 col-md-6" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;" class="btn btn-lg btn-default" @click="goToLastStep">Back</button></div><div class="col-xs-12 col-md-6"  v-for="btn in buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, btn.script)}">{{btn.label}}</button></div>
+			<div class="col-xs-12 col-md-6" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;" class="btn btn-lg btn-default" @click="goToLastStep">{{button_label1}}</button></div><div class="col-xs-12 col-md-6"  v-for="btn in buttons" style="padding:0px;"><button v-on:keypress.enter.prevent type="button" style="width:100%;white-space: normal;":class="btn.class" :id="'btn_' + btn.label.toLowerCase().replace(/ /g,'_')" @click="mainButton">{{button_label2}}</button></div>
 	</div>
 </div>
 </template>
@@ -75,6 +72,8 @@ export default {
 	},
 	data() {
 		return {
+			button_label1: "Back",
+			button_label2: "Skip",
 			quantity_text: "",
 			cloudquantity: 1,
 			current_step: 0,
@@ -145,6 +144,14 @@ export default {
 			'setError',
 			'checkDuplicateCloud'
 		]),
+		mainButton(){
+			if(this.current_step == 0){
+				this.buttonAction(null, this.buttons[0].script)
+			}
+			else{
+				this.chooseCloud()
+			}
+		},
 		chooseCloud(){
 			let key = 'cloudquantity'
 
@@ -169,7 +176,8 @@ export default {
 				this.cloudquantity = 1
 			}
 
-			this.buttons[0].label = "Finish Cloud"
+			this.button_label1 = "Back"
+			this.button_label2 = "Finish Cloud"
 			this.buttons[0].class = "btn btn-lg btn-success"
 		},
 		goToLastStep(){
@@ -196,6 +204,9 @@ export default {
 					name == 'Dynamics 365'){
 				this.quantity_text = "How many users do you have on this cloud service?"
 			}
+
+			this.button_label1 = "Cancel"
+			this.button_label2 = "Add"
 			
 			document.getElementById('cloudquantity').focus()
 		},

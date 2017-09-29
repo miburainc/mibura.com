@@ -574,8 +574,10 @@ def get_estimate_pdf(request):
 		for client_prod in cart.products.all():
 
 			if(client_prod.product != None):
+				print("CLIENT PROD!!!!!!!!!!!",client_prod.__dict__['_product_cache'].__dict__['release'])
 				items.append({
 					**client_prod.__dict__,
+					'device_age': client_prod.__dict__['_product_cache'].__dict__['release'],
 					'type': 'product',
 					'category': client_prod.product.category.category_code,
 					'cost': product_price(client_prod, cart.plan, cart.length)

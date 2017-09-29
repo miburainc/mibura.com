@@ -390,9 +390,6 @@ export default {
 
 				let bankcustomername = document.getElementById("bankcustomername").value
 				extraDetails['bankcustomername'] = bankcustomername
-
-				console.log("error bankcustomername:", bankcustomername)
-
 				errors = ValidateFormStep(this.ach_fields[0], bankcustomername)
 				if (errors["valid"] == false)
 				{
@@ -460,7 +457,6 @@ export default {
 			}
 			else if(this.payment_type == 'po'){
 
-				console.log("payment_type: po")
 				let ponumber = document.getElementById("ponumber").value
 
 				errors = ValidateFormStep(this.po_fields[0], ponumber)
@@ -560,8 +556,6 @@ export default {
 				let bankcustomername = document.getElementById("bankcustomername").value
 				extraDetails['bankcustomername'] = bankcustomername
 
-				console.log("errors: bankcustomername", bankcustomername)
-
 				errors = ValidateFormStep(this.ach_fields[0], bankcustomername)
 				if (errors["valid"] == false)
 				{
@@ -572,7 +566,6 @@ export default {
 					})
 				}
 
-				console.log("plaid")
 			},
 			onExit: function(err, metadata) {
 				// The user exited the Link flow.
@@ -613,7 +606,6 @@ export default {
 		this.card.on('change', (event) => {
 			
 			this.cardError = this.stripeSetOutcome(event);
-			console.log(this.cardError)
 		});
 
 	},

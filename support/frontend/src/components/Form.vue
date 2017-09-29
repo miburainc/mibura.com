@@ -136,9 +136,6 @@ export default {
 					cloud = this.getCloudProviders[i]
 				}
 			}
-
-			console.log(cloud)
-
 			let cloud_obj = {
 				sku: 'cloud',
 				category: this.getMultiplier('cloud'),
@@ -153,9 +150,6 @@ export default {
 				release: moment().format("YYYY-MM-DD"),
 			}
 			this.addCartItem(cloud_obj)
-				.then((value) => {
-					console.log("Added cloud: ", value)
-				})
 		},
 		goToStep(step_num) {
 			// Proceed to next page of form
@@ -175,7 +169,6 @@ export default {
 		},
 		buttonAction(el, scr) {
 
-			console.log("button action", scr)
 			scr = scr.split(',')
 
 			// Grab current step data
@@ -186,7 +179,6 @@ export default {
 				return(true)
 			}
 			if(scr == "submitach"){
-				console.log("SubmitACH in ButtonAction")
 				$('#achSubmitModal').modal('show')
 				return(true)
 			}
@@ -199,14 +191,12 @@ export default {
 				}
 				this.sendPaymentPoNumber(payload)
 					.then((response) => {
-						console.log("PO created")
 						this.setPaymentProcessing(false)
 					})
 				return(true)
 			}
 				
 			else if(scr == "verifyach") {
-				console.log("verifyACH in ButtonAction")
 				this.achSendVerify()
 				return(true)
 			}
@@ -304,7 +294,6 @@ export default {
 
 							let cloud = document.getElementById('cloudprovider').value
 							let qty = document.getElementById('cloudquantity').value
-							console.log(cloud)
 
 							if (cloud=="none") {
 								cloud = this.getCurrentCloudSelection
@@ -365,8 +354,7 @@ export default {
 							}
 							
 							let verified = this.getCurrentItemProp('verified')
-							console.log("VERIFIED")
-							console.log(verified)
+
 
 							var type = ''
 
@@ -424,9 +412,6 @@ export default {
 								additional_info: additional_info,
 							}
 
-							console.log("PROD INFO")
-							console.log(prd_info)
-							
 							this.addCartItem(
 								{
 									...prd_info,
@@ -458,7 +443,7 @@ export default {
 								this.buttonStartClientInfo()
 							}
 							else if (!this.getPaymentToken && this.getPaymentInfoProp('checkouttype') != 'ach') {
-								console.log(this.getPaymentToken)
+
 								this.addNotification({
 									type: 'warning',
 									message: 'Please fill out your payment information!'
@@ -487,7 +472,6 @@ export default {
 			}	
 		},
 		setFormItem (value, obj) {
-			console.log(obj)
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {

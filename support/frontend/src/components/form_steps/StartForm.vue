@@ -60,7 +60,6 @@ export default {
 
 		},
 		setFormItem (value, obj) {
-			console.log(obj)
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {

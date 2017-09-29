@@ -77,30 +77,30 @@ class StripeClient(models.Model):
 
 class PaymentManager(models.Manager):
 	def create_stripe_creditcard(self, client, payment_token, amount):
-		payment = self.create(token=payment_token, amount=amount)
+		payment = self.create(client=client, token=payment_token, amount=amount)
 		payment.payment_type="creditcard"
 		return payment
 
-	def create_stripe_ach(self, payment_token):
-		payment = self.create(title=title)
+	def create_stripe_ach(self, client, payment_token):
+		payment = self.create(client=client, title=title)
 		# do something with the book
 		payment.payment_type="achstripe"
 		return payment
 
 	def create_plaid(self, client, payment_token, amount):
-		payment = self.create(token=payment_token, amount=amount)
+		payment = self.create(client=client, token=payment_token, amount=amount)
 		# do something with the book
 		payment.payment_type="achplaid"
 		return payment
 
 	def create_paypal(self, client, payment_token, amount):
-		payment = self.create(token=payment_token, amount=amount)
+		payment = self.create(client=client, token=payment_token, amount=amount)
 		# do something with the book
 		payment.payment_type="paypal"
 		return payment
 
 	def create_purchaseorder(self, client, po_number):
-		payment = self.create(token=po_number)
+		payment = self.create(client=client, token=po_number)
 		payment.payment_type="po"
 		return payment
 
@@ -112,6 +112,7 @@ class Payment(models.Model):
 	payment_type = models.CharField(max_length=64, choices=payment_type_choices)
 	token = models.CharField(max_length=128)
 	secondary_token = models.CharField(max_length=128, blank=True) # Payment auth token or completion token, optional
+	token_expired = models.BooleanField(default=False)
 	amount = models.FloatField(default=0.0)
 
 	completed = models.BooleanField(default=False)

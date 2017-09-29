@@ -308,10 +308,13 @@ import cart from './store/api/cart'
 
 import axios from './store/api/api-config'
 
+import stripe from './store/stripe'
+
 export default {
 	name: 'app',
 	data () {
 		return {
+			stripe: stripe,
 			estimate_id: '',
 			stripe: null,
 			verifyError1: false,

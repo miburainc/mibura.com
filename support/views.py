@@ -649,21 +649,52 @@ def get_invoice_pdf(invoice_id):
 
 @csrf_exempt
 def create_payment_object(request):
+	print("create_payment_object")
 	if request.method == 'POST':
-		print("create_payment_object")
 		data = json.loads(request.body.decode("utf-8"))
 		data = dotdict(data)
 
-		client = get_object_or_404(Client, pk=data.client)
-		cart = get_object_or_404(Cart, reference=data.cart)
+		print(data)
+
+		client = get_object_or_404(Client, pk=data.client_id)
+		cart = get_object_or_404(Cart, reference=data.cart_ref)
+
+		token = data.token
+		amount = cart.get_total()
 
 		if data.payment_type == "creditcard":
+			print("creditcard")
 			payment = Payment.objects.create_stripe_creditcard(client, token, amount)
 		elif data.payment_type == "achplaid":
 			payment = Payment.objects.create_plaid(client, token)
 		elif data.payment_type == "achstripe":
 			payment = Payment.objects.create_stripe_ach(client, token)
+		elif data.payment_type == "paypal":
+			payment = Payment.objects.create_paypal(client, token, amount)
+		elif data.payment_type == "po":
+			payment = Payment.objects.create_purchaseorder(client, data.po_number)
 
+		payment.cart = cart
+		payment.save()
+		data = payment.__dict__
+
+		
+
+		del(data['_state'])
+		del(data['_cart_cache'])
+		del(data['_client_cache'])
+		del(data['date_created'])
+		del(data['date_updated'])
+
+		print(data)
+		
+		response_data = json.dumps(data)
+
+		print(response_data)
+
+		return HttpResponse(response_data, status=200)
+	else:
+		return HttpResponse('Not POST', status=400)
 
 
 @csrf_exempt
@@ -677,7 +708,7 @@ def checkout(request):
 
 		client = get_object_or_404(Client, pk=data.client)
 		cart = get_object_or_404(Cart, reference=data.cart)
-		total = cart.get_total_price()
+		total = cart.get_total()
 
 		discount_list = Discount.objects.all()
 

@@ -217,15 +217,32 @@ class Cart(models.Model):
 	def __str__(self):
 		return self.client.get_full_name() + " Cart " + str(self.date_created)
 
-	def get_total_price(self):
-		total = 0
+	def get_subtotal(self):
+		result = 0
 		for prd in self.products.all():
 			if(prd.product != None):
-				total += product_price(prd, self.plan, self.length)
+				result += product_price(prd, self.plan, self.length)
 			else:
-				total += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
+				result += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
 		
-		return total
+		return result
+
+	def get_total(self):
+		result = 0
+		for prd in self.products.all():
+			if(prd.product != None):
+				result += product_price(prd, self.plan, self.length)
+			else:
+				result += cloud_price(prd.cloud, self.plan, self.length, prd.quantity)
+		discounts = Discount.objects.all()
+		active_discount = 0.0
+
+		for index, dis in enumerate(discounts):
+			if float(self.length) >= dis.year_threshold:
+				if dis.discount_percent > active_discount:
+					active_discount = dis.discount_percent
+
+		return result - result*active_discount
 
 class Subscription(models.Model):
 	client = models.ForeignKey(Client)

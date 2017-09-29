@@ -12,9 +12,7 @@ export default {
 	clearError(state, name) {
 		Vue.set(state.errors, name, null)
 	},
-	[TYPE.SET_STRIPE_PROP]: (state, payload) => {
-		Vue.set(state.stripe, payload.prop, payload.value)
-	},
+
 
 	[TYPE.SET_CATEGORY_MULTIPLIER]: (state, payload) => {
 		Vue.set(state, 'multiplier', payload)
@@ -36,10 +34,5 @@ export default {
 	},
 
 	// PDFS
-	[TYPE.SET_ESTIMATE_PDF]: (state, value) => {
-		state.estimate_pdf = value
-	},
-	[TYPE.SET_INVOICE_PDF]: (state, value) => {
-		state.invoice_pdf = value
-	},
+	
 }

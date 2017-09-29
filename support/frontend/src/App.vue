@@ -483,9 +483,7 @@ export default {
 			}
 
 			if(allGood){
-				$('#verifyModal').modal('toggle')
-				this.setPaymentProp({prop: 'verify1', data: v1})
-				this.setPaymentProp({prop: 'verify2', data: v2})
+				
 				this.achSendVerify()
 			}
 		},

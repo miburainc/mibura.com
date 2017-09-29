@@ -11,6 +11,15 @@ const actions = {
 			console.error(error)
 		})
 	},
+	sendPaymentPaypalToken(payload) {
+		return axios.post(URL_ROOT + 'support/create-purchase-order/', payload)
+		.then((response) => {
+			return response
+		})
+		.catch((error) => {
+			console.error(error)
+		})
+	},
 }
 
 export default {

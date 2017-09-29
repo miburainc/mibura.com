@@ -27,17 +27,14 @@
 				resetVerified()
 				ValidateFormStepFunction(fields[0], el)
 			}"
+			:on-blur="test"
 			style="position:relative; z-index:1;">
 		</autocomplete>
 
-		<div ref="input" v-for="(step, index) in fields" v-if="index > 0" 
-			:style="{
-					display: ((step.form.name == 'deviceage' || step.form.name == 'additionalinfo') && getCurrentItemProp('verified') == true) ? 'none' : 'block'
-				}">
-			
-			<form-text-input :step="step"></form-text-input>
-			
-		</div>
+		<form-text-input :step="fields[1]"></form-text-input>
+		<form-text-input v-show="unverified_item" :step="fields[2]"></form-text-input>
+		<form-text-input v-show="unverified_item" :step="fields[3]"></form-text-input>
+		
 		<div v-bind:style="form.buttonStyle" class="container-fluid" style="padding:0px;"> 	
 			<div class="col-xs-12 col-md-2 btn-container">
 				<button type="button" v-on:keypress.enter.prevent :class="buttons[0].class" :id="'btn_' + buttons[0].label.toLowerCase().replace(/ /g,'_')" @click="(el) => {buttonAction(el, buttons[0].script)}">{{form.buttons[0].label}}</button>
@@ -79,6 +76,8 @@ export default {
 	},
 	data() {
 		return {
+			unverified_item: false,
+			autoselected: false,
 			title: "On-Premise Hardware - Software",
 			text: "Search for your hardware device or software below",
 			canSubmit: true,
@@ -160,6 +159,11 @@ export default {
 			'clearErrors',
 			'setAllowFormSubmit'
 		]),
+		test(el){
+			if(!this.autoselected && el.relatedTarget.localName != 'a'){
+				this.unverified_item = true
+			}
+		},
 		submitForm(){
 			if(!this.canSubmit){
 				document.getElementById(this.fields[1].form.name).focus()
@@ -172,20 +176,19 @@ export default {
 		processAjaxResult(json) {
 			return json['results']
 		},
-		test(el){
-			console.log(el)
-		},
 		ValidateFormStepFunction(step, value){
 			//let s = step.dest.split('.')
 			//this.setCurrentItemProp({prop: s[s.length-1], data: value})
 			let errors = ValidateFormStep(step, value)
-
+			this.autoselected = false
 			if(errors['valid'] == true){
 				this.clearError(step.form.name)
 			}
 		},
 		setFormItemAutoselect (obj, name) {
 			this.canSubmit = false
+			this.autoselected = true
+			this.unverified_item = false
 			for(var key in obj){
 				if(obj.hasOwnProperty(key)){
 					this.setCurrentItemProp({prop:key, data:obj[key]})	

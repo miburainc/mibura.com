@@ -36,6 +36,7 @@ export default {
           commit(TYPE.ADD_NOTIFICATION, {type: 'danger',message: response.response.data})
         }
         else if (response.status == 200) {
+          $('#verifyModal').modal('toggle')
           commit(TYPE.SET_PAYMENT_PROP, {prop: 'checkouttype', data: 'ach'})
           commit(TYPE.SET_PAYMENT_PROP, {prop: 'payment_token', data: 'ach'})
           commit(TYPE.ADD_NOTIFICATION, {type: 'success',message: "Successfully verified bank account.  Please proceed to checkout"})

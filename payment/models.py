@@ -20,7 +20,7 @@ class StripeClient(models.Model):
 	client = models.OneToOneField(Client)
 	customer_id = models.CharField(max_length=128)
 	bank_id = models.CharField(max_length=128, blank=True)
-	bank_type = models.CharField(max_length=32, blank=True)
+	bank_type = models.CharField(max_length=32, blank=True, null=True)
 	bank_verified = models.BooleanField(default=False)
 
 	@classmethod
@@ -52,8 +52,18 @@ class StripeClient(models.Model):
 		# Verify bank account
 		# Allows ACH payments with stripe
 		# uses two micro-deposits into bank
-		customer = stripe.Customer.retrieve(self.customer_id)
+		try:
+			customer = stripe.Customer.retrieve(self.customer_id)
+		except stripe.error.InvalidRequestError as e:
+			body = e.json_body
+			err  = body.get('error', {})
+			return{
+				'status': 400,
+				'error': err.get('message')
+			}
+
 		bank_account = customer.sources.retrieve(self.bank_id)
+
 
 		try:
 			request = bank_account.verify(amounts=[amt1, amt2])

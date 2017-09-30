@@ -157,7 +157,6 @@ export default {
 			'setClientProp',
 			'clearError',
 			'clearErrors',
-			'setAllowFormSubmit'
 		]),
 		test(el){
 			if(!this.autoselected && el.relatedTarget.localName != 'a'){
@@ -196,8 +195,6 @@ export default {
 			}
 			this.setCurrentItemProp({ prop: 'verified', data: true })
 
-			this.setAllowFormSubmit(false)
-			setTimeout(() => {this.setAllowFormSubmit(true)}, 200)
 			document.getElementById('serialnumber').focus()
 		},
 		setFormItem (value, obj) {

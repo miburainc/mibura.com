@@ -140,7 +140,6 @@ export default {
 		...mapActions([
 			'setCurrentFormStep',
 			'setCurrentCloudSelection',
-			'setAllowFormSubmit',
 			'setError',
 			'checkDuplicateCloud'
 		]),
@@ -190,7 +189,6 @@ export default {
 		},
 		selectProvider(index){
 			let name = this.getCloudProviders[index].name
-			this.setAllowFormSubmit(false)
 			this.selected_provider = index
 			this.current_step = 1
 			this.text = ""

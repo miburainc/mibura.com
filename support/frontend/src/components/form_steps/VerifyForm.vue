@@ -153,15 +153,12 @@ export default {
 		},
 		setTerms(value){
 			this.setAcceptedTerms(value)
-			console.log(value)
 			document.getElementById('termsCheckbox').checked = value
 		},
 		processAjaxResult(json) {
 			return json['results']
 		},
 		setFormItemAutoselect (obj, name) {
-			console.log("Name: " + name)
-			console.log("Obj: ", obj)
 			this.setCurrentItemProp({ prop: "brand", data: obj["brand"] })
 			this.setCurrentItemProp({ prop: "model", data: obj["model"] })
 			this.setCurrentItemProp({ prop: 'verified', data: true })
@@ -172,7 +169,6 @@ export default {
 			// }
 		},
 		setFormItem (value, obj) {
-			console.log(obj)
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {
@@ -233,6 +229,9 @@ export default {
 			'getAcceptedTerms',
 			'getPaymentProcessing'
 		])
+	},
+	mounted(){
+		this.setPaymentProcessing(false)
 	}
 }
 

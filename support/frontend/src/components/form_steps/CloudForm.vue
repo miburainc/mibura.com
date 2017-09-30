@@ -254,12 +254,8 @@ export default {
 		});
 
 		$("#cloud-selector-formstep").bind('slid.bs.carousel', (e) => {
-			console.log("carousel slide")
 			this.slide_index = $('#cloud-selector-formstep .active').index('#cloud-selector-formstep .item')
-			console.log("carousel index: ", this.slide_index)
-			console.log(e)
 			let cloud_pk = e.relatedTarget.dataset.cloudPk
-			console.log(cloud_pk)
 			this.setCurrentCloudSelection(cloud_pk)
 
 		});

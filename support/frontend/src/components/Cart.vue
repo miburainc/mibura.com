@@ -180,7 +180,6 @@ export default {
 
 		buttonCartScroll() {
 			velocity(document.body, "scroll", { duration: 1000, mobileHA: false, offset: document.body.scrollHeight });
-			console.log("cart button clicked")
 		},
 
 		getWindowWidth(event) {
@@ -248,8 +247,6 @@ export default {
 					this.saveCart().then(() => {
 						this.checkout()
 							.then((status) => {
-								console.log("after purchase callback")
-								console.log(status)
 								if (status == false) {
 									// Failed
 									this.addNotification({

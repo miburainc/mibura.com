@@ -15,27 +15,28 @@
 		<div class="payment-box">
 
 				<div v-show="payment_type=='card'" class="stripe-form-cc pad-10" style="position:relative;">
-				<div class="outcome" style="margin:0px 0px 0px 0px;" >
-					<div class="error" role="alert"></div>
-					<!--
-					<div class="success"> 
-					Success! Your Stripe token is <span class="token"></span>
+					<div class="outcome" style="margin:0px 0px 0px 0px;" >
+						<div class="error" role="alert"></div>
+						<!--
+						<div class="success"> 
+						Success! Your Stripe token is <span class="token"></span>
+						</div>
+						-->
 					</div>
-					-->
-				</div>
-				<form-text-input 
-				:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
-				:step="cc_fields.cardname" 
-				id="cardName"></form-text-input>
+					<form-text-input 
+					:class="{'error-border': getErrors[cc_fields.cardname.form.name]}" 
+					:step="cc_fields.cardname" 
+					id="cardName"></form-text-input>
 
-				<label>Card Info</label>
-				<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
-				<div style="position:absolute;font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
-					<i class="fa fa-cc-visa" aria-hidden="true"></i>
-					<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
-					<i class="fa fa-cc-discover" aria-hidden="true"></i>
-					<i class="fa fa-cc-amex" aria-hidden="true"></i>
+					<label>Card Info</label>
+					<div id="card-element" class="field" :class="{'error-border': cardError}">{{cardError}}</div>
+					<div style="font-size:32px; text-align:center; margin: 0px -93px; left: 50%; color: #2f334c;">
+						<i class="fa fa-cc-visa" aria-hidden="true"></i>
+						<i class="fa fa-cc-mastercard" aria-hidden="true"></i>
+						<i class="fa fa-cc-discover" aria-hidden="true"></i>
+						<i class="fa fa-cc-amex" aria-hidden="true"></i>
 
+					</div>
 				</div>
 
 				<div v-show="payment_type=='paypal'" class="pad-10" style="position:relative;">

@@ -264,7 +264,15 @@
 
 
 		<div v-if="!getPurchaseSuccess" class="notifications-container" style="padding: 0 5px;z-index: 5;">
-			<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
+			<transition 
+				v-bind:css="false"
+				v-on:before-enter="animateBeforeEnter"
+				v-on:before-leave="animateBeforeLeave"
+				v-on:enter="animateEnter"
+				v-on:leave="animateLeave"
+			>
+				<notification v-for="(notification, index) in getNotifications" :data="notification" :index="index" :key="index"></notification>
+			</transition>
 		</div>
 
 		<div v-if="getPurchaseSuccess" class="row">
@@ -309,6 +317,9 @@ import cart from './store/api/cart'
 import axios from './store/api/api-config'
 
 import stripe from './store/stripe'
+
+import Velocity from 'velocity-animate'
+import 'velocity-animate/velocity.ui';
 
 export default {
 	name: 'app',
@@ -378,10 +389,8 @@ export default {
 
 			var newCart = cart.getCart(data).then((response) => {
 				if(response['response'] != null){
-					console.log(response)
 					this.cartLoaded = true
 					data = response.response.data
-					console.log(data)
 					let payload = {
 						'items': data.items,
 						'id': data.cart.id,
@@ -391,9 +400,7 @@ export default {
 
 					this.setCart(payload)
 					let client = JSON.parse(data.client)
-					console.log(client)
 					Object.keys(client).map((prop) => {
-						console.log(prop)
 						this.setClientProp({
 							'prop': prop,
 							'data': client[prop]
@@ -473,14 +480,12 @@ export default {
 
 			errors = ValidateFormStep(format1, v1)
 			if(errors.valid == false){
-				console.log("error1")
 				allGood = false
 				this.verifyError1 = true
 			}
 
 			errors = ValidateFormStep(format2, v2)
 			if(errors.valid == false){
-				console.log("error2")
 				allGood = false
 				this.verifyError2 = true
 			}
@@ -532,7 +537,6 @@ export default {
 				account_holder_type: this.getPaymentInfo['accounttype'],
 			}).then((results) => {
 				// handle result.error or result.token
-				console.log(results.token)
 				this.setPaymentProp({ prop: 'banktoken', data: results.token.id})
 				this.setPaymentProp({ prop: 'bankname', data: results.token.bank_account.bank_name})
 
@@ -547,8 +551,6 @@ export default {
 					// this.serverGetEstimatePdf()
 				}).then(() => {
 					payload['cart_ref'] = this.getCartReference
-					console.log("SEND PAYLOAD TO API ENDPOINT")
-					console.log(payload)
 					this.createPaymentObject({
 						client_id: this.getClientInfo['pk'],
 						cart_ref: this.getCartReference,
@@ -565,12 +567,43 @@ export default {
 			
 			
 			//GO TO SUCCESS PAGE
-		}
+		},
+		animateBeforeEnter(el) {
+			el.style.opacity = 0
+		},
+		animateBeforeLeave(el) {
+			el.style.opacity = 1
+		},
+		animateEnter(el, done) {
+			let transition = 'transition.slideDownIn'
+			Velocity(
+				el,
+				transition,
+				{
+					duration: this.formTransitionTime,
+					complete: () => {
+						done()
+					}
+				}
+			)
+		},
+		animateLeave(el, done) {
+			let transition = 'transition.slideUpOut'
+			Velocity(
+				el,
+				transition,
+				{
+					duration: this.formTransitionTime,
+					complete: () => {
+						done()
+					}
+				}
+			)
+		},
 	},
 	mounted() {
 		axios.get(this.getAPIRoot + 'cloud/')
 			.then((response) => {
-				console.log(response)
 				this.setCloudProviders(response.data.results)
 			})
 			.catch((error) => {

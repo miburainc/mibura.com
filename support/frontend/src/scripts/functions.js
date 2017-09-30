@@ -20,14 +20,10 @@ export function toJSONLocal (date) {
 }
 
 export function ValidateFormStep(fieldStep, fieldValue){
-	
-	console.log("validate step")
-
 	let errors = {
 		valid: true,
 		errors: {}
 	}
-	console.log(fieldValue)
 
 	if (fieldStep.required) {
 		errors.errors[fieldStep.form.name] = []

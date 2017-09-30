@@ -60,7 +60,7 @@ const actions = {
 				return response
 			})
 	},
-	achSendCredentials({commit, rootState}, achToken) {
+	achSendCredentials({commit, state, rootState}, achToken) {
 		stripeApi.postAchCredentials(rootState.Client.client_info.pk, achToken)
 			.then((response) => {
 				console.log(response)
@@ -69,7 +69,7 @@ const actions = {
 				commit(TYPE.SET_CURRENT_FORM_STEP, step_names.success)
 			})
 	},
-	achSendVerify({commit, rootState}) {
+	achSendVerify({commit, state, rootState}) {
 		stripeApi.postAchVerify(rootState.Client.client_info.pk, rootState.Payment.payment_info.verify1, rootState.Payment.payment_info.verify2)
 		.then(
 			response => {

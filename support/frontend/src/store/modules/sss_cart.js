@@ -90,7 +90,6 @@ const actions = {
 		commit(TYPE.CART_CHANGED, value)
 	},
 	checkDuplicateCloud({commit, state, dispatch, rootState}, value){
-		console.log("asdffdsasadf")
 		for (let i=0; i<state.cart.length; i++) {
 			if (state.cart[i].brand == value) {
 				dispatch('addNotification', {
@@ -212,14 +211,11 @@ const actions = {
 		for (let i=0; i<state.cart.length; i++) {
 			if (!state.cart[i].verified && state.cart[i].type != "cloud") {
 				can_checkout = false;
-				console.log("unknown item")
-				console.log(state.cart[i])
 			}
 		}
 		if (can_checkout) {
 			cart.api_checkout(data)
 				.then((response) => {
-					console.log(response)
 					var blob=new Blob([response.data], {type:"application/pdf"});
 					let file_url = window.URL.createObjectURL(blob)
 					commit(TYPE.SET_INVOICE_PDF, file_url)
@@ -269,7 +265,6 @@ const getters = {
 				break;
 		}
 		// Product multiplier per plan e.g 1.0x
-		console.log(product)
 		let pp = product['price_'+plan_name]
 		
 		// Product Category multiplier e.g 1.2x
@@ -304,15 +299,6 @@ const getters = {
 		let pc = store.getPlan(store.getCurrentPlan).cost
 		// Calculation and then divided by half since plans are sold in 6 month increments
 		cost = (pc * pp * (pm + pq * qm + pa * pt)) / 2
-
-		console.log("ASDDFASDASFAFASD")
-		console.log(pp)
-		console.log(pc)
-		console.log(pm)
-		console.log(pq)
-		console.log(pa)
-		console.log(qm)
-		console.log(pt)
 
 		return cost
 	},

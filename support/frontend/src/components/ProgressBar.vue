@@ -74,10 +74,6 @@ export default {
 			
 			let roundnum = Math.floor(formsteps_length * xconvert)
 
-			
-
-			console.log(roundnum)
-
 			this.set_current_form_step(roundnum)
 		});
 	},

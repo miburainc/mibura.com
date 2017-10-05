@@ -51,9 +51,6 @@ export default {
 				this.setClientProp({prop: s[s.length-1], data: value})
 			}
 			else if(s[0] == 'payment'){
-				console.log("payment error check")
-				console.log({prop: s[s.length-1], data: value})
-				console.log(value)
 				this.setPaymentProp({prop: s[s.length-1], data: value})
 			}
 
@@ -64,7 +61,6 @@ export default {
 			}
 		},
 		setFormItem (value, obj) {
-			console.log(obj)
 			let dest_array = obj.dest.split('.')
 
 			if (dest_array[0] == "cart") {

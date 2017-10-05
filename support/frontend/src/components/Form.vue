@@ -107,14 +107,6 @@ export default {
 			'setPaymentProcessing',
 			'sendPaymentPoNumber'
 		]),
-
-		
-		logData(obj) {
-			// Function for testing ajax replies
-			console.log("logData")
-			console.log(obj)
-		},
-		
 		skipToCloud() {
 			this.past_step = this.getCurrentFormStep
 			this.setCurrentFormStep(this.getCurrentFormStep+1)

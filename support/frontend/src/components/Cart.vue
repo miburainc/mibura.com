@@ -196,7 +196,7 @@ export default {
 				case 'silver':
 					this.addNotification({
 						type: 'success',
-						message: 'Pro Silver provides 4 hour response for the lowest price!'
+						message: 'Silver Pro provides 4 hour response for the lowest price!'
 						// message: 'Pro Silver provides 4 hour response for the lowest price! <a href="/support#plan-comparison" target="_blank">Click here to see more!</a>'
 					})
 					break;

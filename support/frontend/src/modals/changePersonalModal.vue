@@ -201,7 +201,6 @@ export default {
 			'setError'
 		]),
 		submitForm(){
-			console.log("SUBMITTING FORM FROM PERSONAL CHANGE MODAL")
 			// Save all current form fields into vuex store
 			let data = this.fields
 			let errors = ValidateFormSteps(this.getCurrentItem, data)
@@ -223,7 +222,6 @@ export default {
 
 					if (dest_array[1] == "address") {
 						let p = dest_array[2].substring(0, dest_array[2].length - 1)
-						console.log(p)
 						this.setClientProp({prop: dest_array[2], data: value})
 					}
 					else {
@@ -232,9 +230,6 @@ export default {
 				}
 				$('#ChangePersonalModal').modal('toggle')
 			}
-			console.log("errors")
-			console.log(this.getErrors)
-
 		},
 	},
 	computed: {

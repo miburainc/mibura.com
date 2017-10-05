@@ -35,8 +35,6 @@ wheels/
 
 # Security
 
-local.py
-
 # Javascript
 
 staticfiles/*

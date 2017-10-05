@@ -501,9 +501,9 @@ def email_estimate_pdf(request):
 			return HttpResponse('No Freshbooks id', status=400)
 
 		pdf_status = estimates.get_estimate_pdf(cart.freshbooks_estimate_id)
-		
+
 		file_name = "Mibura_SmartSupport_Estimate.pdf"
-		path_to_file = settings.MEDIA_ROOT + file_name
+		path_to_file = os.path.join(settings.MEDIA_ROOT, 'pdfs', file_name)
 
 		f = open(path_to_file)
 

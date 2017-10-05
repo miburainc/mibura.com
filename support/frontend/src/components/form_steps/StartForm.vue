@@ -53,11 +53,7 @@ export default {
 			this.buttonAction(null, "next")
 		},
 		formHandleEnter(index) {
-			// console.log(this.$refs)
-			// console.log(this.$refs.input)
-			// console.log(this.$refs.input.children[0])
 			this.$refs.input.children[index+1].children[0].children[1].focus();
-
 		},
 		setFormItem (value, obj) {
 			let dest_array = obj.dest.split('.')

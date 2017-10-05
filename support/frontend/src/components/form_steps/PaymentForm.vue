@@ -537,13 +537,6 @@ export default {
 			product: ['auth'],
 			selectAccount: true,
 			onSuccess: (public_token, metadata) => {
-				// Send the public_token and account ID to your app server.
-				// console.log('public_token: ' + public_token);
-				// console.log('account ID: ' + metadata.account_id);
-				// sendDataToBackendServer({
-				//   public_token: public_token,
-				//   account_id: metadata.account_id
-				// });
 				this.setPaymentProp({prop: 'ach_public_token', data: public_token})
 				this.setPaymentProp({prop: 'ach_account_id', data: metadata.account_id})
 				this.plaidSendCredentials()

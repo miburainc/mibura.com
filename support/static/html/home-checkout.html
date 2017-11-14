@@ -1,0 +1,189 @@
+ <style type="text/css">
+ 	.price {
+ 		background: silver;
+ 		padding: 5px;
+ 	}
+
+ 	.image {
+ 		width: 200px;
+ 	}
+
+ </style>
+ <div class="col-md-8 col-lg-8" id="myWizard">
+	   <div class="progress " style="margin-top:100px">
+	     <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" style="width: [[ progress ]]%;">
+	       [[ progress ]]%
+	     </div>
+	   </div>
+	  
+	   
+	   <uib-tabset type="pills">
+	    <uib-tab heading="Welcome" ng-click="step(0)">
+	    	<div class="tab-pane">
+	    	<div class="well"> 
+	            <h3 class="text-center"> Welcome to Mibura Smart Support </h3>
+	            <h4 class="text-center"> We're here to offer 3rd party hardware, software, and cloud support. Please answer a few quick questions and we will tailor a support plan that will fit your needs. </h4>
+	            <a href="#step2" data-toggle="tab" class="btn btn-lg btn-block btn-success" data-step="2">New Customer</a>
+	        	<button type="button" class="btn btn-lg btn-block btn-default">Already have a quote? Click here to checkout</button>
+
+	        </div>
+	        </div>
+	    </uib-tab>
+
+	    <uib-tab heading="Add Product" ng-click="step(40)">
+	    	<div class="tap-pane">
+	    		<div class="well"> 
+	    		 	<h3 class="text-center">On-Premise Hardware - Software</h3>
+	    		 	<h4 class="text-center">Search for your hardware device or software below</h4>
+	    		
+	    		 	<div class="form-group" >
+	    		   	<label>Product Name [[ selected ]]</label>
+	    		   	<input class="form-control input-lg" placeholder="Enter Product Name" ng-model="process.selected"  uib-typeahead="product.brand +' | '+product.model +' | '+product.category.name for product in getProduct($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" typeahead-on-select="onSelect($item, $model, $label)">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Serial Number</label>
+	    		   	<input class="form-control input-lg" ng-model="process.serial" placeholder="Enter Serial Number"  ng-required="required">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<a href="" class="btn btn-info btn-block" ng-click="addProduct()">Add</a>
+	    		   	<a href="" class="btn btn-primary btn-block">Add Continue</a>
+	    		   </div>
+
+	    		</div>
+	    	</div>
+	    </uib-tab>
+	    <uib-tab heading="Add Cloud" ng-click="step(60)">
+	    	<div class="tap-pane">
+	    		<div class="well"> 
+	    		 	<h3 class="text-center">Add Cloud Services</h3>
+	    			<hr>
+	    			<div ng-repeat="cloud in clouds">
+	    		 	<div class="row">
+	    		 		<div class="col-md-4">
+	    		 			<img src="[[ cloud.image ]]" class="image">
+	    		 		</div>
+
+	    		 		<div class="col-md-6">
+	    		 				<label>How many users do you have on this cloud service?</label>
+	    		 			
+	    		 			<div class="input-group">
+	 			                <input type="number" class="form-control">
+
+	 			                <span class="input-group-btn">
+	 			                    <button type="button" ng-click="addCloud(cloud)" class="btn btn-success">Add Item</button>
+	 			                </span>
+	 			            </div>
+	    		 		</div>
+	    			
+	    		 	</div>
+	    		 	<hr>
+	    		 	</div>
+	    		 		
+	    		</div>
+	    	</div>
+	    </uib-tab>
+	    <uib-tab heading="Account Information" ng-click="step(80)">
+	    	<div class="tap-pane">
+	    		<div class="well"> 
+	    		 	<h3 class="text-center">About Your Company</h3>
+
+	    		   <div class="form-group">
+	    		   	<label>First Name</label>
+	    		   	<input class="form-control input-lg" placeholder="First Name">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Last Name</label>
+	    		   	<input class="form-control input-lg" placeholder="Last Name">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Company</label>
+	    		   	<input class="form-control input-lg" placeholder="Company">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Phone</label>
+	    		   	<input class="form-control input-lg" placeholder="Phone Number">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Email Address</label>
+	    		   	<input class="form-control input-lg" placeholder="Email">
+	    		   </div>
+	    		  
+	    		   	<a href="" class="btn btn-default">Back</a>
+	    		   	<a href="" class="btn btn-primary">Continue</a>
+
+
+	    		
+	    		</div>
+	    	</div>
+	    </uib-tab>
+	    <uib-tab heading="Finish" ng-click="step(100)">
+	    	<div class="tap-pane">
+	    		<div class="well"> 
+	    		 	<h3 class="text-center">About Your Company</h3>
+
+	    		   <div class="form-group">
+	    		   	<label>First Name</label>
+	    		   	<input class="form-control input-lg" placeholder="First Name">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Last Name</label>
+	    		   	<input class="form-control input-lg" placeholder="Last Name">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Company</label>
+	    		   	<input class="form-control input-lg" placeholder="Company">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Phone</label>
+	    		   	<input class="form-control input-lg" placeholder="Phone Number">
+	    		   </div>
+
+	    		   <div class="form-group">
+	    		   	<label>Email Address</label>
+	    		   	<input class="form-control input-lg" placeholder="Email">
+	    		   </div>
+	    		  	
+	    		
+	    		</div>
+	    	</div>
+	    </uib-tab>
+	    
+	  </uib-tabset>
+ </div>
+ <div class="col-md-4 col-lg-4" style="margin-top:100px; background: #fff; border-radius: 3px; padding: 6px; box-shadow: 5px 5px 5px 5px #cec9c9;">
+ 		<div class="price">
+ 			<center><h3>$[[ total_cost ]]</h3></center>
+ 		</div>
+		<div class="btn-group btn-group-justified">
+	        <label class="btn btn-md btn-primary silver"  ng-click="plans('silver')">Silver Pro</label>
+	        <label class="btn btn-md btn-primary gold"  ng-click="plans('gold')" >Pure Gold</label>
+	        <label class="btn btn-md btn-primary carbon" ng-click="plans('carbon')" >Carbon Black</label>
+	    </div>
+
+	    <table class="table table-condensed table-responsive">
+		  
+		    <tbody>
+		      <tr ng-repeat="item in items">
+		        <td><img src="/static/img/[[ item.brand.toLowerCase() ]].png" width="30px"></td>
+		        <td>[[ item.model ]]</td>
+		        <td>$[[ item.price_silver ]]</td>
+		        <td><a href="" class="btn btn-xs btn-danger" ng-click="delete($index)"><span class="glyphicon glyphicon-remove"></span></a></td>
+		      </tr>
+		     
+		    </tbody>
+		  </table>
+		  <div class="btn-group btn-group-justified">
+	        <label class="btn btn-md btn-success" ng-model="radioModel" ng-if="items.length > 0" uib-btn-radio="'Left'">Back</label>
+	        <label class="btn btn-md btn-primary" ng-model="radioModel" ng-if="items.length > 0"  uib-btn-radio="'Right'">Checkout</label>
+	    </div>
+
+	</div>

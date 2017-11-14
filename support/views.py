@@ -117,7 +117,7 @@ def purchase(request):
 	
 	return render(
 		request,
-		'support/purchase.html',
+		'support/app.html',
 		context
 	)
 

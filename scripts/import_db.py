@@ -111,5 +111,5 @@ if __name__ == '__main__':
 
 	for sheet in SHEETS:
 		name = sheet.lower()
-		workbook = load_workbook('scripts/files/products/mibura_sss_product_' + name + '.xlsx')
+		workbook = load_workbook('scripts/files/products/_done/mibura_sss_product_' + name + '.xlsx')
 		App(workbook, sheet)

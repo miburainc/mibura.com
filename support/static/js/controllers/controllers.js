@@ -4,6 +4,7 @@ angular
 
 	  var _selected;
 	  $scope.items = [];
+	  $scope.cloudsupports = [];
 	  $scope.process = {};
 	  $scope.clouds = [];
 	  $scope.cloudlist = { fields: {} };
@@ -79,11 +80,7 @@ angular
 
 	  $scope.addCloud = function(model) {
 	  	console.log(model);
-	  	$scope.items.push({
-	  		'brand': model.name.split(' ')[0].toLowerCase(),
-	  		'model': model.name,
-	  		'price': model.price_multiplier
-	  	});
+	  	$scope.cloudsupports.push(model);
 	  };
 
 

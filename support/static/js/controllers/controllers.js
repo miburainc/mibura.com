@@ -80,6 +80,7 @@ angular
 
 	  $scope.addCloud = function(model) {
 	  	console.log(model);
+	  	model['brand'] = model['name'];
 	  	$scope.cloudsupports.push(model);
 	  };
 

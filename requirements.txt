@@ -60,7 +60,7 @@ gunicorn==19.7.1
 idna==2.5
 isodate==0.5.4
 jdcal==1.3
-Jinja2==2.9.6
+Jinja2==2.11.3
 jsonfield==1.0.3
 keyring==10.4.0
 MarkupSafe==1.0
